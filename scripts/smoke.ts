@@ -71,6 +71,7 @@ await check("calendar", async () => {
 await check("web app", async () => {
   const html = await (await getOk("/")).text();
   if (!/<html|<!doctype/i.test(html)) throw new Error("no HTML at /");
+  if (html.includes("hasn't been built yet")) throw new Error("the web app isn't in this deploy (web build failed or skipped)");
 });
 
 if (withAsk) {

@@ -1,0 +1,20 @@
+{
+  "id": "demo-king-bike-lanes",
+  "city": "waterloo-region",
+  "title": "Report DSD-2026-101: King Street Protected Bike Lanes, Phase 2",
+  "plainTitle": "Protected bike lanes on King Street (test fixture)",
+  "decidedBy": "Demo City Council",
+  "status": "in-consultation",
+  "officialUrl": "https://example.org/demo/king-bike-lanes",
+  "sources": ["demo-report", "demo-notice"],
+  "timeline": [
+    { "id": "t1", "date": "2026-11-02", "kind": "report", "title": "Staff report published", "plain": "City staff published their report and recommendation." },
+    { "id": "t2", "date": "2026-11-23T18:00:00-05:00", "kind": "committee", "title": "Planning and Strategic Initiatives Committee", "plain": "Councillors discuss the plan. You can speak or write in.", "location": "Council Chambers, 200 King St. W.",
+      "participation": [ { "method": "speak", "instructions": "Register to speak by noon on Friday, November 20.", "deadline": "2026-11-20T12:00:00-05:00", "contact": "clerks@example.org" },
+                         { "method": "write", "instructions": "Email the clerk before the meeting.", "contact": "clerks@example.org" } ] },
+    { "id": "t3", "date": "2026-12-07T18:00:00-05:00", "kind": "council", "title": "Council decision", "plain": "Council votes on the plan." }
+  ],
+  "center": [-80.4925, 43.4516],
+  "zoom": 14,
+  "lenses": ["cost", "commitments"]
+}

@@ -1,12 +1,15 @@
 # Municipal Agents: one image with the API, the agents and the built web app.
 
 # Stage 1: build the web app. The whole context is copied because web/ may not exist
-# yet in early deploys and may import ../shared; a missing web/ leaves an empty dist.
+# yet in early deploys and may import ../shared. Vite runs without the type check (the
+# web builder runs that) and a failed web build doesn't block the API: the server then
+# shows a "not built yet" page, which the smoke test reports.
 FROM node:24-slim AS build
 WORKDIR /src
 COPY . .
 RUN if [ -f web/package.json ]; then \
-      npm --prefix web ci --no-audit --no-fund && npm --prefix web run build; \
+      (npm --prefix web ci --no-audit --no-fund && cd web && npx vite build) \
+        || echo "WARNING: web build failed; deploying the API without the web app"; \
     else \
       echo "web/ not present yet: skipping the web build"; \
     fi \

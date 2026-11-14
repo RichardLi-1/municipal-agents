@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Municipal Readiness Report: Municipal Agents</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  /* Inter (SIL Open Font License 1.1), static files from @fontsource/inter 5.1.0, vendored in fonts/. */
+  @font-face { font-family: "Inter Report"; font-weight: 400; font-style: normal; src: url("fonts/inter-latin-400-normal.woff2") format("woff2"); }
+  @font-face { font-family: "Inter Report"; font-weight: 400; font-style: italic; src: url("fonts/inter-latin-400-italic.woff2") format("woff2"); }
+  @font-face { font-family: "Inter Report"; font-weight: 600; font-style: normal; src: url("fonts/inter-latin-600-normal.woff2") format("woff2"); }
+  @font-face { font-family: "Inter Report"; font-weight: 700; font-style: normal; src: url("fonts/inter-latin-700-normal.woff2") format("woff2"); }
+
+  @page { size: Letter; margin: 0.45in; }
+  :root {
+    --ink: #111418;
+    --muted: #4a5260;
+    --rule: #d9dee7;
+    --blue: #1f5fd6;
+    --tint: #eef3fc;
+    --todo: #9a4300;
+    --todo-bg: #fff3e0;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: #fff; }
+  body {
+    font-family: "Inter Report", Inter, -apple-system, "Helvetica Neue", Arial, sans-serif;
+    font-size: 8.2pt;
+    line-height: 1.25;
+    color: var(--ink);
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .page { width: 7.6in; }
+
+  /* Title band */
+  header.band {
+    display: flex; justify-content: space-between; align-items: flex-end; gap: 0.2in;
+    border-bottom: 2.5pt solid var(--blue);
+    padding-bottom: 4pt; margin-bottom: 5pt;
+  }
+  header .kicker { font-size: 6.8pt; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--blue); }
+  header h1 { font-size: 16pt; line-height: 1.1; margin: 1pt 0 2pt; font-weight: 700; letter-spacing: -0.01em; }
+  header .lede { font-size: 8.8pt; margin: 0; max-width: 5.1in; }
+  header .meta { font-size: 6.8pt; line-height: 1.4; color: var(--muted); text-align: right; white-space: nowrap; }
+  header .meta b { color: var(--ink); font-weight: 600; }
+
+  /* Architecture strip */
+  .arch { display: flex; align-items: stretch; margin: 0 0 6pt; font-size: 6.9pt; line-height: 1.22; }
+  .arch .box { border: 0.8pt solid var(--rule); border-radius: 6pt; padding: 3pt 5pt; flex: 1; }
+  .arch .box.core { background: var(--tint); border-color: #b9cdf3; flex: 1.5; }
+  .arch .box b { display: block; font-size: 7.1pt; font-weight: 600; margin-bottom: 0.5pt; }
+  .arch .arrow { align-self: center; color: var(--blue); font-weight: 700; padding: 0 2.5pt; font-size: 8.5pt; font-family: Arial, sans-serif; }
+  .arch .muted { color: var(--muted); }
+
+  /* Body columns */
+  .cols { display: grid; grid-template-columns: 1fr 1fr; column-gap: 0.22in; align-items: start; }
+  section { break-inside: avoid-column; margin: 0 0 4.2pt; }
+  h2 {
+    font-size: 7.8pt; font-weight: 700; color: var(--blue); margin: 0 0 1.5pt;
+    text-transform: uppercase; letter-spacing: 0.05em;
+  }
+  p { margin: 0 0 2.5pt; }
+  ul, ol { margin: 0 0 2.5pt; padding-left: 10pt; }
+  li { margin: 0 0 1.2pt; }
+  li::marker { color: var(--blue); font-weight: 600; }
+  b, strong { font-weight: 600; }
+  i, em { color: var(--muted); }
+  sup { font-size: 5.6pt; line-height: 0; color: var(--blue); font-weight: 600; }
+  code { font-family: "Inter Report", Inter, sans-serif; font-weight: 600; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 7.4pt; line-height: 1.22; margin: 0.5pt 0 2.5pt; }
+  th { text-align: left; font-weight: 600; color: var(--muted); font-size: 6.3pt; text-transform: uppercase; letter-spacing: 0.04em; border-bottom: 0.8pt solid var(--ink); padding: 1pt 4pt 1.5pt 0; }
+  td { vertical-align: top; border-bottom: 0.5pt solid var(--rule); padding: 1.5pt 4pt 1.5pt 0; }
+  td:first-child { font-weight: 600; white-space: nowrap; }
+  td.num { white-space: nowrap; }
+
+  .case { background: var(--tint); border-radius: 7pt; padding: 4.5pt 6pt 2.5pt; }
+  .note { font-size: 7pt; color: var(--muted); }
+  .todo {
+    display: inline-block; font-size: 5.8pt; font-weight: 600; line-height: 1.15; color: var(--todo);
+    background: var(--todo-bg); border: 0.5pt solid #f0c27a; border-radius: 2.5pt; padding: 0 1.8pt; vertical-align: 0.4pt;
+    font-family: ui-monospace, Menlo, monospace; letter-spacing: 0;
+  }
+
+  footer.refs {
+    border-top: 0.8pt solid var(--rule); padding-top: 2.5pt; margin-top: 1pt;
+    font-size: 6pt; line-height: 1.28; color: var(--muted);
+    column-count: 2; column-gap: 0.22in;
+  }
+  footer.refs ol { margin: 0; padding-left: 8.5pt; }
+  footer.refs li { margin: 0 0 0.4pt; break-inside: avoid; }
+  footer.refs li::marker { color: var(--muted); font-weight: 400; }
+
+  @media screen {
+    body { background: #e9ecf1; }
+    .page { background: #fff; margin: 24px auto; padding: 0.45in; width: 8.5in; min-height: 11in; box-shadow: 0 2px 16px rgba(0,0,0,0.12); }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+<header class="band">
+  <div>
+    <div class="kicker">Municipal Readiness Report</div>
+    <h1>Municipal Agents</h1>
+    <p class="lede">AI agents read a city's own documents and turn a proposed decision into a brief a resident can read in five minutes: what's proposed, how it affects you, and when you can have a say. Every figure links to its page; staff approve every statement.</p>
+  </div>
+  <div class="meta">
+    CIVIC Hack 2026, Future Cities Institute, UWaterloo<br>
+    14 November 2026<br>
+    <b>Working prototype, not yet used by a city</b><br>
+    Live: <span class="todo">TODO(verify) URL</span> &nbsp;Code: <span class="todo">TODO(verify)</span>
+  </div>
+</header>
+
+<div class="arch" aria-label="How it runs">
+  <div class="box"><b>Resident's browser</b>Brief, map, source pages, chat. No account.</div>
+  <div class="arrow">&rarr;</div>
+  <div class="box core"><b>One Node 24 service on Fly.io, Toronto</b>API, agent loop, citation checker, reading grade, spend caps. Hash-chained public log in SQLite.</div>
+  <div class="arrow">&rarr;</div>
+  <div class="box"><b>Gemini API (US)</b>gemini-3.6-flash. One setting to swap for a Canadian or on-premises model.</div>
+  <div class="arrow">&larr;</div>
+  <div class="box"><b>Prepared ahead</b>PDFs to page text; GTFS, OpenStreetMap, permits to lenses.</div>
+</div>
+
+<div class="cols">
+<div class="col">
+<section>
+  <h2>The problem</h2>
+  <p>Budgets, transit changes, rezonings and new facilities are explained in long staff reports, often published shortly before the meeting. Affected residents find out late, can't tell how it touches them, and miss the chance to speak. Municipal Agents drafts a plain brief from the city's own documents; code checks every quote is on its page, and a named staff member approves each statement. Lenses add transit access, lifecycle cost, commitments and housing.</p>
+</section>
+
+<section class="case">
+  <h2>Case study: Waterloo Region</h2>
+  <p><b>Decision:</b> <span class="todo">TODO(verify) title, decided by, council date</span>. <b>Sources:</b> <span class="todo">TODO(verify) n</span> public PDFs, <span class="todo">TODO(verify) n</span> pages.</p>
+  <p><b>Result:</b> <span class="todo">TODO(verify) n</span> statements, each linked to a page; <span class="todo">TODO(verify) n</span> drafts rejected because a quote was not on its page; reading grade <span class="todo">TODO(verify)</span> (staff report: <span class="todo">TODO(verify)</span>); the next chance to speak as a calendar file; transit gaps from Grand River Transit and ION schedules.</p>
+  <p><b>Lesson:</b> budget staff time for the hand-checked timeline and housing data, not only AI review <span class="todo">TODO(verify)</span>.</p>
+</section>
+
+<section>
+  <h2>Data and resources needed</h2>
+  <ul>
+    <li>Staff reports, agendas, budgets, plans as text PDFs; per decision, a clerk-checked timeline and map area.</li>
+    <li>GTFS, OpenStreetMap, building permits, Statistics Canada households.</li>
+    <li>A trained reviewer per brief; light IT; a capped model API key.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Rough cost (US dollars)</h2>
+  <table>
+    <tr><th>Item</th><th>Cost</th><th>Basis</th></tr>
+    <tr><td>Hosting, one city</td><td class="num">~$7&ndash;10 a month</td><td>Fly.io 1 GB machine $6.70; volume, traffic<sup>7</sup></td></tr>
+    <tr><td>Model, per brief</td><td class="num"><span class="todo">TODO(verify)</span></td><td>Run cap: 40 calls or $0.50</td></tr>
+    <tr><td>Model, per question</td><td class="num"><span class="todo">TODO(verify)</span></td><td>Same cap</td></tr>
+    <tr><td>Public site cap</td><td class="num">$5 a day at most</td><td>In code; worst case ~$150/month</td></tr>
+    <tr><td>Staff review</td><td class="num">30&ndash;60 min a brief</td><td>Our estimate, not measured</td></tr>
+  </table>
+  <p class="note">gemini-3.6-flash: $0.75 in, $3.75 out per million tokens to 31 Dec 2026, then $1.50 and $7.50.<sup>5</sup> Cached briefs cost nothing to read.</p>
+</section>
+
+<section>
+  <h2>How another municipality adapts it</h2>
+  <ol>
+    <li><code>cities/&lt;id&gt;.json</code>: map, languages, notice page, clerk, GTFS, open data. <i>~1 h</i></li>
+    <li>PDFs into <code>data/sources</code>; <code>npm run sources</code>. <i>~1 h</i></li>
+    <li><code>data/decisions/&lt;id&gt;.json</code>, clerk-checked. <i>~2&ndash;4 h each</i></li>
+    <li>Local GTFS, OpenStreetMap, permits (5 stages). <i>~1&ndash;3 days</i></li>
+    <li>Model and spend caps; deploy the container. <i>~&frac12; day</i></li>
+    <li>Train reviewers. <i>~1 h</i></li>
+  </ol>
+  <p class="note">Times are estimates. Text PDFs and public GTFS need no code changes.</p>
+</section>
+
+<section>
+  <h2>Needed before real use</h2>
+  <p>Accuracy and review time measured in a pilot; a WCAG 2.2 AA audit; a privacy impact assessment; a Canadian-hosted model; OCR for scanned PDFs; a written clerk sign-off procedure.</p>
+</section>
+</div>
+<div class="col">
+<section>
+  <h2>Who would use it</h2>
+  <ul>
+    <li><b>Residents</b>, no account: renters, owners, riders, seniors, students, parents, people with a disability, newcomers.</li>
+    <li><b>Clerks, communications</b>: start a brief, review each statement, publish.</li>
+    <li><b>Planners</b>: transit, cost, housing lenses from open data.</li>
+    <li><b>Councillors, groups</b>: one cited link with the dates to take part.</li>
+  </ul>
+</section>
+
+<section class="split">
+  <h2>Privacy and the law</h2>
+  <ul>
+    <li><b>No personal data by design.</b> No resident accounts; only public documents go to the model. Questions are kept without identity <span class="todo">TODO(verify) no IP</span> but are public, so we ask people not to type personal details.</li>
+    <li><b>MFIPPA.</b> A municipality may collect personal information only if a statute authorizes it, for law enforcement, or if necessary to a lawfully authorized activity, with notice (ss. 28(2), 29(2)).<sup>4</sup> Still do a privacy impact assessment.</li>
+    <li><b>Data residency.</b> The Gemini API is a US service; paid-tier content is not used to improve Google's products.<sup>5</sup> For production: Vertex AI in Canada, which lists Gemini 3.5 and 3.8 Flash but not 3.6,<sup>6</sup> or an on-premises model.</li>
+    <li><b>Bill 194.</b> Ontario's Enhancing Digital Security and Trust Act, 2024 lets the province require prescribed public sector entities that use AI (municipalities can be prescribed) to inform the public, keep an accountability framework, manage risk and have a person oversee it.<sup>1,2</sup> No regulation yet does so for municipal AI.<sup>3</sup> The prototype already discloses AI use, names a human approver and keeps a public log.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>What residents should know</h2>
+  <ul>
+    <li>AI drafts; a named staff member approves each statement.</li>
+    <li><b>Not the official notice</b>: each page links to it, and it prevails.</li>
+    <li>Every number links to its page. The AI can be wrong; it never says what to think.</li>
+    <li>Questions are public, not tied to you. Translations are by machine <span class="todo">TODO(verify)</span>.</li>
+    <li>Errors: "Report an error" or the clerk <span class="todo">TODO(verify)</span>.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Risks and mitigations</h2>
+  <table>
+    <tr><th>Risk</th><th>Mitigation</th></tr>
+    <tr><td>Misinformation</td><td>Quotes checked on the page in code; staff approve</td></tr>
+    <tr><td>Over-trust in AI</td><td>"AI draft" labels; uncertainty kept; sources a click away</td></tr>
+    <tr><td>Digital divide</td><td>Grade 8, measured; screen readers; keep paper channels</td></tr>
+    <tr><td>Language</td><td>Language menu; translations labelled</td></tr>
+    <tr><td>Manipulation</td><td>Only staff add sources; answers only from cited pages</td></tr>
+    <tr><td>Liability</td><td>Not the official notice; approvals in a tamper-evident log</td></tr>
+    <tr><td>Staff workload</td><td>Agents draft; staff review one statement at a time</td></tr>
+  </table>
+</section>
+
+<section>
+  <h2>What's next</h2>
+  <p>Pilot one live decision with a Waterloo Region municipality; measure review time and whether residents understand it, with screen-reader users and newcomers; then scale to more cities.</p>
+</section>
+</div>
+</div>
+
+<footer class="refs">
+  <ol>
+    <li>Bill 194, Strengthening Cyber Security and Building Trust in the Public Sector Act, 2024, S.O. 2024, c. 24. ola.org</li>
+    <li>Lerners LLP, "Bill 194, Part II: Enhancing Digital Security and Trust Act, 2024". lerners.ca</li>
+    <li>Ontario, "Enhancing Digital Security and Trust Act" (web page), updated 22 Oct 2026. ontario.ca</li>
+    <li>Municipal Freedom of Information and Protection of Privacy Act, R.S.O. 1990, c. M.56.</li>
+    <li>Google, Gemini API pricing. ai.google.dev/gemini-api/docs/pricing</li>
+    <li>Google Cloud, Generative AI on Vertex AI: data residency. docs.cloud.google.com</li>
+    <li>Fly.io, Resource pricing, lowest-price regions. fly.io/docs/about/pricing</li>
+    <li>Kincaid et al. 1975; Dibbelt et al. 2018. Web pages read 14 Nov 2026. More: docs/references.md</li>
+  </ol>
+</footer>
+
+</div>
+</body>
+</html>
