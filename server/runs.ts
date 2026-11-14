@@ -65,13 +65,12 @@ export function logUsageFallback(app: App, run: Run, decisionId: string | undefi
 const PROVIDER = /ai\.studio|generativelanguage|googleapis|\{\s*"error"|"code"\s*:|prepayment|FAILED_PRECONDITION|RESOURCE_EXHAUSTED|UNAVAILABLE|x-goog-api-key|api_key|AIza[0-9A-Za-z_-]{10}|Gemini \d{3}/i;
 const LEAKY = new RegExp(`${PROVIDER.source}|https?://|[{}]`, "i");
 
-/** Plain words for a provider HTTP status. */
+/**
+ * Plain words for a provider HTTP status. Residents never learn why the model is
+ * unreachable (credit, rate limit, outage): that stays in the server's console.
+ */
 export function providerMessage(status: number): string {
-  if (status === 402) return "The AI model can't be reached right now: the model service's prepaid credit is used up.";
-  if (status === 429) return "The AI model can't be reached right now: the model service is rate-limiting requests.";
-  if (status === 401 || status === 403) return "The AI model can't be reached right now: the model service refused the API key.";
-  if (status >= 500) return "The AI model can't be reached right now: the model service is having an outage.";
-  if (status === 0) return "The AI model can't be reached right now.";
+  if (status === 0 || status === 401 || status === 402 || status === 403 || status === 429 || status >= 500) return "The AI model can't be reached right now.";
   return "The AI model returned an error. Please try again.";
 }
 

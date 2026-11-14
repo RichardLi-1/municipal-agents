@@ -11,7 +11,8 @@ import { readingGrade } from "../shared/readability.ts";
 import type { AgentContext } from "./index.ts";
 import { callGemini, type CallModel } from "./gemini.ts";
 import { loadCorpus, type Corpus } from "./corpus.ts";
-import { Budget, budgetedCall, decisionBrief, isUnreachable, logFailure, publicError, runStep, unreachableReason, type Run, type StepSpec } from "./loop.ts";
+import { Budget, budgetedCall, decisionBrief, runStep, type Run, type StepSpec } from "./loop.ts";
+import { isUnreachable, logFailure, publicError, UNREACHABLE } from "./errors.ts";
 import { offlineAnswer } from "./offline.ts";
 import { tidyBrief } from "./tidy.ts";
 import { listSkills, loadSkill } from "./skills.ts";
@@ -327,14 +328,17 @@ export async function askWith(
   const question = String(req.question ?? "").trim().slice(0, 1000);
   // Model unreachable: answer from the brief's checked statements instead (no model).
   const answerOffline = (err: unknown) => {
-    const reason = unreachableReason(err);
-    const a = offlineAnswer(ctx.dataDir, req.decisionId, question, reason);
+    // Why the model is unreachable goes to the console only; residents and the public
+    // record just learn that it is.
+    logFailure("ask (answered offline)", err);
+    const a = offlineAnswer(ctx.dataDir, req.decisionId, question, { lang: req.lang });
     emit(a);
     ctx.log({
       actor: "agent:lead", kind: "answer.given", decisionId: req.decisionId,
-      payload: { question, text: a.text, offline: true, reason, statements: a.statements.map((s) => ({ id: s.id, text: s.text, citations: s.citations })), costUsd: 0 },
+      payload: { question, text: a.text, offline: true, statements: a.statements.map((s) => ({ id: s.id, text: s.text, citations: s.citations })), costUsd: 0 },
     });
   };
+
   // The question text only: no IP, no identity, nothing that ties it to a person.
   ctx.log({ actor: "visitor", kind: "question.asked", decisionId: req.decisionId, payload: { question, lang: req.lang, audiences: req.audiences } });
   try {
@@ -574,7 +578,7 @@ export async function generateBriefWith(
     // or out of credit): if every specialist failed, the run fails.
     if (results.every((r) => r.status === "failed")) {
       if (run.unreachable)
-        throw new Error(`The AI model can't be reached right now: ${unreachableReason(run.unreachable)}. No new brief was made; the current brief is unchanged.`);
+        throw new Error(`${UNREACHABLE} No new brief was made; the current brief is unchanged.`);
       throw new Error(`The agents couldn't write this brief (${results[0]?.summary ?? "every step failed"}). The current brief is unchanged.`);
     }
 
@@ -586,7 +590,7 @@ export async function generateBriefWith(
       costUsd: budget.usd,
     });
     // Code's last pass: near-duplicates out, hedged facts become estimates, glitches fixed.
-    const { brief, report: tidy } = tidyBrief(assembled);
+    const { brief, report: tidy } = tidyBrief(assembled, [corpus.decision.title, corpus.decision.plainTitle]);
     ctx.log({
       actor: "agent:lead",
       kind: "brief.generated",
@@ -598,7 +602,7 @@ export async function generateBriefWith(
         unknowns: brief.unknowns.length,
         readingGrade: brief.readingGrade,
         readingGradeBefore: plain.gradeBefore,
-        tidied: { dropped: tidy.dropped.length, repaired: tidy.repaired.length, estimates: tidy.estimates.length },
+        tidied: { dropped: tidy.dropped.length, repaired: tidy.repaired.length, estimates: tidy.estimates.length, weak: tidy.weak.length },
         rewritten: plain.rewritten,
         glossaryAdded: plain.termsAdded,
         steps: results.map((r) => ({ id: r.id, status: r.status, calls: r.calls })),

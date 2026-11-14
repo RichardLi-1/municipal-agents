@@ -7,6 +7,7 @@ import type { AgentContext } from "./index.ts";
 import type { CallModel, Content, GeminiResult, Part } from "./gemini.ts";
 import type { Corpus } from "./corpus.ts";
 import { loadRules, loadSkill, type Skill } from "./skills.ts";
+import { isUnreachable, logFailure, publicError } from "./errors.ts";
 import { AUDIENCES, toolsFor, type Findings, type ToolEnv } from "./tools.ts";
 import type { Decision, LensId } from "../shared/types.ts";
 
@@ -84,42 +85,8 @@ export interface Run {
   unreachable?: Error;
 }
 
-/** True for errors that mean the model can't be reached at all, as opposed to a bad request. */
-export function isUnreachable(err: unknown): boolean {
-  const e = err as { status?: unknown; message?: unknown } | undefined;
-  if (!e || typeof e.status !== "number" || typeof e.message !== "string" || !/^Gemini|GEMINI_API_KEY/.test(e.message)) return false;
-  return e.status === 0 || [401, 402, 403, 429].includes(e.status) || e.status >= 500;
-}
-
-/**
- * What a resident may be told about any failure: plain words, never the provider's
- * response, a URL or a stack. The details go to the server's console only.
- */
-export function publicError(err: unknown): string {
-  if (isUnreachable(err)) return `The AI model can't be reached right now: ${unreachableReason(err)}.`;
-  const e = err as { name?: string; message?: string; status?: number; detail?: string } | undefined;
-  if (e?.name === "TimeoutError" || e?.name === "AbortError" || /aborted|cancelled|timed? ?out/i.test(e?.message ?? "")) return "The run was stopped before it finished.";
-  if (typeof e?.status === "number") return "The AI model returned an error. Please try again.";
-  return "Something went wrong while the agents were working.";
-}
-
-/** Server-side log of a failure, without secrets (provider bodies never contain the key). */
-export function logFailure(where: string, err: unknown): void {
-  const e = err as { message?: string; status?: number; detail?: string };
-  console.error(`${where}: ${e?.message ?? String(err)}${e?.status !== undefined ? ` (status ${e.status})` : ""}${e?.detail ? ` ${e.detail.slice(0, 300)}` : ""}`);
-}
-
-/** Why the model is unreachable, in plain words. */
-export function unreachableReason(err: unknown): string {
-  const status = (err as { status?: number })?.status ?? 0;
-  const msg = String((err as Error)?.message ?? "");
-  if (status === 402) return "the model service's prepaid credit is used up";
-  if (status === 429) return "the model service is rate-limiting requests";
-  if (status === 401 || status === 403) return "the model service refused the API key";
-  if (status >= 500) return "the model service is having an outage";
-  if (/GEMINI_API_KEY/.test(msg)) return "no API key is set";
-  return "there is no connection to the model service";
-}
+// Error helpers live in errors.ts; re-exported here for the modules that import them from the loop.
+export { isUnreachable, logFailure, publicError, unreachableReason, UNREACHABLE } from "./errors.ts";
 
 export interface StepSpec {
   id: string;

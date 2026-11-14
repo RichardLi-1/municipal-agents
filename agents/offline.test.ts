@@ -36,7 +36,8 @@ test("ask answers offline, without error, when the model has no credit (402)", a
   assert.deepEqual(r.events.map((e) => e.type).filter((t) => t !== "usage"), ["answer", "done"]);
   const a = r.events.find((e) => e.type === "answer") as any;
   assert.equal(a.offline, true);
-  assert.match(a.text, /prepaid credit is used up/);
+  assert.doesNotMatch(a.text, /credit|billing|prepaid|rate|outage/i, "residents aren't told why");
+  assert.ok(a.text.startsWith(OFFLINE_INTRO));
   assert.equal(a.statements[0].id, "s3");
   const given = r.logs.find((l) => l.kind === "answer.given")!.payload as any;
   assert.equal(given.offline, true);
@@ -44,7 +45,8 @@ test("ask answers offline, without error, when the model has no credit (402)", a
 
 test("generateBrief says plainly that the model can't be reached", async () => {
   const r = recorder();
-  await assert.rejects(generateBriefWith(r.ctx, { decisionId: DEMO }, r.emit, fakeDeps(noCredit())), /can't be reached right now: the model service's prepaid credit is used up/);
+  await assert.rejects(generateBriefWith(r.ctx, { decisionId: DEMO }, r.emit, fakeDeps(noCredit())), /^Error: The AI model can't be reached right now\. No new brief was made/);
+  assert.doesNotMatch(JSON.stringify(r.events), /credit|prepaid|billing/i);
 });
 
 // The questions that showed the old ranking's faults, against the real committed data.
@@ -89,4 +91,30 @@ test("offline: nothing relevant means saying so and naming the Clerk", () => {
   const a = offlineAnswer(DATA, "row-2027-budget", "What is the weather tomorrow?");
   assert.equal(a.statements.length, 0);
   assert.match(a.text, /doesn't cover that question\. You can ask the Clerk: Regional Clerk/);
+});
+
+test("offline: 'when' questions always lead with the next chances to take part, with their deadlines", () => {
+  const now = new Date("2026-11-14T09:00:00-05:00");
+  const a = offlineAnswer(DATA, "row-2027-budget", "When can I speak to council?", { now });
+  const ids = a.statements.map((s) => s.id);
+  assert.ok(ids.includes("timeline-overview"), ids.join(", "));
+  assert.match(a.statements.find((s) => s.id === "timeline-overview")!.text, /Deadline: noon on December 9, 2026\./);
+  const w = offlineAnswer(DATA, "row-water-supply-2051", "When can I have my say?", { now });
+  assert.deepEqual(w.statements.slice(0, 2).map((s) => s.id), ["timeline-meeting-2-virtual", "timeline-meeting-2-in-person"]);
+});
+
+test("offline: French questions get French fixed lines and match French words", () => {
+  const now = new Date("2026-11-14T09:00:00-05:00");
+  const a = offlineAnswer(DATA, "row-2027-budget", "Quand puis-je parler au conseil?", { lang: "fr", now });
+  assert.ok(a.text.startsWith("Les agents ne sont pas joignables pour le moment."));
+  assert.ok(a.statements.some((s) => s.id === "timeline-overview"));
+  const t = offlineAnswer(DATA, "row-2027-budget", "Est-ce que mes impôts vont augmenter?", { lang: "fr" });
+  assert.ok(t.statements.some((s) => /tax/i.test(s.text)), t.text);
+  const none = offlineAnswer(DATA, "row-2027-budget", "Quelle est la météo?", { lang: "fr" });
+  assert.match(none.text, /Vous pouvez vous adresser au greffe/);
+});
+
+test("offline: 'Will buses get better near the station?' on the hub gets the hub's transit figures", () => {
+  const a = offlineAnswer(DATA, "kitchener-transit-hub-variances", "Will buses get better near the station?");
+  assert.ok(a.figures?.some((f) => /every 15 minutes or better/.test(f.label)), a.text);
 });

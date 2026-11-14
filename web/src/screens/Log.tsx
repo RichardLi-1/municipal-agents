@@ -116,16 +116,18 @@ export function LogScreen() {
                   <span class="log-actor">{e.actor}</span>
                   {e.decisionId ? <span class="muted small">{e.decisionId}</span> : null}
                 </p>
-                {purgedOf(e) ? (
+                {purgedOf(e) || e.payload === null ? (
                   <p class="log-sum log-purged">
-                    {t("Content purged under retention by-law on {date}: {reason}", { date: fmtDate(purgedOf(e)!.at), reason: purgedOf(e)!.reason })}
+                    {purgedOf(e)
+                      ? t("Content purged under retention by-law on {date}: {reason}", { date: fmtDate(purgedOf(e)!.at), reason: purgedOf(e)!.reason })
+                      : t("Content purged under retention by-law")}
                   </p>
                 ) : (
                   <p class="log-sum">{summary(e)}</p>
                 )}
                 <details class="log-more">
                   <summary>{t("Show details")}</summary>
-                  {purgedOf(e) ? null : <pre>{JSON.stringify(e.payload, null, 2)}</pre>}
+                  {purgedOf(e) || e.payload === null ? null : <pre>{JSON.stringify(e.payload, null, 2)}</pre>}
                   {(e as LogEntry & { payloadHash?: string }).payloadHash ? (
                     <p class="hash">payload sha256 {(e as LogEntry & { payloadHash?: string }).payloadHash!.slice(0, 16)}…</p>
                   ) : null}

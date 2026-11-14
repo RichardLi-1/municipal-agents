@@ -183,6 +183,11 @@ export function Transit({ lens: base, activeGap, setActiveGap }: { lens: Transit
 
 // ---------------------------------------------------------------- costs
 
+const listOf = (xs: string[]) => {
+  const s = xs.length > 1 ? `${xs.slice(0, -1).join(", ")} and ${xs[xs.length - 1]}` : xs[0] ?? "";
+  return s.charAt(0).toUpperCase() + s.slice(1);
+};
+
 export function Costs({ lens }: { lens: CostLens }) {
   if (!lens.series?.length || !lens.totals) return <CostsPartial lens={lens} />;
   return <CostsFull lens={lens} />;
@@ -218,39 +223,53 @@ function CostsFull({ lens }: { lens: CostLens }) {
   const model = useMemo(() => (changed ? recompute(lens, vals) : { series: lens.series, totals: lens.totals }), [vals, lens, changed]);
   const tot = model.totals;
   const yearly = tot.operating + tot.maintenance + tot.environmental + tot.renewal;
+  const years = Math.max(1, model.series.length);
+  // Parts with no cited figure are all zero: leave them out rather than show $0.
+  const shown = PARTS.filter((k) => model.series.some((r) => r[k] > 0));
+  const missing = PARTS.filter((k) => !shown.includes(k));
+  const households = (changed ? vals.households : undefined) ?? lens.households;
+  const perHouseholdYear = households ? tot.lifecycle / households / years : undefined;
+  const addsParts = (["operating", "maintenance", "renewal", "environmental"] as const).filter((k) => shown.includes(k)).map((k) => t(PART_LABEL[k]).toLowerCase());
   const fmtVal = (v: number, unit: string) =>
     unit === "CAD" ? fmtMoney(v) : unit === "%" ? `${fmtNumber(v, 1)}%` : `${fmtNumber(v, 1)} ${t(unit)}`;
   return (
     <div class="tab-body">
       <p class="lede">{lens.asset}</p>
       <div class="big-pair">
+        {perHouseholdYear ? (
+          <div class="big-stat big-stat--accent">
+            <p class="big-label">{t("Per household, per year")}</p>
+            <p class="big-num" aria-live="polite">{fmtMoney(perHouseholdYear, { compact: false })}</p>
+          </div>
+        ) : null}
+        <div class={`big-stat ${perHouseholdYear ? "" : "big-stat--accent"}`}>
+          <p class="big-label">{t("Lifetime cost")} · {years} {t("years")}</p>
+          <p class="big-num">{fmtMoney(tot.lifecycle)}</p>
+        </div>
         <div class="big-stat">
           <p class="big-label">{t("Upfront")}</p>
           <p class="big-num">{fmtMoney(tot.capital)}</p>
         </div>
-        <div class="big-stat big-stat--accent">
-          <p class="big-label">{t("Lifetime cost")} · {model.series.length} {t("years")}</p>
-          <p class="big-num" aria-live="polite">{fmtMoney(tot.lifecycle)}</p>
-        </div>
-        {tot.perHousehold ? (
-          <div class="big-stat">
-            <p class="big-label">{t("Per household")}</p>
-            <p class="big-num">{fmtMoney(tot.perHousehold, { compact: false })}</p>
-          </div>
-        ) : null}
       </div>
       <p class="muted small">
-        {t("Upkeep, renewal and emissions add {x} on top of the upfront price.", { x: fmtMoney(yearly) })}
+        {addsParts.length ? t("{parts} add {x} on top of the upfront price.", { parts: listOf(addsParts), x: fmtMoney(yearly) }) + " " : ""}
+        {t("Gross cost: fares and other revenue not subtracted.")}
         {changed ? <> <span class="pill pill--warn">{t("With your assumptions")}</span></> : null}
       </p>
-      <CostChart series={model.series} />
+      <CostChart series={model.series} parts={shown} />
       <table class="totals">
         <caption class="sr-only">{t("Lifetime cost")}</caption>
         <tbody>
-          {PARTS.map((k) => (
+          {shown.map((k) => (
             <tr key={k}>
               <th scope="row"><span class={`swatch swatch--${k}`} aria-hidden="true" /> {t(PART_LABEL[k])}</th>
               <td>{fmtMoney(tot[k])}</td>
+            </tr>
+          ))}
+          {missing.map((k) => (
+            <tr key={k} class="totals-missing">
+              <th scope="row">{t(PART_LABEL[k])}</th>
+              <td>{t("Not included: no cited source")}</td>
             </tr>
           ))}
           <tr class="totals-sum">
@@ -423,21 +442,72 @@ export function Housing({ lens }: { lens: HousingLens }) {
           })}
         </ol>
       </section>
-      {lens.target ? (
-        <section class="card target">
-          <div class="row-between">
-            <h3 class="card-title">{lens.target.label}</h3>
-            {lens.target.citation ? <CitationChip c={lens.target.citation} /> : null}
-          </div>
-          <p>
-            <strong class="big-inline">{fmtNumber(completed)}</strong> {t("of {n} homes completed", { n: fmtNumber(lens.target.units) })} ·{" "}
-            {t("target {by}", { by: lens.target.by })}
-          </p>
-          <div class="progress" role="progressbar" aria-valuemin={0} aria-valuemax={lens.target.units} aria-valuenow={completed} aria-label={lens.target.label}>
-            <span style={{ width: `${Math.min(100, (completed / lens.target.units) * 100)}%` }} />
-          </div>
-        </section>
-      ) : null}
+      {lens.target ? (() => {
+        const tg = lens.target!;
+        const prog = (tg as typeof tg & { progress?: { units: number; asOf: string; source: string; url?: string; citation?: import("../../../shared/types.ts").Citation } }).progress;
+        const done = prog ? prog.units : completed;
+        const short = tg.label.length > 90;
+        return (
+          <section class="card target">
+            <div class="row-between">
+              <h3 class="card-title">
+                {t("Target")}: {fmtNumber(tg.units)} {t("homes")} · {t("target {by}", { by: tg.by })}
+              </h3>
+              {tg.citation ? <CitationChip c={tg.citation} /> : prog?.citation ? <CitationChip c={prog.citation} /> : null}
+            </div>
+            <p>
+              <strong class="big-inline">{fmtNumber(done)}</strong> {t("of {n} homes", { n: fmtNumber(tg.units) })}
+              {prog ? (
+                <>
+                  {" · "}
+                  {prog.url ? (
+                    <a class="link" href={prog.url} target="_blank" rel="noopener noreferrer">
+                      {t("counted by the province, as of {date}", { date: fmtDate(prog.asOf) })}
+                    </a>
+                  ) : (
+                    t("counted by the province, as of {date}", { date: fmtDate(prog.asOf) })
+                  )}
+                </>
+              ) : (
+                <> · {t("completed")}</>
+              )}
+            </p>
+            <div class="progress" role="progressbar" aria-valuemin={0} aria-valuemax={tg.units} aria-valuenow={done} aria-label={t("Target")}>
+              <span style={{ width: `${Math.min(100, (done / tg.units) * 100)}%` }} />
+            </div>
+            {short || prog?.source ? (
+              <details class="small target-more">
+                <summary>{t("About this count")}</summary>
+                {short ? <p>{tg.label}</p> : null}
+                {prog?.source ? <p class="muted">{prog.source}</p> : null}
+              </details>
+            ) : null}
+            {!short ? <p class="small muted">{tg.label}</p> : null}
+          </section>
+        );
+      })() : null}
+      {(() => {
+        const ctx = (lens as HousingLens & { context?: { id: string; label: string; units: number; asOf?: string; source?: string }[] }).context;
+        if (!ctx?.length) return null;
+        return (
+          <section>
+            <h3 class="eyebrow">{t("Context (different area)")}</h3>
+            <ul class="context-list" role="list">
+              {ctx.map((c) => (
+                <li key={c.id}>
+                  <strong>{fmtNumber(c.units)}</strong> <span>{c.label}</span>
+                  {c.source ? (
+                    <details class="small">
+                      <summary>{t("Source")}</summary>
+                      <p class="muted">{c.source}</p>
+                    </details>
+                  ) : null}
+                </li>
+              ))}
+            </ul>
+          </section>
+        );
+      })()}
       {visible(lens.statements).length ? (
         <section>
           {visible(lens.statements).map((s) => (

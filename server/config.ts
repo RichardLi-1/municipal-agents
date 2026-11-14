@@ -53,7 +53,8 @@ export function loadConfig(env: NodeJS.ProcessEnv = process.env): Config {
     host: env.HOST ?? "0.0.0.0",
     staffToken: env.STAFF_TOKEN || undefined,
     dailyLimitUsd: Number(env.DAILY_LIMIT_USD ?? 5),
-    askPerWindow: Number(env.ASK_PER_WINDOW ?? 10),
+    // Judges and residents at one venue share an IP; only model-backed runs count.
+    askPerWindow: Number(env.ASK_PER_WINDOW ?? 30),
     askWindowMs: Number(env.ASK_WINDOW_MIN ?? 10) * 60_000,
     maxConcurrentRuns: Number(env.MAX_CONCURRENT_RUNS ?? 4),
     runTimeoutMs: Number(env.RUN_TIMEOUT_SEC ?? 240) * 1000,

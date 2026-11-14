@@ -128,13 +128,20 @@ function answerParts(a: NonNullable<RunState["answer"]>) {
 /** Friendly words for a failed run; the raw message stays one click away. */
 function RunError({ message }: { message: string }) {
   const t = useT();
-  const unreachable = /402|429|5\d\d|credit|quota|unavailable|fetch|network/i.test(message);
+  // "429: Too many questions…" from the service: show its own words.
+  const m = /^(\d{3}):\s*([\s\S]*)$/.exec(message);
+  const status = m ? Number(m[1]) : 0;
+  const said = m ? m[2].trim() : message;
+  const readable = said && !said.startsWith("{") && said.length < 400 ? said : "";
+  const unreachable = status === 402 || status >= 500 || /credit|quota|unavailable|fetch|network/i.test(message);
   return (
     <div class="run-error" role="alert">
       <p class="run-error-title">
-        <Alert size={16} /> {unreachable ? t("The agents can't be reached right now") : t("Something went wrong")}
+        <Alert size={16} />{" "}
+        {status === 429 ? t("Too many questions right now") : unreachable ? t("The agents can't be reached right now") : t("Something went wrong")}
       </p>
-      <p class="small muted">{t("The brief on the left is still here, with every statement checked against its page.")}</p>
+      {status === 429 && readable ? <p class="small">{readable}</p> : null}
+      <p class="small muted">{t("The brief is still here, with every statement checked against its page.")}</p>
       <details class="small">
         <summary>{t("Show details")}</summary>
         <code>{message}</code>
@@ -182,11 +189,12 @@ export function Chat({ decision, audiences, lang }: { decision: Decision; audien
     }
   };
 
-  const suggestions = [
-    ...SUGGEST.base.slice(0, 1),
-    ...decision.lenses.flatMap((l) => SUGGEST[l === "cost" ? "cost" : l] ?? []),
-    ...SUGGEST.base.slice(1),
-  ].slice(0, 4);
+  const own = (decision as Decision & { suggestedQuestions?: string[] }).suggestedQuestions?.filter(Boolean) ?? [];
+  const suggestions = (
+    own.length
+      ? own
+      : [...SUGGEST.base.slice(0, 1), ...decision.lenses.flatMap((l) => SUGGEST[l] ?? []), ...SUGGEST.base.slice(1)].map((q) => t(q))
+  ).slice(0, 4);
 
   return (
     <section class="chat" aria-labelledby="chat-title">
@@ -202,8 +210,8 @@ export function Chat({ decision, audiences, lang }: { decision: Decision; audien
             <ul role="list">
               {suggestions.map((s, i) => (
                 <li key={s}>
-                  <button type="button" class={`suggest-btn ${i === 0 ? "is-first" : ""}`} onClick={() => ask(t(s))}>
-                    {t(s)}
+                  <button type="button" class={`suggest-btn ${i === 0 ? "is-first" : ""}`} onClick={() => ask(s)}>
+                    {s}
                   </button>
                 </li>
               ))}
@@ -293,7 +301,11 @@ export function Chat({ decision, audiences, lang }: { decision: Decision; audien
           </button>
         )}
       </form>
-      <p class="chat-note">{t("Answers explain; they never tell you what to think. Check the cited pages.")}</p>
+      <p class="chat-note">
+        {t("Your question is posted, without your name, on the public record. Don't include personal details.")}
+        <br />
+        {t("Answers explain; they never tell you what to think. Check the cited pages.")}
+      </p>
     </section>
   );
 }

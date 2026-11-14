@@ -19,7 +19,8 @@
           "quote": "In this study, we will look at future water supply needs for the community through to 2051."
         }
       ],
-      "verified": true
+      "verified": true,
+      "support": "strong"
     },
     {
       "id": "s3",
@@ -32,7 +33,8 @@
           "quote": "The second public meeting is being held to share a study update since the last meeting in December 2024 and present the shortlisted alternatives for water supply."
         }
       ],
-      "verified": true
+      "verified": true,
+      "support": "weak"
     },
     {
       "id": "s4",
@@ -50,7 +52,8 @@
           "quote": "Development Charge - Water 13,664 14,342 28,006 32,666 29,530 40,427 41,895 172,524 139,379 311,904"
         }
       ],
-      "verified": true
+      "verified": true,
+      "support": "strong"
     },
     {
       "id": "s14",
@@ -63,7 +66,8 @@
           "quote": "In this study, we will look at future water supply needs for the community through to 2051."
         }
       ],
-      "verified": true
+      "verified": true,
+      "support": "strong"
     },
     {
       "id": "s24",
@@ -81,7 +85,8 @@
           "quote": "Total Expenditure 32,829 34,443 67,272 73,470 78,996 101,738 111,037 432,513 415,059 847,572"
         }
       ],
-      "verified": true
+      "verified": true,
+      "support": "strong"
     }
   ],
   "whyNow": [
@@ -96,7 +101,8 @@
           "quote": "Existing and future growth needs"
         }
       ],
-      "verified": true
+      "verified": true,
+      "support": "strong"
     },
     {
       "id": "s16",
@@ -109,7 +115,8 @@
           "quote": "Master Plan study under the Municipal Class Environmental Assessment process, Phases 1 and 2"
         }
       ],
-      "verified": true
+      "verified": true,
+      "support": "weak"
     }
   ],
   "impacts": [
@@ -128,7 +135,8 @@
               "quote": "Water $230.05 $243.63 $13.58 5.90%"
             }
           ],
-          "verified": true
+          "verified": true,
+          "support": "weak"
         },
         {
           "id": "s29",
@@ -141,7 +149,8 @@
               "quote": "Reviewing approximately 400 development applications annually."
             }
           ],
-          "verified": true
+          "verified": true,
+          "support": "weak"
         }
       ]
     },
@@ -160,7 +169,8 @@
               "quote": "workload capacity and staffing resources (particularly the water capacity constraint work where council has subsequently addressed staffing pressures."
             }
           ],
-          "verified": true
+          "verified": true,
+          "support": "weak"
         },
         {
           "id": "s18",
@@ -173,7 +183,8 @@
               "quote": "workload capacity and staffing resources (particularly the water capacity constraint work where council has subsequently addressed staffing pressures."
             }
           ],
-          "verified": true
+          "verified": true,
+          "support": "weak"
         },
         {
           "id": "s20",
@@ -186,7 +197,8 @@
               "quote": "2025 2026 $ Change % Change Water $230.05 $243.63 $13.58 5.90%"
             }
           ],
-          "verified": true
+          "verified": true,
+          "support": "strong"
         },
         {
           "id": "s25",
@@ -204,7 +216,8 @@
               "quote": "Water Capital Reserve 18,887 18,517 37,404 39,996 48,764 60,296 67,739 254,200 271,207 525,407"
             }
           ],
-          "verified": true
+          "verified": true,
+          "support": "strong"
         },
         {
           "id": "s28",
@@ -222,7 +235,8 @@
               "quote": "Water $230.05 $243.63 $13.58 5.90%"
             }
           ],
-          "verified": true
+          "verified": true,
+          "support": "strong"
         }
       ]
     },
@@ -241,7 +255,8 @@
               "quote": "Supplying 125 million litres of drinking water per day for residents and businesses."
             }
           ],
-          "verified": true
+          "verified": true,
+          "support": "weak"
         },
         {
           "id": "s30",
@@ -259,7 +274,8 @@
               "quote": "Development Charge - Water 13,664 14,342 28,006 32,666 29,530 40,427 41,895 172,524 139,379 311,904"
             }
           ],
-          "verified": true
+          "verified": true,
+          "support": "strong"
         }
       ]
     },
@@ -278,7 +294,8 @@
               "quote": "Supplying 125 million litres of drinking water per day for residents and businesses."
             }
           ],
-          "verified": true
+          "verified": true,
+          "support": "strong"
         }
       ]
     }
@@ -295,7 +312,8 @@
           "quote": "Date: Tuesday, November 17, 2026 Date: Tuesday, November 24, 2026 Time: 7:00 pm – 8:00 pm Time: 6:30 pm – 8:30 pm Location: Virtually; register for the meeting at Location: Main Lobby, 150 Frederick St, Kitchener, engagewr.ca/watersupply Ontario"
         }
       ],
-      "verified": true
+      "verified": true,
+      "support": "strong"
     },
     {
       "id": "s22",
@@ -308,7 +326,8 @@
           "quote": "Date: Tuesday, November 24, 2026 Time: 6:30 pm – 8:30 pm Location: Main Lobby, 150 Frederick St, Kitchener,"
         }
       ],
-      "verified": true
+      "verified": true,
+      "support": "strong"
     },
     {
       "id": "s23",
@@ -321,7 +340,8 @@
           "quote": "subscribe to the EngageWR project page at engagewr.ca/watersupply"
         }
       ],
-      "verified": true
+      "verified": true,
+      "support": "strong"
     }
   ],
   "figures": [
@@ -434,7 +454,8 @@
           "quote": "Provides low lifecycle costs"
         }
       ],
-      "verified": true
+      "verified": true,
+      "support": "strong"
     },
     {
       "id": "s27",
@@ -452,7 +473,8 @@
           "quote": "Minimizes impacts to residents and businesses"
         }
       ],
-      "verified": true
+      "verified": true,
+      "support": "strong"
     }
   ],
   "glossary": [
@@ -499,7 +521,8 @@
               "quote": "Water Capital Reserve 18,887 18,517 37,404 39,996 48,764 60,296 67,739 254,200 271,207 525,407"
             }
           ],
-          "verified": true
+          "verified": true,
+          "support": "strong"
         },
         {
           "id": "s19",
@@ -512,7 +535,8 @@
               "quote": "Total Funding & Financing 32,829 34,443 67,272 73,470 78,996 101,738 111,037 432,513 415,059 847,572"
             }
           ],
-          "verified": true
+          "verified": true,
+          "support": "strong"
         }
       ],
       "partial": true
@@ -530,7 +554,8 @@
               "quote": "Reviewing approximately 400 development applications annually."
             }
           ],
-          "verified": true
+          "verified": true,
+          "support": "strong"
         }
       ]
     }

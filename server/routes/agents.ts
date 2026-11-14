@@ -8,6 +8,7 @@ import { checkDailyCap } from "../limits.ts";
 import { failureMessage, logUsageFallback, safeEvent, startRun } from "../runs.ts";
 import { findCachedAnswer, replayRun, RunWriter } from "../runfiles.ts";
 import { publicBrief } from "../statements.ts";
+import { withLenses } from "./public.ts";
 
 export const AUDIENCES: AudienceId[] = [
   "renter",
@@ -51,10 +52,9 @@ export function agentRoutes(app: App, r: Router): void {
 
     // The answer cache: a question a real run already answered is replayed from the
     // record (labelled with when it was answered). It costs nothing, so it skips the
-    // daily cap and the model, but not the per-visitor limit.
+    // daily cap, the model and the per-visitor limit.
     const cached = findCachedAnswer(app.cfg.dataDir, { decisionId: decision.id, question, lang, audiences });
     if (cached) {
-      app.visitorLimiter.take(clientIp(req), "questions");
       const replayOf = cached.header.runId;
       app.log.append({ actor: "visitor", kind: "question.asked", decisionId: decision.id, payload: { question, audiences, lang, replayOf } });
       const sse = openSse(req, res);
@@ -113,6 +113,8 @@ export function agentRoutes(app: App, r: Router): void {
           });
         }
         logUsageFallback(app, run, decision.id, "agent:lead");
+        // An offline answer cost nothing: it doesn't count against the visitor's limit.
+        if (answer?.offline) app.visitorLimiter.refund(clientIp(req));
         sse.send({ type: "done" });
         sse.end();
       }
@@ -129,10 +131,12 @@ export function agentRoutes(app: App, r: Router): void {
     if (!SAFE_LANG.test(lang)) throw new HttpError(400, 'Send {"lang": "fr"} with a language code.');
     const source = app.store.brief(decision.id);
     if (!source) throw new HttpError(404, "There's no brief for this decision yet.");
-    if ((source.lang ?? "en") === lang) return sendJson(req, res, 200, publicBrief(source));
+    // Like GET /api/decisions/:id: the computed lens files merged into brief.lenses.
+    const lenses = app.store.lenses(decision);
+    if ((source.lang ?? "en") === lang) return sendJson(req, res, 200, withLenses(publicBrief(source), lenses));
 
     const cached = cachedTranslation(app, decision.id, lang, source);
-    if (cached) return sendJson(req, res, 200, publicBrief(cached, source));
+    if (cached) return sendJson(req, res, 200, withLenses(publicBrief(cached, source), lenses));
 
     const key = `${decision.id}:${lang}`;
     let pending = app.translating.get(key);
@@ -142,7 +146,7 @@ export function agentRoutes(app: App, r: Router): void {
       app.visitorLimiter.take(clientIp(req), "requests");
       const release = app.slots.acquire();
       pending = translate(app, agents, source, lang)
-        .then((t) => publicBrief(t, source))
+        .then((t) => withLenses(publicBrief(t, source), lenses)!)
         .finally(() => {
           release();
           app.translating.delete(key);
@@ -199,9 +203,13 @@ async function respondSlowJson(req: import("node:http").IncomingMessage, res: im
     if (!streaming) return sendJson(req, res, 200, value);
     res.end(JSON.stringify(value));
   } catch (err) {
-    const message = err instanceof HttpError ? err.message : "The translation didn't finish. Please try again.";
-    if (!(err instanceof HttpError)) console.error("translation failed:", (err as Error).message);
-    if (!streaming) throw err instanceof HttpError ? err : new HttpError(502, message);
+    // Plain words as JSON, never a gateway error: the web shows the English brief instead.
+    const message = err instanceof HttpError ? err.message : "Translation isn't available right now. The brief is shown in English.";
+    if (!(err instanceof HttpError)) console.error("translation failed:", (err as Error).message, String((err as { detail?: unknown }).detail ?? "").slice(0, 300));
+    if (!streaming) {
+      if (err instanceof HttpError) throw err;
+      return sendJson(req, res, 503, { error: message });
+    }
     res.end(JSON.stringify({ error: message }));
   } finally {
     clearTimeout(first);

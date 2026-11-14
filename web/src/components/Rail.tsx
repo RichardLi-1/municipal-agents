@@ -167,7 +167,7 @@ export function Rail() {
         <RailMenu id="menu-settings" icon={<Sliders size={20} />} label={t("Settings")} labelText={t("Settings")}>
           {() => <Appearance />}
         </RailMenu>
-        <a class="rail-item" href="https://github.com/" target="_blank" rel="noopener noreferrer">
+        <a class="rail-item" href="https://github.com/RichardLi-1/municipal-agents" target="_blank" rel="noopener noreferrer">
           <Github size={20} />
           <span class="rail-label">{t("Code")}</span>
           <span class="sr-only"> ({t("Source code on GitHub")})</span>

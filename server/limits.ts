@@ -21,9 +21,11 @@ export class RateLimiter {
     if (recent.length >= this.max) {
       const waitMin = Math.max(1, Math.ceil((this.windowMs - (now - recent[0])) / 60_000));
       this.hits.set(key, recent);
+      // Plain words the web can show as they are. Everyone on a shared network (venue
+      // Wi-Fi) counts as one visitor, so say so.
       const err = new HttpError(
         429,
-        `You've sent ${this.max} ${what} in ${Math.round(this.windowMs / 60_000)} minutes. Please wait ${waitMin} minute${waitMin === 1 ? "" : "s"} and try again.`,
+        `Lots of ${what} have come from this network in the last ${Math.round(this.windowMs / 60_000)} minutes (everyone on a shared Wi-Fi counts together). Please wait ${waitMin} minute${waitMin === 1 ? "" : "s"} and try again.`,
       );
       (err as HttpError & { retryAfter?: number }).retryAfter = waitMin * 60;
       throw err;
@@ -33,6 +35,12 @@ export class RateLimiter {
     // Keep the map small on a long-running server.
     if (this.hits.size > 10_000) for (const [k, v] of this.hits) if (!v.some((t) => now - t < this.windowMs)) this.hits.delete(k);
   }
+  /** Give back the latest use: a run that turned out to cost nothing (an offline answer). */
+  refund(key: string): void {
+    const recent = this.hits.get(key);
+    if (recent?.length) recent.pop();
+  }
+
 }
 
 export class RunSlots {

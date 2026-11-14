@@ -249,7 +249,7 @@
         var p = h("p", { class: "how" }, (t.methods[m.method] || m.method) + ": " + m.instructions + (m.deadline ? " (" + t.deadline + " " + when(m.deadline, lang) + ")" : ""));
         say.appendChild(p);
       });
-      say.appendChild(h("div", { class: "row" }, h("a", { class: "btn", href: d.links.calendar, rel: "noopener" }, t.cal)));
+      say.appendChild(h("div", { class: "row" }, h("a", { class: "btn", href: d.links.calendar, rel: "noopener noreferrer" }, t.cal)));
       setInterval(function () {
         cd.textContent = label();
       }, 60000);

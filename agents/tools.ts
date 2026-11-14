@@ -10,7 +10,7 @@ import type {
 } from "../shared/types.ts";
 import { findQuotePages, normalise, verifyCitation, MIN_QUOTE_CHARS } from "../shared/verify.ts";
 import { fleschKincaidGrade } from "../shared/readability.ts";
-import { textArtifacts } from "./tidy.ts";
+import { supportOf, textArtifacts } from "./tidy.ts";
 import { displayText, search, type Corpus } from "./corpus.ts";
 import type { FunctionDeclaration } from "./gemini.ts";
 
@@ -337,6 +337,7 @@ function recordStatement(
     specialist: env.specialist,
     stepId: env.stepId,
     lens: env.lens,
+    support: supportOf(text, citations.map((c) => c.quote), [env.corpus.decision.title, env.corpus.decision.plainTitle]),
   };
   env.findings.statements.push(statement);
   const { section: _s, audience: _a, specialist: _sp, stepId: _st, lens: _l, ...publicStatement } = statement;
@@ -666,7 +667,10 @@ export const TOOLS: Record<string, Tool> = {
           if (missing.length) cp.push(`the number(s) ${missing.join(", ")} must be in a quote.`);
         }
         for (const x of [...rp, ...cp]) problems.push(`Progress ${i + 1}: ${x}`);
-        progress.push({ id: `s${env.findings.nextId++}`, text, kind: "fact", citations, verified: cp.length === 0 });
+        progress.push({
+          id: `s${env.findings.nextId++}`, text, kind: "fact", citations, verified: cp.length === 0,
+          support: supportOf(text, citations.map((c) => c.quote), [env.corpus.decision.title, env.corpus.decision.plainTitle]),
+        });
       });
       let status = ["on-track", "behind", "done", "unclear"].includes(a.status) ? a.status : "unclear";
       // With numbers, the status is computed (lenses/commitments), not judged by the model.

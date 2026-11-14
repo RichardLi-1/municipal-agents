@@ -19,6 +19,46 @@ type Answer = Extract<AgentEvent, { type: "answer" }>;
 
 export const OFFLINE_INTRO = "The agents can't be reached right now. Here is what the checked brief says about that:";
 
+// The fixed lines of an offline answer, per language (statements stay in English: they
+// are the checked text). Other languages get English for now.
+const LINES = {
+  en: {
+    intro: OFFLINE_INTRO,
+    quotes: "The agents can't be reached right now, and the checked brief doesn't cover that. The decision's documents mention it here (exact quotes):",
+    none: "The agents can't be reached right now, and the checked brief doesn't cover that question.",
+    clerk: (c: string) => ` You can ask the Clerk: ${c}.`,
+    noDecision: "The agents can't be reached right now. Please try again later.",
+    computed: "computed from open data",
+    draft: "(This brief is a draft: code checked every quote against its page, but staff haven't reviewed it yet.)",
+    estimated: "estimated: the latest it can be",
+  },
+  fr: {
+    intro: "Les agents ne sont pas joignables pour le moment. Voici ce que dit le résumé vérifié (en anglais) :",
+    quotes: "Les agents ne sont pas joignables pour le moment, et le résumé vérifié n'en parle pas. Les documents de la décision en parlent ici (citations exactes, en anglais) :",
+    none: "Les agents ne sont pas joignables pour le moment, et le résumé vérifié ne répond pas à cette question.",
+    clerk: (c: string) => ` Vous pouvez vous adresser au greffe : ${c}.`,
+    noDecision: "Les agents ne sont pas joignables pour le moment. Veuillez réessayer plus tard.",
+    computed: "calculé à partir de données ouvertes",
+    draft: "(Ce résumé est une ébauche : chaque citation a été vérifiée par le code, mais le personnel ne l'a pas encore relu.)",
+    estimated: "date estimée : au plus tard",
+  },
+};
+type Lines = (typeof LINES)["en"];
+const linesFor = (lang?: string): Lines => (/^fr\b/i.test(lang ?? "") ? LINES.fr : LINES.en);
+
+// French question words mapped to the English words the documents use.
+const FR: Record<string, string> = {
+  quand: "when", parler: "speak", parle: "speak", conseil: "council", budget: "budget", impot: "tax", impots: "tax", taxe: "tax",
+  foncier: "property", fonciere: "property", autobus: "bus", bus: "bus", eau: "water", appel: "appeal", appeler: "appeal", inscrire: "register",
+  inscription: "register", reunion: "meeting", audience: "hearing", logement: "housing", logements: "housing", loyer: "rent", transport: "transit",
+  cout: "cost", couts: "cost", sondage: "survey", delai: "deadline", date: "date", ordure: "garbage", ordures: "garbage", dechet: "waste", dechets: "waste",
+  gare: "station", station: "station", train: "train", hopital: "hospital", dimanche: "sunday", matin: "morning", augmenter: "increase", hausse: "increase",
+};
+const plainLetters = (w: string) => w.normalize("NFD").replace(/\p{M}/gu, "").toLowerCase();
+
+// Questions about when and how to take part get the next chances to do so, always.
+const WHEN_WORDS = new Set(["when", "register", "speak", "deadline", "delegation", "delegate", "date", "meeting", "hearing", "submit", "submission", "survey", "write", "attend", "say"]);
+
 // Words that shape a question but say nothing about its topic.
 const QUESTION_WORDS = new Set(
   ("much many get got gets getting people person going goe go any about would should could also like need want know tell please there here does did doing " +
@@ -46,6 +86,9 @@ const SYNONYMS: Record<string, string[]> = {
   cost: ["cost", "price", "spend", "spending"],
   hospital: ["hospital"],
   veto: ["veto"],
+  better: ["better", "frequent", "frequency", "improve", "more"],
+  station: ["station", "stop", "hub", "terminal"],
+  register: ["register", "registration", "delegation"],
 };
 
 function readJson<T>(file: string): T | undefined {
@@ -124,11 +167,19 @@ function pagesOf(dataDir: string, sourceId: string): string[] | undefined {
   return readJson<string[]>(path.join(dataDir, "sources", `${sourceId}.pages.json`));
 }
 
+const TIME = new Intl.DateTimeFormat("en-CA", { timeZone: "America/Toronto", hour: "numeric", minute: "2-digit" });
+/** "noon on December 9, 2026", "11:59 p.m. on February 26, 2027", or just the date. */
+function fmtDeadline(iso: string): string {
+  if (!/T/.test(iso)) return fmtDate(iso);
+  const time = TIME.format(new Date(iso));
+  return `${/^12:00\s*p/i.test(time) ? "noon" : time} on ${fmtDate(iso)}`;
+}
+
 /** The decision's hand-checked timeline as checked statements (each cites its own page). */
-function timelineItems(dataDir: string, d: Decision): Item[] {
+function timelineItems(dataDir: string, d: Decision, lines: Lines = LINES.en): Item[] {
   return d.timeline.map((t) => {
-    const est = (t as { estimated?: boolean }).estimated ? " (estimated: the latest it can be)" : "";
-    const how = (t.participation ?? []).map((p) => p.instructions).join(" ");
+    const est = (t as { estimated?: boolean }).estimated ? ` (${lines.estimated})` : "";
+    const how = (t.participation ?? []).map((p) => `${p.instructions}${p.deadline ? ` Deadline: ${fmtDeadline(p.deadline)}.` : ""}`).join(" ");
     const text = `${fmtDate(t.date)}${est}: ${t.title}. ${t.plain}${how ? ` ${how}` : ""}`;
     const pages = t.citation ? pagesOf(dataDir, t.citation.sourceId) : undefined;
     const verified = !!(t.citation && pages && verifyCitation(pages, t.citation));
@@ -147,6 +198,19 @@ function lensItems(dataDir: string, d: Decision): Item[] {
   const t = lenses.transit;
   if (t) {
     const method = `Computed by Municipal Agents from GRT's published timetables and the 2021 census. ${String(t.method ?? "").slice(0, 200)}`;
+    const n = (x: number) => Number(x).toLocaleString("en-CA");
+    const pct = (x: number, of: number) => (of ? ` (${Math.round((x / of) * 100)}%)` : "");
+    const fs_ = t.frequentService;
+    const total = t.population?.total ?? 0;
+    const where = t.area?.label ?? "the area";
+    if (fs_) {
+      out.push(fig("frequent-15", `People in ${where} within 800 m of a stop with a bus or train every 15 minutes or better (weekday 8 am)`, `${n(fs_.peopleWithin800mOf15Min)} of ${n(total)}${pct(fs_.peopleWithin800mOf15Min, total)}`, method, fs_.peopleWithin800mOf15Min, "people"));
+      out.push(fig("frequent-10", `People in ${where} within 800 m of a stop with a bus or train every 10 minutes or better (weekday 8 am)`, `${n(fs_.peopleWithin800mOf10Min)} of ${n(total)}${pct(fs_.peopleWithin800mOf10Min, total)}`, method, fs_.peopleWithin800mOf10Min, "people"));
+    }
+    if (t.focus?.reach?.length) {
+      const r = t.focus.reach.filter((x: { scenario: string }) => x.scenario === "weekday-0800");
+      if (r.length) out.push(fig("focus-reach", `People who can reach ${t.focus.label} by transit and walking (weekday 8 am)`, r.map((x: { minutes: number; people: number; share: number }) => `${x.minutes} min: ${n(x.people)} (${Math.round(x.share * 100)}%)`).join("; "), method));
+    }
     for (const g of t.gaps ?? []) out.push(fig(`gap-${g.id}`, g.title, g.peopleAffected ? `${Number(g.peopleAffected).toLocaleString("en-CA")} people` : "", method, g.peopleAffected ?? 0, "people"));
     for (const f of t.fixes ?? []) out.push(fig(`fix-${f.id}`, `Possible fix (not a GRT proposal): ${f.title}`, `${f.benefit} Trade-off: ${f.tradeoff}`, method));
   }
@@ -189,34 +253,62 @@ function documentQuotes(dataDir: string, decisionId: string, words: string[][]):
   return out.slice(0, 3);
 }
 
-function clerk(d: Decision | undefined): string {
+function clerk(d: Decision | undefined, lines: Lines): string {
   const city = d ? readJson<CityConfig>(path.join(import.meta.dirname, "..", "cities", `${d.city}.json`)) : undefined;
-  return city?.clerkContact ? ` You can ask the Clerk: ${city.clerkContact}.` : "";
+  return city?.clerkContact ? lines.clerk(city.clerkContact) : "";
 }
 
-export function offlineAnswer(dataDir: string, decisionId: string, question: string, reason?: string): Answer {
-  const why = reason ? ` (${reason})` : "";
+/** The next events (or open windows) with ways to take part, soonest first. */
+function upcoming(d: Decision, now: Date): string[] {
+  const t = now.getTime();
+  const start = (iso: string) => new Date(/T/.test(iso) ? iso : `${iso}T23:59:00-05:00`).getTime();
+  return d.timeline
+    .filter((e) => e.participation?.length && (start(e.end ?? e.date) >= t))
+    .sort((a, b) => start(a.date) - start(b.date))
+    .slice(0, 2)
+    .map((e) => `timeline-${e.id}`);
+}
+
+export function offlineAnswer(dataDir: string, decisionId: string, question: string, opts: { lang?: string; now?: Date } = {}): Answer {
+  const L = linesFor(opts.lang);
   const decision = /^[a-z0-9][a-z0-9_-]{0,127}$/i.test(decisionId) ? readJson<Decision>(path.join(dataDir, "decisions", `${decisionId}.json`)) : undefined;
   const brief = decision ? readJson<Brief>(path.join(dataDir, "briefs", `${decisionId}.json`)) : undefined;
-  if (!decision) return { type: "answer", offline: true, statements: [], text: `The agents can't be reached right now${why}. Please try again later.` };
+  if (!decision) return { type: "answer", offline: true, statements: [], text: L.noDecision };
 
-  // The question's meaningful words, each with the document words that count for it.
-  // Words of the decision's title ("Region", "budget") are about the whole decision, not the question's topic.
+  // The question's meaningful words (French ones mapped to English), each with the
+  // document words that count for it. Words of the decision's title ("Region", "budget")
+  // are about the whole decision, not the question's topic.
   const decisionWords = new Set(terms(decision.title));
-  const asked = [...new Set(terms(question))].filter((w) => !QUESTION_WORDS.has(w) && !decisionWords.has(w) && !/^\d+$/.test(w));
+  const raw = [...new Set(terms(question).map((w) => FR[plainLetters(w)] ?? w).flatMap((w) => terms(w)))];
+  const asked = raw.filter((w) => !QUESTION_WORDS.has(w) && !decisionWords.has(w) && !/^\d+$/.test(w));
   const words = asked.map((w) => [w, ...(SYNONYMS[w] ?? [])]);
 
   const aboutConstruction = words.some((alts) => alts.some((w) => CONSTRUCTION.has(w)));
+  const timeline = timelineItems(dataDir, decision, L).filter((i) => i.kind !== "statement" || i.statement.verified);
   const items: Item[] = [
     ...(brief ? checkedStatements(brief).map((s) => ({ kind: "statement", statement: s }) as Item) : []),
-    ...timelineItems(dataDir, decision).filter((i) => i.kind !== "statement" || i.statement.verified),
+    ...timeline,
     ...(brief?.figures ?? []).filter((f) => f.kind === "computed").map((f) => ({ kind: "figure", figure: f }) as Item),
     ...lensItems(dataDir, decision).filter((i) => aboutConstruction || i.kind !== "figure" || !i.figure.id.startsWith("construction")),
   ];
   const picked = rankItems(items, words);
+  // "When can I…", "how do I register…": the next chances to take part, with their
+  // deadlines, always come first.
+  // Read from the raw words: "when" is a stopword to the search, but not to the intent.
+  const rawWords = question.toLowerCase().split(/[^\p{L}]+/u).filter(Boolean).map((w) => FR[plainLetters(w)] ?? w);
+  if (rawWords.some((w) => WHEN_WORDS.has(w) || WHEN_WORDS.has(w.replace(/s$/, "")))) {
+    const next = upcoming(decision, opts.now ?? new Date())
+      .map((id) => items.findIndex((it) => it.kind === "statement" && it.statement.id === id))
+      .filter((i) => i >= 0);
+    for (const i of next.reverse()) {
+      const at = picked.indexOf(i);
+      if (at >= 0) picked.splice(at, 1);
+      picked.unshift(i);
+    }
+    picked.splice(5);
+  }
 
-  const draft = brief && brief.review?.status !== "published" ? "\n\n(This brief is a draft: code checked every quote against its page, but staff haven't reviewed it yet.)" : "";
-  const intro = reason ? OFFLINE_INTRO.replace("right now.", `right now${why}.`) : OFFLINE_INTRO;
+  const draft = brief && brief.review?.status !== "published" ? `\n\n${L.draft}` : "";
   if (picked.length) {
     const statements: Statement[] = [];
     const figures: Figure[] = [];
@@ -227,25 +319,15 @@ export function offlineAnswer(dataDir: string, decisionId: string, question: str
         return `• ${it.statement.text} [${statements.length}]`;
       }
       figures.push(it.figure);
-      return `• ${it.figure.label}${it.figure.display ? `: ${it.figure.display}` : ""} (computed from open data) [C${figures.length}]`;
+      return `• ${it.figure.label}${it.figure.display ? `: ${it.figure.display}` : ""} (${L.computed}) [C${figures.length}]`;
     });
-    return { type: "answer", offline: true, text: `${intro}\n${lines.join("\n")}${draft}`, statements, ...(figures.length ? { figures } : {}) };
+    return { type: "answer", offline: true, text: `${L.intro}\n${lines.join("\n")}${draft}`, statements, ...(figures.length ? { figures } : {}) };
   }
 
   const quotes = words.length ? documentQuotes(dataDir, decisionId, words) : [];
   if (quotes.length)
-    return {
-      type: "answer",
-      offline: true,
-      statements: quotes,
-      text: `The agents can't be reached right now${why}, and the checked brief doesn't cover that. The decision's documents mention it here (exact quotes):\n${quotes.map((q, i) => `• ${q.text} [${i + 1}]`).join("\n")}`,
-    };
-  return {
-    type: "answer",
-    offline: true,
-    statements: [],
-    text: `The agents can't be reached right now${why}, and the checked brief doesn't cover that question.${clerk(decision)}`,
-  };
+    return { type: "answer", offline: true, statements: quotes, text: `${L.quotes}\n${quotes.map((q, i) => `• ${q.text} [${i + 1}]`).join("\n")}` };
+  return { type: "answer", offline: true, statements: [], text: `${L.none}${clerk(decision, L)}` };
 }
 
 /** Minimum BM25 score for an item to be shown (calibrated on the questions in offline.test.ts). */
@@ -276,3 +358,4 @@ function nearDuplicate(a: string, b: string): boolean {
   return shared / Math.max(1, Math.min(A.size, B.size)) >= 0.8;
 }
 
+export const __forTests = { timelineItems, upcoming };

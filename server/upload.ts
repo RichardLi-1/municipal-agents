@@ -149,7 +149,8 @@ export async function handleUpload(app: App, req: IncomingMessage): Promise<{ de
     plainTitle: field("plainTitle") ?? title,
     decidedBy: field("decidedBy") ?? "To be confirmed by staff",
     status: "proposed",
-    officialUrl: field("officialUrl") ?? source.url ?? city?.officialNoticeUrl ?? "",
+    // || not ??: an upload without a url has source.url "", which must fall through.
+    officialUrl: field("officialUrl") || source.url || city?.officialNoticeUrl || "",
     sources: [id],
     timeline: [],
     center: city?.center ?? [0, 0],

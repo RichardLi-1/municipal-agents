@@ -89,7 +89,7 @@ test("provider error text never reaches a visitor", async () => {
   const raw = 'Gemini 402: {"error":{"code":402,"message":"Your prepayment credits are depleted. Please go to AI Studio at https://ai.studio/projects"}}';
   const leaks = /ai\.studio|https?:|prepayment|\{/;
   assert.doesNotMatch(failureMessage(Object.assign(new Error("Gemini 402"), { status: 402, detail: raw }), run), leaks);
-  assert.match(failureMessage(Object.assign(new Error("Gemini 402"), { status: 402 }), run), /prepaid credit is used up/);
+  assert.equal(failureMessage(Object.assign(new Error("Gemini 402"), { status: 402 }), run), "The AI model can't be reached right now.");
   assert.doesNotMatch(failureMessage(new Error(`rate limit: ${raw}`), run), leaks, "a 'limit' message with provider text is hidden");
   assert.match(failureMessage(new Error("The AI model can't be reached right now: no API key is set."), run), /no API key/);
   assert.doesNotMatch((safeEvent({ type: "error", message: raw }) as { message: string }).message, leaks);

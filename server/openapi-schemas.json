@@ -125,6 +125,14 @@
         "type": "boolean",
         "description": "True only when every citation's quote was found on its page by the checker."
       },
+      "support": {
+        "type": "string",
+        "enum": [
+          "strong",
+          "weak"
+        ],
+        "description": "How well the quotes back the sentence, measured in code by shared words and numbers:\n\"weak\" means the quote is on the page but a reader should check that it supports this."
+      },
       "review": {
         "type": "object",
         "properties": {
@@ -450,6 +458,13 @@
           ]
         },
         "description": "Hand-checked notices that change how to read the brief (e.g. a new rule on who\nproposes the budget). Shown above the brief until staff regenerate it."
+      },
+      "suggestedQuestions": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "description": "Hand-picked first questions for the chat, in the residents' own words."
       }
     },
     "required": [
@@ -1099,6 +1114,32 @@
           },
           "citation": {
             "$ref": "#/components/schemas/Citation"
+          },
+          "progress": {
+            "type": "object",
+            "properties": {
+              "units": {
+                "type": "number"
+              },
+              "asOf": {
+                "type": "string"
+              },
+              "source": {
+                "type": "string"
+              },
+              "url": {
+                "type": "string"
+              },
+              "citation": {
+                "$ref": "#/components/schemas/Citation"
+              }
+            },
+            "required": [
+              "units",
+              "asOf",
+              "source"
+            ],
+            "description": "Progress toward this target as the target's owner counts it (e.g. Ontario's housing supply progress). Compare this, not the completed stage, with `units`."
           }
         },
         "required": [
@@ -1906,6 +1947,14 @@
       },
       "clerkContact": {
         "type": "string"
+      },
+      "feedbackUrl": {
+        "type": "string",
+        "description": "Where residents report an error or ask for another format. In a city's own deployment\nthis is the city's; in this demo it is the team's issue tracker, never the city clerk."
+      },
+      "operator": {
+        "type": "string",
+        "description": "Who runs this deployment, shown beside feedback links."
       },
       "gtfsUrl": {
         "type": "string"

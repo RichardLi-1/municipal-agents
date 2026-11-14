@@ -18,55 +18,66 @@ function loadPdf(): Promise<PdfLib> {
   return pdfLib;
 }
 
-/** Lowercase, straight quotes, plain dashes, no hyphenated line breaks, single spaces. */
-export function norm(s: string) {
-  return s
-    .normalize("NFKC")
-    .toLowerCase()
-    .replace(/[\u2018\u2019\u201b\u2032]/g, "'")
-    .replace(/[\u201c\u201d\u201f\u2033]/g, '"')
-    .replace(/[\u2010-\u2015\u2212]/g, "-")
-    .replace(/-\s+/g, "-")
-    .replace(/\s+/g, " ")
-    .trim();
+/**
+ * Matching that survives what PDFs do to text: curly quotes, dashes, ligatures, soft and
+ * line-end hyphens, spacing. Both sides keep only letters and digits, lowercased, and we
+ * remember where each kept character came from.
+ */
+function keep(raw: string): { text: string; at: number[] } {
+  let text = "";
+  const at: number[] = [];
+  for (let i = 0; i < raw.length; i++) {
+    const n = raw[i].normalize("NFKC").toLowerCase();
+    for (const ch of n) {
+      if (/[\p{L}\p{N}]/u.test(ch)) {
+        text += ch;
+        at.push(i);
+      }
+    }
+  }
+  return { text, at };
 }
 
-/** Where the quote sits in a list of text pieces: returns the piece indexes it covers. */
+/** Where the quote is in the kept text, allowing a shorter leading match when the end differs. */
+function findKept(hay: string, quote: string): [number, number] | null {
+  const q = keep(quote).text;
+  if (q.length < 4) return null;
+  let i = hay.indexOf(q);
+  if (i >= 0) return [i, i + q.length];
+  for (let n = Math.floor(q.length * 0.85); n >= Math.max(16, Math.floor(q.length * 0.5)); n = Math.floor(n * 0.85)) {
+    i = hay.indexOf(q.slice(0, n));
+    if (i >= 0) return [i, i + n];
+  }
+  return null;
+}
+
+/** Which text-layer pieces the quote covers. */
 function locate(pieces: string[], quote: string): number[] {
-  const q = norm(quote);
-  if (!q) return [];
-  let text = "";
+  let all = "";
   const owner: number[] = [];
   pieces.forEach((p, i) => {
-    const n = norm(p);
-    if (!n) return;
-    const add = (text && !text.endsWith(" ") ? " " : "") + n;
-    for (let k = 0; k < add.length; k++) owner.push(i);
-    text += add;
+    const k = keep(p).text;
+    all += k;
+    for (let j = 0; j < k.length; j++) owner.push(i);
   });
-  let at = text.indexOf(q);
-  // Fall back to the longest leading run of words that does match.
-  if (at < 0) {
-    const words = q.split(" ");
-    for (let n = words.length - 1; n >= 4 && at < 0; n--) at = text.indexOf(words.slice(0, n).join(" "));
-    if (at < 0) return [];
-  }
-  const hit = new Set<number>();
-  for (let k = at; k < Math.min(at + q.length, owner.length); k++) hit.add(owner[k]);
-  return [...hit];
+  const hit = findKept(all, quote);
+  if (!hit) return [];
+  return [...new Set(owner.slice(hit[0], hit[1]))];
+}
+
+/** True when the quote is somewhere in this text. */
+export function quoteIn(text: string, quote: string) {
+  return !!findKept(keep(text).text, quote);
 }
 
 function highlightText(text: string, quote?: string) {
   if (!quote) return [text];
-  // Match on a normalised copy, then map back by trying the raw text with flexible whitespace.
-  const pattern = quote
-    .trim()
-    .split(/\s+/)
-    .map((w) => w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&").replace(/['\u2018\u2019]/g, "['\u2018\u2019]").replace(/["\u201c\u201d]/g, '["\u201c\u201d]'))
-    .join("[\\s\\-]+");
-  const m = new RegExp(pattern, "i").exec(text);
-  if (!m) return [text];
-  return [text.slice(0, m.index), <mark class="quote-mark">{m[0]}</mark>, text.slice(m.index + m[0].length)];
+  const k = keep(text);
+  const hit = findKept(k.text, quote);
+  if (!hit) return [text];
+  const a = k.at[hit[0]];
+  const b = k.at[hit[1] - 1] + 1;
+  return [text.slice(0, a), <mark class="quote-mark">{text.slice(a, b)}</mark>, text.slice(b)];
 }
 
 export function SourceViewer() {
@@ -86,7 +97,7 @@ function Viewer({ req }: { req: SourceRequest }) {
   const [total, setTotal] = useState<number | null>(doc?.pages ?? null);
   const [mode, setMode] = useState<"loading" | "pdf" | "text" | "error">("loading");
   const [text, setText] = useState("");
-  const [found, setFound] = useState<boolean | null>(null);
+  const [found, setFound] = useState<boolean | "unhighlighted" | null>(null);
   const pdfDoc = useRef<import("pdfjs-dist").PDFDocumentProxy | null>(null);
   const quote = page === req.page ? req.quote : undefined;
 
@@ -164,7 +175,7 @@ function Viewer({ req }: { req: SourceRequest }) {
         .then((s) => {
           if (dead) return;
           setText(s);
-          if (quote) setFound(new RegExp(norm(quote).split(" ").slice(0, 4).join(".{0,3}"), "i").test(norm(s)));
+          if (quote) setFound(quoteIn(s, quote));
           requestAnimationFrame(() => stage.current?.querySelector("mark")?.scrollIntoView({ block: "center" }));
         })
         .catch(() => !dead && setMode("error"));
@@ -211,7 +222,12 @@ function Viewer({ req }: { req: SourceRequest }) {
       if (quote) {
         const hits = locate(strs, quote);
         hits.forEach((i) => spans[i]?.classList.add("quote-hit"));
-        setFound(hits.length > 0);
+        if (hits.length) setFound(true);
+        else {
+          // Not in the text layer: is it on the page's own text? Then say so plainly.
+          const pageText = await api.pageText(req.sourceId, page).catch(() => "");
+          if (!dead) setFound(quoteIn(pageText || strs.join(" "), quote) ? "unhighlighted" : false);
+        }
         const firstHit = spans[hits[0]];
         if (firstHit) firstHit.scrollIntoView({ block: "center", behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
       }
@@ -247,7 +263,9 @@ function Viewer({ req }: { req: SourceRequest }) {
           <div class={`viewer-quote ${found === false ? "is-missing" : ""}`}>
             <blockquote>“{quote}”</blockquote>
             <p class="small" role="status">
-              {found === null ? t("Loading…") : found ? (
+              {found === null ? t("Loading…") : found === "unhighlighted" ? (
+                <span class="ok-text"><Check size={14} /> {t("The quote is on this page; we couldn't highlight it.")}</span>
+              ) : found ? (
                 <span class="ok-text"><Check size={14} /> {t("Quote found and highlighted.")}</span>
               ) : (
                 <span class="warn-text"><Alert size={14} /> {t("Quote not found on this page.")}</span>

@@ -245,7 +245,61 @@ test("ask rejects empty questions and rate-limits per IP", async () => {
   const res = await post("/api/decisions/fixture-budget/ask", { question: "one too many" }, ip);
   assert.equal(res.status, 429);
   assert.ok(res.headers.get("retry-after"));
-  assert.match((await res.json()).error, /wait/);
+  assert.match((await res.json()).error, /shared Wi-Fi counts together\)\. Please wait/);
+});
+
+test("replayed and offline answers don't count against the per-network limit", async () => {
+  const ip = { "Fly-Client-IP": "10.0.0.40" };
+  // seed-1 (written by an earlier test) answers this question from the record.
+  for (let i = 0; i < 5; i++) {
+    const res = await post("/api/decisions/fixture-budget/ask", { question: "What does the levy pay for?" }, ip);
+    assert.equal(res.status, 200, `replay ${i}`);
+    await res.text();
+  }
+  const saved = fakeAgents.ask;
+  fakeAgents.ask = async (_ctx, _req, emit) => {
+    emit({ type: "answer", text: "The agents can't be reached right now.", statements: [], offline: true });
+    emit({ type: "done" });
+  };
+  try {
+    for (let i = 0; i < 5; i++) {
+      const res = await post("/api/decisions/fixture-budget/ask", { question: `offline ${i}` }, ip);
+      assert.equal(res.status, 200, `offline ${i}`);
+      await res.text();
+    }
+  } finally {
+    fakeAgents.ask = saved;
+  }
+});
+
+test("a translation carries the computed lenses, and a failed one is a plain JSON error", async () => {
+  const es = (await (await post("/api/decisions/fixture-budget/translate", { lang: "es" }, { "Fly-Client-IP": "10.0.0.41" })).json()) as Brief;
+  assert.ok((es.lenses as Record<string, unknown>).construction, "lens files merged in, like GET /api/decisions/:id");
+  const saved = fakeAgents.translateBrief;
+  fakeAgents.translateBrief = async () => {
+    throw Object.assign(new Error("Gemini 402"), { status: 402, detail: '{"error":{"message":"https://ai.studio"}}' });
+  };
+  try {
+    const res = await post("/api/decisions/fixture-budget/translate", { lang: "de" }, { "Fly-Client-IP": "10.0.0.41" });
+    assert.equal(res.status, 503);
+    const body = await res.json();
+    assert.equal(body.error, "Translation isn't available right now. The brief is shown in English.");
+  } finally {
+    fakeAgents.translateBrief = saved;
+  }
+});
+
+test("purging a question also blanks its words in the run's file, and the purge entry says so", async () => {
+  const res = await post("/api/decisions/fixture-budget/ask", { question: "My name is Jo Smith, will my tax rise?" }, { "Fly-Client-IP": "10.0.0.42" });
+  await res.text();
+  const asked = app.log.list({ kind: "question.asked" }).at(-1) as LogEntry;
+  const runId = (asked.payload as { runId: string }).runId;
+  const out = await (await post("/api/staff/purge", { seq: asked.seq, reason: "Retention ended", reviewer: "Ana" }, staff)).json();
+  assert.equal(out.record.payload.runTextBlanked, true);
+  assert.equal(out.record.payload.runFile, `runs/${runId}.jsonl`);
+  const text = fs.readFileSync(path.join(app.cfg.dataDir, "runs", `${runId}.jsonl`), "utf8");
+  assert.doesNotMatch(text, /Jo Smith/);
+  assert.match(text.split("\n")[0], /"purged":\{"at":/);
 });
 
 test("staff routes need the passcode", async () => {

@@ -99,7 +99,7 @@ On the public site, the data volume is on Fly.io in Toronto (`yyz`).
 | PDF upload | 30 MB, 600 pages, must have a text layer | fixed |
 | Question length | 1,000 characters | fixed |
 | Staff edit or note | 2,000 characters | fixed |
-| Questions and new translations per internet address | 10 per 10 minutes | `ASK_PER_WINDOW`, `ASK_WINDOW_MIN` |
+| Model-backed questions and new translations per internet address | 30 per 10 minutes (replays and offline answers are free) | `ASK_PER_WINDOW`, `ASK_WINDOW_MIN` |
 | Agent runs at once, across the site | 4 | `MAX_CONCURRENT_RUNS` |
 | One question | 4 minutes, 40 model calls or US$0.50 | `RUN_TIMEOUT_SEC` (calls and dollars fixed) |
 | One brief or translation | 15 minutes, 40 model calls or US$0.50 | `BRIEF_TIMEOUT_SEC` |

@@ -23,11 +23,26 @@ function sections(b: Brief): { title: string; items: Statement[] }[] {
     { title: "Have your say", items: b.haveYourSay },
     { title: "Trade-offs and possible harms", items: b.tradeoffs },
   ];
-  if (b.lenses.cost) out.push({ title: "Costs", items: b.lenses.cost.statements });
-  if (b.lenses.housing) out.push({ title: "Housing", items: b.lenses.housing.statements });
-  if (b.lenses.commitments)
-    for (const k of b.lenses.commitments.commitments) out.push({ title: `Commitments: ${k.title}`, items: k.progress });
-  return out.filter((s) => s.items.length);
+  // Every lens's statements, so publishing (which needs all reviewed) can go through.
+  const st = (l: unknown) => ((l as { statements?: Statement[] } | undefined)?.statements ?? []);
+  const L = b.lenses as Record<string, unknown>;
+  if (L.transit) out.push({ title: "Transit", items: st(L.transit) });
+  if (L.cost) out.push({ title: "Costs", items: st(L.cost) });
+  if (L.housing) out.push({ title: "Housing", items: st(L.housing) });
+  if (L.construction) out.push({ title: "Construction", items: st(L.construction) });
+  if (L.commitments) {
+    out.push({ title: "Commitments", items: st(L.commitments) });
+    const list = (L.commitments as { commitments?: { title: string; progress?: Statement[] }[] }).commitments ?? [];
+    for (const k of list) out.push({ title: `Commitments: ${k.title}`, items: k.progress ?? [] });
+  }
+  for (const [name, lens] of Object.entries(L)) {
+    if (!["transit", "cost", "housing", "construction", "commitments"].includes(name) && lens) out.push({ title: name, items: st(lens) });
+  }
+  // A statement can appear in two places: list it once.
+  const seen = new Set<string>();
+  return out
+    .map((sec) => ({ ...sec, items: (sec.items ?? []).filter((x) => x && !seen.has(x.id) && (seen.add(x.id), true)) }))
+    .filter((sec) => sec.items.length);
 }
 
 function ReviewRow({ s, decisionId, token, reviewer }: { s: Statement; decisionId: string; token: string; reviewer: string }) {

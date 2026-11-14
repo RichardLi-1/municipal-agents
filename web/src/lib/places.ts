@@ -57,3 +57,32 @@ export function km(a: [number, number], b: [number, number]) {
   const x = Math.sin(dLat / 2) ** 2 + Math.cos((a[1] * Math.PI) / 180) * Math.cos((b[1] * Math.PI) / 180) * Math.sin(dLng / 2) ** 2;
   return 2 * R * Math.asin(Math.sqrt(x));
 }
+
+/** Is the point inside the decision's area (Polygon or MultiPolygon features)? */
+export function inArea(pt: [number, number], geo: GeoJSON.GeoJSON | undefined): boolean {
+  if (!geo) return false;
+  const inRing = (ring: number[][]) => {
+    let inside = false;
+    for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
+      const [xi, yi] = ring[i];
+      const [xj, yj] = ring[j];
+      if (yi > pt[1] !== yj > pt[1] && pt[0] < ((xj - xi) * (pt[1] - yi)) / (yj - yi) + xi) inside = !inside;
+    }
+    return inside;
+  };
+  const inPoly = (rings: number[][][]) => rings.length > 0 && inRing(rings[0]) && !rings.slice(1).some(inRing);
+  switch (geo.type) {
+    case "FeatureCollection":
+      return geo.features.some((f) => inArea(pt, f));
+    case "Feature":
+      return inArea(pt, geo.geometry ?? undefined);
+    case "Polygon":
+      return inPoly(geo.coordinates);
+    case "MultiPolygon":
+      return geo.coordinates.some(inPoly);
+    case "GeometryCollection":
+      return geo.geometries.some((g) => inArea(pt, g));
+    default:
+      return false;
+  }
+}

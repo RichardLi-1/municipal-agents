@@ -3,14 +3,20 @@ import type { Decision, DecisionCard } from "../../../shared/types.ts";
 import { Bus, Coins, Flag, House, MapPin, Search, Cross, CheckCircle, Tunnel } from "../components/icons.tsx";
 import { mapApi, mapState } from "../components/MapView.tsx";
 import { api } from "../lib/api.ts";
-import { countdown, fmtDateTime, targetOf } from "../lib/format.ts";
+import { countdown, fmtDateTime, targetOf, when } from "../lib/format.ts";
 import { useT } from "../lib/i18n.ts";
-import { km, searchPlaces, PLACES } from "../lib/places.ts";
+import { inArea, km, searchPlaces, PLACES } from "../lib/places.ts";
 import { navigate, onLinkClick } from "../lib/router.ts";
 import { cityStore } from "../lib/state.ts";
 import { useStore } from "../lib/store.ts";
 import { ErrorPane, LoadingPane, MapCredit, SampleBadge } from "./common.tsx";
 import { Footer } from "../components/Footer.tsx";
+
+export const DEADLINE_VERB: Record<string, string> = {
+  speak: "Register to speak by",
+  write: "Send comments by",
+  survey: "Answer the survey by",
+};
 
 const LENS_ICON = { transit: Bus, cost: Coins, commitments: Flag, housing: House, construction: Tunnel } as const;
 const LENS_NAME = { transit: "Transit", cost: "Costs", commitments: "Commitments", housing: "Housing", construction: "Construction" } as const;
@@ -43,7 +49,7 @@ function Card({ c, onHover, near }: { c: DecisionCard; onHover: (id: string | nu
       </h2>
       <p class="muted small">
         {t("Decided by {who}", { who: c.decidedBy })}
-        {near !== undefined ? <> · {near < 1 ? "< 1 km" : `${Math.round(near)} km`}</> : null}
+        {near !== undefined ? <> · {near === 0 ? t("covers this place") : near < 1 ? "< 1 km" : `${Math.round(near)} km`}</> : null}
       </p>
       {c.next && cd ? (
         <div class="dcard-next">
@@ -51,7 +57,18 @@ function Card({ c, onHover, near }: { c: DecisionCard; onHover: (id: string | nu
           <div class="row-between dcard-next-row">
             <div>
               <p class="dcard-next-title">{c.next.title}</p>
+              {(() => {
+                const target = targetOf(c.next!);
+                if (target === c.next!.date) return null;
+                const p = c.next!.participation?.find((x) => x.deadline === target);
+                return (
+                  <p class="small dcard-deadline">
+                    {t(DEADLINE_VERB[p?.method ?? ""] ?? "Take part by")} <time dateTime={target}>{fmtDateTime(target)}</time>
+                  </p>
+                );
+              })()}
               <p class="small muted">
+                {targetOf(c.next) !== c.next.date && when(c.next.date) > Date.now() && ["committee", "council", "budget-vote", "public-input"].includes(c.next.kind) ? `${t("Meeting")} ` : ""}
                 <time dateTime={c.next.date}>{fmtDateTime(c.next.date)}</time>
               </p>
             </div>
@@ -231,11 +248,12 @@ export function HomeScreen() {
   const sorted = useMemo(() => {
     if (!cards) return null;
     if (!place) return { near: cards, far: [] as DecisionCard[], dist: {} as Record<string, number> };
+    // Inside a decision's area counts as 0 km (a region-wide budget covers Elmira); else distance.
     const dist: Record<string, number> = {};
-    for (const c of cards) dist[c.id] = km(place.at, c.center);
+    for (const c of cards) dist[c.id] = inArea(place.at, areas[c.id]?.area) ? 0 : km(place.at, c.center);
     const byDist = [...cards].sort((a, b) => dist[a.id] - dist[b.id]);
     return { near: byDist.filter((c) => dist[c.id] <= 5), far: byDist.filter((c) => dist[c.id] > 5), dist };
-  }, [cards, place]);
+  }, [cards, place, areas]);
 
   return (
     <div class="layout layout-home">

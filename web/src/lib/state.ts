@@ -44,3 +44,13 @@ export function clerkEmail(city: CityConfig | null): string | null {
 export function mailto(to: string, subject: string, body: string) {
   return `mailto:${to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 }
+
+/** Where residents report a mistake: the operator's feedback page (a GitHub new-issue form). */
+export const DEFAULT_FEEDBACK = "https://github.com/RichardLi-1/municipal-agents/issues/new";
+export function feedbackLink(city: CityConfig | null, title: string, body: string) {
+  const base = (city as (CityConfig & { feedbackUrl?: string }) | null)?.feedbackUrl || DEFAULT_FEEDBACK;
+  return `${base}${base.includes("?") ? "&" : "?"}title=${encodeURIComponent(title)}&body=${encodeURIComponent(body)}`;
+}
+export function operatorOf(city: CityConfig | null) {
+  return (city as (CityConfig & { operator?: string }) | null)?.operator || "the Municipal Agents team";
+}

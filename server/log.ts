@@ -239,7 +239,7 @@ export class Log {
    * `record.purged` entry (which entry, its payload hash, why, by whom) and blanks the
    * content in the same transaction. The purged entry keeps its header and payload hash.
    */
-  purge(seq: number, opts: { reason: string; actor: string; by?: string }): { purged: LogEntry; record: LogEntry } {
+  purge(seq: number, opts: { reason: string; actor: string; by?: string; also?: Record<string, unknown> }): { purged: LogEntry; record: LogEntry } {
     this.db.exec("BEGIN IMMEDIATE");
     try {
       const target = this.get(seq);
@@ -250,7 +250,7 @@ export class Log {
         actor: opts.actor,
         kind: "record.purged",
         decisionId: target.decisionId,
-        payload: { seq, kind: target.kind, payloadHash: target.payloadHash, reason: opts.reason, ...(opts.by ? { by: opts.by } : {}) },
+        payload: { seq, kind: target.kind, payloadHash: target.payloadHash, reason: opts.reason, ...(opts.by ? { by: opts.by } : {}), ...(opts.also ?? {}) },
       });
       const changed = this.db
         .prepare("UPDATE log_content SET payload = NULL, purged_at = ?, purged_reason = ?, purged_by_seq = ? WHERE seq = ?")

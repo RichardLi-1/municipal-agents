@@ -291,9 +291,25 @@ export function Unknowns({ brief }: { brief: Brief }) {
           <div class="stack">
             {brief.unknowns.map((u, i) => (
               <article class="card unknown" key={i}>
-                <h3 class="card-title">{u.question}?</h3>
+                <h3 class="card-title">{/[?.!]$/.test(u.question.trim()) ? u.question.trim() : `${u.question.trim()}?`}</h3>
                 <p><strong>{t("Why it matters:")}</strong> {u.why}</p>
-                <p><strong>{t("Who can answer:")}</strong> {u.whoCanAnswer}{u.contact ? <>, <a class="link" href={`mailto:${u.contact}`}>{u.contact}</a></> : null}</p>
+                <p>
+                  <strong>{t("Who can answer:")}</strong> {u.whoCanAnswer}
+                  {u.contact ? (
+                    (() => {
+                      const email = /[\w.+-]+@[\w-]+(\.[\w-]+)+/.exec(u.contact)?.[0];
+                      return email ? (
+                        <>
+                          {" · "}
+                          {u.contact.replace(email, "").replace(/^[\s,;:]+|[\s,;:]+$/g, "")}{" "}
+                          <a class="link" href={`mailto:${email}`}>{email}</a>
+                        </>
+                      ) : (
+                        <> · {u.contact}</>
+                      );
+                    })()
+                  ) : null}
+                </p>
               </article>
             ))}
           </div>

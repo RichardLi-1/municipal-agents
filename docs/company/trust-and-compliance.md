@@ -221,7 +221,7 @@ We use it as a benchmark because Ontario has no municipal equivalent yet.
 |---|---|---|
 | Identity and access | Staff routes need a bearer passcode compared in constant time; reviewer name on every action | Individual staff accounts, roles (drafter, reviewer, publisher), MFA, SSO with SAML or OIDC (Q1 2027 for pilots; SSO by Q2 2027) |
 | Least privilege for agents | Agent tools are read-only over the decision's own documents plus draft-writing tools; no browsing, email or file access | A prompt-injection test set added to the evals (Q1 2027) |
-| Abuse and cost | Body size caps; questions capped at 1,000 characters; 10 questions per 10 minutes per IP; at most 4 concurrent runs; US$0.50 per run and US$5 per day caps | Rate limits per city, a WAF and bot protection (Q2 2027) |
+| Abuse and cost | Body size caps; questions capped at 1,000 characters; 30 model-backed questions per 10 minutes per IP (replays free); at most 4 concurrent runs; US$0.50 per run and US$5 per day caps | Rate limits per city, a WAF and bot protection (Q2 2027) |
 | Secrets | Environment variables (Fly secrets), never committed; API key sent only in a header | A managed secrets store and rotation schedule (Q2 2027) |
 | Integrity | Append-only hash-chained log; triggers refuse UPDATE and DELETE; chain verified on the server and in the browser | Head hash published on a schedule outside the city's control, e.g. a public Git repository, council minutes or a timestamping service (Q1 2027) |
 | Supply chain | No runtime dependencies at the server root; three dev dependencies ([architecture D1](../architecture.md)) | Dependency and container scanning in CI (Q1 2027) |

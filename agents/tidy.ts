@@ -10,9 +10,26 @@ import type { Brief, GlossaryTerm, Statement, Unknown } from "../shared/types.ts
 import { readingGrade } from "../shared/readability.ts";
 import { normalise } from "../shared/verify.ts";
 import { terms } from "./corpus.ts";
+import { numberBacked, numbersIn } from "./tools.ts";
 
 const HEDGE = /\b(may|might|could)\b/i;
 const STRAY_START = /^\p{Ll}[\p{Ll}'-]*\s+(?=\p{Lu})/u;
+
+/**
+ * How well a statement's quotes back it: "weak" when they share fewer than 2 meaningful
+ * word stems and no number. Words that name the decision itself (its title and plain
+ * title, e.g. "budget", "taxes") don't count: every quote about it has them.
+ */
+export function supportOf(text: string, quotes: string[], decisionWords: string[] = []): "strong" | "weak" {
+  const ignore = new Set(decisionWords.flatMap((w) => terms(w)).map(stem));
+  const A = new Set(terms(text).map(stem).filter((w) => !ignore.has(w) && !/^\d/.test(w)));
+  const B = new Set(terms(quotes.join(" ")).map(stem).filter((w) => !ignore.has(w)));
+  let shared = 0;
+  for (const w of A) if (B.has(w)) shared++;
+  const quoted = quotes.flatMap(numbersIn);
+  const sharesNumber = numbersIn(text).some((n) => numberBacked(n, quoted));
+  return shared < 2 && !sharesNumber ? "weak" : "strong";
+}
 
 /** Problems with a sentence's form that point to a glitch, not to plain language. */
 export function textArtifacts(text: string): string[] {
@@ -57,16 +74,18 @@ export interface TidyReport {
   dropped: string[];
   repaired: { id: string; from: string; to: string }[];
   estimates: string[];
+  /** Statements whose quotes only weakly back them. */
+  weak: string[];
   gradeBefore: number;
   gradeAfter: number;
 }
 
 const graded = (b: Brief) => readingGrade([...(b.summary ?? []), ...(b.impacts ?? []).flatMap((g) => g.statements ?? [])].map((s) => s.text));
 
-/** Returns a tidied copy of the brief and what changed. */
-export function tidyBrief(input: Brief): { brief: Brief; report: TidyReport } {
+/** Returns a tidied copy of the brief and what changed. `decisionWords`: its title and plain title. */
+export function tidyBrief(input: Brief, decisionWords: string[] = []): { brief: Brief; report: TidyReport } {
   const b = structuredClone(input);
-  const report: TidyReport = { dropped: [], repaired: [], estimates: [], gradeBefore: graded(input), gradeAfter: 0 };
+  const report: TidyReport = { dropped: [], repaired: [], estimates: [], weak: [], gradeBefore: graded(input), gradeAfter: 0 };
 
   const fixStatement = (s: Statement) => {
     const to = repairText(s.text);
@@ -78,6 +97,8 @@ export function tidyBrief(input: Brief): { brief: Brief; report: TidyReport } {
       s.kind = "estimate";
       report.estimates.push(s.id);
     }
+    s.support = supportOf(s.text, s.citations.map((c) => c.quote), decisionWords);
+    if (s.support === "weak" && !report.weak.includes(s.id)) report.weak.push(s.id);
   };
   const lists: Statement[][] = [];
   const statements = (list: Statement[] | undefined, threshold: number): Statement[] => {

@@ -1,7 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import type { Brief, Statement } from "../shared/types.ts";
-import { repairText, textArtifacts, tidyBrief } from "./tidy.ts";
+import { repairText, supportOf, textArtifacts, tidyBrief } from "./tidy.ts";
 import { rewriteProblem } from "./plain.ts";
 import { TOOLS, newFindings } from "./tools.ts";
 import { loadCorpus } from "./corpus.ts";
@@ -58,4 +58,14 @@ test("tidyBrief drops repeated trade-offs and unknowns, repairs glitches, and re
   assert.equal(report.repaired.length, 1);
   assert.ok(out.readingGrade > 0);
   assert.equal(brief.summary[0].text, "reached The design removes 64 parking spaces.", "the input is not changed");
+});
+
+test("support strength: weak when sentence and quotes share under 2 meaningful words and no number", () => {
+  const decision = ["Region of Waterloo 2027 Plan and Budget", "The Region's 2027 budget: what your regional taxes and water bills will pay for next year"];
+  // The reviewer's examples.
+  assert.equal(supportOf("Council sets a new plan and budget every year.", ["affordability for residents; maintaining critical services; and protecting essential infrastructure."], decision), "weak");
+  assert.equal(supportOf("Your rent could rise if regional property taxes go up and landlords pass on costs.", ["Property Tax 2,786.44 $2,928.62 142.18 5.10%"], decision), "weak");
+  // A shared number, or two shared words, is enough.
+  assert.equal(supportOf("Your regional tax bill rose $142 in 2026.", ["Property Tax 2,786.44 $2,928.62 142.18 5.10%"], decision), "strong");
+  assert.equal(supportOf("The design removes street parking spaces.", ["The design removes 64 on-street parking spaces"]), "strong");
 });

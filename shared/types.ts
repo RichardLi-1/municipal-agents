@@ -35,12 +35,6 @@ export interface Statement {
   /** True only when every citation's quote was found on its page by the checker. */
   verified: boolean;
   /**
-   * How well the quotes back the sentence, measured in code: "weak" when the sentence and
-   * its quotes share fewer than 2 meaningful words and no number (the quote is on the page,
-   * but may not say what the sentence says). Shown so staff check those first.
-   */
-  support?: "strong" | "weak";
-  /**
    * How well the quotes back the sentence, measured in code by shared words and numbers:
    * "weak" means the quote is on the page but a reader should check that it supports this.
    */

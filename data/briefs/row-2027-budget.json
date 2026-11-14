@@ -19,7 +19,8 @@
           "quote": "December 16, 2026 - 2027 Plan and Budget Overview"
         }
       ],
-      "verified": true
+      "verified": true,
+      "support": "strong"
     },
     {
       "id": "s23",
@@ -32,7 +33,8 @@
           "quote": "December 16, 2026 - 2027 Plan and Budget Overview"
         }
       ],
-      "verified": true
+      "verified": true,
+      "support": "strong"
     },
     {
       "id": "s24",
@@ -45,7 +47,8 @@
           "quote": "This is a stability-focused budget to ensure that the services our residents rely on remain strong"
         }
       ],
-      "verified": true
+      "verified": true,
+      "support": "weak"
     },
     {
       "id": "s25",
@@ -58,7 +61,8 @@
           "quote": "Property Tax 2,786.44 $2,928.62 142.18 5.10%"
         }
       ],
-      "verified": true
+      "verified": true,
+      "support": "weak"
     }
   ],
   "whyNow": [
@@ -73,7 +77,8 @@
           "quote": "affordability for residents; maintaining critical services; and protecting essential infrastructure."
         }
       ],
-      "verified": true
+      "verified": true,
+      "support": "weak"
     },
     {
       "id": "s27",
@@ -86,7 +91,8 @@
           "quote": "affordability for residents; maintaining critical services; and protecting essential infrastructure."
         }
       ],
-      "verified": true
+      "verified": true,
+      "support": "strong"
     }
   ],
   "impacts": [
@@ -105,7 +111,8 @@
               "quote": "2,100 of those (60%) dedicated to households with very-low-to-low income"
             }
           ],
-          "verified": true
+          "verified": true,
+          "support": "strong"
         },
         {
           "id": "s5",
@@ -118,7 +125,8 @@
               "quote": "Property Tax 2,786.44 $2,928.62 142.18 5.10%"
             }
           ],
-          "verified": true
+          "verified": true,
+          "support": "weak"
         }
       ]
     },
@@ -137,7 +145,8 @@
               "quote": "Property Tax 2,786.44 $2,928.62 142.18 5.10%"
             }
           ],
-          "verified": true
+          "verified": true,
+          "support": "strong"
         },
         {
           "id": "s48",
@@ -155,7 +164,8 @@
               "quote": "Wastewater $284.81 $301.61 $16.80 5.90%"
             }
           ],
-          "verified": true
+          "verified": true,
+          "support": "strong"
         }
       ]
     },
@@ -174,7 +184,8 @@
               "quote": "Transit operating costs will be refined on an ongoing basis as staff prepares annual service expansion plans"
             }
           ],
-          "verified": true
+          "verified": true,
+          "support": "strong"
         },
         {
           "id": "s7",
@@ -187,7 +198,8 @@
               "quote": "68030 RT to Cambridge-Project Development 85,000"
             }
           ],
-          "verified": true
+          "verified": true,
+          "support": "strong"
         },
         {
           "id": "s39",
@@ -200,7 +212,8 @@
               "quote": "On average, residents and visitors will be able to reach approximately 38,000 more people and 15,000 more jobs within a one-hour trip compared to today."
             }
           ],
-          "verified": true
+          "verified": true,
+          "support": "strong"
         }
       ]
     }
@@ -222,7 +235,8 @@
           "quote": "closes at 11:59 pm. (E.T.) on Friday, February 26, 2027."
         }
       ],
-      "verified": true
+      "verified": true,
+      "support": "strong"
     },
     {
       "id": "s29",
@@ -240,7 +254,8 @@
           "quote": "December 16, 2026 - 2027 Plan and Budget Overview"
         }
       ],
-      "verified": true
+      "verified": true,
+      "support": "strong"
     },
     {
       "id": "s30",
@@ -253,7 +268,8 @@
           "quote": "A delegation is a person or group who would like to speak at a Council or Committee meeting"
         }
       ],
-      "verified": true
+      "verified": true,
+      "support": "weak"
     },
     {
       "id": "s31",
@@ -266,7 +282,8 @@
           "quote": "Visit the EngageWR webpage (https://www.engagewr.ca/ROW-2027-budget) to share your thoughts"
         }
       ],
-      "verified": true
+      "verified": true,
+      "support": "weak"
     }
   ],
   "figures": [
@@ -454,7 +471,8 @@
           "quote": "Property Tax 2,786.44 $2,928.62 142.18 5.10%"
         }
       ],
-      "verified": true
+      "verified": true,
+      "support": "strong"
     },
     {
       "id": "s9",
@@ -472,7 +490,8 @@
           "quote": "Public Transit(2) 231,203 156,402 17.6 $516"
         }
       ],
-      "verified": true
+      "verified": true,
+      "support": "strong"
     }
   ],
   "glossary": [
@@ -507,7 +526,8 @@
               "quote": "Improve frequency to 10 minutes on weekdays (7 a.m. - 7 p.m.), and 15 minutes all other times, on 16 routes."
             }
           ],
-          "verified": true
+          "verified": true,
+          "support": "strong"
         }
       ]
     },
@@ -531,7 +551,8 @@
                   "quote": "Our new target is to create or preserve up to 3,500 affordable homes by the end of 2029"
                 }
               ],
-              "verified": true
+              "verified": true,
+              "support": "strong"
             },
             {
               "id": "s15",
@@ -544,7 +565,8 @@
                   "quote": "increasing affordable housing we generated from an average of 50 units per year to 500 units per year."
                 }
               ],
-              "verified": true
+              "verified": true,
+              "support": "strong"
             }
           ],
           "unclear": [
@@ -570,7 +592,8 @@
                   "quote": "Our community GHG targets: 80% emissions reduction (below 2010 baseline levels) by the year 2050, With an interim target of a 50% reduction by 2030."
                 }
               ],
-              "verified": true
+              "verified": true,
+              "support": "strong"
             },
             {
               "id": "s43",
@@ -583,7 +606,8 @@
                   "quote": "In 2022 we saw a 12% emissions reduction (below 2010 levels). Although we are seeing some progress and sustained emissions reductions, we are not on track for our 50% emissions reduction target by 2030"
                 }
               ],
-              "verified": true
+              "verified": true,
+              "support": "strong"
             }
           ],
           "unclear": [
@@ -609,7 +633,8 @@
                   "quote": "The annual average level of investment in asset renewal over the ten-year capital program of $233.9 million falls short of the optimal level of investment needs identified in the 2026 progress report of $321.5 million."
                 }
               ],
-              "verified": true
+              "verified": true,
+              "support": "strong"
             },
             {
               "id": "s50",
@@ -627,7 +652,8 @@
                   "quote": "The annual average level of investment in asset renewal over the ten-year capital program of $233.9 million falls short of the optimal level of investment needs identified in the 2026 progress report of $321.5 million. This represents a renewal funding shortfall or infrastructure funding gap of $87.6 million per year."
                 }
               ],
-              "verified": true
+              "verified": true,
+              "support": "strong"
             }
           ],
           "unclear": [
@@ -648,7 +674,8 @@
               "quote": "we are not on track for our 50% emissions reduction target by 2030"
             }
           ],
-          "verified": true
+          "verified": true,
+          "support": "strong"
         },
         {
           "id": "s20",
@@ -661,7 +688,8 @@
               "quote": "Our new target is to create or preserve up to 3,500 affordable homes by the end of 2029"
             }
           ],
-          "verified": true
+          "verified": true,
+          "support": "strong"
         },
         {
           "id": "s21",
@@ -674,7 +702,8 @@
               "quote": "In 2026, the Region’s infrastructure funding gap has grown from $82.8M per year to $87.6M per year."
             }
           ],
-          "verified": true
+          "verified": true,
+          "support": "strong"
         }
       ]
     },
@@ -691,7 +720,8 @@
               "quote": "Our new target is to create or preserve up to 3,500 affordable homes by the end of 2029"
             }
           ],
-          "verified": true
+          "verified": true,
+          "support": "strong"
         }
       ]
     }

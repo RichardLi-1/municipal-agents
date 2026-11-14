@@ -25,6 +25,8 @@ export interface RunHeader {
   /** Model calls and spend of the original run, when known. */
   calls?: number;
   costUsd?: number;
+  /** Set when staff purged the visitor's text under the retention by-law. */
+  purged?: { at: IsoDate; bySeq?: number };
 }
 
 export interface RunLine {
@@ -175,11 +177,42 @@ export function findCachedAnswer(
   q: { decisionId: string; question: string; lang?: string; audiences?: AudienceId[] },
 ): SavedRun | undefined {
   return savedRuns(dataDir)
-    .filter((r) => r.header.kind === "ask" && r.header.decisionId === q.decisionId)
+    .filter((r) => r.header.kind === "ask" && r.header.decisionId === q.decisionId && !r.header.purged)
     .filter((r) => langOf(r.header.lang) === langOf(q.lang) && sameSet(r.header.audiences, q.audiences))
     .filter((r) => r.header.question && sameQuestion(r.header.question, q.question))
     .filter((r) => answerOf(r))
     .sort((a, b) => Number(hasSteps(b)) - Number(hasSteps(a)) || b.header.startedAt.localeCompare(a.header.startedAt))[0];
+}
+
+// ---------------------------------------------------------------------------
+// Purging a visitor's words from a run file (when the log entry is purged).
+
+function blankEvent(e: AgentEvent): AgentEvent {
+  if (e.type === "answer") return { ...e, text: "" };
+  if (e.type === "plan") return { ...e, steps: e.steps.map((s) => ({ ...s, question: "" })) };
+  if (e.type === "step.start") return { ...e, question: "" };
+  // Search terms are often the visitor's own words.
+  if (e.type === "tool" && e.tool === "search_pages") return { ...e, summary: "Searched the documents" };
+  return e;
+}
+
+/**
+ * Blanks the question, the answer text, the sub-questions and the search terms in
+ * runs/<runId>.jsonl; the checked statements (the documents' words) stay. Returns the
+ * file's path relative to the data folder, or undefined if there is no such run.
+ */
+export function blankRunText(dataDir: string, runId: string, purge: { at: IsoDate; bySeq?: number }): string | undefined {
+  if (!/^[A-Za-z0-9_-]{1,80}$/.test(runId)) return undefined;
+  const file = path.join(runsDir(dataDir), `${runId}.jsonl`);
+  const run = readRun(file);
+  if (!run) return undefined;
+  const header: RunHeader = { ...run.header, question: "", purged: purge };
+  const body = [JSON.stringify(header), ...run.lines.map((l) => JSON.stringify({ t: l.t, event: blankEvent(l.event) }))].join("\n") + "\n";
+  const tmp = `${file}.${process.pid}.tmp`;
+  fs.writeFileSync(tmp, body);
+  fs.renameSync(tmp, file);
+  headerCache.delete(file);
+  return path.relative(dataDir, file);
 }
 
 // ---------------------------------------------------------------------------

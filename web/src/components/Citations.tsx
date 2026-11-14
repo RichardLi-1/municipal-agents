@@ -1,6 +1,6 @@
 import type { Citation, Figure, Statement } from "../../../shared/types.ts";
 import { useT } from "../lib/i18n.ts";
-import { cityStore, clerkEmail, currentDecision, mailto, openSource, sourceIndex } from "../lib/state.ts";
+import { cityStore, currentDecision, feedbackLink, openSource, sourceIndex } from "../lib/state.ts";
 import { useStore } from "../lib/store.ts";
 import { Alert, Check, Doc, Flag } from "./icons.tsx";
 import { useState } from "preact/hooks";
@@ -28,47 +28,71 @@ const KIND_LABEL: Partial<Record<Statement["kind"], string>> = {
 
 export function StatementView({ s, showKind = true }: { s: Statement; showKind?: boolean }) {
   const t = useT();
+  const [open, setOpen] = useState(false);
   const kind = KIND_LABEL[s.kind];
+  const pages = [...new Set(s.citations.map((c) => c.page))].join(", ");
+  const weak = (s as Statement & { support?: "strong" | "weak" }).support === "weak";
+  const qid = `q-${s.id}`;
   return (
-    <p class={`stmt ${s.verified ? "" : "stmt--unverified"}`}>
-      {showKind && kind ? <span class={`kind kind--${s.kind}`}>{t(kind)}</span> : null}
-      <span class="stmt-text">{s.text}</span>{" "}
-      <span class="stmt-meta">
-        {s.citations.map((c, i) => (
-          <CitationChip key={i} c={c} />
-        ))}
-        {s.verified ? (
-          <span class="verified" title={t("Quote checked on page {page}", { page: s.citations[0]?.page ?? "" })}>
-            <Check size={13} />
-            <span class="sr-only">{t("Checked")}</span>
-          </span>
-        ) : (
-          <span class="unverified" title={t("The quote for this statement was not found on the cited page.")}>
-            <Alert size={13} />
-            {t("Not verified")}
-          </span>
-        )}
-        {s.review?.action === "edited" ? <span class="edited">{t("Edited by staff")}</span> : null}
-        <ReportLink s={s} />
-      </span>
-    </p>
+    <div class={`stmt ${s.verified ? "" : "stmt--unverified"}`}>
+      <p>
+        {showKind && kind ? <span class={`kind kind--${s.kind}`}>{t(kind)}</span> : null}
+        <span class="stmt-text">{s.text}</span>{" "}
+        <span class="stmt-meta">
+          {s.citations.map((c, i) => (
+            <CitationChip key={i} c={c} />
+          ))}
+          {s.verified ? (
+            <span class="verified" title={t("Quote found on p. {page}", { page: pages })}>
+              <Check size={13} />
+              <span class="sr-only">{t("Quote found on p. {page}", { page: pages })}</span>
+            </span>
+          ) : (
+            <span class="unverified" title={t("The quote for this statement was not found on the cited page.")}>
+              <Alert size={13} />
+              {t("Not verified")}
+            </span>
+          )}
+          {weak ? (
+            <span class="weak" title={t("Check: the quote may not fully support this")}>
+              {t("Check: the quote may not fully support this")}
+            </span>
+          ) : null}
+          {s.review?.action === "edited" ? <span class="edited">{t("Edited by staff")}</span> : null}
+          {s.citations.length ? (
+            <button type="button" class="quote-toggle" aria-expanded={open} aria-controls={qid} onClick={() => setOpen(!open)}>
+              {open ? t("Hide quote") : t("Show quote")}
+            </button>
+          ) : null}
+          <ReportLink s={s} />
+        </span>
+      </p>
+      {open ? (
+        <div class="stmt-quotes" id={qid}>
+          {s.citations.map((c, i) => (
+            <blockquote key={i}>
+              “{c.quote}” <CitationChip c={c} />
+            </blockquote>
+          ))}
+        </div>
+      ) : null}
+    </div>
   );
 }
 
-/** A quiet link that emails the clerk about one statement, with its ids in the subject. */
+/** A quiet link to report a mistake in one statement to the team that runs this site. */
 function ReportLink({ s }: { s: Statement }) {
   const t = useT();
   const city = useStore(cityStore);
   const d = useStore(currentDecision);
-  const to = clerkEmail(city);
-  if (!to || !d) return null;
-  const href = mailto(
-    to,
-    `Error report: ${d.id} / ${s.id}`,
+  if (!d) return null;
+  const href = feedbackLink(
+    city,
+    `Error report: ${d.id}/${s.id}`,
     `Decision: ${d.title} (${d.id})\nStatement ${s.id}: "${s.text}"\n\nWhat is wrong:\n`,
   );
   return (
-    <a class="report-link" href={href} title={t("Report an error")}>
+    <a class="report-link" href={href} target="_blank" rel="noopener noreferrer" title={t("Report an error")}>
       <Flag size={12} />
       <span class="sr-only">{t("Report an error in this statement")}</span>
     </a>

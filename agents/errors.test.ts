@@ -7,7 +7,7 @@ import { fakeDeps, fakeModel, recorder, DEMO } from "./testing.ts";
 
 // What Google sends when the prepaid credit is gone (shape as seen on 14 Nov 2026).
 const BODY_402 = JSON.stringify({ error: { code: 402, message: "Your prepayment credits are depleted. Please go to AI Studio at https://ai.studio/projects to manage your project and billing.", status: "FAILED_PRECONDITION" } });
-const LEAKS = /ai\.studio|https?:\/\/|prepayment|FAILED_PRECONDITION|\{"error"/;
+const LEAKS = /ai\.studio|https?:\/\/|prepayment|prepaid|credit|billing|FAILED_PRECONDITION|\{"error"/i;
 
 test("callGemini keeps the provider's body out of the error message", async () => {
   const fetchImpl = (async () => new Response(BODY_402, { status: 402 })) as typeof fetch;
@@ -25,11 +25,12 @@ test("callGemini keeps the provider's body out of the error message", async () =
 
 test("every provider failure becomes plain words", () => {
   const cases: [unknown, RegExp][] = [
-    [new GeminiError("Gemini 402", 402, BODY_402), /prepaid credit is used up/],
-    [new GeminiError("Gemini 429", 429), /rate-limiting/],
-    [new GeminiError("Gemini 503", 503), /outage/],
-    [new GeminiError("Gemini request failed", 0, "fetch failed"), /no connection/],
-    [new GeminiError("GEMINI_API_KEY is not set", 0), /no API key is set/],
+    // Residents never learn why (credit, rate limit, outage, key): one generic sentence.
+    [new GeminiError("Gemini 402", 402, BODY_402), /^The AI model can't be reached right now\.$/],
+    [new GeminiError("Gemini 429", 429), /^The AI model can't be reached right now\.$/],
+    [new GeminiError("Gemini 503", 503), /^The AI model can't be reached right now\.$/],
+    [new GeminiError("Gemini request failed", 0, "fetch failed"), /^The AI model can't be reached right now\.$/],
+    [new GeminiError("GEMINI_API_KEY is not set", 0), /^The AI model can't be reached right now\.$/],
     [new GeminiError("Gemini 400", 400, BODY_402), /returned an error/],
     [Object.assign(new Error("The operation was aborted due to timeout"), { name: "TimeoutError" }), /stopped before it finished/],
     [new Error('Something odd {"error": "https://x.y"}'), /Something went wrong/],

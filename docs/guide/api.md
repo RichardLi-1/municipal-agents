@@ -61,7 +61,7 @@ them with [environment variables](self-host.md#environment-variables).
 
 | Limit | Default | Applies to | Answer when hit |
 |---|---|---|---|
-| Questions per visitor | 10 per 10 minutes, per IP address | `ask`, `translate` (shared) | `429` with `Retry-After` |
+| Questions per visitor | 30 model-backed runs per 10 minutes, per IP address (replays and offline answers don't count) | `ask`, `translate` (shared) | `429` with `Retry-After` |
 | Runs at once | 4, across all visitors and staff | `ask`, `translate`, starting a brief | `503` "The agents are busy..." |
 | Daily spend cap | US$5, resetting at midnight Toronto time | `ask`, `translate`, starting a brief | `429` "Today's budget ... has been used" |
 | One run | 40 model calls or US$0.50 | each `ask`, brief or translation | the run stops and reports what it has |

@@ -12,7 +12,7 @@ export const PART_LABEL: Record<Part, string> = {
 };
 
 /** Running total, stacked by kind of cost: shows when upkeep overtakes the upfront price. */
-export function CostChart({ series }: { series: Row[] }) {
+export function CostChart({ series, parts = [...PARTS] }: { series: Row[]; parts?: Part[] }) {
   const t = useT();
   const [hover, setHover] = useState<number | null>(null);
   const W = 640, H = 280, L = 56, R = 12, T = 14, B = 30;
@@ -30,8 +30,8 @@ export function CostChart({ series }: { series: Row[] }) {
   const x = (i: number) => L + (n <= 1 ? 0 : (i / (n - 1)) * (W - L - R));
   const y = (v: number) => T + (1 - v / top) * (H - T - B);
 
-  const paths = PARTS.map((k, pi) => {
-    const lower = (i: number) => PARTS.slice(0, pi).reduce((a, kk) => a + cum[i][kk], 0);
+  const paths = parts.map((k, pi) => {
+    const lower = (i: number) => parts.slice(0, pi).reduce((a, kk) => a + cum[i][kk], 0);
     const upper = (i: number) => lower(i) + cum[i][k];
     let d = "";
     for (let i = 0; i < n; i++) d += `${i ? "L" : "M"}${x(i).toFixed(1)},${y(upper(i)).toFixed(1)}`;
@@ -98,7 +98,7 @@ export function CostChart({ series }: { series: Row[] }) {
         )}
       </figcaption>
       <ul class="legend" role="list">
-        {PARTS.map((k) => (
+        {parts.map((k) => (
           <li key={k}>
             <span class={`swatch swatch--${k}`} aria-hidden="true" />
             {t(PART_LABEL[k])}

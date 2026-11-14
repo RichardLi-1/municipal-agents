@@ -5,11 +5,12 @@ import { CitationChip } from "../components/Citations.tsx";
 import { ArrowLeft, Bus, CheckCircle, Alert, External, Layers, Spark, Doc, Flag, Access } from "../components/icons.tsx";
 import { mapApi, mapState, type MapLayer, type LayerKind } from "../components/MapView.tsx";
 import { api } from "../lib/api.ts";
-import { countdown, fmtDate, targetOf } from "../lib/format.ts";
+import { countdown, fmtDate, fmtDateTime, targetOf } from "../lib/format.ts";
+import { DEADLINE_VERB } from "./Home.tsx";
 import { languageName, useT } from "../lib/i18n.ts";
 import { lang, RTL } from "../lib/prefs.ts";
 import { onLinkClick, route, setParam } from "../lib/router.ts";
-import { cityStore, clerkEmail, currentDecision, mailto, rememberSources } from "../lib/state.ts";
+import { cityStore, currentDecision, feedbackLink, operatorOf, rememberSources } from "../lib/state.ts";
 import { toast } from "../lib/toast.ts";
 import { useStore } from "../lib/store.ts";
 import { Affects, HaveYourSay, nextChance, Overview, Sources, Unknowns } from "./tabs-brief.tsx";
@@ -195,7 +196,6 @@ export function DecisionScreen({ id }: { id: string }) {
     [],
   );
   const city = useStore(cityStore);
-  const clerk = clerkEmail(city);
   useEffect(() => {
     if (tab !== "transit") {
       mapApi.pulse(null);
@@ -274,6 +274,13 @@ export function DecisionScreen({ id }: { id: string }) {
               ) : null}
               {original ? <span class="grade">{t("Grade {n} reading level", { n: Math.round(original.readingGrade) })}</span> : null}
             </div>
+            {original ? (
+              <p class="ai-note">
+                <Spark size={14} /> {t("Drafted by AI agents from the city's documents; every quote checked in code.")}
+              </p>
+            ) : null}
+            <div class="badges-end" hidden>
+            </div>
             <p class="notice">
               {t("Not the official notice.")}{" "}
               <a class="link" href={decision.officialUrl} target="_blank" rel="noopener noreferrer">
@@ -283,7 +290,19 @@ export function DecisionScreen({ id }: { id: string }) {
             {next && nextCd && tab !== "say" ? (
               <button type="button" class="next-cta" onClick={() => selectTab("say")}>
                 <span class="next-cta-k">{t("Next chance to have a say")}</span>
-                <span class="next-cta-t">{next.title}</span>
+                <span class="next-cta-t">
+                  {next.title}
+                  {(() => {
+                    const target = targetOf(next);
+                    if (target === next.date) return null;
+                    const p = next.participation?.find((x) => x.deadline === target);
+                    return (
+                      <span class="next-cta-d">
+                        {t(DEADLINE_VERB[p?.method ?? ""] ?? "Take part by")} {fmtDateTime(target)}
+                      </span>
+                    );
+                  })()}
+                </span>
                 <span class="next-cta-cd">{t("in {n}", { n: nextCd.text })}</span>
               </button>
             ) : null}
@@ -374,30 +393,34 @@ export function DecisionScreen({ id }: { id: string }) {
             {tab === "sources" ? <Sources detail={detail} /> : null}
           </div>
           <footer class="brief-foot">
-            {clerk ? (
-              <>
-                <a
-                  class="link"
-                  href={mailto(clerk, `Error report: ${decision.id}`, `Decision: ${decision.plainTitle} (${decision.id})\n\nWhat is wrong, and where:\n`)}
-                >
-                  <Flag size={14} /> {t("Report an error")}
-                </a>
-                <a
-                  class="link"
-                  href={mailto(
-                    clerk,
-                    `Accessible format request: ${decision.id}`,
-                    `Decision: ${decision.plainTitle} (${decision.id})\n\nThe format or support I need (for example large print, braille, audio, plain text, an interpreter):\n`,
-                  )}
-                >
-                  <Access size={14} /> {t("Request another format")}
-                </a>
-              </>
-            ) : null}
+            <a
+              class="link"
+              href={feedbackLink(city, `Error report: ${decision.id}`, `Decision: ${decision.plainTitle} (${decision.id})\n\nWhat is wrong, and where:\n`)}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Flag size={14} /> {t("Report an error")}
+            </a>
+            <a
+              class="link"
+              href={feedbackLink(
+                city,
+                `Accessible format request: ${decision.id}`,
+                `Decision: ${decision.plainTitle} (${decision.id})\n\nThe format or support I need (for example large print, braille, audio, plain text, an interpreter):\n`,
+              )}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Access size={14} /> {t("Request another format")}
+            </a>
             <p class="small muted">
-              {t("Accessible formats and communication supports are available on request.")}
-              {city?.clerkContact ? ` ${city.clerkContact}` : ""}
+              {t("Accessible formats and communication supports are available on request.")} {t("Run by {who}.", { who: operatorOf(city) })}
             </p>
+            {city?.clerkContact ? (
+              <p class="small muted">
+                {t("Official questions about the decision:")} {city.clerkContact}
+              </p>
+            ) : null}
           </footer>
         </div>
       </aside>
