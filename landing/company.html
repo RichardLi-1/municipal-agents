@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en-CA">
+  <head>
+    <!-- @include head -->
+    <title>Company · Municipal Agents</title>
+    <meta name="description" content="Municipal Agents helps residents understand the decisions that shape their city, and know when they can have a say. Started at CIVIC Hack 2026 in Waterloo, Ontario." />
+    <meta property="og:title" content="Company · Municipal Agents" />
+    <meta property="og:description" content="Our mission, our story from CIVIC Hack 2026, and the rules the product follows." />
+    <meta property="og:image" content="/public/og.jpg" />
+  </head>
+  <body>
+    <!-- @include header -->
+    <main id="main">
+      <section class="page-hero" aria-labelledby="page-title">
+        <div class="hero-bg"><!-- @include map --></div>
+        <div class="wrap">
+          <div class="page-hero-inner">
+            <p class="eyebrow">Company</p>
+            <h1 id="page-title">Everyone affected by a decision should be able to understand it.</h1>
+            <p class="lead">Our mission is to help residents understand the decisions that shape their city, how those decisions may affect them, and when they can have a say, and to help the people who serve them explain it well.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section--tight" style="padding-top: 0" aria-labelledby="story-title">
+        <div class="wrap">
+          <div class="two-col">
+            <div class="sticky-head reveal">
+              <p class="eyebrow">The story</p>
+              <h2 id="story-title" class="h2">A 191-page budget book and a noon deadline.</h2>
+            </div>
+            <div class="prose reveal">
+              <p>The Region of Waterloo's 2027 budget will set regional property taxes and water rates for everyone in its three cities and four townships. The facts are public, but they're spread across a 191-page budget book, asset management reports, transit plans and engagement pages: 344 pages in 19 PDFs and 4 web pages. To speak at council, a resident has to register by noon on 9 December. Most people it affects will never find that date.</p>
+              <p>City staff have the opposite problem. They have to explain decisions accurately, to everyone, in many languages, with small teams. A general chatbot doesn't help: it can state a wrong figure with confidence, and a city can't publish what it hasn't checked.</p>
+              <p>We started Municipal Agents at <strong>CIVIC Hack 2026</strong>, run by the Future Cities Institute at the University of Waterloo from 12 to 14 November 2026, to close that gap. AI does the reading and drafting. Code checks every figure against its page. Staff decide what's published. Residents get five minutes instead of three hundred pages.</p>
+              <p>The prototype is live for three real Waterloo Region decisions, built from public data only: the 2027 Plan and Budget, the Water Supply Strategy, and the zoning variances for Kitchener's new central transit hub.</p>
+            </div>
+          </div>
+
+          <div class="two-col">
+            <div class="sticky-head reveal">
+              <p class="eyebrow">Team</p>
+              <h2 class="h2">Who's building it.</h2>
+            </div>
+            <div class="reveal" style="display: grid; gap: 20px">
+              <div class="team-card">
+                <span class="avatar" aria-hidden="true">RL</span>
+                <div><b>Richard Li</b><span>University of Waterloo</span></div>
+              </div>
+              <p class="muted" style="max-width: 60ch">Built in Waterloo, Ontario. Code, data pipelines and documents were drafted with AI coding tools, directed and reviewed by the team; the product's own agents use a hosted language model. Full credits are in the repository.</p>
+            </div>
+          </div>
+
+          <div class="two-col">
+            <div class="sticky-head reveal">
+              <p class="eyebrow">Where we are</p>
+              <h2 class="h2">Honest status.</h2>
+            </div>
+            <div class="prose reveal">
+              <p>We have a working prototype and no customers, pilots or letters of intent yet. We're not affiliated with the Region of Waterloo or any of its municipalities; the demo uses public data.</p>
+              <p>What we're looking for now:</p>
+              <ul>
+                <li><strong>Two or three Ontario municipalities</strong> for a 90-day pilot on one live decision, with a clerk or communications lead as the reviewer.</li>
+                <li><strong>Introductions</strong> to clerks, communications directors, and IT and privacy leads.</li>
+              </ul>
+              <p><a href="/contact">Get in touch</a>.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="rules-title" style="padding-top: 0">
+        <div class="wrap">
+          <div class="section-head reveal">
+            <p class="eyebrow">How we build</p>
+            <h2 id="rules-title" class="h2">Seven rules, enforced in code.</h2>
+            <p class="lead">These aren't values on a wall. Each one is a check the product runs or a line it won't cross.</p>
+          </div>
+          <ol class="principles">
+            <li class="reveal"><b>Every figure cites a page.</b><span>A statement is accepted only if each quote is found on that page of that source. Unverified statements are shown as such, never silently.</span></li>
+            <li class="reveal reveal-d1"><b>Plain words.</b><span>Grade 8 or lower, measured and shown.</span></li>
+            <li class="reveal"><b>Agents never decide.</b><span>They explain, lay out trade-offs on both sides, and say what's unknown. They never say what residents should think.</span></li>
+            <li class="reveal reveal-d1"><b>Staff publish.</b><span>Nothing is official until a named staff member approves it. Until then a brief says it's a draft, as the demo briefs do.</span></li>
+            <li class="reveal"><b>The record can't be edited quietly.</b><span>Every brief, check, question, answer, approval and dollar spent is appended to a hash-chained log anyone can verify.</span></li>
+            <li class="reveal reveal-d1"><b>Not the official notice.</b><span>Every page says where the official notice is.</span></li>
+            <li class="reveal"><b>Public data only.</b><span>No personal information. Questions aren't tied to anyone, and residents never need an account.</span></li>
+          </ol>
+        </div>
+      </section>
+
+      <!-- @include cta -->
+    </main>
+    <!-- @include footer -->
+  </body>
+</html>

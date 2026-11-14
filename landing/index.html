@@ -1,0 +1,364 @@
+<!doctype html>
+<html lang="en-CA">
+  <head>
+    <!-- @include head -->
+    <title>Municipal Agents: every city decision, explained in five minutes</title>
+    <meta name="description" content="AI agents read a city's own documents and turn a proposed decision into a brief a resident can read in five minutes. Every figure links to its page, and nothing is official until a named staff member approves each statement." />
+    <meta property="og:title" content="Municipal Agents: every city decision, explained in five minutes" />
+    <meta property="og:description" content="Plain-language briefs on proposed municipal decisions. Every figure checked against its page; nothing official until staff approve each statement." />
+    <meta property="og:image" content="/public/og.jpg" />
+  </head>
+  <body>
+    <!-- @include header -->
+    <main id="main">
+      <!-- Hero -->
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-bg"><!-- @include map --></div>
+        <div class="wrap">
+          <div class="hero-inner">
+            <a class="eyebrow eyebrow--chip" href="/decisions"><span class="dot" aria-hidden="true"></span><span>Live demo with Waterloo Region public data<span class="hide-sm"> · Built at CIVIC Hack 2026</span></span></a>
+            <h1 id="hero-title" class="display">Every city decision, explained in five minutes.</h1>
+            <p class="lead">Municipal Agents reads a city's own documents and turns a proposed decision into a plain-language brief: what's proposed, how it may affect you, and when you can have a say. Code checks every quote against its page, nothing is official until a named staff member approves each statement, and every step goes on a public record anyone can verify.</p>
+            <div class="hero-actions">
+              <a class="btn btn-primary btn-lg" href="/decisions">See it live: Waterloo Region <svg class="arrow" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13m-5-6 6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+              <a class="btn btn-ghost btn-lg" href="/contact">Book a pilot</a>
+            </div>
+            <ul class="hero-proof" aria-label="What every brief guarantees">
+              <li><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>A source for every fact</li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>Nothing official without staff approval</li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>No resident accounts</li>
+            </ul>
+          </div>
+
+          <div class="hero-visual">
+            <div class="shot-frame">
+              <img class="shot-light" src="/public/shots/brief-light.webp" srcset="/public/shots/brief-light-sm.webp 1200w, /public/shots/brief-light.webp 2400w" sizes="(max-width: 1260px) 96vw, 1200px" width="2400" height="1350" alt="The Municipal Agents brief for the Region of Waterloo's 2027 budget: a plain-language title, the reading grade, the next chance to have a say with a countdown, cited statements, the region on a map, and a chat pane for questions." fetchpriority="high" decoding="async" />
+              <img class="shot-dark" src="/public/shots/brief-dark.webp" srcset="/public/shots/brief-dark-sm.webp 1200w, /public/shots/brief-dark.webp 2400w" sizes="(max-width: 1260px) 96vw, 1200px" width="2400" height="1350" alt="The same brief in the dark theme." loading="lazy" decoding="async" />
+            </div>
+            <div class="callouts">
+              <div class="callout callout--a">
+                <span class="badge badge--pass"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                <div><b>Quote found on page 7</b><span>Checked in code, not by a model</span></div>
+              </div>
+              <div class="callout callout--b">
+                <span class="badge badge--accent"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h10M4 18h13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></span>
+                <div><b>Grade 7 reading level</b><span>Measured and shown on every brief</span></div>
+              </div>
+              <div class="callout callout--c">
+                <span class="badge badge--amber"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5" width="16" height="15" rx="3.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M4 10h16M9 3v4M15 3v4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+                <div><b>Next chance to have a say</b><span>A countdown, how to take part, and a calendar file</span></div>
+              </div>
+            </div>
+          </div>
+
+          <ul class="proof-row" aria-label="Measured in the prototype">
+            <li class="reveal"><b>Every quote</b><span>checked against its page, in code, before a statement is kept</span></li>
+            <li class="reveal reveal-d1"><b>US$0.24</b><span>in AI fees for a full brief with four lenses, on its first run</span></li>
+            <li class="reveal reveal-d2"><b>US$0.50 · US$5</b><span>hard spending caps per run and per day, enforced in code</span></li>
+          </ul>
+
+          <div class="sources-line">
+            <p>The live demo reads public documents and open data, including</p>
+            <ul aria-label="Public sources the demo reads">
+              <li>Region of Waterloo budget and reports</li>
+              <li>City of Kitchener notices</li>
+              <li>Grand River Transit GTFS</li>
+              <li>OpenStreetMap</li>
+              <li>Statistics Canada census</li>
+              <li>Building permit open data</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- How it works -->
+      <section class="section" id="how" aria-labelledby="how-title">
+        <div class="wrap">
+          <div class="section-head reveal">
+            <p class="eyebrow">How it works</p>
+            <h2 id="how-title" class="h2">From a 300-page staff report to a five-minute brief.</h2>
+            <p class="lead">AI does the reading and drafting. Code checks every figure. People decide what's published.</p>
+          </div>
+          <ol class="steps">
+            <li class="step reveal">
+              <span class="step-n" aria-hidden="true">1</span>
+              <h3 class="h3">Agents read</h3>
+              <p>A lead agent plans the brief and hands questions to specialists. They search the city's reports, budgets, agendas and open data, and draft plain statements, each with a quote and a page.</p>
+              <div class="mini" aria-hidden="true">
+                <span class="mini-tag">Budget book · page 7</span>
+                <div class="mini-doc"><i></i><i></i><mark></mark><i></i><i></i></div>
+              </div>
+            </li>
+            <li class="step reveal reveal-d1">
+              <span class="step-n" aria-hidden="true">2</span>
+              <h3 class="h3">Every figure checked against its page</h3>
+              <p>A statement is kept only if its quote is on the page it cites. The check runs in code, not in a model. When it fails, the agent is told where the quote really is and tries again.</p>
+              <div class="mini" aria-hidden="true">
+                <div class="mini-row"><svg class="ok" width="16" height="16" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Quote found on page 7</div>
+                <div class="mini-row"><svg class="no" width="16" height="16" viewBox="0 0 24 24"><path d="M7 7l10 10M17 7 7 17" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg>Not on page 12: it's on page 14</div>
+              </div>
+            </li>
+            <li class="step reveal reveal-d2">
+              <span class="step-n" aria-hidden="true">3</span>
+              <h3 class="h3">Staff approve</h3>
+              <p>Nothing is official until a named staff member approves, edits or rejects each statement. Edits are re-checked, and every action lands on a public record that can't be changed quietly. Until then a brief is labelled a draft.</p>
+              <div class="mini" aria-hidden="true">
+                <div class="mini-row">Property taxes and user fees pay for regional spending.</div>
+                <div class="mini-actions"><span>Approve</span><span>Edit</span><span>Reject</span></div>
+              </div>
+            </li>
+            <li class="step reveal reveal-d3">
+              <span class="step-n" aria-hidden="true">4</span>
+              <h3 class="h3">Residents understand</h3>
+              <p>A brief in plain words, in their language, with how it may affect them, what's still unknown, and exactly when and how they can have a say.</p>
+              <div class="mini" aria-hidden="true">
+                <div class="langs"><span aria-current="true">English</span><span>Français</span><span lang="pa">ਪੰਜਾਬੀ</span><span lang="ar" dir="rtl">العربية</span><span lang="zh">中文</span><span>+6</span></div>
+                <div class="countdown">Speak at council <small>in 9 days</small></div>
+              </div>
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      <!-- Capabilities -->
+      <section class="section" id="product" aria-labelledby="product-title">
+        <div class="wrap">
+          <div class="section-head reveal">
+            <p class="eyebrow">The product</p>
+            <h2 id="product-title" class="h2">Six specialists. One decision, seen from every side.</h2>
+            <p class="lead">Each answers a question residents and councils actually ask, from the same documents, checked the same way.</p>
+          </div>
+          <div class="bento">
+            <article class="bento-card span-4 bento-card--wide reveal">
+              <div class="bento-copy">
+                <span class="bento-icon" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24"><path d="M7 3.5h7l4.5 4.5v11A1.5 1.5 0 0 1 17 20.5H7A1.5 1.5 0 0 1 5.5 19V5A1.5 1.5 0 0 1 7 3.5Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="m9 13.5 2.2 2.2L15.5 11" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                <h3 class="h3">Decision briefs</h3>
+                <p>What's proposed and why now, how it may affect you, and when you can have a say. Pick who you are (renter, transit rider, senior, newcomer, business owner) and see cited impacts with honest "may" language. Ask anything, in any language, and get an answer with numbered citations.</p>
+              </div>
+              <div class="bento-shot">
+                <img class="shot-light" src="/public/shots/affects-light.webp" width="1440" height="810" alt="The 'Affects you' tab of a brief: pick who you are, such as renter or transit rider, and see cited impacts for each." loading="lazy" decoding="async" />
+                <img class="shot-dark" src="/public/shots/affects-dark.webp" width="1440" height="810" alt="" loading="lazy" decoding="async" />
+              </div>
+            </article>
+            <article class="bento-card span-2 bento-card--fill reveal reveal-d1">
+              <div class="bento-copy">
+                <span class="bento-icon" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24"><rect x="5" y="3.5" width="14" height="14" rx="3.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M5 11h14M8.5 20.5l1.5-3M15.5 20.5l-1.5-3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="8.8" cy="14.2" r="1" fill="currentColor"/><circle cx="15.2" cy="14.2" r="1" fill="currentColor"/></svg></span>
+                <h3 class="h3">Transit access gaps</h3>
+                <p>Connection Scan over the region's bus and light-rail schedules finds the hospitals, groceries and schools a neighbourhood can't reach in 45 minutes, then ranks fixes by people affected.</p>
+              </div>
+              <div class="bento-shot">
+                <img class="shot-light" src="/public/shots/transit-light.webp" width="960" height="720" alt="The transit lens in a brief: travel times, destinations out of reach and service gaps near the decision's area." loading="lazy" decoding="async" />
+                <img class="shot-dark" src="/public/shots/transit-dark.webp" width="960" height="720" alt="" loading="lazy" decoding="async" />
+              </div>
+            </article>
+            <article class="bento-card span-2 reveal">
+              <div class="bento-copy">
+                <span class="bento-icon" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24"><path d="M4.5 19.5h15M7 16.5v-4M11 16.5V8.5M15 16.5v-6M19 16.5V5.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>
+                <h3 class="h3">Lifecycle costs</h3>
+                <p>The upfront price next to 25 to 40 years of operating, maintenance, renewal and environmental costs, per household. Every input is cited or a slider residents can move.</p>
+              </div>
+              <div class="bento-shot">
+                <img class="shot-light" src="/public/shots/costs-light.webp" width="960" height="720" alt="The cost lens: upfront and long-term costs over the asset's life, per household, with adjustable assumptions." loading="lazy" decoding="async" />
+                <img class="shot-dark" src="/public/shots/costs-dark.webp" width="960" height="720" alt="" loading="lazy" decoding="async" />
+              </div>
+            </article>
+            <article class="bento-card span-2 reveal reveal-d1">
+              <div class="bento-copy">
+                <span class="bento-icon" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24"><path d="M6 20.5V4.5M6 5h11l-2.5 4L17 13H6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                <h3 class="h3">Commitments tracker</h3>
+                <p>The public promises a decision touches, from climate targets to housing pledges: who made each one, the target, the latest progress with its source, and what's still unclear.</p>
+              </div>
+              <div class="bento-shot">
+                <img class="shot-light" src="/public/shots/commitments-light.webp" width="960" height="720" alt="The commitments lens: each public commitment the decision touches, with its target, latest progress and status." loading="lazy" decoding="async" />
+                <img class="shot-dark" src="/public/shots/commitments-dark.webp" width="960" height="720" alt="" loading="lazy" decoding="async" />
+              </div>
+            </article>
+            <article class="bento-card span-2 reveal reveal-d2">
+              <div class="bento-copy">
+                <span class="bento-icon" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24"><path d="M4.5 10.5 12 4.5l7.5 6V19a1.5 1.5 0 0 1-1.5 1.5H6A1.5 1.5 0 0 1 4.5 19Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M10 20.5v-5h4v5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></span>
+                <h3 class="h3">Housing pipeline</h3>
+                <p>Units from approval to permit to construction, from open permit data, with the time between stages where the data allow, and where the public trail goes dark.</p>
+              </div>
+              <div class="bento-shot">
+                <img class="shot-light" src="/public/shots/housing-light.webp" width="960" height="720" alt="The housing lens: units by stage from approval to completion, and stages with no public data." loading="lazy" decoding="async" />
+                <img class="shot-dark" src="/public/shots/housing-dark.webp" width="960" height="720" alt="" loading="lazy" decoding="async" />
+              </div>
+            </article>
+            <article class="bento-card span-6 scout reveal">
+              <div class="bento-copy">
+                <span class="bento-icon" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24"><path d="M3.5 19.5h17M6 19.5V13a6 6 0 0 1 12 0v6.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="13.5" r="2.5" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></span>
+                <h3 class="h3">Construction scout <span class="tag-plan tag-illustrative">Illustrative</span></h3>
+                <p>For a project with a line, agents scout candidate work sites from OpenStreetMap, score them by stated weights (room, distance from schools, homes and hospitals, truck access) and stage the work with what residents would notice at each step. The demo is an illustrative scenario, not a Region plan.</p>
+              </div>
+              <div class="render-strip" tabindex="0" role="region" aria-label="Illustrated construction steps from the scenario">
+                <figure><img src="/public/renders/investigate.webp" width="960" height="536" alt="A truck-mounted drill rig takes soil cores in a coned-off lane beside a highway overpass." loading="lazy" decoding="async" /><figcaption><b>1. Read the ground</b>Boreholes along the line and at each shaft.</figcaption></figure>
+                <figure><img src="/public/renders/set-up.webp" width="960" height="536" alt="A retail parking lot fenced with white hoarding, site offices and a wheel wash at the gate." loading="lazy" decoding="async" /><figcaption><b>2. Fence the sites</b>Hoarding, site offices, utilities moved.</figcaption></figure>
+                <figure><img src="/public/renders/shaft.webp" width="960" height="536" alt="Excavators dig a braced launch shaft inside a ring of concrete piles." loading="lazy" decoding="async" /><figcaption><b>3. Dig the launch shaft</b>The loudest stage on site.</figcaption></figure>
+                <figure><img src="/public/renders/launch.webp" width="960" height="536" alt="A large crane lowers a tunnel boring machine cutterhead into the shaft." loading="lazy" decoding="async" /><figcaption><b>4. Launch the machines</b>Oversize loads at night, crane lifts.</figcaption></figure>
+                <figure><img src="/public/renders/bore.webp" width="960" height="536" alt="Dump trucks leave the launch site while the machines bore underground." loading="lazy" decoding="async" /><figcaption><b>5. Bore the tunnels</b>Trucks by day; boring is rarely felt above.</figcaption></figure>
+                <figure><img src="/public/renders/breakthrough.webp" width="960" height="536" alt="A boring machine breaks through the wall of the extraction shaft." loading="lazy" decoding="async" /><figcaption><b>6. Break through</b>Machines lifted out, cross-passages dug.</figcaption></figure>
+                <figure><img src="/public/renders/restore.webp" width="960" height="536" alt="The site restored with new paving, trees and a small vent building." loading="lazy" decoding="async" /><figcaption><b>7. Give the land back</b>Fit-out, then paving and trees return.</figcaption></figure>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- For whom -->
+      <section class="section" id="who" aria-labelledby="who-title">
+        <div class="wrap">
+          <div class="section-head reveal">
+            <p class="eyebrow">Who it's for</p>
+            <h2 id="who-title" class="h2">For the people on both sides of the counter.</h2>
+          </div>
+          <div class="audiences">
+            <article class="card audience reveal">
+              <p class="who">Residents</p>
+              <h3 class="h3">Understand it before it's decided</h3>
+              <p>See what's being decided near you and how it may affect renters, riders, seniors, students, parents or business owners. Find the next date you can take part. You don't need an account, and nothing tracks you.</p>
+              <ul class="checks">
+                <li><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>Plain words, with the reading grade shown</li>
+                <li><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>When and how to take part, with a calendar file</li>
+                <li><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>Ask in your language</li>
+              </ul>
+            </article>
+            <article class="card audience reveal reveal-d1">
+              <p class="who">Clerks and communications</p>
+              <h3 class="h3">Start from a checked draft, not a blank page</h3>
+              <p>Each statement arrives with its quote and page side by side. Approve, edit or reject in one place, and publish under your name with a record of who approved what.</p>
+              <ul class="checks">
+                <li><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>Upload a staff report; agents draft the brief</li>
+                <li><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>Citations re-checked on every edit</li>
+                <li><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>“Not the official notice” on every page</li>
+              </ul>
+            </article>
+            <article class="card audience reveal reveal-d2">
+              <p class="who">Planners and councillors</p>
+              <h3 class="h3">One neutral, sourced link</h3>
+              <p>Lenses you can recognize, with methods and inputs cited. Send constituents a brief that lays out trade-offs on both sides and gives the dates to take part.</p>
+              <ul class="checks">
+                <li><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>Transit, cost, commitment and housing lenses</li>
+                <li><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>Trade-offs on both sides, and what's unknown</li>
+                <li><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>A public record anyone can verify</li>
+              </ul>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- Features -->
+      <section class="section" id="features" aria-labelledby="features-title">
+        <div class="wrap">
+          <div class="section-head reveal">
+            <p class="eyebrow">Why cities can trust it</p>
+            <h2 id="features-title" class="h2">A city can't publish what it hasn't checked. So we check everything.</h2>
+          </div>
+          <ul class="features plain-list">
+            <li class="feature reveal"><span class="bento-icon" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24"><path d="M7 3.5h7l4.5 4.5v11A1.5 1.5 0 0 1 17 20.5H7A1.5 1.5 0 0 1 5.5 19V5A1.5 1.5 0 0 1 7 3.5Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="m9 13.5 2.2 2.2L15.5 11" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><h3 class="h3">Every fact has its page</h3><p>Click any figure to open the source page with the quote highlighted. If a quote can't be found on the page it cites, the statement is never shown as verified.</p></li>
+            <li class="feature reveal reveal-d1"><span class="bento-icon" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24"><circle cx="10" cy="8" r="3.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M3.5 19.5a6.5 6.5 0 0 1 11-4.7M15 17.5l2 2 4-4.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><h3 class="h3">Nothing is official until staff approve it</h3><p>Agents draft. A named clerk or communications officer approves, edits or rejects each statement, then publishes under their own name. Until then, the brief says plainly that it's an unreviewed draft, as every demo brief does today.</p></li>
+            <li class="feature reveal reveal-d2"><span class="bento-icon" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span><h3 class="h3">A record that can't be edited quietly</h3><p>Every brief, approval, question and answer is added to a hash-chained public record. Anyone can check the chain in their browser.</p></li>
+            <li class="feature reveal"><span class="bento-icon" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="3.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M4 10h16M9 3v4M15 3v4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span><h3 class="h3">Have your say, on time</h3><p>A timeline of the decision with the next chance to speak, write in or answer a survey, plus the deadline, the contact and an add-to-calendar button.</p></li>
+            <li class="feature reveal reveal-d1"><span class="bento-icon" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 3.5v17M3.5 12h17" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></span><h3 class="h3">Lenses on the same decision</h3><p>Transit access gaps, lifecycle cost per household, the city's own commitments, and housing from approval to construction, all computed from open data with the method shown.</p></li>
+            <li class="feature reveal reveal-d2"><span class="bento-icon" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24"><path d="M4 6h16M4 12h10M4 18h13" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span><h3 class="h3">Plain words, for everyone</h3><p>Briefs aim for a grade 8 reading level, measured and shown. Designed for WCAG 2.2 AA. Read it in 11 languages; machine translations are labelled.</p></li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Trust strip -->
+      <section class="trust-band" id="trust" aria-labelledby="trust-title">
+        <div class="wrap trust-strip">
+          <h2 id="trust-title" class="trust-title">Trust and compliance</h2>
+          <ul class="trust-chips plain-list">
+              <li><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Verified citations</li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>Hash-chained public record</li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="8" r="3.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M3.5 19.5a6.5 6.5 0 0 1 11-4.7M15 17.5l2 2 4-4.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Staff publish</li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M5.5 19.5a6.5 6.5 0 0 1 13 0M4 4l16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>No resident accounts</li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle cx="12" cy="10" r="2.3" fill="none" stroke="currentColor" stroke-width="2"/></svg>Canadian data residency (planned)</li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="4.8" r="1.8" fill="currentColor"/><path d="M5 8.5c2.3.7 4.6 1 7 1s4.7-.3 7-1M12 9.5v4.5m0 0-3 6.5m3-6.5 3 6.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>WCAG 2.2 AA target</li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5 19.5 6v5.5c0 4.4-3.1 8-7.5 9-4.4-1-7.5-4.6-7.5-9V6Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>AODA</li>
+          </ul>
+          <a class="text-link trust-link" href="/security">Security overview <span aria-hidden="true">→</span></a>
+        </div>
+      </section>
+
+      <!-- Origin -->
+      <section class="section" id="origin" aria-labelledby="origin-title">
+        <div class="wrap origin">
+          <div class="origin-copy reveal">
+            <p class="eyebrow">Where it started</p>
+            <h2 id="origin-title" class="h2">Born at CIVIC Hack 2026.</h2>
+            <p class="lead">Municipal Agents began at CIVIC Hack 2026, run by the Future Cities Institute at the University of Waterloo, 12 to 14 November 2026. The challenge we chose asked:</p>
+            <blockquote>
+              <p>“How might we help residents understand a proposed municipal decision, how it could affect them, and when they can have a say?”</p>
+              <footer>Challenge 1: Making municipal decisions easier to understand</footer>
+            </blockquote>
+            <p class="muted">We answered all three parts, then built the other four challenges in as lenses on the same decision, so a resident never has to leave the brief to see the whole picture.</p>
+          </div>
+          <ol class="challenge-list" aria-label="The five CIVIC Hack challenges and where each lives in the product">
+            <li class="challenge reveal"><span class="n" aria-hidden="true">1</span><div><b>Making municipal decisions easier to understand</b><span>The brief: plain summary, how it affects you, have your say</span></div></li>
+            <li class="challenge reveal reveal-d1"><span class="n" aria-hidden="true">2</span><div><b>Finding gaps in transit access</b><span>Transit lens: schedules against essential destinations</span></div></li>
+            <li class="challenge reveal reveal-d1"><span class="n" aria-hidden="true">3</span><div><b>Making long-term infrastructure costs visible</b><span>Cost lens: the asset's whole life, per household</span></div></li>
+            <li class="challenge reveal reveal-d2"><span class="n" aria-hidden="true">4</span><div><b>Tracking a city's commitments</b><span>Commitments lens: progress, with its source</span></div></li>
+            <li class="challenge reveal reveal-d2"><span class="n" aria-hidden="true">5</span><div><b>From housing approval to construction</b><span>Housing lens: units by stage, and where the trail goes dark</span></div></li>
+          </ol>
+        </div>
+      </section>
+
+      <!-- FAQ -->
+      <section class="section" id="faq" aria-labelledby="faq-title">
+        <div class="wrap faq">
+          <div class="sticky-head reveal">
+            <p class="eyebrow">Questions</p>
+            <h2 id="faq-title" class="h2">Asked and answered.</h2>
+            <p class="muted">Something else? <a class="text-link" href="/contact">Get in touch</a>.</p>
+          </div>
+          <div class="faq-list">
+            <details class="reveal">
+              <summary>Who uses it today?<span class="plus" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg></span></summary>
+              <div><p>No municipality yet. Municipal Agents is a working prototype built at CIVIC Hack 2026 from public Waterloo Region documents and open data. We're looking for our first pilot municipalities.</p></div>
+            </details>
+            <details class="reveal">
+              <summary>Is this the city's official notice?<span class="plus" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg></span></summary>
+              <div><p>No. Every page says so and links to the official notice, which always prevails. Municipal Agents explains a decision; it doesn't replace legal notice or the city's consultation.</p></div>
+            </details>
+            <details class="reveal">
+              <summary>Can the AI get things wrong?<span class="plus" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg></span></summary>
+              <div><p>Yes, which is why it never gets the last word. Code, not a model, checks that every quote is on the page it cites. Sentences with figures that no checked statement supports are removed from answers. Nothing is official until a named staff member approves each statement.</p></div>
+            </details>
+            <details class="reveal">
+              <summary>Does it tell residents what to think?<span class="plus" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg></span></summary>
+              <div><p>No. The agents explain, lay out the trade-offs on both sides, and say what's unknown. They never decide and never recommend a position.</p></div>
+            </details>
+            <details class="reveal">
+              <summary>Who approves what residents see?<span class="plus" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg></span></summary>
+              <div><p>City staff. Agents produce a draft; a clerk or communications officer approves, edits or rejects each statement and publishes under their name. The approval is added to the public record. The demo briefs are unreviewed drafts, and each one says so at the top.</p></div>
+            </details>
+            <details class="reveal">
+              <summary>Do you collect personal information?<span class="plus" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg></span></summary>
+              <div><p>No, by design. Residents don't need an account, and there are no tracking scripts. Questions are logged with no identifier, and IP addresses are kept in memory only for rate limiting, never written. Please don't type personal details into a question, because questions are part of the public record.</p></div>
+            </details>
+            <details class="reveal">
+              <summary>Where is data stored, and where does the AI run?<span class="plus" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg></span></summary>
+              <div><p>The prototype stores its record in Toronto and uses a US-hosted AI model. Running the model in Canada or on the city's own infrastructure is planned for City and Region plans. Only public documents and residents' questions are sent to the model.</p></div>
+            </details>
+            <details class="reveal">
+              <summary>Is it accessible, and is it available in French?<span class="plus" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg></span></summary>
+              <div><p>It's designed to WCAG 2.2 AA, beyond Ontario's WCAG 2.0 AA requirement; an independent audit comes before the first paid launch. French is included in every plan, and machine translations are labelled.</p></div>
+            </details>
+            <details class="reveal">
+              <summary>How does a municipality start?<span class="plus" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg></span></summary>
+              <div><p>With a 90-day paid pilot on one live decision, priced below typical low-value purchase limits. We set up your city from your public documents, your staff review and publish, and you get a short report you can take to council. <a class="text-link" href="/contact">Book a pilot</a>.</p></div>
+            </details>
+            <details class="reveal">
+              <summary>Is the code open?<span class="plus" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg></span></summary>
+              <div><p>Yes. The code is on <a class="text-link" href="https://github.com/RichardLi-1/municipal-agents" rel="noopener">GitHub</a>, so a city's IT team can read exactly what runs.</p></div>
+            </details>
+          </div>
+        </div>
+      </section>
+
+      <!-- @include cta -->
+    </main>
+    <!-- @include footer -->
+  </body>
+</html>

@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en-CA">
+  <head>
+    <!-- @include head -->
+    <title>Security and trust · Municipal Agents</title>
+    <meta name="description" content="How Municipal Agents keeps AI-drafted briefs trustworthy: citations checked in code, staff approval, a hash-chained public record, no resident accounts, Canadian hosting and accessibility." />
+    <meta property="og:title" content="Security and trust · Municipal Agents" />
+    <meta property="og:description" content="Citations checked in code, staff approval, a hash-chained public record, and no resident accounts." />
+    <meta property="og:image" content="/public/og.jpg" />
+  </head>
+  <body>
+    <!-- @include header -->
+    <main id="main">
+      <section class="page-hero" aria-labelledby="page-title">
+        <div class="hero-bg"><!-- @include map --></div>
+        <div class="wrap">
+          <div class="page-hero-inner">
+            <p class="eyebrow">Security and trust</p>
+            <h1 id="page-title">Trust is the product.</h1>
+            <p class="lead">A city can't publish text it hasn't checked, and a resident shouldn't have to take an AI's word for anything. Here is how each safeguard works, and what's live today versus offered for pilots.</p>
+            <ul class="hero-proof" style="justify-content: flex-start" aria-label="Status labels">
+              <li><span class="status status--live">Live</span> in the demo today</li>
+              <li><span class="status status--pilot">Pilot option</span> offered in a pilot agreement</li>
+              <li><span class="status status--target">Target</span> or <span class="status status--target">Planned</span> not done yet</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section--tight" style="padding-top: 0" aria-label="Safeguards">
+        <div class="wrap">
+          <div class="two-col">
+            <div class="sticky-head reveal">
+              <p class="eyebrow">Accuracy</p>
+              <h2 class="h2">Every statement earns its place.</h2>
+            </div>
+            <div class="sec-list">
+              <article class="sec-item reveal">
+                <span class="status status--live">Live</span>
+                <h3><span class="ti" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24"><path d="M7 3.5h7l4.5 4.5v11A1.5 1.5 0 0 1 17 20.5H7A1.5 1.5 0 0 1 5.5 19V5A1.5 1.5 0 0 1 7 3.5Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="m9 13.5 2.2 2.2L15.5 11" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Citations checked in code</h3>
+                <p>An agent can only record a statement through a tool that checks it on the spot: each citation's quote must be found on the page it names, in that source, after normalising spacing and line breaks. If it isn't, the statement is rejected and the agent is told where the quote really is, or the closest line on that page. A model never grades its own citations.</p>
+              </article>
+              <article class="sec-item reveal">
+                <span class="status status--live">Live</span>
+                <h3><span class="ti" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24"><circle cx="10" cy="8" r="3.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M3.5 19.5a6.5 6.5 0 0 1 11-4.7M15 17.5l2 2 4-4.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Staff publish, statement by statement</h3>
+                <p>Agent output is a draft until a named staff member reviews every statement: approve, edit (and the citation is checked again) or reject, with a note. Until then the brief says, in plain words, "Draft: not yet reviewed by city staff". The demo briefs are unreviewed drafts today: no municipality has reviewed them.</p>
+              </article>
+              <article class="sec-item reveal">
+                <span class="status status--live">Live</span>
+                <h3><span class="ti" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24"><path d="M12 3.5v17M3.5 12h17" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></span>Neutral by design</h3>
+                <p>Agents explain, lay out the trade-offs on both sides and say what the documents don't answer. They never decide and never tell anyone what to think. Every brief is labelled "Not the official notice" and links to the notice that is.</p>
+              </article>
+              <article class="sec-item reveal">
+                <span class="status status--live">Live</span>
+                <h3><span class="ti" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24"><path d="M4 6h16M4 12h10M4 18h13" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>Plain language, measured</h3>
+                <p>Briefs aim for a grade 8 reading level or lower. The grade is computed in code (Flesch-Kincaid) and shown on the brief, even when it misses the target.</p>
+              </article>
+            </div>
+          </div>
+
+          <div class="two-col">
+            <div class="sticky-head reveal">
+              <p class="eyebrow">Accountability</p>
+              <h2 class="h2">A record that can't be edited quietly.</h2>
+            </div>
+            <div class="sec-list">
+              <article class="sec-item reveal">
+                <span class="status status--live">Live</span>
+                <h3><span class="ti" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>Hash-chained public record</h3>
+                <p>Every brief, citation check, question, answer, review, approval and dollar spent is appended to a log. Each entry's SHA-256 hash covers the previous entry's hash, so changing or deleting any past entry breaks every hash after it. The database refuses updates and deletes, and anyone can re-check the whole chain in their browser on the <a class="text-link" href="/log">public record</a>.</p>
+                <div class="hash" aria-label="How an entry is chained">hash(n) = SHA-256( hash(n-1) + entry(n) )
+entry(n) = { seq, at, actor, kind, decision, payload }</div>
+                <p>The honest limit: whoever controls the server could rebuild the whole chain. Publishing the latest hash somewhere outside the city's sole control closes that gap; it's planned.</p>
+              </article>
+              <article class="sec-item reveal">
+                <span class="status status--live">Live</span>
+                <h3><span class="ti" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24"><path d="M4.5 19.5h15M7 16.5v-4M11 16.5V8.5M15 16.5v-6M19 16.5V5.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>Spend caps and a public spend page</h3>
+                <p>Each agent run stops at 40 model calls or US$0.50, and the public site at US$5 a day. Every call's tokens and cost are logged and shown on the <a class="text-link" href="/spend">spend page</a>, with an estimate of energy use.</p>
+              </article>
+              <article class="sec-item reveal">
+                <span class="status status--live">Live</span>
+                <h3><span class="ti" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24"><path d="m8 8-4 4 4 4M16 8l4 4-4 4M13.5 5l-3 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Open code, one container</h3>
+                <p>The code is on <a class="text-link" href="https://github.com/RichardLi-1/municipal-agents" rel="noopener">GitHub</a>. The agents are a small loop a city's IT team can read, with plain-language skill files staff can review. The service is one process in one container, with one settings file per city.</p>
+              </article>
+            </div>
+          </div>
+
+          <div class="two-col">
+            <div class="sticky-head reveal">
+              <p class="eyebrow">Privacy and data</p>
+              <h2 class="h2">Public data in. No personal data kept.</h2>
+            </div>
+            <div class="sec-list">
+              <article class="sec-item reveal">
+                <span class="status status--live">Live</span>
+                <h3><span class="ti" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M5.5 19.5a6.5 6.5 0 0 1 13 0M4 4l16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>No resident accounts, no tracking</h3>
+                <p>Residents never sign up. There are no analytics or advertising trackers. Questions are logged on the public record with no identifier, and IP addresses stay in memory only for the rate-limit window, never written. Because questions are public, residents are asked not to type personal details. This site stores one thing in your browser, your light or dark choice, and sends nothing; the contact form only opens a pre-filled GitHub issue for you to post.</p>
+              </article>
+              <article class="sec-item reveal">
+                <span class="status status--live">Live</span>
+                <h3><span class="ti" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24"><path d="M7 3.5h7l4.5 4.5v11A1.5 1.5 0 0 1 17 20.5H7A1.5 1.5 0 0 1 5.5 19V5A1.5 1.5 0 0 1 7 3.5Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M9 12h6M9 15.5h4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>Public documents only</h3>
+                <p>Agents read what the city has already published: reports, budgets, notices, agendas and open data. Each source is listed with its publisher, date, licence and link.</p>
+              </article>
+              <article class="sec-item reveal">
+                <span class="status status--target">Planned</span>
+                <h3><span class="ti" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><circle cx="12" cy="10" r="2.3" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></span>Canadian data residency</h3>
+                <p>Today the service and its record run on one server in Toronto, and the demo's model calls go to a hosted model in the United States. Guaranteed Canadian storage on every plan, model processing in Canada on City and Region plans, and an on-premises option with a model of the city's choice are planned, and would be written into each pilot agreement.</p>
+              </article>
+              <article class="sec-item reveal">
+                <span class="status status--target">Planned</span>
+                <h3><span class="ti" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24"><rect x="5" y="10.5" width="14" height="10" rx="3" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M8.5 10.5V8a3.5 3.5 0 0 1 7 0v2.5" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></span>Staff sign-in</h3>
+                <p>In the demo, staff tools sit behind a shared passcode. A sign-in for each staff member, with roles, and single sign-on with the city's identity provider are on the roadmap.</p>
+              </article>
+              <article class="sec-item reveal">
+                <span class="status status--pilot">Pilot option</span>
+                <h3><span class="ti" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24"><path d="M12 3.5 19.5 6v5.5c0 4.4-3.1 8-7.5 9-4.4-1-7.5-4.6-7.5-9V6Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></span>A procurement-ready trust package</h3>
+                <p>For pilots: a privacy impact assessment template (Ontario's MFIPPA in mind), AI disclosure text for your website, and an algorithmic impact assessment in the style of the federal tool.</p>
+              </article>
+              <article class="sec-item reveal">
+                <span class="status status--target">Planned</span>
+                <h3><span class="ti" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24"><rect x="4.5" y="3.5" width="15" height="17" rx="3" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M8.5 8.5h7M8.5 12h7M8.5 15.5h4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>SOC 2</h3>
+                <p>We don't have a SOC 2 or ISO 27001 report yet. A SOC 2 Type I readiness assessment and audit are planned for 2027, with a penetration test summary in the procurement package.</p>
+              </article>
+            </div>
+          </div>
+
+          <div class="two-col">
+            <div class="sticky-head reveal">
+              <p class="eyebrow">Accessibility</p>
+              <h2 class="h2">Readable by everyone it affects.</h2>
+            </div>
+            <div class="sec-list">
+              <article class="sec-item reveal">
+                <span class="status status--target">Target</span>
+                <h3><span class="ti" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24"><circle cx="12" cy="4.8" r="1.8" fill="currentColor"/><path d="M5 8.5c2.3.7 4.6 1 7 1s4.7-.3 7-1M12 9.5v4.5m0 0-3 6.5m3-6.5 3 6.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>WCAG 2.2 AA and AODA</h3>
+                <p>We build and test to WCAG 2.2 Level AA: keyboard and screen-reader use, visible focus, contrast in light and dark themes, a high-contrast mode, and reduced motion when asked. That goes beyond the WCAG 2.0 Level AA that the Accessibility for Ontarians with Disabilities Act requires of designated public-sector websites. An independent audit is part of our plan; it hasn't happened yet.</p>
+              </article>
+              <article class="sec-item reveal">
+                <span class="status status--live">Live</span>
+                <h3><span class="ti" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M3.5 12h17M12 3.5c2.5 2.4 3.6 5.3 3.6 8.5s-1.1 6.1-3.6 8.5c-2.5-2.4-3.6-5.3-3.6-8.5s1.1-6.1 3.6-8.5Z" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></span>In residents' languages</h3>
+                <p>The interface is in English and French. A translator agent renders briefs and answers in other languages from the staff-approved text, keeping every citation.</p>
+              </article>
+            </div>
+          </div>
+
+          <div class="two-col">
+            <div class="sticky-head reveal">
+              <p class="eyebrow">Report a problem</p>
+              <h2 class="h2">Found something wrong?</h2>
+            </div>
+            <div class="prose reveal">
+              <p>For a security vulnerability, please open a private advisory on <a href="https://github.com/RichardLi-1/municipal-agents/security/advisories/new" rel="noopener">GitHub</a>. Our <a href="/.well-known/security.txt">security.txt</a> lists the same contacts.</p>
+              <p>For a wrong statement in a brief, or anything else, <a href="/contact?topic=other">contact us</a>. Corrections are made by staff and land on the public record like everything else.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- @include cta -->
+    </main>
+    <!-- @include footer -->
+  </body>
+</html>

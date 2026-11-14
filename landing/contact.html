@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en-CA">
+  <head>
+    <!-- @include head -->
+    <title>Contact · Municipal Agents</title>
+    <meta name="description" content="Book a pilot or ask a question. We don't have a company email yet: this form opens a pre-filled issue on our public GitHub repository, and this site collects nothing." />
+    <meta property="og:title" content="Contact · Municipal Agents" />
+    <meta property="og:description" content="Book a 90-day pilot on one live decision, or ask us anything." />
+    <meta property="og:image" content="/public/og.jpg" />
+  </head>
+  <body>
+    <!-- @include header -->
+    <main id="main">
+      <section class="page-hero" aria-labelledby="page-title">
+        <div class="hero-bg"><!-- @include map --></div>
+        <div class="wrap">
+          <div class="page-hero-inner">
+            <p class="eyebrow">Contact</p>
+            <h1 id="page-title">Let's explain your next decision.</h1>
+            <p class="lead">Tell us which decision is coming up and who needs to understand it. We'll reply with what a pilot would look like for your municipality.</p>
+            <p class="contact-honest">We don't have a company email address yet. This form opens a new issue on our <a class="text-link" href="https://github.com/RichardLi-1/municipal-agents" rel="noopener">public GitHub repository</a> with your message filled in, so you can edit it before posting. You'll need a GitHub account, and issues are public, so leave out anything private.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section--tight" style="padding-top: 0" aria-label="Contact form">
+        <div class="wrap contact-grid">
+          <form class="pane form-pane reveal" data-issue="https://github.com/RichardLi-1/municipal-agents/issues/new" novalidate>
+            <fieldset class="field">
+              <legend>What's this about?</legend>
+              <div class="choice-row" style="margin-top: 8px">
+                <label class="choice"><input type="radio" name="topic" value="A pilot" checked /><span>A pilot</span></label>
+                <label class="choice"><input type="radio" name="topic" value="A demo call" /><span>A demo call</span></label>
+                <label class="choice"><input type="radio" name="topic" value="Pricing" /><span>Pricing</span></label>
+                <label class="choice"><input type="radio" name="topic" value="Security or privacy review" /><span>Security review</span></label>
+                <label class="choice"><input type="radio" name="topic" value="Something else" /><span>Something else</span></label>
+              </div>
+            </fieldset>
+            <div class="field-row">
+              <div class="field">
+                <label for="f-name">Your name</label>
+                <input id="f-name" name="name" type="text" autocomplete="name" required />
+              </div>
+              <div class="field">
+                <label for="f-role">Your role</label>
+                <input id="f-role" name="role" type="text" autocomplete="organization-title" placeholder="For example: Deputy Clerk" />
+              </div>
+            </div>
+            <div class="field">
+              <label for="f-org">Municipality or organisation</label>
+              <input id="f-org" name="org" type="text" autocomplete="organization" required />
+            </div>
+            <div class="field">
+              <label for="f-msg">What would you like residents to understand?</label>
+              <span class="hint" id="f-msg-hint">A decision coming to council, a budget, a housing application, a transit change.</span>
+              <textarea id="f-msg" name="message" aria-describedby="f-msg-hint" required></textarea>
+            </div>
+            <div style="display: flex; flex-wrap: wrap; gap: 12px; align-items: center">
+              <button class="btn btn-primary btn-lg" type="submit">Open a GitHub issue</button>
+              <p class="form-note" style="margin: 0">
+                <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span>Nothing is sent from this page. GitHub opens in a new tab with your message, and nothing is posted until you submit it there.</span>
+              </p>
+            </div>
+            <p class="form-sent" data-sent hidden role="status">GitHub should be open in a new tab. If it didn't open, <a class="text-link" href="https://github.com/RichardLi-1/municipal-agents/issues/new?title=Pilot%20enquiry" rel="noopener">open a new issue here</a>.</p>
+          </form>
+
+          <aside class="side-list" aria-label="Other ways to reach us">
+            <div class="side-card reveal reveal-d1">
+              <h2>Skip the form</h2>
+              <p>Open a blank pilot enquiry on GitHub and write it yourself.</p>
+              <p><a class="text-link" href="https://github.com/RichardLi-1/municipal-agents/issues/new?title=Pilot%20enquiry" rel="noopener">New pilot enquiry</a></p>
+            </div>
+            <div class="side-card reveal reveal-d2">
+              <h2>See it first</h2>
+              <p>The live demo covers three real Waterloo Region decisions.</p>
+              <p><a class="text-link" href="/decisions">Open the demo</a></p>
+            </div>
+            <div class="side-card reveal reveal-d3">
+              <h2>Security and privacy</h2>
+              <p>Please don't report a vulnerability in a public issue. Use a <a class="text-link" href="https://github.com/RichardLi-1/municipal-agents/security/advisories/new" rel="noopener">private advisory</a> instead, or read the <a class="text-link" href="/security">security overview</a>.</p>
+            </div>
+          </aside>
+        </div>
+      </section>
+    </main>
+    <!-- @include footer -->
+  </body>
+</html>
