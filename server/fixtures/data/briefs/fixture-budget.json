@@ -1,0 +1,21 @@
+{
+  "decisionId": "fixture-budget",
+  "lang": "en",
+  "generatedAt": "2026-11-14T05:00:00Z",
+  "models": ["fixture"],
+  "costUsd": 0,
+  "readingGrade": 6.5,
+  "summary": [
+    { "id": "s1", "text": "The levy would rise 4.9%.", "kind": "fact", "citations": [{ "sourceId": "fixture-report", "page": 1, "quote": "The levy rises 4.9 per cent." }], "verified": true },
+    { "id": "s2", "text": "Council votes on 25 November.", "kind": "fact", "citations": [{ "sourceId": "fixture-report", "page": 2, "quote": "Council votes on 25 November." }], "verified": true }
+  ],
+  "whyNow": [],
+  "impacts": [{ "audience": "renter", "label": "If you rent", "statements": [{ "id": "i1", "text": "Rent may rise if landlords pass on the tax.", "kind": "estimate", "citations": [], "verified": false }] }],
+  "haveYourSay": [],
+  "figures": [],
+  "unknowns": [],
+  "tradeoffs": [],
+  "glossary": [],
+  "lenses": {},
+  "review": { "status": "draft" }
+}

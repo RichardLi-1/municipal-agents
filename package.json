@@ -4,11 +4,13 @@
   "type": "module",
   "engines": { "node": ">=24" },
   "scripts": {
-    "dev": "node server/main.ts",
-    "start": "node server/main.ts",
-    "build": "npm --prefix web run build",
-    "test": "node --test \"server/**/*.test.ts\" \"agents/**/*.test.ts\" \"lenses/**/*.test.ts\"",
-    "typecheck": "tsc --noEmit -p tsconfig.json"
+    "dev": "node --env-file-if-exists=.env --disable-warning=ExperimentalWarning --watch server/main.ts",
+    "start": "node --env-file-if-exists=.env --disable-warning=ExperimentalWarning server/main.ts",
+    "build": "npm --prefix web ci && npm --prefix web run build",
+    "test": "node --disable-warning=ExperimentalWarning --test \"server/**/*.test.ts\" \"agents/**/*.test.ts\" \"lenses/**/*.test.ts\"",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "smoke": "node scripts/smoke.ts",
+    "deploy": "fly deploy --remote-only && npm run smoke"
   },
   "devDependencies": {
     "@types/geojson": "^7946.0.16",

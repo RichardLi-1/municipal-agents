@@ -1,0 +1,14 @@
+{
+  "id": "fixture-past",
+  "city": "test-region",
+  "title": "Old bylaw",
+  "plainTitle": "An old decision with no chances left to take part",
+  "decidedBy": "Testville Council",
+  "status": "decided",
+  "officialUrl": "https://example.org/old",
+  "sources": [],
+  "timeline": [{ "id": "vote", "date": "2020-01-01", "kind": "council", "title": "Vote", "plain": "Done.", "participation": [{ "method": "attend", "instructions": "Too late." }] }],
+  "center": [-80.5, 43.4],
+  "zoom": 12,
+  "lenses": []
+}

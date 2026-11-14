@@ -1,0 +1,30 @@
+{
+  "id": "fixture-budget",
+  "city": "test-region",
+  "title": "2099 Budget",
+  "plainTitle": "Testville's budget: a 4.9% tax rise",
+  "decidedBy": "Testville Council",
+  "status": "in-consultation",
+  "officialUrl": "https://example.org/budget",
+  "sources": ["fixture-report"],
+  "timeline": [
+    { "id": "report", "date": "2020-10-01", "kind": "report", "title": "Staff report", "plain": "Staff publish the draft budget." },
+    {
+      "id": "input",
+      "date": "2099-11-20T18:00:00-05:00",
+      "end": "2099-11-20T21:00:00-05:00",
+      "kind": "public-input",
+      "title": "Public input meeting",
+      "plain": "Tell councillors what you think, in person or online.",
+      "location": "Council Chambers, 200 Main St, Testville",
+      "participation": [
+        { "method": "speak", "instructions": "Register to speak, by noon the day before; you get 5 minutes.", "deadline": "2099-11-19T12:00:00-05:00", "url": "https://example.org/delegate", "contact": "clerk@example.org" },
+        { "method": "write", "instructions": "Email your comments; they go to every councillor." }
+      ]
+    },
+    { "id": "council", "date": "2099-11-25", "kind": "council", "title": "Council vote", "plain": "Council votes on the budget.", "participation": [{ "method": "watch", "instructions": "Watch the livestream." }] }
+  ],
+  "center": [-80.49, 43.45],
+  "zoom": 12,
+  "lenses": ["cost", "housing"]
+}

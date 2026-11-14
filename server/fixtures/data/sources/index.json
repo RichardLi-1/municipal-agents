@@ -1,0 +1,13 @@
+[
+  {
+    "id": "fixture-report",
+    "title": "Fixture staff report",
+    "publisher": "Town of Testville",
+    "url": "https://example.org/report.pdf",
+    "published": "2026-10-01",
+    "retrieved": "2026-11-13",
+    "pages": 2,
+    "licence": "Public record",
+    "kind": "staff-report"
+  }
+]

@@ -1,0 +1,11 @@
+{
+  "id": "test-region",
+  "name": "Test Region",
+  "municipalities": ["Testville"],
+  "center": [-80.49, 43.45],
+  "zoom": 11,
+  "languages": ["en", "fr"],
+  "officialNoticeUrl": "https://example.org/notices",
+  "clerkContact": "clerk@example.org",
+  "openData": []
+}
