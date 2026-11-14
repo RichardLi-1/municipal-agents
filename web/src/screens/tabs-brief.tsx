@@ -121,6 +121,43 @@ export function nextChance(d: Decision, now = Date.now()): TimelineEvent | undef
     .sort((a, b) => when(targetOf(a, now)) - when(targetOf(b, now)))[0];
 }
 
+/** Subscribe to the dates: links from GET /api/calendar (webcal, Google, Outlook). */
+function Subscribe({ decisionId }: { decisionId: string }) {
+  const t = useT();
+  const [links, setLinks] = useState<{ webcal?: string; google?: string; outlook?: string; ics?: string; privacy?: string } | null>(null);
+  const [open, setOpen] = useState(false);
+  const [err, setErr] = useState(false);
+  const toggle = async () => {
+    if (!open && !links) {
+      try {
+        const r = await fetch(`/api/calendar?decisions=${encodeURIComponent(decisionId)}`);
+        if (!r.ok) throw new Error(String(r.status));
+        const j = await r.json();
+        setLinks(j.links ?? j);
+      } catch {
+        setErr(true);
+      }
+    }
+    setOpen(!open);
+  };
+  return (
+    <div class="subscribe">
+      <button type="button" class="btn btn-ghost btn-sm" aria-expanded={open} onClick={toggle}>
+        {t("Subscribe to all dates")}
+      </button>
+      {open ? (
+        <div class="subscribe-pop" role="group" aria-label={t("Subscribe to all dates")}>
+          {err ? <p class="small muted">{t("Subscriptions aren't available right now.")}</p> : null}
+          {links?.webcal ? <a class="link" href={links.webcal}>{t("Apple Calendar or any calendar app")}</a> : null}
+          {links?.google ? <a class="link" href={links.google} target="_blank" rel="noopener noreferrer">Google Calendar <External size={13} /></a> : null}
+          {links?.outlook ? <a class="link" href={links.outlook} target="_blank" rel="noopener noreferrer">Outlook <External size={13} /></a> : null}
+          {links?.privacy ? <p class="small muted">{links.privacy}</p> : null}
+        </div>
+      ) : null}
+    </div>
+  );
+}
+
 export function HaveYourSay({ decision, brief }: { decision: Decision; brief?: Brief }) {
   const t = useT();
   const sample = useStore(sampleMode);
@@ -222,9 +259,12 @@ export function HaveYourSay({ decision, brief }: { decision: Decision; brief?: B
       {brief ? <Statements list={brief.haveYourSay} /> : null}
       <div class="row-between">
         <h2 class="section-title">{t("Timeline")}</h2>
-        <a class="btn btn-secondary btn-sm" href={api.calendarUrl(decision.id)} download={`${decision.id}.ics`} onClick={downloadIcs}>
-          <Calendar size={16} /> {t("Add to calendar")}
-        </a>
+        <div class="row-gap">
+          <a class="btn btn-secondary btn-sm" href={api.calendarUrl(decision.id)} download={`${decision.id}.ics`} onClick={downloadIcs}>
+            <Calendar size={16} /> {t("Add to calendar")}
+          </a>
+          {!sample ? <Subscribe decisionId={decision.id} /> : null}
+        </div>
       </div>
       {pastEvents.length ? (
         <details class="tl-past">

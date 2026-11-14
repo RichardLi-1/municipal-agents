@@ -157,6 +157,26 @@ function and makes no guesses.
 Every input must come from a cited page or be marked as an assumption that the resident can
 change. Tests: `cost.test.ts`.
 
+**Built lenses.** `node lenses/cost/build.ts [<decisionId> | --all]` writes
+`data/lenses/cost-<decisionId>.json` with no model calls. Each one is built from figures whose
+quotes `shared/verify.ts` finds on their pages, and the build stops if any quote fails.
+
+| Decision | Asset | Years | Main inputs |
+|---|---|---|---|
+| `row-2027-budget` | GRT Business Plan | 25 | Capital $798M; operating $195M → $262M (GRT plan pp. 5–7) |
+| `row-water-supply-2051` | Water supply system | 25 | Capital program $847.6M (budget book p. 63); operating $47.9M (p. 62); renewal gap and need (infrastructure gap report p. 1) |
+| `kitchener-transit-hub-variances` | Kitchener Central Transit Hub | 40 | Capital $35M + $129M, by year (KCTH update p. 5, budget book p. 87) |
+
+The transit hub's upkeep and running costs are labelled assumptions, because none are
+published.
+
+Households are 222,426: the 2021 Census count of private households in Waterloo Region,
+from the Statistics Canada API.
+
+Each lens also carries `inputNotes` (how each input was set), `unknowns` and a text
+`summary`. Every slider uses an id that the web's Costs tab recomputes. Tests:
+`build.test.ts`.
+
 ## Commitments (challenge 4): `lenses/commitments/`
 
 `commitmentStatus({baselineYear, baselineValue, targetYear, targetValue, latestYear,

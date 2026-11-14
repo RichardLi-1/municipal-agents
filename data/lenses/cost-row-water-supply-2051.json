@@ -1,0 +1,706 @@
+{
+ "inputs": {
+  "startYear": 2026,
+  "horizonYears": 25,
+  "capital": [
+   {
+    "year": 2026,
+    "amount": 67272000
+   },
+   {
+    "year": 2027,
+    "amount": 73470000
+   },
+   {
+    "year": 2028,
+    "amount": 78996000
+   },
+   {
+    "year": 2029,
+    "amount": 101738000
+   },
+   {
+    "year": 2030,
+    "amount": 111037000
+   },
+   {
+    "year": 2031,
+    "amount": 83011800
+   },
+   {
+    "year": 2032,
+    "amount": 83011800
+   },
+   {
+    "year": 2033,
+    "amount": 83011800
+   },
+   {
+    "year": 2034,
+    "amount": 83011800
+   },
+   {
+    "year": 2035,
+    "amount": 83011800
+   }
+  ],
+  "serviceStartYear": 2026,
+  "operatingPerYear": 47878000,
+  "maintenancePerYear": 0,
+  "renewals": [
+   {
+    "afterYears": 0,
+    "amount": 23200000,
+    "label": "renewal not yet funded"
+   },
+   {
+    "afterYears": 1,
+    "amount": 23200000,
+    "label": "renewal not yet funded"
+   },
+   {
+    "afterYears": 2,
+    "amount": 23200000,
+    "label": "renewal not yet funded"
+   },
+   {
+    "afterYears": 3,
+    "amount": 23200000,
+    "label": "renewal not yet funded"
+   },
+   {
+    "afterYears": 4,
+    "amount": 23200000,
+    "label": "renewal not yet funded"
+   },
+   {
+    "afterYears": 5,
+    "amount": 23200000,
+    "label": "renewal not yet funded"
+   },
+   {
+    "afterYears": 6,
+    "amount": 23200000,
+    "label": "renewal not yet funded"
+   },
+   {
+    "afterYears": 7,
+    "amount": 23200000,
+    "label": "renewal not yet funded"
+   },
+   {
+    "afterYears": 8,
+    "amount": 23200000,
+    "label": "renewal not yet funded"
+   },
+   {
+    "afterYears": 9,
+    "amount": 23200000,
+    "label": "renewal not yet funded"
+   },
+   {
+    "afterYears": 10,
+    "amount": 54700000,
+    "label": "renewal need after the capital plan"
+   },
+   {
+    "afterYears": 11,
+    "amount": 54700000,
+    "label": "renewal need after the capital plan"
+   },
+   {
+    "afterYears": 12,
+    "amount": 54700000,
+    "label": "renewal need after the capital plan"
+   },
+   {
+    "afterYears": 13,
+    "amount": 54700000,
+    "label": "renewal need after the capital plan"
+   },
+   {
+    "afterYears": 14,
+    "amount": 54700000,
+    "label": "renewal need after the capital plan"
+   },
+   {
+    "afterYears": 15,
+    "amount": 54700000,
+    "label": "renewal need after the capital plan"
+   },
+   {
+    "afterYears": 16,
+    "amount": 54700000,
+    "label": "renewal need after the capital plan"
+   },
+   {
+    "afterYears": 17,
+    "amount": 54700000,
+    "label": "renewal need after the capital plan"
+   },
+   {
+    "afterYears": 18,
+    "amount": 54700000,
+    "label": "renewal need after the capital plan"
+   },
+   {
+    "afterYears": 19,
+    "amount": 54700000,
+    "label": "renewal need after the capital plan"
+   },
+   {
+    "afterYears": 20,
+    "amount": 54700000,
+    "label": "renewal need after the capital plan"
+   },
+   {
+    "afterYears": 21,
+    "amount": 54700000,
+    "label": "renewal need after the capital plan"
+   },
+   {
+    "afterYears": 22,
+    "amount": 54700000,
+    "label": "renewal need after the capital plan"
+   },
+   {
+    "afterYears": 23,
+    "amount": 54700000,
+    "label": "renewal need after the capital plan"
+   },
+   {
+    "afterYears": 24,
+    "amount": 54700000,
+    "label": "renewal need after the capital plan"
+   }
+  ],
+  "households": 222426
+ },
+ "asset": "The Region's water supply system: its 2026–2035 capital program, running costs and renewal, before the new strategy's choices are added",
+ "horizonYears": 25,
+ "discountRate": 0,
+ "households": 222426,
+ "figures": [
+  {
+   "id": "water-capital",
+   "label": "Water supply capital program, 2026–2035",
+   "value": 847572000,
+   "unit": "CAD",
+   "display": "$847.6 million",
+   "citation": {
+    "sourceId": "row-2026-budget-book",
+    "page": 63,
+    "quote": "Total Expenditure 32,829 34,443 67,272 73,470 78,996 101,738 111,037 432,513 415,059 847,572"
+   },
+   "kind": "cited"
+  },
+  {
+   "id": "water-growth",
+   "label": "Of which upgrades, expansion and new facilities",
+   "value": 487917000,
+   "unit": "CAD",
+   "display": "$487.9 million",
+   "citation": {
+    "sourceId": "row-2026-budget-book",
+    "page": 63,
+    "quote": "Upgrades, Expansion & New Facilities 12,003 7,398 19,401 24,448 38,478 63,083 66,559 211,969 275,948 487,917"
+   },
+   "kind": "cited"
+  },
+  {
+   "id": "water-dc",
+   "label": "Paid by water development charges",
+   "value": 311904000,
+   "unit": "CAD",
+   "display": "$311.9 million",
+   "citation": {
+    "sourceId": "row-2026-budget-book",
+    "page": 63,
+    "quote": "Development Charge - Water 13,664 14,342 28,006 32,666 29,530 40,427 41,895 172,524 139,379 311,904"
+   },
+   "kind": "cited"
+  },
+  {
+   "id": "water-rates",
+   "label": "Paid from the Water Capital Reserve (water rates)",
+   "value": 525407000,
+   "unit": "CAD",
+   "display": "$525.4 million",
+   "citation": {
+    "sourceId": "row-2026-budget-book",
+    "page": 63,
+    "quote": "Water Capital Reserve 18,887 18,517 37,404 39,996 48,764 60,296 67,739 254,200 271,207 525,407"
+   },
+   "kind": "cited"
+  },
+  {
+   "id": "water-operating",
+   "label": "Water supply operating spending, 2026 (before capital financing)",
+   "value": 47878000,
+   "unit": "CAD",
+   "display": "$47.9 million a year",
+   "citation": {
+    "sourceId": "row-2026-budget-book",
+    "page": 62,
+    "quote": "Subtotal - Operating 45,447 47,878 2,431 5.3%"
+   },
+   "kind": "cited"
+  },
+  {
+   "id": "water-renewal-need",
+   "label": "Water renewal the Region says is needed each year",
+   "value": 54700000,
+   "unit": "CAD",
+   "display": "$54.7 million a year",
+   "citation": {
+    "sourceId": "row-infrastructure-gap-2026",
+    "page": 1,
+    "quote": "Water *Optimal Renewal Investment Needs $54.7M"
+   },
+   "kind": "cited"
+  },
+  {
+   "id": "water-renewal-planned",
+   "label": "Water renewal the 10-year plan pays for each year (average)",
+   "value": 31500000,
+   "unit": "CAD",
+   "display": "$31.5 million a year",
+   "citation": {
+    "sourceId": "row-infrastructure-gap-2026",
+    "page": 1,
+    "quote": "The annual average level of investment in $31.5M"
+   },
+   "kind": "cited"
+  },
+  {
+   "id": "water-renewal-gap",
+   "label": "Water renewal funding gap",
+   "value": 23200000,
+   "unit": "CAD",
+   "display": "$23.2 million a year",
+   "citation": {
+    "sourceId": "row-infrastructure-gap-2026",
+    "page": 1,
+    "quote": "Infrastructure Funding Gap $23.2M"
+   },
+   "kind": "cited"
+  },
+  {
+   "id": "water-bill",
+   "label": "Average household's water supply cost, 2026",
+   "value": 243.63,
+   "unit": "CAD",
+   "display": "$243.63 a year",
+   "citation": {
+    "sourceId": "row-2026-budget-book",
+    "page": 11,
+    "quote": "Water $230.05 $243.63 $13.58 5.90%"
+   },
+   "kind": "cited"
+  },
+  {
+   "id": "households-2021",
+   "label": "Households in Waterloo Region (2021 Census)",
+   "value": 222426,
+   "unit": "households",
+   "display": "222,426 households",
+   "kind": "computed",
+   "formula": "Statistics Canada, 2021 Census of Population: private dwellings occupied by usual residents, summed over Waterloo Region's 766 dissemination areas (Census Profile API, characteristic 5; Statistics Canada Open Licence). Not from a city document.",
+   "inputs": []
+  },
+  {
+   "id": "water-capital-later",
+   "label": "Capital each year 2031–2035 (five-year subtotal spread evenly)",
+   "value": 83011800,
+   "unit": "CAD",
+   "display": "$83.0 million a year",
+   "kind": "computed",
+   "formula": "$415.1 million for 2031–2035 ÷ 5 (the budget book gives only the five-year subtotal)",
+   "inputs": [
+    "water-capital"
+   ]
+  }
+ ],
+ "series": [
+  {
+   "year": 2026,
+   "capital": 67272000,
+   "operating": 47878000,
+   "maintenance": 0,
+   "renewal": 23200000,
+   "environmental": 0
+  },
+  {
+   "year": 2027,
+   "capital": 73470000,
+   "operating": 47878000,
+   "maintenance": 0,
+   "renewal": 23200000,
+   "environmental": 0
+  },
+  {
+   "year": 2028,
+   "capital": 78996000,
+   "operating": 47878000,
+   "maintenance": 0,
+   "renewal": 23200000,
+   "environmental": 0
+  },
+  {
+   "year": 2029,
+   "capital": 101738000,
+   "operating": 47878000,
+   "maintenance": 0,
+   "renewal": 23200000,
+   "environmental": 0
+  },
+  {
+   "year": 2030,
+   "capital": 111037000,
+   "operating": 47878000,
+   "maintenance": 0,
+   "renewal": 23200000,
+   "environmental": 0
+  },
+  {
+   "year": 2031,
+   "capital": 83011800,
+   "operating": 47878000,
+   "maintenance": 0,
+   "renewal": 23200000,
+   "environmental": 0
+  },
+  {
+   "year": 2032,
+   "capital": 83011800,
+   "operating": 47878000,
+   "maintenance": 0,
+   "renewal": 23200000,
+   "environmental": 0
+  },
+  {
+   "year": 2033,
+   "capital": 83011800,
+   "operating": 47878000,
+   "maintenance": 0,
+   "renewal": 23200000,
+   "environmental": 0
+  },
+  {
+   "year": 2034,
+   "capital": 83011800,
+   "operating": 47878000,
+   "maintenance": 0,
+   "renewal": 23200000,
+   "environmental": 0
+  },
+  {
+   "year": 2035,
+   "capital": 83011800,
+   "operating": 47878000,
+   "maintenance": 0,
+   "renewal": 23200000,
+   "environmental": 0
+  },
+  {
+   "year": 2036,
+   "capital": 0,
+   "operating": 47878000,
+   "maintenance": 0,
+   "renewal": 54700000,
+   "environmental": 0
+  },
+  {
+   "year": 2037,
+   "capital": 0,
+   "operating": 47878000,
+   "maintenance": 0,
+   "renewal": 54700000,
+   "environmental": 0
+  },
+  {
+   "year": 2038,
+   "capital": 0,
+   "operating": 47878000,
+   "maintenance": 0,
+   "renewal": 54700000,
+   "environmental": 0
+  },
+  {
+   "year": 2039,
+   "capital": 0,
+   "operating": 47878000,
+   "maintenance": 0,
+   "renewal": 54700000,
+   "environmental": 0
+  },
+  {
+   "year": 2040,
+   "capital": 0,
+   "operating": 47878000,
+   "maintenance": 0,
+   "renewal": 54700000,
+   "environmental": 0
+  },
+  {
+   "year": 2041,
+   "capital": 0,
+   "operating": 47878000,
+   "maintenance": 0,
+   "renewal": 54700000,
+   "environmental": 0
+  },
+  {
+   "year": 2042,
+   "capital": 0,
+   "operating": 47878000,
+   "maintenance": 0,
+   "renewal": 54700000,
+   "environmental": 0
+  },
+  {
+   "year": 2043,
+   "capital": 0,
+   "operating": 47878000,
+   "maintenance": 0,
+   "renewal": 54700000,
+   "environmental": 0
+  },
+  {
+   "year": 2044,
+   "capital": 0,
+   "operating": 47878000,
+   "maintenance": 0,
+   "renewal": 54700000,
+   "environmental": 0
+  },
+  {
+   "year": 2045,
+   "capital": 0,
+   "operating": 47878000,
+   "maintenance": 0,
+   "renewal": 54700000,
+   "environmental": 0
+  },
+  {
+   "year": 2046,
+   "capital": 0,
+   "operating": 47878000,
+   "maintenance": 0,
+   "renewal": 54700000,
+   "environmental": 0
+  },
+  {
+   "year": 2047,
+   "capital": 0,
+   "operating": 47878000,
+   "maintenance": 0,
+   "renewal": 54700000,
+   "environmental": 0
+  },
+  {
+   "year": 2048,
+   "capital": 0,
+   "operating": 47878000,
+   "maintenance": 0,
+   "renewal": 54700000,
+   "environmental": 0
+  },
+  {
+   "year": 2049,
+   "capital": 0,
+   "operating": 47878000,
+   "maintenance": 0,
+   "renewal": 54700000,
+   "environmental": 0
+  },
+  {
+   "year": 2050,
+   "capital": 0,
+   "operating": 47878000,
+   "maintenance": 0,
+   "renewal": 54700000,
+   "environmental": 0
+  }
+ ],
+ "totals": {
+  "capital": 847572000,
+  "operating": 1196950000,
+  "maintenance": 0,
+  "renewal": 1052500000,
+  "environmental": 0,
+  "lifecycle": 3097022000,
+  "perHousehold": 13923.83
+ },
+ "statements": [
+  {
+   "id": "w-cap",
+   "kind": "fact",
+   "text": "The Region plans $847.6 million of water supply capital work from 2026 to 2035, with $73.5 million in 2027.",
+   "citations": [
+    {
+     "sourceId": "row-2026-budget-book",
+     "page": 63,
+     "quote": "Total Expenditure 32,829 34,443 67,272 73,470 78,996 101,738 111,037 432,513 415,059 847,572"
+    }
+   ],
+   "verified": true
+  },
+  {
+   "id": "w-growth",
+   "kind": "fact",
+   "text": "$487.9 million of that is for upgrades, expansion and new facilities.",
+   "citations": [
+    {
+     "sourceId": "row-2026-budget-book",
+     "page": 63,
+     "quote": "Upgrades, Expansion & New Facilities 12,003 7,398 19,401 24,448 38,478 63,083 66,559 211,969 275,948 487,917"
+    }
+   ],
+   "verified": true
+  },
+  {
+   "id": "w-fund",
+   "kind": "fact",
+   "text": "Development charges on new building pay $311.9 million of it, and water rates pay $525.4 million through the Water Capital Reserve.",
+   "citations": [
+    {
+     "sourceId": "row-2026-budget-book",
+     "page": 63,
+     "quote": "Development Charge - Water 13,664 14,342 28,006 32,666 29,530 40,427 41,895 172,524 139,379 311,904"
+    },
+    {
+     "sourceId": "row-2026-budget-book",
+     "page": 63,
+     "quote": "Water Capital Reserve 18,887 18,517 37,404 39,996 48,764 60,296 67,739 254,200 271,207 525,407"
+    }
+   ],
+   "verified": true
+  },
+  {
+   "id": "w-op",
+   "kind": "fact",
+   "text": "Running the water supply system costs $47.9 million in 2026, before paying for capital.",
+   "citations": [
+    {
+     "sourceId": "row-2026-budget-book",
+     "page": 62,
+     "quote": "Subtotal - Operating 45,447 47,878 2,431 5.3%"
+    }
+   ],
+   "verified": true
+  },
+  {
+   "id": "w-gap",
+   "kind": "fact",
+   "text": "The Region says its water assets need $54.7 million a year of renewal, but the 10-year plan invests $31.5 million a year, a gap of $23.2 million a year.",
+   "citations": [
+    {
+     "sourceId": "row-infrastructure-gap-2026",
+     "page": 1,
+     "quote": "Water *Optimal Renewal Investment Needs $54.7M"
+    },
+    {
+     "sourceId": "row-infrastructure-gap-2026",
+     "page": 1,
+     "quote": "The annual average level of investment in $31.5M"
+    },
+    {
+     "sourceId": "row-infrastructure-gap-2026",
+     "page": 1,
+     "quote": "Infrastructure Funding Gap $23.2M"
+    }
+   ],
+   "verified": true
+  },
+  {
+   "id": "w-bill",
+   "kind": "fact",
+   "text": "Water supply costs the average household $243.63 in 2026, up 5.9%.",
+   "citations": [
+    {
+     "sourceId": "row-2026-budget-book",
+     "page": 11,
+     "quote": "Water $230.05 $243.63 $13.58 5.90%"
+    }
+   ],
+   "verified": true
+  }
+ ],
+ "assumptions": [
+  {
+   "id": "horizonYears",
+   "label": "Years counted",
+   "value": 25,
+   "unit": "years",
+   "min": 10,
+   "max": 50,
+   "step": 5,
+   "why": "25 years (2026–2050) runs close to the strategy's 2051 horizon. Pipes, wells and plants last longer, so their renewal keeps going after that."
+  },
+  {
+   "id": "discountRate",
+   "label": "Discount rate",
+   "value": 0,
+   "unit": "%",
+   "min": 0,
+   "max": 7,
+   "step": 0.5,
+   "why": "At 0% every year's dollar counts the same. A higher rate counts future dollars for less, as many public-sector cost studies do (3% is common)."
+  },
+  {
+   "id": "operatingPerYear",
+   "label": "Yearly running cost",
+   "value": 47878000,
+   "unit": "CAD",
+   "min": 30000000,
+   "max": 90000000,
+   "step": 1000000,
+   "why": "The 2026 operating budget, held flat in today's dollars. New wells or sources chosen by the strategy will add running costs that are not published yet."
+  },
+  {
+   "id": "renewalScale",
+   "label": "Renewal counted",
+   "value": 100,
+   "unit": "%",
+   "min": 0,
+   "max": 200,
+   "step": 10,
+   "why": "2026–2035: the $23.2 million a year the Region says is missing from renewal. After 2035: the full $54.7 million a year need, assuming it stays at today's level. Slide to 0 to count only what is budgeted."
+  },
+  {
+   "id": "capitalOverrun",
+   "label": "Capital cost overrun",
+   "value": 0,
+   "unit": "%",
+   "min": 0,
+   "max": 50,
+   "step": 5,
+   "why": "Construction prices can rise faster than budgets. Slide to see what an overrun on the capital program adds."
+  },
+  {
+   "id": "households",
+   "label": "Households sharing the cost",
+   "value": 222426,
+   "unit": "households",
+   "min": 150000,
+   "max": 350000,
+   "step": 1000,
+   "why": "222,426 households lived in Waterloo Region at the 2021 Census (Statistics Canada). There are more now. Businesses pay too, so this is a rough share per home, not a bill."
+  }
+ ],
+ "decisionId": "row-water-supply-2051",
+ "method": "Lifecycle cost = capital in the years it is spent + operating and maintenance in each year of service + renewals in the years they fall + emissions × carbon price (none counted here), over the years shown, in today's dollars, undiscounted unless a discount rate is set. Built in code by lenses/cost from figures whose quotes were checked on their pages; everything else is a labelled assumption.",
+ "inputNotes": [
+  "Capital: the budget book's yearly totals for 2026–2030 (cited) and its 2031–2035 subtotal spread evenly (assumption). 2026 includes earlier approvals not yet spent.",
+  "No capital after 2035 is counted: the strategy's new sources will add to it, and their costs are not published.",
+  "Operating: the 2026 operating subtotal (cited), held flat in today's dollars (assumption). Maintenance is inside it.",
+  "Renewal: the unfunded gap ($23.2 million a year, cited) for 2026–2035, then the full need ($54.7 million a year, cited) after the 10-year plan ends (assumption). The gap report's 'Water' line covers the Region's water assets, which may include more than water supply.",
+  "Emissions are not counted: no document gives the water system's emissions."
+ ],
+ "unknowns": [
+  "The cost of each shortlisted water source option: not published until the strategy's evaluation is released.",
+  "How water rates would change to pay for the preferred option."
+ ],
+ "summary": "LIFECYCLE COST over 25 years (2026-2050), service from 2026, discount rate 0.0%, today's dollars:\n- Capital $847.6 million (27%)\n- Operating $1.20 billion (39%)\n- Maintenance $0 (0%)\n- Renewal $1.05 billion (34%)\n- Environmental (emissions x carbon price) $0 (0%)\n- Lifecycle total $3.10 billion; the upfront price is 27% of it.\n- Per household (222,426 households): $13,924 over the period, about $557 a year.\nComputed by lenses/cost from the inputs given; each input must be cited or marked as an assumption."
+}

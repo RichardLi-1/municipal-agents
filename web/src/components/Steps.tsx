@@ -1,7 +1,8 @@
 import { useEffect, useState } from "preact/hooks";
 import type { RunState, StepState } from "../lib/run.ts";
 import { useT } from "../lib/i18n.ts";
-import { Check, Cross } from "./icons.tsx";
+import { Check, Cross, Replay } from "./icons.tsx";
+import { fmtDate } from "../lib/format.ts";
 
 const NAMES: Record<string, string> = {
   lead: "Lead",
@@ -89,6 +90,12 @@ export function StepsPanel({ run, collapseWhenDone = true }: { run: RunState; ti
   const done = run.steps.filter((s) => s.status === "done").length;
   return (
     <section class="steps-wrap" aria-label={t("Agents at work")}>
+      {run.replay ? (
+        <p class="replay-chip">
+          <Replay size={13} />{" "}
+          {run.replay.label ?? t("Replay of the agents' real run on {date}", { date: fmtDate(run.replay.at) })}
+        </p>
+      ) : null}
       <button type="button" class="step-head plan-head" aria-expanded={open} onClick={() => setOpen(!open)}>
         <Mark state={run.done ? (run.error ? "failed" : "done") : "plan"} />
         <span class="step-name">
@@ -97,7 +104,6 @@ export function StepsPanel({ run, collapseWhenDone = true }: { run: RunState; ti
             {agentName(run.planner ?? "lead")} · {t("{n} of {total} specialists done", { n: done, total: run.steps.length })}
           </span>
         </span>
-        {run.replay ? <span class="replay-chip replay-chip--inline">{t("Replay of a real run")}</span> : null}
         <span class="chev" aria-hidden="true" />
       </button>
       {open ? (

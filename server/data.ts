@@ -217,7 +217,8 @@ export class Store {
     const general: Partial<Record<LensId, { value: unknown; score: number }>> = {};
     for (const file of files) {
       const rel = path.relative(root, file).replace(/\.json$/, "").toLowerCase();
-      const words = rel.split(/[/._-]+/);
+      // Drop the decision id first: "kitchener-transit-hub-variances" must not read as a transit lens.
+      const words = rel.replace(decision.id.toLowerCase(), "").split(/[/._-]+/);
       const names = (id: string) => new RegExp(`(^|[/._-])${id.toLowerCase()}([/._-]|$)`).test(rel);
       if (others.some(names)) continue;
       const value = readJson<Record<string, unknown>>(file);

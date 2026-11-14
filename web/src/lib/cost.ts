@@ -26,8 +26,20 @@ export function recompute(lens: CostLens, values: Record<string, number>) {
     return v.length ? v[Math.floor(v.length / 2)] : 0;
   };
   const opStart = base.find((s) => s.operating > 0 || s.maintenance > 0)?.year ?? first;
-  const operating = values.operatingPerYear ?? steady("operating");
-  const maintenance = values.maintenancePerYear ?? steady("maintenance");
+  // Keep each year's own operating and upkeep (a ramp stays a ramp): a slider scales them
+  // by its change from the default, or sets a flat amount when there's nothing to scale.
+  const lastOf = (k: Part) => {
+    for (let j = base.length - 1; j >= 0; j--) if (base[j][k] > 0) return base[j][k];
+    return 0;
+  };
+  const yearly = (k: "operating" | "maintenance", id: string, b: Row | undefined, live: boolean) => {
+    if (!live) return 0;
+    const stored = b ? b[k] : lastOf(k);
+    const v = values[id];
+    if (v === undefined) return stored;
+    if (!def[id]) return stored + v; // a slider starting at 0 adds a flat amount
+    return stored ? stored * (v / def[id]) : v;
+  };
   const environmental = steady("environmental") * ratio("carbonPrice");
   const capitalScale =
     (values.capitalCost !== undefined && lens.totals.capital ? values.capitalCost / lens.totals.capital : 1) *
@@ -43,8 +55,8 @@ export function recompute(lens: CostLens, values: Record<string, number>) {
     series.push({
       year,
       capital: ((b?.capital ?? 0) * capitalScale) / d,
-      operating: (live ? operating : 0) / d,
-      maintenance: (live ? maintenance : 0) / d,
+      operating: yearly("operating", "operatingPerYear", b, live) / d,
+      maintenance: yearly("maintenance", "maintenancePerYear", b, live) / d,
       renewal: ((b?.renewal ?? 0) * renewalScale) / d,
       environmental: (live ? environmental : 0) / d,
     });

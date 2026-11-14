@@ -46,6 +46,15 @@ All retrieved 2026-11-14 by `node lenses/transit/fetch.ts` into `data/cache/` (d
   Derived file: **`population-da-2021.geojson`**: one point per DA (centroid of its largest part) with its
   2021 population and land area.
 
+## Cost
+
+- **2021 Census private households by dissemination area**, Statistics Canada, Census Profile SDMX
+  API, characteristic 5 ("Private dwellings occupied by usual residents"):
+  https://api.statcan.gc.ca/census-recensement/profile/sdmx/rest/data/STC_CP,DF_DA/A5..1.5.1?startPeriod=2021.
+  Retrieved 2026-11-14. Licence: Statistics Canada Open Licence. Summed over Waterloo Region's 766
+  dissemination areas: 222,426 households. This is the `households` figure in `data/lenses/cost-*.json`.
+  Every other cost input is quoted from a page in `data/sources/`.
+
 ## Housing
 
 All retrieved 2026-11-14 by `lenses/housing/fetch.ts` into `data/cache/housing/`. The lens

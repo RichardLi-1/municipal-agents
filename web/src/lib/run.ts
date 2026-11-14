@@ -54,6 +54,8 @@ export function reduceRun(prev: RunState, e: AgentEvent): RunState {
     case "tool":
       return upd(e.id, (x) => ({ ...x, tools: [...x.tools, { tool: e.tool, summary: e.summary }] }), e);
     case "statement":
+      // A statement from a step we don't show (e.g. the lead merging): no new row for it.
+      if (!s.steps.some((x) => x.id === e.id)) return s;
       return upd(e.id, (x) => ({ ...x, statements: [...x.statements, e.statement] }));
     case "step.end":
       return upd(e.id, (x) => ({ ...x, status: e.status, summary: e.summary }), e);

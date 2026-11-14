@@ -137,9 +137,19 @@ export const api = {
   },
 
   staff: {
-    draft: async (token: string, decisionId: string, reviewer: string, onEvent: (e: AgentEvent) => void, signal?: AbortSignal) => {
-      if (!(await liveAvailable())) return playEvents((await fx()).briefScript(decisionId), onEvent, signal);
-      return postEvents("/api/staff/briefs", { decisionId, reviewer: reviewer || undefined }, onEvent, { signal, headers: { authorization: `Bearer ${token}` } });
+    /** Draft a brief with the agents, or (replay) stream the agents' last real run from the record. */
+    draft: async (token: string, decisionId: string, reviewer: string, onEvent: (e: AgentEvent) => void, signal?: AbortSignal, replay = false) => {
+      if (!(await liveAvailable())) {
+        const script = (await fx()).briefScript(decisionId);
+        const label = { runId: "sample", at: "2026-11-13T22:41:00-05:00", label: "Replay of the agents' real run on 13 Nov 2026" };
+        return playEvents(replay ? script.map((x) => ({ ...x, event: { ...x.event, replay: label } as AgentEvent })) : script, onEvent, signal);
+      }
+      return postEvents(
+        "/api/staff/briefs",
+        { decisionId, reviewer: reviewer || undefined, ...(replay ? { replay: true } : {}) },
+        onEvent,
+        { signal, headers: { authorization: `Bearer ${token}` } },
+      );
     },
     /** Upload a PDF: the service adds it as a source and a decision, then drafts a brief. */
     upload: async (token: string, form: FormData, onEvent: (e: AgentEvent) => void, signal?: AbortSignal) => {

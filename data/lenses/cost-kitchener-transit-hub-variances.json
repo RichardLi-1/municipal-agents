@@ -1,0 +1,662 @@
+{
+ "inputs": {
+  "startYear": 2026,
+  "horizonYears": 40,
+  "capital": [
+   {
+    "year": 2026,
+    "amount": 5503000
+   },
+   {
+    "year": 2027,
+    "amount": 27801000
+   },
+   {
+    "year": 2028,
+    "amount": 78425000
+   },
+   {
+    "year": 2029,
+    "amount": 35461000
+   },
+   {
+    "year": 2030,
+    "amount": 16302000
+   }
+  ],
+  "serviceStartYear": 2031,
+  "operatingPerYear": 0,
+  "maintenancePerYear": 3269840,
+  "households": 222426
+ },
+ "asset": "Kitchener Central Transit Hub (Phases 1 and 2): the Region's capital budget, with upkeep and running costs as assumptions because none are published",
+ "horizonYears": 40,
+ "discountRate": 0,
+ "households": 222426,
+ "figures": [
+  {
+   "id": "kcth-phase1",
+   "label": "Phase 1 budget (early works, pedestrian bridge and ramp)",
+   "value": 35000000,
+   "unit": "CAD",
+   "display": "$35 million",
+   "citation": {
+    "sourceId": "row-kcth-update-2026",
+    "page": 5,
+    "quote": "includes a budget of $35 million for the Kitchener Central Transit Hub Project Phase 1"
+   },
+   "kind": "cited"
+  },
+  {
+   "id": "kcth-phase2",
+   "label": "Phase 2 budget (the hub)",
+   "value": 129000000,
+   "unit": "CAD",
+   "display": "$129 million",
+   "citation": {
+    "sourceId": "row-kcth-update-2026",
+    "page": 5,
+    "quote": "includes a budget of $129 million for the Kitchener Central Transit Hub Project Phase 2"
+   },
+   "kind": "cited"
+  },
+  {
+   "id": "kcth-early-years",
+   "label": "Project 90170 KCTH Early Works by year (2026–2029)",
+   "value": 34926000,
+   "unit": "CAD",
+   "display": "$34.9 million",
+   "citation": {
+    "sourceId": "row-2026-budget-book",
+    "page": 87,
+    "quote": "90170 KCTH Early Works 2,090 140 2,230 4,810 19,000 8,886 34,926 34,926"
+   },
+   "kind": "cited"
+  },
+  {
+   "id": "kcth-hub-years",
+   "label": "Project 90179 Kitchener Central Transit Hub by year (2026–2030)",
+   "value": 128566000,
+   "unit": "CAD",
+   "display": "$128.6 million",
+   "citation": {
+    "sourceId": "row-2026-budget-book",
+    "page": 87,
+    "quote": "90179 Kitchener Central Transit Hub 563 2,710 3,273 22,991 59,425 26,575 16,302 128,566 128,566"
+   },
+   "kind": "cited"
+  },
+  {
+   "id": "kcth-phase2-federal",
+   "label": "Federal funding for Phase 2",
+   "value": 52000000,
+   "unit": "CAD",
+   "display": "$52 million",
+   "citation": {
+    "sourceId": "row-kcth-update-2026",
+    "page": 5,
+    "quote": "$52 million from the Federal government"
+   },
+   "kind": "cited"
+  },
+  {
+   "id": "kcth-done",
+   "label": "Hub and site works targeted for completion",
+   "value": 2031,
+   "unit": "year",
+   "display": "end of 2031",
+   "citation": {
+    "sourceId": "row-kcth-update-2026",
+    "page": 3,
+    "quote": "The transit hub and related site works are targeted for completion by the end of 2031"
+   },
+   "kind": "cited"
+  },
+  {
+   "id": "households-2021",
+   "label": "Households in Waterloo Region (2021 Census)",
+   "value": 222426,
+   "unit": "households",
+   "display": "222,426 households",
+   "kind": "computed",
+   "formula": "Statistics Canada, 2021 Census of Population: private dwellings occupied by usual residents, summed over Waterloo Region's 766 dissemination areas (Census Profile API, characteristic 5; Statistics Canada Open Licence). Not from a city document.",
+   "inputs": []
+  },
+  {
+   "id": "kcth-capital-total",
+   "label": "Capital by year, both projects",
+   "value": 163492000,
+   "unit": "CAD",
+   "display": "$163.5 million",
+   "kind": "computed",
+   "formula": "90170 + 90179, each year 2026–2030, from the 2026 budget book (2026 includes earlier approvals not yet spent)",
+   "inputs": [
+    "kcth-early-years",
+    "kcth-hub-years"
+   ]
+  },
+  {
+   "id": "kcth-upkeep",
+   "label": "Upkeep each year (assumption: 2% of capital)",
+   "value": 3269840,
+   "unit": "CAD",
+   "display": "$3.3 million a year",
+   "kind": "assumption",
+   "formula": "2% × capital",
+   "inputs": [
+    "kcth-capital-total"
+   ]
+  }
+ ],
+ "series": [
+  {
+   "year": 2026,
+   "capital": 5503000,
+   "operating": 0,
+   "maintenance": 0,
+   "renewal": 0,
+   "environmental": 0
+  },
+  {
+   "year": 2027,
+   "capital": 27801000,
+   "operating": 0,
+   "maintenance": 0,
+   "renewal": 0,
+   "environmental": 0
+  },
+  {
+   "year": 2028,
+   "capital": 78425000,
+   "operating": 0,
+   "maintenance": 0,
+   "renewal": 0,
+   "environmental": 0
+  },
+  {
+   "year": 2029,
+   "capital": 35461000,
+   "operating": 0,
+   "maintenance": 0,
+   "renewal": 0,
+   "environmental": 0
+  },
+  {
+   "year": 2030,
+   "capital": 16302000,
+   "operating": 0,
+   "maintenance": 0,
+   "renewal": 0,
+   "environmental": 0
+  },
+  {
+   "year": 2031,
+   "capital": 0,
+   "operating": 0,
+   "maintenance": 3269840,
+   "renewal": 0,
+   "environmental": 0
+  },
+  {
+   "year": 2032,
+   "capital": 0,
+   "operating": 0,
+   "maintenance": 3269840,
+   "renewal": 0,
+   "environmental": 0
+  },
+  {
+   "year": 2033,
+   "capital": 0,
+   "operating": 0,
+   "maintenance": 3269840,
+   "renewal": 0,
+   "environmental": 0
+  },
+  {
+   "year": 2034,
+   "capital": 0,
+   "operating": 0,
+   "maintenance": 3269840,
+   "renewal": 0,
+   "environmental": 0
+  },
+  {
+   "year": 2035,
+   "capital": 0,
+   "operating": 0,
+   "maintenance": 3269840,
+   "renewal": 0,
+   "environmental": 0
+  },
+  {
+   "year": 2036,
+   "capital": 0,
+   "operating": 0,
+   "maintenance": 3269840,
+   "renewal": 0,
+   "environmental": 0
+  },
+  {
+   "year": 2037,
+   "capital": 0,
+   "operating": 0,
+   "maintenance": 3269840,
+   "renewal": 0,
+   "environmental": 0
+  },
+  {
+   "year": 2038,
+   "capital": 0,
+   "operating": 0,
+   "maintenance": 3269840,
+   "renewal": 0,
+   "environmental": 0
+  },
+  {
+   "year": 2039,
+   "capital": 0,
+   "operating": 0,
+   "maintenance": 3269840,
+   "renewal": 0,
+   "environmental": 0
+  },
+  {
+   "year": 2040,
+   "capital": 0,
+   "operating": 0,
+   "maintenance": 3269840,
+   "renewal": 0,
+   "environmental": 0
+  },
+  {
+   "year": 2041,
+   "capital": 0,
+   "operating": 0,
+   "maintenance": 3269840,
+   "renewal": 0,
+   "environmental": 0
+  },
+  {
+   "year": 2042,
+   "capital": 0,
+   "operating": 0,
+   "maintenance": 3269840,
+   "renewal": 0,
+   "environmental": 0
+  },
+  {
+   "year": 2043,
+   "capital": 0,
+   "operating": 0,
+   "maintenance": 3269840,
+   "renewal": 0,
+   "environmental": 0
+  },
+  {
+   "year": 2044,
+   "capital": 0,
+   "operating": 0,
+   "maintenance": 3269840,
+   "renewal": 0,
+   "environmental": 0
+  },
+  {
+   "year": 2045,
+   "capital": 0,
+   "operating": 0,
+   "maintenance": 3269840,
+   "renewal": 0,
+   "environmental": 0
+  },
+  {
+   "year": 2046,
+   "capital": 0,
+   "operating": 0,
+   "maintenance": 3269840,
+   "renewal": 0,
+   "environmental": 0
+  },
+  {
+   "year": 2047,
+   "capital": 0,
+   "operating": 0,
+   "maintenance": 3269840,
+   "renewal": 0,
+   "environmental": 0
+  },
+  {
+   "year": 2048,
+   "capital": 0,
+   "operating": 0,
+   "maintenance": 3269840,
+   "renewal": 0,
+   "environmental": 0
+  },
+  {
+   "year": 2049,
+   "capital": 0,
+   "operating": 0,
+   "maintenance": 3269840,
+   "renewal": 0,
+   "environmental": 0
+  },
+  {
+   "year": 2050,
+   "capital": 0,
+   "operating": 0,
+   "maintenance": 3269840,
+   "renewal": 0,
+   "environmental": 0
+  },
+  {
+   "year": 2051,
+   "capital": 0,
+   "operating": 0,
+   "maintenance": 3269840,
+   "renewal": 0,
+   "environmental": 0
+  },
+  {
+   "year": 2052,
+   "capital": 0,
+   "operating": 0,
+   "maintenance": 3269840,
+   "renewal": 0,
+   "environmental": 0
+  },
+  {
+   "year": 2053,
+   "capital": 0,
+   "operating": 0,
+   "maintenance": 3269840,
+   "renewal": 0,
+   "environmental": 0
+  },
+  {
+   "year": 2054,
+   "capital": 0,
+   "operating": 0,
+   "maintenance": 3269840,
+   "renewal": 0,
+   "environmental": 0
+  },
+  {
+   "year": 2055,
+   "capital": 0,
+   "operating": 0,
+   "maintenance": 3269840,
+   "renewal": 0,
+   "environmental": 0
+  },
+  {
+   "year": 2056,
+   "capital": 0,
+   "operating": 0,
+   "maintenance": 3269840,
+   "renewal": 0,
+   "environmental": 0
+  },
+  {
+   "year": 2057,
+   "capital": 0,
+   "operating": 0,
+   "maintenance": 3269840,
+   "renewal": 0,
+   "environmental": 0
+  },
+  {
+   "year": 2058,
+   "capital": 0,
+   "operating": 0,
+   "maintenance": 3269840,
+   "renewal": 0,
+   "environmental": 0
+  },
+  {
+   "year": 2059,
+   "capital": 0,
+   "operating": 0,
+   "maintenance": 3269840,
+   "renewal": 0,
+   "environmental": 0
+  },
+  {
+   "year": 2060,
+   "capital": 0,
+   "operating": 0,
+   "maintenance": 3269840,
+   "renewal": 0,
+   "environmental": 0
+  },
+  {
+   "year": 2061,
+   "capital": 0,
+   "operating": 0,
+   "maintenance": 3269840,
+   "renewal": 0,
+   "environmental": 0
+  },
+  {
+   "year": 2062,
+   "capital": 0,
+   "operating": 0,
+   "maintenance": 3269840,
+   "renewal": 0,
+   "environmental": 0
+  },
+  {
+   "year": 2063,
+   "capital": 0,
+   "operating": 0,
+   "maintenance": 3269840,
+   "renewal": 0,
+   "environmental": 0
+  },
+  {
+   "year": 2064,
+   "capital": 0,
+   "operating": 0,
+   "maintenance": 3269840,
+   "renewal": 0,
+   "environmental": 0
+  },
+  {
+   "year": 2065,
+   "capital": 0,
+   "operating": 0,
+   "maintenance": 3269840,
+   "renewal": 0,
+   "environmental": 0
+  }
+ ],
+ "totals": {
+  "capital": 163492000,
+  "operating": 0,
+  "maintenance": 114444400,
+  "renewal": 0,
+  "environmental": 0,
+  "lifecycle": 277936400,
+  "perHousehold": 1249.57
+ },
+ "statements": [
+  {
+   "id": "k-budget",
+   "kind": "fact",
+   "text": "The Region budgets $35 million for Phase 1 and $129 million for Phase 2 of the Kitchener Central Transit Hub.",
+   "citations": [
+    {
+     "sourceId": "row-kcth-update-2026",
+     "page": 5,
+     "quote": "includes a budget of $35 million for the Kitchener Central Transit Hub Project Phase 1"
+    },
+    {
+     "sourceId": "row-kcth-update-2026",
+     "page": 5,
+     "quote": "includes a budget of $129 million for the Kitchener Central Transit Hub Project Phase 2"
+    }
+   ],
+   "verified": true
+  },
+  {
+   "id": "k-funding1",
+   "kind": "fact",
+   "text": "For Phase 1, the province pays $33 million; the Region borrows the rest through debentures.",
+   "citations": [
+    {
+     "sourceId": "row-kcth-update-2026",
+     "page": 5,
+     "quote": "$33 million from the Provincial government (MTO) and regionally through $0.8 million RDC debenture and $1.2 million levy supported debentures"
+    }
+   ],
+   "verified": true
+  },
+  {
+   "id": "k-funding2",
+   "kind": "fact",
+   "text": "For Phase 2, the province pays $42 million and the federal government $52 million; the Region borrows $14 million against development charges and $21 million against property taxes.",
+   "citations": [
+    {
+     "sourceId": "row-kcth-update-2026",
+     "page": 5,
+     "quote": "$42 million from the Provincial government (MTO), $52 million from the Federal government and regionally through $14 million RDC debenture, $21 million through levy supported debentures"
+    }
+   ],
+   "verified": true
+  },
+  {
+   "id": "k-peak",
+   "kind": "fact",
+   "text": "Spending on the hub itself peaks in 2028, at $59.4 million.",
+   "citations": [
+    {
+     "sourceId": "row-2026-budget-book",
+     "page": 87,
+     "quote": "90179 Kitchener Central Transit Hub 563 2,710 3,273 22,991 59,425 26,575 16,302 128,566 128,566"
+    }
+   ],
+   "verified": true
+  },
+  {
+   "id": "k-when",
+   "kind": "fact",
+   "text": "Substantial completion is expected in 2030, and the hub and site works are targeted for completion by the end of 2031.",
+   "citations": [
+    {
+     "sourceId": "row-kcth-update-2026",
+     "page": 2,
+     "quote": "Substantial completion of Kitchener Central Transit Hub is currently expected in 2030"
+    },
+    {
+     "sourceId": "row-kcth-update-2026",
+     "page": 3,
+     "quote": "The transit hub and related site works are targeted for completion by the end of 2031"
+    }
+   ],
+   "verified": true
+  },
+  {
+   "id": "k-om",
+   "kind": "unknown",
+   "text": "Operations and maintenance arrangements with Metrolinx are still to be agreed.",
+   "citations": [
+    {
+     "sourceId": "row-kcth-update-2024",
+     "page": 5,
+     "quote": "The MOU agreement provides for future licence, operations and maintenance agreements"
+    }
+   ],
+   "verified": true
+  },
+  {
+   "id": "k-grt",
+   "kind": "fact",
+   "text": "GRT's Business Plan operating estimates leave out Kitchener Central Station.",
+   "citations": [
+    {
+     "sourceId": "grt-business-plan-2025",
+     "page": 5,
+     "quote": "Excludes ION Stage 2 and Kitchener Central Station"
+    }
+   ],
+   "verified": true
+  }
+ ],
+ "assumptions": [
+  {
+   "id": "horizonYears",
+   "label": "Years counted",
+   "value": 40,
+   "unit": "years",
+   "min": 20,
+   "max": 60,
+   "step": 5,
+   "why": "Transit buildings usually serve 40 years or more. The Region has not published the hub's design life."
+  },
+  {
+   "id": "discountRate",
+   "label": "Discount rate",
+   "value": 0,
+   "unit": "%",
+   "min": 0,
+   "max": 7,
+   "step": 0.5,
+   "why": "At 0% every year's dollar counts the same. A higher rate counts future dollars for less, as many public-sector cost studies do (3% is common)."
+  },
+  {
+   "id": "maintenancePerYear",
+   "label": "Yearly upkeep (maintenance and repair)",
+   "value": 3269840,
+   "unit": "CAD",
+   "min": 0,
+   "max": 6539680,
+   "step": 100000,
+   "why": "No upkeep figure is published. A common rule of thumb for public buildings is 2 to 4% of their value a year for maintenance and repair (US National Research Council, 1990). We start at 2% of the capital budget."
+  },
+  {
+   "id": "operatingPerYear",
+   "label": "Yearly running cost (staff, cleaning, security, utilities)",
+   "value": 0,
+   "unit": "CAD",
+   "min": 0,
+   "max": 10000000,
+   "step": 250000,
+   "why": "No running cost is published, and the operations agreements are still to come. It starts at $0 so the chart shows only what is known; move it to test an amount."
+  },
+  {
+   "id": "capitalOverrun",
+   "label": "Capital cost overrun",
+   "value": 0,
+   "unit": "%",
+   "min": 0,
+   "max": 50,
+   "step": 5,
+   "why": "Large building projects often cost more than first budgeted. Slide to see what an overrun adds."
+  },
+  {
+   "id": "households",
+   "label": "Households sharing the cost",
+   "value": 222426,
+   "unit": "households",
+   "min": 150000,
+   "max": 350000,
+   "step": 1000,
+   "why": "222,426 households lived in Waterloo Region at the 2021 Census (Statistics Canada). There are more now. Businesses pay too, so this is a rough share per home, not a bill."
+  }
+ ],
+ "decisionId": "kitchener-transit-hub-variances",
+ "method": "Lifecycle cost = capital in the years it is spent + operating and maintenance in each year of service + renewals in the years they fall + emissions × carbon price (none counted here), over the years shown, in today's dollars, undiscounted unless a discount rate is set. Built in code by lenses/cost from figures whose quotes were checked on their pages; everything else is a labelled assumption.",
+ "inputNotes": [
+  "Capital: projects 90170 (early works) and 90179 (the hub) by year from the 2026 budget book (cited), $163.5 million in all. This matches the report's $35 million and $129 million.",
+  "Service starts in 2031, between substantial completion (2030) and the end-2031 target (both cited).",
+  "Upkeep: 2% of capital a year (assumption, slider 0–4%). Running cost: $0 by default (unknown, slider).",
+  "No separate renewal is counted. The upkeep rule of thumb is meant to cover repairs and replacing parts.",
+  "Emissions are not counted: no document gives the hub's emissions.",
+  "The minor variances being decided don't change these costs; the costs show what the hub they enable commits the Region to."
+ ],
+ "unknowns": [
+  "What the hub will cost to run and maintain each year, and how that is shared with Metrolinx and GO Transit.",
+  "What the Region will earn or spend on the leftover land after the hub is built."
+ ],
+ "summary": "LIFECYCLE COST over 40 years (2026-2065), service from 2031, discount rate 0.0%, today's dollars:\n- Capital $163.5 million (59%)\n- Operating $0 (0%)\n- Maintenance $114.4 million (41%)\n- Renewal $0 (0%)\n- Environmental (emissions x carbon price) $0 (0%)\n- Lifecycle total $277.9 million; the upfront price is 59% of it.\n- Per household (222,426 households): $1,250 over the period, about $31 a year.\nComputed by lenses/cost from the inputs given; each input must be cited or marked as an assumption."
+}

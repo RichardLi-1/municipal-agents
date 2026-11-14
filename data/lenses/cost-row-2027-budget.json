@@ -1,0 +1,672 @@
+{
+ "inputs": {
+  "startYear": 2025,
+  "horizonYears": 25,
+  "capital": [
+   {
+    "year": 2025,
+    "amount": 79800000
+   },
+   {
+    "year": 2026,
+    "amount": 79800000
+   },
+   {
+    "year": 2027,
+    "amount": 79800000
+   },
+   {
+    "year": 2028,
+    "amount": 79800000
+   },
+   {
+    "year": 2029,
+    "amount": 79800000
+   },
+   {
+    "year": 2030,
+    "amount": 79800000
+   },
+   {
+    "year": 2031,
+    "amount": 79800000
+   },
+   {
+    "year": 2032,
+    "amount": 79800000
+   },
+   {
+    "year": 2033,
+    "amount": 79800000
+   },
+   {
+    "year": 2034,
+    "amount": 79800000
+   }
+  ],
+  "serviceStartYear": 2025,
+  "operatingPerYear": 262000000,
+  "operatingSchedule": [
+   {
+    "year": 2025,
+    "amount": 195000000
+   },
+   {
+    "year": 2034,
+    "amount": 262000000
+   }
+  ],
+  "maintenancePerYear": 0,
+  "renewals": [
+   {
+    "afterYears": 10,
+    "amount": 48700000,
+    "label": "bus fleet replacement"
+   },
+   {
+    "afterYears": 11,
+    "amount": 48700000,
+    "label": "bus fleet replacement"
+   },
+   {
+    "afterYears": 12,
+    "amount": 48700000,
+    "label": "bus fleet replacement"
+   },
+   {
+    "afterYears": 13,
+    "amount": 48700000,
+    "label": "bus fleet replacement"
+   },
+   {
+    "afterYears": 14,
+    "amount": 48700000,
+    "label": "bus fleet replacement"
+   },
+   {
+    "afterYears": 15,
+    "amount": 48700000,
+    "label": "bus fleet replacement"
+   },
+   {
+    "afterYears": 16,
+    "amount": 48700000,
+    "label": "bus fleet replacement"
+   },
+   {
+    "afterYears": 17,
+    "amount": 48700000,
+    "label": "bus fleet replacement"
+   },
+   {
+    "afterYears": 18,
+    "amount": 48700000,
+    "label": "bus fleet replacement"
+   },
+   {
+    "afterYears": 19,
+    "amount": 48700000,
+    "label": "bus fleet replacement"
+   },
+   {
+    "afterYears": 20,
+    "amount": 48700000,
+    "label": "bus fleet replacement"
+   },
+   {
+    "afterYears": 21,
+    "amount": 48700000,
+    "label": "bus fleet replacement"
+   },
+   {
+    "afterYears": 22,
+    "amount": 48700000,
+    "label": "bus fleet replacement"
+   },
+   {
+    "afterYears": 23,
+    "amount": 48700000,
+    "label": "bus fleet replacement"
+   },
+   {
+    "afterYears": 24,
+    "amount": 48700000,
+    "label": "bus fleet replacement"
+   }
+  ],
+  "households": 222426
+ },
+ "asset": "Grand River Transit's Business Plan: building and running the bus and ION network to 2034 and beyond (GRT's own estimates in 2025 dollars; leaves out ION Stage 2 and Kitchener Central Station)",
+ "horizonYears": 25,
+ "discountRate": 0,
+ "households": 222426,
+ "figures": [
+  {
+   "id": "grt-capital",
+   "label": "Major transit capital projects, 2025–2035",
+   "value": 798000000,
+   "unit": "CAD",
+   "display": "$798 million",
+   "citation": {
+    "sourceId": "grt-business-plan-2025",
+    "page": 6,
+    "quote": "The GRT Business Plan identifies $798 million in major transit capital projects over the 2025–2035 timeframe"
+   },
+   "kind": "cited"
+  },
+  {
+   "id": "grt-capital-new",
+   "label": "New capital the plan adds to the approved program",
+   "value": 254000000,
+   "unit": "CAD",
+   "display": "$254 million",
+   "citation": {
+    "sourceId": "grt-business-plan-2025",
+    "page": 7,
+    "quote": "Total $544 $254 $798"
+   },
+   "kind": "cited"
+  },
+  {
+   "id": "grt-fleet",
+   "label": "Bus fleet and support vehicles in the 10-year capital plan",
+   "value": 487000000,
+   "unit": "CAD",
+   "display": "$487 million",
+   "citation": {
+    "sourceId": "grt-business-plan-2025",
+    "page": 6,
+    "quote": "Bus Fleet / Support Vehicles $487 No Change** $487"
+   },
+   "kind": "cited"
+  },
+  {
+   "id": "grt-operating-2025",
+   "label": "Operating spending in 2025 (operations, maintenance, fuel, wages)",
+   "value": 195000000,
+   "unit": "CAD",
+   "display": "$195 million a year",
+   "citation": {
+    "sourceId": "grt-business-plan-2025",
+    "page": 5,
+    "quote": "Operating Expenditures 195 67 262"
+   },
+   "kind": "cited"
+  },
+  {
+   "id": "grt-operating-2034",
+   "label": "Operating spending by 2034 with the full plan (2025 dollars)",
+   "value": 262000000,
+   "unit": "CAD",
+   "display": "$262 million a year",
+   "citation": {
+    "sourceId": "grt-business-plan-2025",
+    "page": 5,
+    "quote": "Operating Expenditures 195 67 262"
+   },
+   "kind": "cited"
+  },
+  {
+   "id": "grt-operating-total-2034",
+   "label": "Total operating cost by 2034, including debt payments and reserves",
+   "value": 314000000,
+   "unit": "CAD",
+   "display": "$314 million a year",
+   "citation": {
+    "sourceId": "grt-business-plan-2025",
+    "page": 5,
+    "quote": "Total Operating Cost 234 80 314"
+   },
+   "kind": "cited"
+  },
+  {
+   "id": "grt-net-2034",
+   "label": "Net operating cost by 2034, after fares and other revenue",
+   "value": 199000000,
+   "unit": "CAD",
+   "display": "$199 million a year",
+   "citation": {
+    "sourceId": "grt-business-plan-2025",
+    "page": 5,
+    "quote": "Net Operating Cost 149 50 199"
+   },
+   "kind": "cited"
+  },
+  {
+   "id": "ion-stage2-capital",
+   "label": "ION Stage 2 (light rail to Cambridge) capital, 2026–2035",
+   "value": 2045600000,
+   "unit": "CAD",
+   "display": "$2.05 billion",
+   "citation": {
+    "sourceId": "row-2026-budget-book",
+    "page": 43,
+    "quote": "68030 RT to Cambridge-Project Development 85,000 72,000 78,000 78,000 313,000 1,732,600 2,045,600"
+   },
+   "kind": "cited"
+  },
+  {
+   "id": "transit-per-household-2026",
+   "label": "Transit's share of the 2026 regional tax for an average household",
+   "value": 516,
+   "unit": "CAD",
+   "display": "$516 a year",
+   "citation": {
+    "sourceId": "row-2026-budget-book",
+    "page": 12,
+    "quote": "Public Transit(2) 231,203 156,402 17.6 $516"
+   },
+   "kind": "cited"
+  },
+  {
+   "id": "households-2021",
+   "label": "Households in Waterloo Region (2021 Census)",
+   "value": 222426,
+   "unit": "households",
+   "display": "222,426 households",
+   "kind": "computed",
+   "formula": "Statistics Canada, 2021 Census of Population: private dwellings occupied by usual residents, summed over Waterloo Region's 766 dissemination areas (Census Profile API, characteristic 5; Statistics Canada Open Licence). Not from a city document.",
+   "inputs": []
+  },
+  {
+   "id": "grt-fleet-per-year",
+   "label": "Bus fleet replacement after 2034 (assumed to continue at the plan's pace)",
+   "value": 48700000,
+   "unit": "CAD",
+   "display": "$48.7 million a year",
+   "kind": "computed",
+   "formula": "$487 million of fleet over ten years ÷ 10",
+   "inputs": [
+    "grt-fleet"
+   ]
+  }
+ ],
+ "series": [
+  {
+   "year": 2025,
+   "capital": 79800000,
+   "operating": 195000000,
+   "maintenance": 0,
+   "renewal": 0,
+   "environmental": 0
+  },
+  {
+   "year": 2026,
+   "capital": 79800000,
+   "operating": 202444444.44,
+   "maintenance": 0,
+   "renewal": 0,
+   "environmental": 0
+  },
+  {
+   "year": 2027,
+   "capital": 79800000,
+   "operating": 209888888.89,
+   "maintenance": 0,
+   "renewal": 0,
+   "environmental": 0
+  },
+  {
+   "year": 2028,
+   "capital": 79800000,
+   "operating": 217333333.33,
+   "maintenance": 0,
+   "renewal": 0,
+   "environmental": 0
+  },
+  {
+   "year": 2029,
+   "capital": 79800000,
+   "operating": 224777777.78,
+   "maintenance": 0,
+   "renewal": 0,
+   "environmental": 0
+  },
+  {
+   "year": 2030,
+   "capital": 79800000,
+   "operating": 232222222.22,
+   "maintenance": 0,
+   "renewal": 0,
+   "environmental": 0
+  },
+  {
+   "year": 2031,
+   "capital": 79800000,
+   "operating": 239666666.67,
+   "maintenance": 0,
+   "renewal": 0,
+   "environmental": 0
+  },
+  {
+   "year": 2032,
+   "capital": 79800000,
+   "operating": 247111111.11,
+   "maintenance": 0,
+   "renewal": 0,
+   "environmental": 0
+  },
+  {
+   "year": 2033,
+   "capital": 79800000,
+   "operating": 254555555.56,
+   "maintenance": 0,
+   "renewal": 0,
+   "environmental": 0
+  },
+  {
+   "year": 2034,
+   "capital": 79800000,
+   "operating": 262000000,
+   "maintenance": 0,
+   "renewal": 0,
+   "environmental": 0
+  },
+  {
+   "year": 2035,
+   "capital": 0,
+   "operating": 262000000,
+   "maintenance": 0,
+   "renewal": 48700000,
+   "environmental": 0
+  },
+  {
+   "year": 2036,
+   "capital": 0,
+   "operating": 262000000,
+   "maintenance": 0,
+   "renewal": 48700000,
+   "environmental": 0
+  },
+  {
+   "year": 2037,
+   "capital": 0,
+   "operating": 262000000,
+   "maintenance": 0,
+   "renewal": 48700000,
+   "environmental": 0
+  },
+  {
+   "year": 2038,
+   "capital": 0,
+   "operating": 262000000,
+   "maintenance": 0,
+   "renewal": 48700000,
+   "environmental": 0
+  },
+  {
+   "year": 2039,
+   "capital": 0,
+   "operating": 262000000,
+   "maintenance": 0,
+   "renewal": 48700000,
+   "environmental": 0
+  },
+  {
+   "year": 2040,
+   "capital": 0,
+   "operating": 262000000,
+   "maintenance": 0,
+   "renewal": 48700000,
+   "environmental": 0
+  },
+  {
+   "year": 2041,
+   "capital": 0,
+   "operating": 262000000,
+   "maintenance": 0,
+   "renewal": 48700000,
+   "environmental": 0
+  },
+  {
+   "year": 2042,
+   "capital": 0,
+   "operating": 262000000,
+   "maintenance": 0,
+   "renewal": 48700000,
+   "environmental": 0
+  },
+  {
+   "year": 2043,
+   "capital": 0,
+   "operating": 262000000,
+   "maintenance": 0,
+   "renewal": 48700000,
+   "environmental": 0
+  },
+  {
+   "year": 2044,
+   "capital": 0,
+   "operating": 262000000,
+   "maintenance": 0,
+   "renewal": 48700000,
+   "environmental": 0
+  },
+  {
+   "year": 2045,
+   "capital": 0,
+   "operating": 262000000,
+   "maintenance": 0,
+   "renewal": 48700000,
+   "environmental": 0
+  },
+  {
+   "year": 2046,
+   "capital": 0,
+   "operating": 262000000,
+   "maintenance": 0,
+   "renewal": 48700000,
+   "environmental": 0
+  },
+  {
+   "year": 2047,
+   "capital": 0,
+   "operating": 262000000,
+   "maintenance": 0,
+   "renewal": 48700000,
+   "environmental": 0
+  },
+  {
+   "year": 2048,
+   "capital": 0,
+   "operating": 262000000,
+   "maintenance": 0,
+   "renewal": 48700000,
+   "environmental": 0
+  },
+  {
+   "year": 2049,
+   "capital": 0,
+   "operating": 262000000,
+   "maintenance": 0,
+   "renewal": 48700000,
+   "environmental": 0
+  }
+ ],
+ "totals": {
+  "capital": 798000000,
+  "operating": 6215000000,
+  "maintenance": 0,
+  "renewal": 730500000,
+  "environmental": 0,
+  "lifecycle": 7743500000,
+  "perHousehold": 34813.83
+ },
+ "statements": [
+  {
+   "id": "grt-op",
+   "kind": "estimate",
+   "text": "Grand River Transit estimates that running its buses and trains (operations, maintenance, fuel and wages) would cost $262 million a year by 2034 to deliver its whole Business Plan, up from $195 million in 2025, in 2025 dollars.",
+   "citations": [
+    {
+     "sourceId": "grt-business-plan-2025",
+     "page": 5,
+     "quote": "Operating Expenditures 195 67 262"
+    }
+   ],
+   "verified": true
+  },
+  {
+   "id": "grt-cap",
+   "kind": "estimate",
+   "text": "The plan lists $798 million of major transit capital projects for 2025 to 2035; about $544 million of it was already in the approved capital program.",
+   "citations": [
+    {
+     "sourceId": "grt-business-plan-2025",
+     "page": 6,
+     "quote": "The GRT Business Plan identifies $798 million in major transit capital projects over the 2025–2035 timeframe"
+    },
+    {
+     "sourceId": "grt-business-plan-2025",
+     "page": 6,
+     "quote": "approximately $544 million is currently accommodated within the approved 2025-2034 Transit Capital Program"
+    }
+   ],
+   "verified": true
+  },
+  {
+   "id": "grt-excludes",
+   "kind": "fact",
+   "text": "These estimates leave out ION Stage 2 and Kitchener Central Station.",
+   "citations": [
+    {
+     "sourceId": "grt-business-plan-2025",
+     "page": 5,
+     "quote": "Excludes ION Stage 2 and Kitchener Central Station"
+    }
+   ],
+   "verified": true
+  },
+  {
+   "id": "grt-budget",
+   "kind": "fact",
+   "text": "Each year's budget decides how much of the plan goes ahead.",
+   "citations": [
+    {
+     "sourceId": "grt-business-plan-2025",
+     "page": 7,
+     "quote": "subject to Regional Council’s annual Plan and Budget process"
+    }
+   ],
+   "verified": true
+  },
+  {
+   "id": "grt-net",
+   "kind": "estimate",
+   "text": "After fares and other revenue, GRT expects the net operating cost to reach $199 million a year by 2034, up from $149 million.",
+   "citations": [
+    {
+     "sourceId": "grt-business-plan-2025",
+     "page": 5,
+     "quote": "Net Operating Cost 149 50 199"
+    }
+   ],
+   "verified": true
+  },
+  {
+   "id": "ion2",
+   "kind": "fact",
+   "text": "Separately, the Region's 10-year capital plan sets aside $2.05 billion for light rail to Cambridge (ION Stage 2), starting with $85 million in 2027.",
+   "citations": [
+    {
+     "sourceId": "row-2026-budget-book",
+     "page": 43,
+     "quote": "68030 RT to Cambridge-Project Development 85,000 72,000 78,000 78,000 313,000 1,732,600 2,045,600"
+    }
+   ],
+   "verified": true
+  },
+  {
+   "id": "transit-hh",
+   "kind": "fact",
+   "text": "In 2026, transit took $516 of an average household's regional property tax.",
+   "citations": [
+    {
+     "sourceId": "row-2026-budget-book",
+     "page": 12,
+     "quote": "Public Transit(2) 231,203 156,402 17.6 $516"
+    }
+   ],
+   "verified": true
+  }
+ ],
+ "assumptions": [
+  {
+   "id": "horizonYears",
+   "label": "Years counted",
+   "value": 25,
+   "unit": "years",
+   "min": 10,
+   "max": 50,
+   "step": 5,
+   "why": "The plan runs to 2034. Counting 25 years (2025–2049) also shows the 15 years after it is built out, when the bigger network keeps costing money to run."
+  },
+  {
+   "id": "discountRate",
+   "label": "Discount rate",
+   "value": 0,
+   "unit": "%",
+   "min": 0,
+   "max": 7,
+   "step": 0.5,
+   "why": "At 0% every year's dollar counts the same. A higher rate counts future dollars for less, as many public-sector cost studies do (3% is common)."
+  },
+  {
+   "id": "operatingPerYear",
+   "label": "Yearly operating spending once the plan is built",
+   "value": 262000000,
+   "unit": "CAD",
+   "min": 150000000,
+   "max": 400000000,
+   "step": 5000000,
+   "why": "GRT's 2034 estimate for the full plan, in 2025 dollars, without debt payments (those pay for the capital already counted). The chart climbs in a straight line from $195 million in 2025 because the plan gives only the start and the end; moving this slider sets every year to one amount."
+  },
+  {
+   "id": "renewalScale",
+   "label": "Bus replacement after 2034",
+   "value": 100,
+   "unit": "%",
+   "min": 0,
+   "max": 200,
+   "step": 10,
+   "why": "After 2034 we assume buses keep being replaced at the plan's pace: $487 million of fleet over ten years, about $48.7 million a year. No document gives spending after 2034."
+  },
+  {
+   "id": "capitalOverrun",
+   "label": "Capital cost overrun",
+   "value": 0,
+   "unit": "%",
+   "min": 0,
+   "max": 50,
+   "step": 5,
+   "why": "Large transit projects often cost more than first estimated, and GRT calls these figures demonstrative. Slide to see what an overrun adds."
+  },
+  {
+   "id": "households",
+   "label": "Households sharing the cost",
+   "value": 222426,
+   "unit": "households",
+   "min": 150000,
+   "max": 350000,
+   "step": 1000,
+   "why": "222,426 households lived in Waterloo Region at the 2021 Census (Statistics Canada). There are more now. Businesses pay too, so this is a rough share per home, not a bill."
+  }
+ ],
+ "decisionId": "row-2027-budget",
+ "method": "Lifecycle cost = capital in the years it is spent + operating and maintenance in each year of service + renewals in the years they fall + emissions × carbon price (none counted here), over the years shown, in today's dollars, undiscounted unless a discount rate is set. Built in code by lenses/cost from figures whose quotes were checked on their pages; everything else is a labelled assumption.",
+ "inputNotes": [
+  "Capital: $798 million (cited) spread evenly over 2025–2034, the ten years of the plan's capital table (assumption: the plan gives no year-by-year split).",
+  "Operating: $195 million in 2025 and $262 million in 2034 (cited), straight line in between (assumption), then held at $262 million in 2025 dollars.",
+  "Maintenance is inside GRT's operating line (operations, maintenance, fuel, wages), so it is not counted twice.",
+  "Debt payments and transfers to reserves ($39 million rising to $52 million) are left out because they pay for capital that is already counted.",
+  "Renewal: bus replacement after 2034 at $48.7 million a year, the plan's fleet budget divided by ten (assumption).",
+  "Emissions are not counted: no document gives Grand River Transit's own emissions, so no carbon cost is added.",
+  "Revenue (fares, gas tax, advertising) is not subtracted: this is the cost of the service, not what taxpayers pay after fares."
+ ],
+ "unknowns": [
+  "What ION Stage 2 (light rail to Cambridge) will cost to run each year: no operating estimate is in these documents.",
+  "What the 2027 budget will fund of the plan: the draft budget is not public until December 2026.",
+  "Bus replacement and garage costs after 2035."
+ ],
+ "summary": "LIFECYCLE COST over 25 years (2025-2049), service from 2025, discount rate 0.0%, today's dollars:\n- Capital $798.0 million (10%)\n- Operating $6.21 billion (80%)\n- Maintenance $0 (0%)\n- Renewal $730.5 million (9%)\n- Environmental (emissions x carbon price) $0 (0%)\n- Lifecycle total $7.74 billion; the upfront price is 10% of it.\n- Per household (222,426 households): $34,814 over the period, about $1,393 a year.\nComputed by lenses/cost from the inputs given; each input must be cited or marked as an assumption."
+}

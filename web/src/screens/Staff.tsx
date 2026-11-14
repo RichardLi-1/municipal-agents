@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "preact/hooks";
 import type { Brief, DecisionCard, Statement } from "../../../shared/types.ts";
 import { CitationChip } from "../components/Citations.tsx";
-import { Alert, Check, CheckCircle, Lock, Pen, Cross, Spark } from "../components/icons.tsx";
+import { Alert, Check, CheckCircle, Lock, Pen, Cross, Spark, Replay } from "../components/icons.tsx";
 import { StepsPanel } from "../components/Steps.tsx";
 import { api } from "../lib/api.ts";
 import { emptyRun, reduceRun, type RunState } from "../lib/run.ts";
@@ -148,7 +148,7 @@ export function StaffScreen() {
     setToken(pass);
   };
 
-  const draft = async () => {
+  const draft = async (replay = false) => {
     if (!token || !decisionId) return;
     const ctl = new AbortController();
     abort.current = ctl;
@@ -161,7 +161,7 @@ export function StaffScreen() {
           setBrief(ev.brief);
           toast({ title: t("Draft ready for review"), body: t("Approve, edit or reject each statement, then publish."), tone: "ok" });
         }
-      }, ctl.signal);
+      }, ctl.signal, replay);
     } catch (e) {
       setRun((r) => ({ ...(r ?? emptyRun()), error: String((e as Error).message) }));
     } finally {
@@ -257,8 +257,11 @@ export function StaffScreen() {
             {(cards ?? []).map((c) => <option key={c.id} value={c.id}>{c.plainTitle}</option>)}
           </select>
         </label>
-        <button type="button" class="btn btn-primary" onClick={draft} disabled={!decisionId || (run !== null && !run.done)}>
+        <button type="button" class="btn btn-primary" onClick={() => draft(false)} disabled={!decisionId || (run !== null && !run.done)}>
           <Spark size={17} /> {t("Draft brief with agents")}
+        </button>
+        <button type="button" class="btn btn-secondary" onClick={() => draft(true)} disabled={!decisionId || (run !== null && !run.done)}>
+          <Replay size={17} /> {t("Replay the agents' last real run")}
         </button>
       </section>
       <details class="card staff-upload">
@@ -289,7 +292,27 @@ export function StaffScreen() {
               {run.usage.calls} calls · {(run.usage.inputTokens + run.usage.outputTokens).toLocaleString()} tokens · US${run.usage.costUsd.toFixed(2)}
             </p>
           ) : null}
-          {run.error ? <p class="error-text" role="alert">{run.error}</p> : null}
+          {run.error ? (
+            <div class="run-error" role="alert">
+              <p class="run-error-title">
+                <Alert size={16} /> {run.replay ? t("Something went wrong") : t("The agents can't be reached right now")}
+              </p>
+              {!run.replay ? (
+                <>
+                  <p class="small muted">{t("You can replay the agents' last real run for this decision from the record instead.")}</p>
+                  <div>
+                    <button type="button" class="btn btn-secondary btn-sm" onClick={() => draft(true)}>
+                      <Replay size={15} /> {t("Replay the agents' last real run")}
+                    </button>
+                  </div>
+                </>
+              ) : null}
+              <details class="small">
+                <summary>{t("Show details")}</summary>
+                <code>{run.error}</code>
+              </details>
+            </div>
+          ) : null}
         </section>
       ) : null}
       {brief ? (

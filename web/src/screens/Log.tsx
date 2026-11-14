@@ -2,10 +2,17 @@ import { useEffect, useMemo, useState } from "preact/hooks";
 import type { LogEntry } from "../../../shared/types.ts";
 import { CheckCircle, Alert, Lock } from "../components/icons.tsx";
 import { api } from "../lib/api.ts";
-import { fmtDateTime, fmtNumber } from "../lib/format.ts";
+import { fmtDate, fmtDateTime, fmtNumber } from "../lib/format.ts";
+
+const purgedOf = (e: LogEntry) => (e as LogEntry & { purged?: { at: string; reason: string; bySeq: number } }).purged;
 import { verifyChain, type ChainResult } from "../lib/hash.ts";
 import { useT } from "../lib/i18n.ts";
 import { ErrorPane, SampleBadge } from "./common.tsx";
+
+const KIND_LABEL: Record<string, string> = {
+  "record.purged": "Content purged",
+  "record.migrated": "Record upgraded to purgeable content",
+};
 
 function summary(e: LogEntry): string {
   const p = e.payload as Record<string, unknown> | null;
@@ -48,7 +55,7 @@ export function LogScreen() {
     () =>
       (entries ?? [])
         .filter((e) => (!kind || e.kind === kind) && (!dec || e.decisionId === dec))
-        .filter((e) => !q || `${e.actor} ${e.kind} ${JSON.stringify(e.payload)}`.toLowerCase().includes(q.toLowerCase()))
+        .filter((e) => !q || `${e.actor} ${e.kind} ${JSON.stringify(e.payload ?? "")}`.toLowerCase().includes(q.toLowerCase()))
         .sort((a, b) => b.seq - a.seq),
     [entries, kind, dec, q],
   );
@@ -105,13 +112,23 @@ export function LogScreen() {
               <div class="log-main">
                 <p class="log-top">
                   <span class={`kind-pill kind-pill--${e.kind.split(".")[0]}`}>{e.kind}</span>
+                  {KIND_LABEL[e.kind] ? <span class="small muted">{t(KIND_LABEL[e.kind])}</span> : null}
                   <span class="log-actor">{e.actor}</span>
                   {e.decisionId ? <span class="muted small">{e.decisionId}</span> : null}
                 </p>
-                <p class="log-sum">{summary(e)}</p>
+                {purgedOf(e) ? (
+                  <p class="log-sum log-purged">
+                    {t("Content purged under retention by-law on {date}: {reason}", { date: fmtDate(purgedOf(e)!.at), reason: purgedOf(e)!.reason })}
+                  </p>
+                ) : (
+                  <p class="log-sum">{summary(e)}</p>
+                )}
                 <details class="log-more">
                   <summary>{t("Show details")}</summary>
-                  <pre>{JSON.stringify(e.payload, null, 2)}</pre>
+                  {purgedOf(e) ? null : <pre>{JSON.stringify(e.payload, null, 2)}</pre>}
+                  {(e as LogEntry & { payloadHash?: string }).payloadHash ? (
+                    <p class="hash">payload sha256 {(e as LogEntry & { payloadHash?: string }).payloadHash!.slice(0, 16)}…</p>
+                  ) : null}
                   <p class="hash"><Lock size={12} /> prev {e.prevHash.slice(0, 16)}… → {e.hash.slice(0, 16)}…</p>
                 </details>
               </div>

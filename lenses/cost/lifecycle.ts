@@ -17,6 +17,13 @@ export interface LifecycleInputs {
   serviceStartYear?: number;
   /** Yearly operating cost while in service (today's dollars). */
   operatingPerYear: number;
+  /**
+   * Operating cost by calendar year where a plan gives it (e.g. today's and the build-out
+   * year's). Years between two points are interpolated in a straight line; before the first
+   * point the first value holds, after the last point the last value holds. Overrides
+   * `operatingPerYear` when given.
+   */
+  operatingSchedule?: { year: number; amount: number }[];
   /** Yearly maintenance cost while in service (today's dollars). */
   maintenancePerYear: number;
   /** Major renewals, `afterYears` years after service starts (e.g. a roof at 20 years). */
@@ -58,6 +65,16 @@ function carbonPriceFor(year: number, p: LifecycleInputs["carbonPrice"]): number
 
 const round2 = (x: number) => Math.round(x * 100) / 100;
 
+/** Straight-line value between the schedule's points; flat before the first and after the last. */
+export function scheduleValue(points: { year: number; amount: number }[], year: number): number {
+  const p = [...points].sort((a, b) => a.year - b.year);
+  if (!p.length) return 0;
+  if (year <= p[0].year) return p[0].amount;
+  for (let i = 1; i < p.length; i++)
+    if (year <= p[i].year) return p[i - 1].amount + ((p[i].amount - p[i - 1].amount) * (year - p[i - 1].year)) / (p[i].year - p[i - 1].year);
+  return p[p.length - 1].amount;
+}
+
 export function lifecycleCost(inp: LifecycleInputs): LifecycleResult {
   if (!(inp.horizonYears > 0)) throw new Error("horizonYears must be positive");
   const r = inp.discountRate ?? 0;
@@ -92,7 +109,7 @@ export function lifecycleCost(inp: LifecycleInputs): LifecycleResult {
     const grow = Math.pow(1 + g, k);
     const raw = {
       capital: capitalByYear.get(year) ?? 0,
-      operating: inService ? inp.operatingPerYear * grow : 0,
+      operating: inService ? (inp.operatingSchedule?.length ? scheduleValue(inp.operatingSchedule, year) : inp.operatingPerYear) * grow : 0,
       maintenance: inService ? inp.maintenancePerYear * grow : 0,
       renewal: renewalByYear.get(year) ?? 0,
       environmental: inService ? (inp.emissionsTPerYear ?? 0) * carbonPriceFor(year, inp.carbonPrice) : 0,
@@ -143,7 +160,8 @@ export function buildCostLens(args: {
   };
 }
 
-const money = (x: number) => (Math.abs(x) >= 1e6 ? `$${(x / 1e6).toFixed(1)} million` : `$${Math.round(x).toLocaleString("en-CA")}`);
+const money = (x: number) =>
+  Math.abs(x) >= 1e9 ? `$${(x / 1e9).toFixed(2)} billion` : Math.abs(x) >= 1e6 ? `$${(x / 1e6).toFixed(1)} million` : `$${Math.round(x).toLocaleString("en-CA")}`;
 
 /** Compact text of a lifecycle result for a model to read. */
 export function costSummary(inp: LifecycleInputs, res: LifecycleResult = lifecycleCost(inp)): string {
