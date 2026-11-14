@@ -1,6 +1,6 @@
 ---
 title: Municipal Agents documentation
-description: AI agents read a city's own documents and turn a proposed decision into a brief a resident can read in five minutes, with every figure linked to its page and every statement approved by city staff.
+description: AI agents read a city's own documents and turn a proposed decision into a brief a resident can read in five minutes, with every figure linked to its page and and nothing official until a named staff member approves each statement.
 ---
 
 Municipal Agents helps residents understand a proposed municipal decision: **what is

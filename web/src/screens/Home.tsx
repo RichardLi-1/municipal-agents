@@ -83,7 +83,7 @@ function Card({ c, onHover, near }: { c: DecisionCard; onHover: (id: string | nu
           <CheckCircle size={14} /> {t("Approved by staff")}
         </p>
       ) : c.reviewStatus === "draft" || c.reviewStatus === "in-review" ? (
-        <p class="small warn-text dcard-review">{t("Draft")}</p>
+        <p class="small warn-text dcard-review">{t("Draft: not yet reviewed by staff")}</p>
       ) : null}
     </article>
   );

@@ -6,11 +6,11 @@
     "gemini-3.6-flash"
   ],
   "costUsd": 0.257177,
-  "readingGrade": 6.7,
+  "readingGrade": 6.9,
   "summary": [
     {
       "id": "s1",
-      "text": "These rule changes would allow building the new Kitchener Central Transit Hub.",
+      "text": "The changes are needed to build the Region's transit hub, as set out in its site plan.",
       "kind": "fact",
       "citations": [
         {
@@ -20,7 +20,14 @@
         }
       ],
       "verified": true,
-      "support": "weak"
+      "support": "strong",
+      "review": {
+        "action": "edited",
+        "by": "Municipal Agents team (not Region staff)",
+        "at": "2026-11-14T09:15:00-05:00",
+        "note": "Reworded to what the notice says the variances are for.",
+        "originalText": "These rule changes would allow building the new Kitchener Central Transit Hub."
+      }
     },
     {
       "id": "s2",
@@ -43,33 +50,47 @@
     },
     {
       "id": "s18",
-      "text": "The Region wants six zoning rule changes to build the new transit hub.",
+      "text": "The Region is requesting changes to Zoning By-law 2019-051, such as letting surface parking sit 3 m from the street.",
       "kind": "fact",
       "citations": [
         {
           "sourceId": "kitchener-cofa-2026-11-17",
           "page": 1,
-          "quote": "Requesting minor variances to Zoning By-law 2019-051 to permit a surface parking space to be located 3m from the street line rather than the minimum required 6m"
+          "quote": "Requesting minor variances to Zoning By-law 2019-051 to permit a surface parking space to be located 3m from the street line"
         }
       ],
       "verified": true,
-      "support": "weak"
+      "support": "strong",
+      "review": {
+        "action": "edited",
+        "by": "Municipal Agents team (not Region staff)",
+        "at": "2026-11-14T09:15:00-05:00",
+        "note": "The count of six wasn't in the quote; now says what the notice asks, with an example.",
+        "originalText": "The Region wants six zoning rule changes to build the new transit hub."
+      }
     }
   ],
   "whyNow": [
     {
       "id": "s3",
-      "text": "The applicant submitted site plan details requiring zoning adjustments for the planned transit hub site.",
+      "text": "The variances are tied to the hub's site plan application, SPF26/025/K.",
       "kind": "fact",
       "citations": [
         {
           "sourceId": "kitchener-cofa-2026-11-17",
           "page": 1,
-          "quote": "TAKE NOTICE THAT the Committee of Adjustment for the City of Kitchener will meet in Council Chambers, 2nd Floor, Kitchener City Hall, 200 King Street West, on TUESDAY, NOVEMBER 17, 2026"
+          "quote": "Transit Hub in accordance with Site Plan Application SPF26/025/K"
         }
       ],
       "verified": true,
-      "support": "weak"
+      "support": "strong",
+      "review": {
+        "action": "edited",
+        "by": "Municipal Agents team (not Region staff)",
+        "at": "2026-11-14T09:15:00-05:00",
+        "note": "The original quote was the notice's opening line; now cites the site plan application.",
+        "originalText": "The applicant submitted site plan details requiring zoning adjustments for the planned transit hub site."
+      }
     },
     {
       "id": "s19",
@@ -93,13 +114,13 @@
       "statements": [
         {
           "id": "s22",
-          "text": "Riders might transfer easily between light rail, buses, and trains by 2030.",
+          "text": "Riders may be able to switch between light rail, buses, GO trains and VIA Rail at the hub by 2030.",
           "kind": "estimate",
           "citations": [
             {
-              "sourceId": "row-kcth-update-2024",
-              "page": 2,
-              "quote": "The transit hub is expected to generate ION ridership as an anchor development along the Central Transit Corridor"
+              "sourceId": "row-kcth-update-2026",
+              "page": 3,
+              "quote": "by providing access to Grand River Transit light rail and bus service, GO Transit rail and bus service, VIA Rail and allow for inter-city bus service"
             },
             {
               "sourceId": "row-kcth-update-2026",
@@ -108,7 +129,14 @@
             }
           ],
           "verified": true,
-          "support": "strong"
+          "support": "strong",
+          "review": {
+            "action": "edited",
+            "by": "Municipal Agents team (not Region staff)",
+            "at": "2026-11-14T09:15:00-05:00",
+            "note": "Re-cited to the report's list of services the hub connects.",
+            "originalText": "Riders might transfer easily between light rail, buses, and trains by 2030."
+          }
         }
       ]
     },
@@ -195,17 +223,24 @@
     },
     {
       "id": "s5",
-      "text": "Contact the Secretary-Treasurer by email or phone to get official notice of the decision.",
+      "text": "To be told the Committee's decision, you must make a written request to its Secretary-Treasurer.",
       "kind": "fact",
       "citations": [
         {
           "sourceId": "kitchener-cofa-2026-11-17",
           "page": 3,
-          "quote": "Additional information is available at the Legislated Services Department, 2nd Floor, City Hall, 200 K Street West, Kitchener 519-741-2203 or by emailing CofA@kitchener.ca"
+          "quote": "If you wish to be notified of a decision you must make a written request"
         }
       ],
       "verified": true,
-      "support": "weak"
+      "support": "strong",
+      "review": {
+        "action": "edited",
+        "by": "Municipal Agents team (not Region staff)",
+        "at": "2026-11-14T09:15:00-05:00",
+        "note": "The notice says a written request is needed, not email or phone.",
+        "originalText": "Contact the Secretary-Treasurer by email or phone to get official notice of the decision."
+      }
     }
   ],
   "figures": [
@@ -310,7 +345,7 @@
     },
     {
       "id": "s9",
-      "text": "The city gets a long transit station building, but less green space.",
+      "text": "The building could be 115 m long instead of 36 m, but the landscaped area would be 13% instead of the required 30%.",
       "kind": "tradeoff",
       "citations": [
         {
@@ -325,7 +360,14 @@
         }
       ],
       "verified": true,
-      "support": "weak"
+      "support": "strong",
+      "review": {
+        "action": "edited",
+        "by": "Municipal Agents team (not Region staff)",
+        "at": "2026-11-14T09:15:00-05:00",
+        "note": "Uses the notice's own numbers for both sides.",
+        "originalText": "The city gets a long transit station building, but less green space."
+      }
     },
     {
       "id": "s29",
@@ -535,7 +577,7 @@
       "statements": [
         {
           "id": "s16",
-          "text": "The Region plans to use leftover land for building after finishing the hub.",
+          "text": "Once the hub is complete, the remaining land will be developed.",
           "kind": "fact",
           "citations": [
             {
@@ -545,11 +587,18 @@
             }
           ],
           "verified": true,
-          "support": "weak"
+          "support": "strong",
+          "review": {
+            "action": "edited",
+            "by": "Municipal Agents team (not Region staff)",
+            "at": "2026-11-14T09:15:00-05:00",
+            "note": "Reworded to the report's words.",
+            "originalText": "The Region plans to use leftover land for building after finishing the hub."
+          }
         },
         {
           "id": "s17",
-          "text": "Future plans for leftover land may include businesses and low cost homes.",
+          "text": "Development on the remaining land may include commercial and residential uses, including affordable housing.",
           "kind": "estimate",
           "citations": [
             {
@@ -559,7 +608,14 @@
             }
           ],
           "verified": true,
-          "support": "weak"
+          "support": "strong",
+          "review": {
+            "action": "edited",
+            "by": "Municipal Agents team (not Region staff)",
+            "at": "2026-11-14T09:15:00-05:00",
+            "note": "Reworded to the report's words.",
+            "originalText": "Future plans for leftover land may include businesses and low cost homes."
+          }
         }
       ]
     }

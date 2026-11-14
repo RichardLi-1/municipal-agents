@@ -450,9 +450,14 @@ export function MapView({ hidden }: { hidden: boolean }) {
     for (const { m, p, el } of list) {
       const w = el.offsetWidth || 200;
       const h = (el.offsetHeight || 50) + 12;
+      const cw = map.getContainer().clientWidth;
+      const left = innerWidth >= 900 ? (document.querySelector("[data-cover=left]")?.getBoundingClientRect().right ?? 0) + 8 : 8;
+      const right = innerWidth >= 900 ? (document.querySelector("[data-cover=right]")?.getBoundingClientRect().left ?? cw) - 8 : cw - 8;
+      // Keep the label inside the visible map.
+      const nudge = (x: number) => Math.min(Math.max(x, left + w / 2), right - w / 2) - x;
       let off: [number, number] = [0, 0];
       for (const [tx, ty] of tries) {
-        const dx = tx * (w + 12);
+        const dx = tx * (w + 12) + nudge(p.x + tx * (w + 12));
         const box = { x: p.x + dx - w / 2, y: p.y + ty - h, w, h };
         const hit = placed.some((q) => box.x < q.x + q.w + 6 && q.x < box.x + box.w + 6 && box.y < q.y + q.h && q.y < box.y + box.h);
         if (!hit) {
@@ -499,6 +504,8 @@ export function MapView({ hidden }: { hidden: boolean }) {
       zoom: st.focus?.zoom ?? 10.6,
       attributionControl: false,
       dragRotate: false,
+      // On touch screens one finger scrolls the page; two fingers move the map.
+      cooperativeGestures: matchMedia("(pointer: coarse)").matches,
       pitchWithRotate: false,
       fadeDuration: 150,
     });

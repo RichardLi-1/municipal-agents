@@ -17,6 +17,7 @@
     "preact": "10.29.8"
   },
   "devDependencies": {
+    "@axe-core/playwright": "4.11.0",
     "@preact/preset-vite": "2.10.6",
     "@types/geojson": "7946.0.16",
     "playwright-core": "1.65.1",

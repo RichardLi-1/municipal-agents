@@ -15,6 +15,15 @@ import { numberBacked, numbersIn } from "./tools.ts";
 const HEDGE = /\b(may|might|could)\b/i;
 const STRAY_START = /^\p{Ll}[\p{Ll}'-]*\s+(?=\p{Lu})/u;
 
+const MONTH = "(?:jan(?:uary)?|feb(?:ruary)?|mar(?:ch)?|apr(?:il)?|may|june?|july?|aug(?:ust)?|sep(?:t(?:ember)?)?|oct(?:ober)?|nov(?:ember)?|dec(?:ember)?)\\.?";
+/** The text with dates ("December 16, 2026", "16 December") and years (1900-2099) removed. */
+export function withoutDates(text: string): string {
+  return text
+    .replace(new RegExp(`\\b${MONTH}\\s+\\d{1,2}(?:st|nd|rd|th)?\\b(?:,?\\s*\\d{4})?`, "gi"), " ")
+    .replace(new RegExp(`\\b\\d{1,2}(?:st|nd|rd|th)?\\s+${MONTH}\\b(?:,?\\s*\\d{4})?`, "gi"), " ")
+    .replace(/\b(19|20)\d{2}\b/g, " ");
+}
+
 /**
  * How well a statement's quotes back it: "weak" when they share fewer than 2 meaningful
  * word stems and no number. Words that name the decision itself (its title and plain
@@ -26,8 +35,9 @@ export function supportOf(text: string, quotes: string[], decisionWords: string[
   const B = new Set(terms(quotes.join(" ")).map(stem).filter((w) => !ignore.has(w)));
   let shared = 0;
   for (const w of A) if (B.has(w)) shared++;
+  // A date or a year ("December 16", "2027") alone doesn't show the quote backs the sentence.
   const quoted = quotes.flatMap(numbersIn);
-  const sharesNumber = numbersIn(text).some((n) => numberBacked(n, quoted));
+  const sharesNumber = numbersIn(withoutDates(text)).some((n) => numberBacked(n, quoted));
   return shared < 2 && !sharesNumber ? "weak" : "strong";
 }
 

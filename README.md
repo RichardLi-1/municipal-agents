@@ -12,7 +12,7 @@ working prototype, not an official city service.
 
 - **Live:** https://municipal-agents.fly.dev (the app: [/decisions](https://municipal-agents.fly.dev/decisions);
   the 2027 budget brief: [/d/row-2027-budget](https://municipal-agents.fly.dev/d/row-2027-budget))
-- **Video:** <link>
+- **Video:** linked from the Devpost submission
 - **Docs site:** https://municipal-agents.fly.dev/docs
 - **Municipal Readiness Report (one page):** [report/municipal-readiness-report.pdf](report/municipal-readiness-report.pdf)
 - **API:** https://municipal-agents.fly.dev/api/openapi.json

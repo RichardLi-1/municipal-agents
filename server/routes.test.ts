@@ -238,6 +238,28 @@ test("staff can replay a saved real brief run: every event labelled, ending with
   assert.equal(fs.statSync(file).mtimeMs, before, "the brief file is not rewritten");
 });
 
+test("operator corrections apply when the brief is loaded, verified, and go on the record once", async () => {
+  const dir = path.join(app.cfg.dataDir, "corrections");
+  fs.mkdirSync(dir, { recursive: true });
+  const at = "2026-11-14T08:30:00-05:00";
+  fs.writeFileSync(path.join(dir, "fixture-budget.json"), JSON.stringify([
+    { statementId: "s2", text: "Council votes on November 25.", note: "Clearer date.", by: "Municipal Agents team (not Region staff)", at },
+    { statementId: "s1", text: "The levy rises 9%.", citations: [{ sourceId: "fixture-report", page: 1, quote: "The levy rises 9 per cent." }], note: "Bad quote.", by: "Municipal Agents team (not Region staff)", at },
+  ]));
+  const d1 = await (await get("/api/decisions/fixture-budget", { headers: staff })).json();
+  const s2 = d1.brief.summary.find((s: Statement) => s.id === "s2");
+  assert.equal(s2.text, "Council votes on November 25.");
+  assert.equal(s2.review.by, "Municipal Agents team (not Region staff)");
+  assert.equal(s2.review.originalText, "Council votes on 25 November.");
+  const s1 = d1.brief.summary.find((s: Statement) => s.id === "s1");
+  assert.notEqual(s1.text, "The levy rises 9%.", "a correction whose quote isn't on the page is refused");
+  await get("/api/decisions/fixture-budget");
+  const reviewed = app.log.list({ kind: "statement.reviewed", decisionId: "fixture-budget" }).filter((e) => e.actor === "operator:municipal-agents-team");
+  assert.equal(reviewed.length, 1, "logged once, however often it's loaded");
+  assert.equal((reviewed[0].payload as { statementId: string }).statementId, "s2");
+  fs.rmSync(path.join(dir, "fixture-budget.json"));
+});
+
 test("ask rejects empty questions and rate-limits per IP", async () => {
   assert.equal((await post("/api/decisions/fixture-budget/ask", { question: " " })).status, 400);
   const ip = { "Fly-Client-IP": "10.0.0.2" };

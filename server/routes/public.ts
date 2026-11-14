@@ -9,6 +9,7 @@ import { decisionCalendar } from "../ics.ts";
 import { nextParticipation, openParticipation, startMs } from "../time.ts";
 import { publicBrief } from "../statements.ts";
 import { summarise } from "../usage.ts";
+import { syncCorrections } from "../corrections.ts";
 import { isStaff } from "./staff.ts";
 
 /** A DecisionCard, plus `open`: ways to take part that are open right now (extra field). */
@@ -98,6 +99,7 @@ export function publicRoutes(app: App, r: Router): void {
 
   r.get("/api/decisions/:id", ({ req, res, params, url }) => {
     const decision = requireDecision(app, params.id);
+    syncCorrections(app); // cheap unless a corrections file changed
     const lang = url.searchParams.get("lang") ?? undefined;
     const lenses = app.store.lenses(decision);
     const original = app.store.brief(decision.id);

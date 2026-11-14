@@ -44,3 +44,9 @@ test("a translation follows the review of the brief it came from", () => {
   const fr = { ...brief("draft"), lang: "fr", summary: [st("a"), st("b")] };
   assert.deepEqual(publicBrief(fr, source).summary.map((s) => s.id), ["a"]);
 });
+
+test("a draft hides statements the Municipal Agents team withdrew, and nothing else", () => {
+  const b = brief("draft");
+  b.summary[0].review = { action: "rejected", by: "Municipal Agents team (not Region staff)", at: "2026-11-14T09:00:00-05:00", note: "Unsupported." };
+  assert.deepEqual(publicBrief(b).summary.map((s) => s.id), ["b"]);
+});

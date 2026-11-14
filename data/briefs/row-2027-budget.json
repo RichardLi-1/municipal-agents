@@ -6,25 +6,42 @@
     "gemini-3.6-flash"
   ],
   "costUsd": 0.368356,
-  "readingGrade": 7.3,
+  "readingGrade": 7.4,
   "summary": [
     {
       "id": "s22",
-      "text": "Regional Council decides the 2027 plan and budget for regional services.",
+      "text": "From November 15, 2026, the Regional Chair proposes the budget, by February 1, 2027; Regional Council can then change it.",
       "kind": "fact",
       "citations": [
         {
-          "sourceId": "row-2027-budget-page",
-          "page": 7,
-          "quote": "December 16, 2026 - 2027 Plan and Budget Overview"
+          "sourceId": "oreg-530-22",
+          "page": 3,
+          "quote": "on or before February 1 of each year"
+        },
+        {
+          "sourceId": "oreg-530-22",
+          "page": 17,
+          "quote": "Note: On November 15, 2026, Schedule 1 to the Regulation is amended by adding the"
+        },
+        {
+          "sourceId": "oreg-530-22",
+          "page": 18,
+          "quote": "203.1 Regional Municipality of Waterloo"
         }
       ],
       "verified": true,
-      "support": "strong"
+      "support": "strong",
+      "review": {
+        "action": "edited",
+        "by": "Municipal Agents team (not Region staff)",
+        "at": "2026-11-14T08:30:00-05:00",
+        "note": "The agents wrote that Council decides; under the strong-mayor rules the Chair proposes the budget and Council can amend it.",
+        "originalText": "Regional Council decides the 2027 plan and budget for regional services."
+      }
     },
     {
       "id": "s23",
-      "text": "Staff first present the draft budget proposal on December 16, 2026.",
+      "text": "Council's first look at the 2027 budget is an overview meeting on December 16, 2026.",
       "kind": "fact",
       "citations": [
         {
@@ -34,51 +51,94 @@
         }
       ],
       "verified": true,
-      "support": "strong"
+      "support": "strong",
+      "review": {
+        "action": "edited",
+        "by": "Municipal Agents team (not Region staff)",
+        "at": "2026-11-14T08:30:00-05:00",
+        "note": "The budget page lists an overview meeting, not a staff presentation of a draft.",
+        "originalText": "Staff first present the draft budget proposal on December 16, 2026."
+      }
     },
     {
       "id": "s24",
-      "text": "The proposed detailed budget numbers are not published yet.",
+      "text": "The draft 2027 budget isn't out yet: the Region says it will add reports as they become available.",
       "kind": "fact",
       "citations": [
         {
           "sourceId": "row-2027-budget-page",
-          "page": 6,
-          "quote": "This is a stability-focused budget to ensure that the services our residents rely on remain strong"
+          "page": 7,
+          "quote": "Links to Council reports and engagement opportunities will be added as they become available."
         }
       ],
       "verified": true,
-      "support": "weak"
+      "support": "strong",
+      "review": {
+        "action": "edited",
+        "by": "Municipal Agents team (not Region staff)",
+        "at": "2026-11-14T08:30:00-05:00",
+        "note": "The original quote did not show that the numbers are unpublished.",
+        "originalText": "The proposed detailed budget numbers are not published yet."
+      }
     },
     {
       "id": "s25",
-      "text": "Property taxes and user fees pay for regional spending.",
+      "text": "In 2026, taxes paid for 39% of the Region's spending, grants for 27% and user fees for 14%.",
       "kind": "fact",
       "citations": [
         {
           "sourceId": "row-2026-budget-book",
-          "page": 11,
-          "quote": "Property Tax 2,786.44 $2,928.62 142.18 5.10%"
+          "page": 7,
+          "quote": "2026 Operating and Capital Budget Summary"
+        },
+        {
+          "sourceId": "row-2026-budget-book",
+          "page": 7,
+          "quote": "Taxation (including Supplementary Taxes and Payments in Lieu) $ 910,967 - $910,967 39%"
+        },
+        {
+          "sourceId": "row-2026-budget-book",
+          "page": 7,
+          "quote": "Provincial & Federal Grants $ 524,010 $ 110,812 $634,822 27%"
+        },
+        {
+          "sourceId": "row-2026-budget-book",
+          "page": 7,
+          "quote": "User Rates, Fees and Other Charges $ 339,144 - $339,144 14%"
         }
       ],
       "verified": true,
-      "support": "weak"
+      "support": "strong",
+      "review": {
+        "action": "edited",
+        "by": "Municipal Agents team (not Region staff)",
+        "at": "2026-11-14T08:30:00-05:00",
+        "note": "The original quote was a tax table row that did not show who pays; replaced with the budget book's funding table.",
+        "originalText": "Property taxes and user fees pay for regional spending."
+      }
     }
   ],
   "whyNow": [
     {
       "id": "s26",
-      "text": "Council sets a new plan and budget every year.",
+      "text": "A new budget must be proposed by February 1 of each year.",
       "kind": "fact",
       "citations": [
         {
-          "sourceId": "row-2027-budget-page",
-          "page": 6,
-          "quote": "affordability for residents; maintaining critical services; and protecting essential infrastructure."
+          "sourceId": "oreg-530-22",
+          "page": 3,
+          "quote": "on or before February 1 of each year"
         }
       ],
       "verified": true,
-      "support": "weak"
+      "support": "strong",
+      "review": {
+        "action": "edited",
+        "by": "Municipal Agents team (not Region staff)",
+        "at": "2026-11-14T08:30:00-05:00",
+        "note": "The original quote was about priorities, not timing; reworded to what the regulation says.",
+        "originalText": "Council sets a new plan and budget every year."
+      }
     },
     {
       "id": "s27",
@@ -116,17 +176,39 @@
         },
         {
           "id": "s5",
-          "text": "Your rent could rise if regional property taxes go up and landlords pass on costs.",
-          "kind": "harm",
+          "text": "If you rent, Ontario caps most rent increases at a yearly guideline (1.9% for 2027). A landlord can ask for more only if municipal taxes rise by an extraordinary amount. Units first lived in after November 15, 2018 have no cap.",
+          "kind": "fact",
           "citations": [
             {
-              "sourceId": "row-2026-budget-book",
-              "page": 11,
-              "quote": "Property Tax 2,786.44 $2,928.62 142.18 5.10%"
+              "sourceId": "ontario-rent-increase-guideline",
+              "page": 1,
+              "quote": "The rent increase guideline for 2027 is 1.9%."
+            },
+            {
+              "sourceId": "rta-s126",
+              "page": 1,
+              "quote": "A landlord may apply to the Board for an order permitting the rent charged to be increased by more than the guideline"
+            },
+            {
+              "sourceId": "rta-s126",
+              "page": 1,
+              "quote": "An extraordinary increase in the cost for municipal taxes and charges for the residential complex"
+            },
+            {
+              "sourceId": "ontario-rent-increase-guideline",
+              "page": 3,
+              "quote": "that are occupied for the first time for residential purposes after November 15, 2018 are exempt from rent control"
             }
           ],
           "verified": true,
-          "support": "weak"
+          "support": "strong",
+          "review": {
+            "action": "edited",
+            "by": "Municipal Agents team (not Region staff)",
+            "at": "2026-11-14T08:30:00-05:00",
+            "note": "The agents said rent could rise as landlords pass on taxes; Ontario rent rules limit that, so it now says what the rules are.",
+            "originalText": "Your rent could rise if regional property taxes go up and landlords pass on costs."
+          }
         }
       ]
     },
@@ -221,7 +303,7 @@
   "haveYourSay": [
     {
       "id": "s28",
-      "text": "Fill in the online survey or quiz by February 26, 2027.",
+      "text": "A prize draw for people who fill in the budget survey closes February 26, 2027. Check EngageWR for when the survey itself closes.",
       "kind": "fact",
       "citations": [
         {
@@ -236,7 +318,14 @@
         }
       ],
       "verified": true,
-      "support": "strong"
+      "support": "strong",
+      "review": {
+        "action": "edited",
+        "by": "Municipal Agents team (not Region staff)",
+        "at": "2026-11-14T08:30:00-05:00",
+        "note": "February 26 is when the prize draw closes, not necessarily the survey.",
+        "originalText": "Fill in the online survey or quiz by February 26, 2027."
+      }
     },
     {
       "id": "s29",
@@ -264,26 +353,40 @@
       "citations": [
         {
           "sourceId": "row-delegation-guide",
-          "page": 1,
-          "quote": "A delegation is a person or group who would like to speak at a Council or Committee meeting"
+          "page": 2,
+          "quote": "Written submissions on the same subject are acceptable and can be attached to the meeting agenda or minutes"
         }
       ],
       "verified": true,
-      "support": "weak"
+      "support": "strong",
+      "review": {
+        "action": "edited",
+        "by": "Municipal Agents team (not Region staff)",
+        "at": "2026-11-14T08:30:00-05:00",
+        "note": "Re-cited to the passage about written submissions.",
+        "originalText": "You can submit written comments to Council through the Clerk."
+      }
     },
     {
       "id": "s31",
-      "text": "You can watch budget meeting broadcasts live online.",
+      "text": "All Council meetings are open to the public and webcast, so you can watch them online.",
       "kind": "fact",
       "citations": [
         {
-          "sourceId": "row-2027-budget-page",
-          "page": 6,
-          "quote": "Visit the EngageWR webpage (https://www.engagewr.ca/ROW-2027-budget) to share your thoughts"
+          "sourceId": "row-delegation-guide",
+          "page": 3,
+          "quote": "All Committee and Council meetings are open to the public and media, and are webcast"
         }
       ],
       "verified": true,
-      "support": "weak"
+      "support": "strong",
+      "review": {
+        "action": "edited",
+        "by": "Municipal Agents team (not Region staff)",
+        "at": "2026-11-14T08:30:00-05:00",
+        "note": "Re-cited to the passage that says meetings are webcast.",
+        "originalText": "You can watch budget meeting broadcasts live online."
+      }
     }
   ],
   "figures": [

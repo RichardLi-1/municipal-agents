@@ -180,6 +180,27 @@ export const MANIFEST: Entry[] = [
     kind: "notice",
     printed: true,
   },
+  // How a regional tax increase can reach renters (primary decision, renter impacts)
+  {
+    id: "rta-s126",
+    title: "Residential Tenancies Act, 2006, s. 126: Application for above guideline increase (e-Laws web page excerpt, consolidation September 21, 2026 to November 11, 2026)",
+    publisher: "Government of Ontario (e-Laws)",
+    url: "https://www.ontario.ca/laws/statute/06r17",
+    published: "2026-09-21",
+    licence: PUBLIC,
+    kind: "other",
+    printed: true,
+  },
+  {
+    id: "ontario-rent-increase-guideline",
+    title: "Residential rent increases (web page)",
+    publisher: "Government of Ontario",
+    url: "https://www.ontario.ca/page/residential-rent-increases",
+    published: "2026-06-23",
+    licence: PUBLIC,
+    kind: "notice",
+    printed: true,
+  },
   // Region of Waterloo Water Supply Strategy Update (secondary decision)
   {
     id: "row-water-supply-notice-2",

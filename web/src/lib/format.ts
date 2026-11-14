@@ -42,8 +42,17 @@ export function countdown(iso: string, now = Date.now()): { text: string; ms: nu
   const nf = new Intl.NumberFormat(loc());
   const unit = (n: number, u: "day" | "hour" | "minute") =>
     new Intl.NumberFormat(loc(), { style: "unit", unit: u, unitDisplay: "long" }).format(n);
+  // Whole calendar days in Toronto between today and that day (not rounded milliseconds).
+  const day = (x: number) => {
+    const [y, m, d] = new Intl.DateTimeFormat("en-CA", { timeZone: "America/Toronto", year: "numeric", month: "2-digit", day: "2-digit" })
+      .format(new Date(x))
+      .split("-")
+      .map(Number);
+    return Date.UTC(y, m - 1, d) / 86_400_000;
+  };
+  const days = Math.abs(day(now + ms) - day(now));
   let text: string;
-  if (abs >= 86_400_000 * 2) text = unit(Math.round(abs / 86_400_000), "day");
+  if (days >= 1 && abs >= 3_600_000 * 6) text = unit(days, "day");
   else if (abs >= 3_600_000) text = unit(Math.round(abs / 3_600_000), "hour");
   else text = unit(Math.max(1, Math.round(abs / 60_000)), "minute");
   void nf;
@@ -59,6 +68,12 @@ export function fmtMoney(n: number, opts: { compact?: boolean; currency?: string
   const currency = opts.currency ?? "CAD";
   const abs = Math.abs(n);
   const sym = currency === "USD" ? "US$" : "$";
+  if (opts.compact !== false && abs >= 1_000_000_000) {
+    const b = abs / 1_000_000_000;
+    const s = new Intl.NumberFormat(loc(), { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(b);
+    const word = chromeLang() === "fr" ? " G" : " billion";
+    return chromeLang() === "fr" ? `${n < 0 ? "-" : ""}${s}${word} ${sym}` : `${n < 0 ? "-" : ""}${sym}${s}${word}`;
+  }
   if (opts.compact !== false && abs >= 1_000_000) {
     const m = abs / 1_000_000;
     const s = new Intl.NumberFormat(loc(), { maximumFractionDigits: m >= 100 ? 0 : 1 }).format(m);

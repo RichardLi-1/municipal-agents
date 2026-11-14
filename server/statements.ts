@@ -2,6 +2,7 @@
 // product rules that act on them: staff review each one before publishing, a
 // published brief leaves out what staff rejected, and an edit is re-checked against
 // its pages so `verified` stays true to the checker.
+import { OPERATOR } from "../shared/corrections.ts";
 import type { Brief, Statement } from "../shared/types.ts";
 import { readingGrade } from "../shared/readability.ts";
 import { verifyStatement } from "../shared/verify.ts";
@@ -61,7 +62,14 @@ export function withoutStatements(brief: Brief, drop: Set<string>): Brief {
  * brief it was made from: its review decides, matched by statement id.
  */
 export function publicBrief(brief: Brief, source: Brief = brief): Brief {
-  if (source.review?.status !== "published") return brief;
+  if (source.review?.status !== "published") {
+    // A draft is shown whole, except statements the Municipal Agents team withdrew
+    // (operator corrections, data/corrections): they're known not to be supported.
+    const withdrawn = new Set(
+      [...allStatements(source), ...allStatements(brief)].filter((s) => s.review?.action === "rejected" && s.review.by === OPERATOR).map((s) => s.id),
+    );
+    return withdrawn.size ? withoutStatements(brief, withdrawn) : brief;
+  }
   const rejected = new Set(
     [...allStatements(source), ...allStatements(brief)].filter((s) => s.review?.action === "rejected").map((s) => s.id),
   );

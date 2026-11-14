@@ -4,6 +4,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import type { Brief, CityConfig, Decision, LensId, SourceDoc } from "../shared/types.ts";
+import { applyCorrections, type Correction } from "../shared/corrections.ts";
 
 export type Lenses = Brief["lenses"];
 
@@ -148,6 +149,24 @@ export class Store {
   brief(decisionId: string, lang?: string): Brief | undefined {
     if (!SAFE_ID.test(decisionId) || (lang && !SAFE_LANG.test(lang))) return undefined;
     const b = readJson<Brief>(this.briefPath(decisionId, lang));
+    if (!b || !Array.isArray(b.summary)) return undefined;
+    // Operator corrections (data/corrections/<id>.json) apply to the brief as written;
+    // translations are remade from it (their source hash changes).
+    const corrections = lang ? [] : this.corrections(decisionId);
+    return corrections.length ? applyCorrections(b, corrections, (id) => this.sourcePages(id)).brief : b;
+  }
+
+  /** The operator corrections for a decision's brief, if any (data/corrections/<id>.json). */
+  corrections(decisionId: string): Correction[] {
+    if (!SAFE_ID.test(decisionId)) return [];
+    const list = readJson<Correction[]>(path.join(this.dataDir, "corrections", `${decisionId}.json`));
+    return Array.isArray(list) ? list : [];
+  }
+
+  /** The brief file as the agents wrote it, before corrections. */
+  rawBrief(decisionId: string): Brief | undefined {
+    if (!SAFE_ID.test(decisionId)) return undefined;
+    const b = readJson<Brief>(this.briefPath(decisionId));
     return b && Array.isArray(b.summary) ? b : undefined;
   }
 

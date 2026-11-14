@@ -69,13 +69,29 @@ export function Affects({ brief, audiences, setAudiences }: { brief: Brief; audi
   const t = useT();
   const toggle = (id: string) => setAudiences(audiences.includes(id) ? audiences.filter((a) => a !== id) : [...audiences, id]);
   const chosen = AUDIENCES.filter((a) => audiences.includes(a.id));
+  const has = (id: string) => brief.impacts.some((i) => i.audience === id && visible(i.statements).length);
+  // What applies to everyone: impacts with no listed audience, and the summary's money figures (taxes, water and sewer rates, fees).
+  const known = new Set<string>(AUDIENCES.map((a) => a.id));
+  const everyone = [
+    ...brief.impacts.filter((i) => !known.has(i.audience)).flatMap((i) => i.statements),
+    ...visible(brief.summary).filter((x) => /\$|%|tax|water|sewer|fee|rate/i.test(x.text)),
+  ];
+  const seen = new Set<string>();
+  const general = visible(everyone).filter((x) => !seen.has(x.id) && (seen.add(x.id), true));
   return (
     <div class="tab-body">
       <fieldset class="aud-picker">
         <legend class="section-title">{t("Who are you? Pick all that apply.")}</legend>
         <div class="chips">
           {AUDIENCES.map((a) => (
-            <button key={a.id} type="button" class="chip-toggle" aria-pressed={audiences.includes(a.id)} onClick={() => toggle(a.id)}>
+            <button
+              key={a.id}
+              type="button"
+              class={`chip-toggle ${has(a.id) ? "" : "is-empty"}`}
+              aria-pressed={audiences.includes(a.id)}
+              onClick={() => toggle(a.id)}
+              title={has(a.id) ? undefined : t("Nothing specific in the documents for this group")}
+            >
               {audiences.includes(a.id) ? <Check size={14} /> : null}
               {t(a.label)}
             </button>
@@ -94,13 +110,19 @@ export function Affects({ brief, audiences, setAudiences }: { brief: Brief; audi
                 {imp && visible(imp.statements).length ? (
                   <Statements list={imp.statements} />
                 ) : (
-                  <p class="muted">{t("Nothing in the documents about this group yet.")}</p>
+                  <p class="muted">{t("Nothing specific in the documents for this group. What applies to everyone is below.")}</p>
                 )}
               </article>
             );
           })}
         </div>
       )}
+      {general.length ? (
+        <section class="card impact">
+          <h2 class="card-title">{t("Applies to everyone")}</h2>
+          <Statements list={general} />
+        </section>
+      ) : null}
     </div>
   );
 }
@@ -142,8 +164,8 @@ function Subscribe({ decisionId }: { decisionId: string }) {
   };
   return (
     <div class="subscribe">
-      <button type="button" class="btn btn-ghost btn-sm" aria-expanded={open} onClick={toggle}>
-        {t("Subscribe to all dates")}
+      <button type="button" class="btn btn-secondary btn-sm" aria-expanded={open} onClick={toggle}>
+        <Calendar size={16} /> {t("Subscribe to all dates")}
       </button>
       {open ? (
         <div class="subscribe-pop" role="group" aria-label={t("Subscribe to all dates")}>
@@ -296,18 +318,21 @@ export function Unknowns({ brief }: { brief: Brief }) {
                 <p>
                   <strong>{t("Who can answer:")}</strong> {u.whoCanAnswer}
                   {u.contact ? (
-                    (() => {
-                      const email = /[\w.+-]+@[\w-]+(\.[\w-]+)+/.exec(u.contact)?.[0];
-                      return email ? (
-                        <>
-                          {" · "}
-                          {u.contact.replace(email, "").replace(/^[\s,;:]+|[\s,;:]+$/g, "")}{" "}
-                          <a class="link" href={`mailto:${email}`}>{email}</a>
-                        </>
-                      ) : (
-                        <> · {u.contact}</>
-                      );
-                    })()
+                    <>
+                      {" · "}
+                      {(() => {
+                        const email = /[\w.+-]+@[\w-]+(\.[\w-]+)+/.exec(u.contact)?.[0];
+                        if (!email) return u.contact;
+                        const [before, after] = u.contact.split(email);
+                        return (
+                          <>
+                            {before}
+                            <a class="link" href={`mailto:${email}`}>{email}</a>
+                            {after}
+                          </>
+                        );
+                      })()}
+                    </>
                   ) : null}
                 </p>
               </article>

@@ -2,11 +2,15 @@
 //   node --env-file=.env agents/cli.ts brief <decisionId>          → data/briefs/<id>.json
 //   node --env-file=.env agents/cli.ts ask <decisionId> "<question>" [--lang fr] [--audience renter,driver]
 //   node --env-file=.env agents/cli.ts translate <decisionId> <lang> → data/briefs/<id>.<lang>.json
+//   node agents/cli.ts correct <decisionId>   applies data/corrections/<id>.json to the brief (no model)
 // Options: --data <dir> (default ./data). Log entries go to data/cache/agents-cli.jsonl.
 
 import fs from "node:fs";
 import path from "node:path";
-import type { AgentEvent, AudienceId, Brief } from "../shared/types.ts";
+import type { AgentEvent, AudienceId, Brief, Decision } from "../shared/types.ts";
+import { applyCorrections, OPERATOR, OPERATOR_ACTOR, type Correction } from "../shared/corrections.ts";
+import { readingGrade } from "../shared/readability.ts";
+import { supportOf } from "./tidy.ts";
 import { ask, generateBrief, translateBrief, type AgentContext } from "./index.ts";
 
 function option(args: string[], name: string): string | undefined {
@@ -102,6 +106,34 @@ async function main(): Promise<void> {
   } else if (cmd === "ask" && decisionId && rest.length) {
     await ask(ctx, { decisionId, question: rest.join(" "), lang, audiences }, printEvent);
     console.log(`\nspent $${ctx.spent().toFixed(4)}`);
+  } else if (cmd === "correct" && decisionId) {
+    // Operator corrections: every corrected quote is checked on its page, or refused.
+    const file = path.join(dataDir, "briefs", `${decisionId}.json`);
+    const brief = JSON.parse(fs.readFileSync(file, "utf8")) as Brief;
+    const corrections = JSON.parse(fs.readFileSync(path.join(dataDir, "corrections", `${decisionId}.json`), "utf8")) as Correction[];
+    const decision = JSON.parse(fs.readFileSync(path.join(dataDir, "decisions", `${decisionId}.json`), "utf8")) as Decision;
+    const pagesOf = (id: string) => {
+      try {
+        return JSON.parse(fs.readFileSync(path.join(dataDir, "sources", `${id}.pages.json`), "utf8")) as string[];
+      } catch {
+        return undefined;
+      }
+    };
+    const { brief: out, applied, refused } = applyCorrections(brief, corrections, pagesOf, {
+      support: (text, quotes) => supportOf(text, quotes, [decision.title, decision.plainTitle]),
+    });
+    for (const r of refused) console.log(`\x1b[33mrefused\x1b[0m ${r.correction.statementId}: ${r.reason}`);
+    for (const a of applied) {
+      console.log(`\x1b[32mapplied\x1b[0m ${a.correction.statementId} (${a.correction.action ?? "edited"}): ${a.correction.text ?? "(text unchanged)"}`);
+      ctx.log({ actor: OPERATOR_ACTOR, kind: "statement.reviewed", decisionId, payload: { statementId: a.correction.statementId, action: a.correction.action ?? "edited", by: OPERATOR, note: a.correction.note, originalText: a.originalText, correctionKey: a.key } });
+    }
+    out.readingGrade = readingGrade([...out.summary, ...out.impacts.flatMap((g) => g.statements)].map((x) => x.text));
+    const hist = path.join(dataDir, "cache", "brief-history");
+    fs.mkdirSync(hist, { recursive: true });
+    fs.copyFileSync(file, path.join(hist, `${decisionId}.${new Date().toISOString().replace(/[:.]/g, "-")}.json`));
+    fs.writeFileSync(file, JSON.stringify(out, null, 2) + "\n");
+    console.log(`wrote ${path.relative(process.cwd(), file)}: ${applied.length} applied, ${refused.length} refused, grade ${out.readingGrade}`);
+    if (refused.length) process.exitCode = 1;
   } else if (cmd === "translate" && decisionId && rest[0]) {
     const brief = JSON.parse(fs.readFileSync(path.join(dataDir, "briefs", `${decisionId}.json`), "utf8")) as Brief;
     const out = await translateBrief(ctx, brief, rest[0]);
@@ -109,7 +141,7 @@ async function main(): Promise<void> {
     fs.writeFileSync(file, JSON.stringify(out, null, 2) + "\n");
     console.log(`wrote ${path.relative(process.cwd(), file)}, spent $${ctx.spent().toFixed(4)}`);
   } else {
-    console.log('usage: agents/cli.ts brief <decisionId> | ask <decisionId> "<question>" [--lang fr] [--audience renter] | translate <decisionId> <lang>  [--data dir]');
+    console.log('usage: agents/cli.ts brief <decisionId> | ask <decisionId> "<question>" [--lang fr] [--audience renter] | translate <decisionId> <lang> | correct <decisionId>  [--data dir]');
     process.exitCode = 2;
   }
 }

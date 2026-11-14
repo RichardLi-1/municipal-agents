@@ -6,11 +6,11 @@
     "gemini-3.6-flash"
   ],
   "costUsd": 0.273632,
-  "readingGrade": 6,
+  "readingGrade": 6.7,
   "summary": [
     {
       "id": "s2",
-      "text": "The Region is planning where to get tap water through to 2051.",
+      "text": "The study looks at the community's future water needs through to 2051.",
       "kind": "fact",
       "citations": [
         {
@@ -20,21 +20,40 @@
         }
       ],
       "verified": true,
-      "support": "strong"
+      "support": "strong",
+      "review": {
+        "action": "edited",
+        "by": "Municipal Agents team (not Region staff)",
+        "at": "2026-11-14T09:15:00-05:00",
+        "note": "Reworded to the notice's words.",
+        "originalText": "The Region is planning where to get tap water through to 2051."
+      }
     },
     {
       "id": "s3",
-      "text": "The Region has not yet chosen its long-term water sources.",
+      "text": "The Region will present a shortlist of options and explain how it will select the preferred one.",
       "kind": "fact",
       "citations": [
         {
           "sourceId": "row-water-supply-notice-2",
           "page": 1,
-          "quote": "The second public meeting is being held to share a study update since the last meeting in December 2024 and present the shortlisted alternatives for water supply."
+          "quote": "present the shortlisted alternatives for water supply"
+        },
+        {
+          "sourceId": "row-water-supply-notice-2",
+          "page": 1,
+          "quote": "discuss the evaluation approach to select the preferred alternative"
         }
       ],
       "verified": true,
-      "support": "weak"
+      "support": "strong",
+      "review": {
+        "action": "edited",
+        "by": "Municipal Agents team (not Region staff)",
+        "at": "2026-11-14T09:15:00-05:00",
+        "note": "The original quote didn't show that no choice has been made; now cites the notice's shortlist and selection lines.",
+        "originalText": "The Region has not yet chosen its long-term water sources."
+      }
     },
     {
       "id": "s4",
@@ -57,21 +76,33 @@
     },
     {
       "id": "s14",
-      "text": "The Region is planning tap water supplies to the year 2051.",
+      "text": "The study will review current water sources and investigate possible new ones.",
       "kind": "fact",
       "citations": [
         {
-          "sourceId": "row-water-supply-notice-2",
-          "page": 1,
-          "quote": "In this study, we will look at future water supply needs for the community through to 2051."
+          "sourceId": "row-water-supply-slides-2024",
+          "page": 7,
+          "quote": "Review current water supply sources"
+        },
+        {
+          "sourceId": "row-water-supply-slides-2024",
+          "page": 7,
+          "quote": "Investigate possible new water supply sources"
         }
       ],
       "verified": true,
-      "support": "strong"
+      "support": "strong",
+      "review": {
+        "action": "edited",
+        "by": "Municipal Agents team (not Region staff)",
+        "at": "2026-11-14T09:15:00-05:00",
+        "note": "Repeated the statement above; replaced with what the study will do, from the 2024 meeting slides.",
+        "originalText": "The Region is planning tap water supplies to the year 2051."
+      }
     },
     {
       "id": "s24",
-      "text": "The ten year plan from 2026 to 2035 costs $847,572 thousand.",
+      "text": "The 10-year water capital plan for 2026 to 2035 totals about $847.6 million.",
       "kind": "fact",
       "citations": [
         {
@@ -86,7 +117,14 @@
         }
       ],
       "verified": true,
-      "support": "strong"
+      "support": "strong",
+      "review": {
+        "action": "edited",
+        "by": "Municipal Agents team (not Region staff)",
+        "at": "2026-11-14T09:15:00-05:00",
+        "note": "Clearer wording: the table is in thousands of dollars.",
+        "originalText": "The ten year plan from 2026 to 2035 costs $847,572 thousand."
+      }
     }
   ],
   "whyNow": [
@@ -106,7 +144,7 @@
     },
     {
       "id": "s16",
-      "text": "The study meets the first steps of environmental rules for main plans.",
+      "text": "The study follows Phases 1 and 2 of the Municipal Class Environmental Assessment process.",
       "kind": "fact",
       "citations": [
         {
@@ -116,7 +154,14 @@
         }
       ],
       "verified": true,
-      "support": "weak"
+      "support": "strong",
+      "review": {
+        "action": "edited",
+        "by": "Municipal Agents team (not Region staff)",
+        "at": "2026-11-14T09:15:00-05:00",
+        "note": "Reworded to the slides' words.",
+        "originalText": "The study meets the first steps of environmental rules for main plans."
+      }
     }
   ],
   "impacts": [
@@ -136,7 +181,14 @@
             }
           ],
           "verified": true,
-          "support": "weak"
+          "support": "weak",
+          "review": {
+            "action": "rejected",
+            "by": "Municipal Agents team (not Region staff)",
+            "at": "2026-11-14T09:15:00-05:00",
+            "note": "No source for this decision shows renters paying regional water rates, and Ontario's rent rules cap most rent increases.",
+            "originalText": "Renters may see rents or utility bills go up if regional water rates increase."
+          }
         },
         {
           "id": "s29",
@@ -150,7 +202,14 @@
             }
           ],
           "verified": true,
-          "support": "weak"
+          "support": "weak",
+          "review": {
+            "action": "rejected",
+            "by": "Municipal Agents team (not Region staff)",
+            "at": "2026-11-14T09:15:00-05:00",
+            "note": "No source for this decision links water limits to slower housing development; the quote counted development applications.",
+            "originalText": "Water limits might slow down new local housing developments."
+          }
         }
       ]
     },
@@ -160,17 +219,24 @@
       "statements": [
         {
           "id": "s5",
-          "text": "New water sources could help fix local water limits over time.",
+          "text": "New supply sources and more storage could make the water system more reliable.",
           "kind": "estimate",
           "citations": [
             {
-              "sourceId": "row-asset-management-review-2026",
-              "page": 4,
-              "quote": "workload capacity and staffing resources (particularly the water capacity constraint work where council has subsequently addressed staffing pressures."
+              "sourceId": "row-water-supply-charter",
+              "page": 10,
+              "quote": "Improve the reliability of the water supply system by increasing the amount of water storage and supply sources"
             }
           ],
           "verified": true,
-          "support": "weak"
+          "support": "strong",
+          "review": {
+            "action": "edited",
+            "by": "Municipal Agents team (not Region staff)",
+            "at": "2026-11-14T09:15:00-05:00",
+            "note": "The original quote was about staffing; re-cited to the project charter's objective.",
+            "originalText": "New water sources could help fix local water limits over time."
+          }
         },
         {
           "id": "s18",
@@ -184,7 +250,14 @@
             }
           ],
           "verified": true,
-          "support": "weak"
+          "support": "weak",
+          "review": {
+            "action": "rejected",
+            "by": "Municipal Agents team (not Region staff)",
+            "at": "2026-11-14T09:15:00-05:00",
+            "note": "No source for this decision links water limits to slower home building; the quote was about staff workload.",
+            "originalText": "Water limits could slow down the building of new homes."
+          }
         },
         {
           "id": "s20",
@@ -246,17 +319,24 @@
       "statements": [
         {
           "id": "s7",
-          "text": "Local businesses could get more reliable water as the population grows.",
+          "text": "Businesses may benefit: reliable service is one of the tests the Region will use to compare options.",
           "kind": "estimate",
           "citations": [
             {
-              "sourceId": "row-2026-budget-book",
-              "page": 59,
-              "quote": "Supplying 125 million litres of drinking water per day for residents and businesses."
+              "sourceId": "row-water-supply-slides-2024",
+              "page": 18,
+              "quote": "Provides reliable service"
             }
           ],
           "verified": true,
-          "support": "weak"
+          "support": "strong",
+          "review": {
+            "action": "edited",
+            "by": "Municipal Agents team (not Region staff)",
+            "at": "2026-11-14T09:15:00-05:00",
+            "note": "The original quote was a daily supply figure; re-cited to the evaluation criteria.",
+            "originalText": "Local businesses could get more reliable water as the population grows."
+          }
         },
         {
           "id": "s30",

@@ -1,0 +1,154 @@
+[
+  {
+    "statementId": "s22",
+    "text": "From November 15, 2026, the Regional Chair proposes the budget, by February 1, 2027; Regional Council can then change it.",
+    "citations": [
+      {
+        "sourceId": "oreg-530-22",
+        "page": 3,
+        "quote": "on or before February 1 of each year"
+      },
+      {
+        "sourceId": "oreg-530-22",
+        "page": 17,
+        "quote": "Note: On November 15, 2026, Schedule 1 to the Regulation is amended by adding the"
+      },
+      {
+        "sourceId": "oreg-530-22",
+        "page": 18,
+        "quote": "203.1 Regional Municipality of Waterloo"
+      }
+    ],
+    "note": "The agents wrote that Council decides; under the strong-mayor rules the Chair proposes the budget and Council can amend it.",
+    "by": "Municipal Agents team (not Region staff)",
+    "at": "2026-11-14T08:30:00-05:00"
+  },
+  {
+    "statementId": "s23",
+    "text": "Council's first look at the 2027 budget is an overview meeting on December 16, 2026.",
+    "note": "The budget page lists an overview meeting, not a staff presentation of a draft.",
+    "by": "Municipal Agents team (not Region staff)",
+    "at": "2026-11-14T08:30:00-05:00"
+  },
+  {
+    "statementId": "s24",
+    "text": "The draft 2027 budget isn't out yet: the Region says it will add reports as they become available.",
+    "citations": [
+      {
+        "sourceId": "row-2027-budget-page",
+        "page": 7,
+        "quote": "Links to Council reports and engagement opportunities will be added as they become available."
+      }
+    ],
+    "note": "The original quote did not show that the numbers are unpublished.",
+    "by": "Municipal Agents team (not Region staff)",
+    "at": "2026-11-14T08:30:00-05:00"
+  },
+  {
+    "statementId": "s25",
+    "text": "In 2026, taxes paid for 39% of the Region's spending, grants for 27% and user fees for 14%.",
+    "citations": [
+      {
+        "sourceId": "row-2026-budget-book",
+        "page": 7,
+        "quote": "2026 Operating and Capital Budget Summary"
+      },
+      {
+        "sourceId": "row-2026-budget-book",
+        "page": 7,
+        "quote": "Taxation (including Supplementary Taxes and Payments in Lieu) $ 910,967 - $910,967 39%"
+      },
+      {
+        "sourceId": "row-2026-budget-book",
+        "page": 7,
+        "quote": "Provincial & Federal Grants $ 524,010 $ 110,812 $634,822 27%"
+      },
+      {
+        "sourceId": "row-2026-budget-book",
+        "page": 7,
+        "quote": "User Rates, Fees and Other Charges $ 339,144 - $339,144 14%"
+      }
+    ],
+    "note": "The original quote was a tax table row that did not show who pays; replaced with the budget book's funding table.",
+    "by": "Municipal Agents team (not Region staff)",
+    "at": "2026-11-14T08:30:00-05:00"
+  },
+  {
+    "statementId": "s26",
+    "text": "A new budget must be proposed by February 1 of each year.",
+    "citations": [
+      {
+        "sourceId": "oreg-530-22",
+        "page": 3,
+        "quote": "on or before February 1 of each year"
+      }
+    ],
+    "note": "The original quote was about priorities, not timing; reworded to what the regulation says.",
+    "by": "Municipal Agents team (not Region staff)",
+    "at": "2026-11-14T08:30:00-05:00"
+  },
+  {
+    "statementId": "s28",
+    "text": "A prize draw for people who fill in the budget survey closes February 26, 2027. Check EngageWR for when the survey itself closes.",
+    "note": "February 26 is when the prize draw closes, not necessarily the survey.",
+    "by": "Municipal Agents team (not Region staff)",
+    "at": "2026-11-14T08:30:00-05:00"
+  },
+  {
+    "statementId": "s30",
+    "citations": [
+      {
+        "sourceId": "row-delegation-guide",
+        "page": 2,
+        "quote": "Written submissions on the same subject are acceptable and can be attached to the meeting agenda or minutes"
+      }
+    ],
+    "note": "Re-cited to the passage about written submissions.",
+    "by": "Municipal Agents team (not Region staff)",
+    "at": "2026-11-14T08:30:00-05:00"
+  },
+  {
+    "statementId": "s31",
+    "text": "All Council meetings are open to the public and webcast, so you can watch them online.",
+    "citations": [
+      {
+        "sourceId": "row-delegation-guide",
+        "page": 3,
+        "quote": "All Committee and Council meetings are open to the public and media, and are webcast"
+      }
+    ],
+    "note": "Re-cited to the passage that says meetings are webcast.",
+    "by": "Municipal Agents team (not Region staff)",
+    "at": "2026-11-14T08:30:00-05:00"
+  },
+  {
+    "statementId": "s5",
+    "text": "If you rent, Ontario caps most rent increases at a yearly guideline (1.9% for 2027). A landlord can ask for more only if municipal taxes rise by an extraordinary amount. Units first lived in after November 15, 2018 have no cap.",
+    "kind": "fact",
+    "citations": [
+      {
+        "sourceId": "ontario-rent-increase-guideline",
+        "page": 1,
+        "quote": "The rent increase guideline for 2027 is 1.9%."
+      },
+      {
+        "sourceId": "rta-s126",
+        "page": 1,
+        "quote": "A landlord may apply to the Board for an order permitting the rent charged to be increased by more than the guideline"
+      },
+      {
+        "sourceId": "rta-s126",
+        "page": 1,
+        "quote": "An extraordinary increase in the cost for municipal taxes and charges for the residential complex"
+      },
+      {
+        "sourceId": "ontario-rent-increase-guideline",
+        "page": 3,
+        "quote": "that are occupied for the first time for residential purposes after November 15, 2018 are exempt from rent control"
+      }
+    ],
+    "note": "The agents said rent could rise as landlords pass on taxes; Ontario rent rules limit that, so it now says what the rules are.",
+    "by": "Municipal Agents team (not Region staff)",
+    "at": "2026-11-14T08:30:00-05:00"
+  }
+]

@@ -45,11 +45,11 @@ function RailMenu({ id, icon, label, children, labelText }: { id: string; icon: 
         class="rail-item"
         aria-expanded={open}
         aria-controls={id}
+        aria-label={label !== labelText ? label : undefined}
         onClick={() => setOpen(!open)}
       >
         {icon}
-        <span class="rail-label">{labelText}</span>
-        {label !== labelText ? <span class="sr-only">, {label}</span> : null}
+        <span class="rail-label" aria-hidden={label !== labelText ? "true" : undefined}>{labelText}</span>
       </button>
       {open ? (
         <div

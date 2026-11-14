@@ -4,6 +4,7 @@ import { cityStore, currentDecision, feedbackLink, openSource, sourceIndex } fro
 import { useStore } from "../lib/store.ts";
 import { Alert, Check, Doc, Flag } from "./icons.tsx";
 import { useState } from "preact/hooks";
+import { fmtMoney } from "../lib/format.ts";
 
 export function CitationChip({ c }: { c: Citation }) {
   const t = useT();
@@ -58,7 +59,15 @@ export function StatementView({ s, showKind = true }: { s: Statement; showKind?:
               {t("Check: the quote may not fully support this")}
             </span>
           ) : null}
-          {s.review?.action === "edited" ? <span class="edited">{t("Edited by staff")}</span> : null}
+          {s.review?.action === "edited" ? (
+            /municipal agents team/i.test(s.review.by ?? "") ? (
+              <span class="corrected">
+                {s.review.note ? t("Corrected by the Municipal Agents team: {note}", { note: s.review.note }) : t("Corrected by the Municipal Agents team")}
+              </span>
+            ) : (
+              <span class="edited">{t("Edited by staff")}</span>
+            )
+          ) : null}
           {s.citations.length ? (
             <button type="button" class="quote-toggle" aria-expanded={open} aria-controls={qid} onClick={() => setOpen(!open)}>
               {open ? t("Hide quote") : t("Show quote")}
@@ -118,6 +127,12 @@ export function Statements({ list, showKind }: { list: Statement[] | undefined; 
   );
 }
 
+/** Money in one style everywhere: "$796 million", "$2.05 billion"; anything else as written. */
+function figureDisplay(f: Figure) {
+  if (/^CAD$/i.test(f.unit) && Math.abs(f.value) >= 1_000_000) return fmtMoney(f.value);
+  return f.display;
+}
+
 /** A number on screen: a button that opens its source page (or explains how it was worked out). */
 export function FigureButton({ f, big = true }: { f: Figure; big?: boolean }) {
   const t = useT();
@@ -128,9 +143,10 @@ export function FigureButton({ f, big = true }: { f: Figure; big?: boolean }) {
     return (
       <button type="button" class={`figure ${big ? "figure--big" : ""}`} onClick={() => openSource(c)}>
         <span class="figure-label">{f.label}</span>
-        <span class="figure-value">{f.display}</span>
+        <span class="figure-value">{figureDisplay(f)}</span>
         <span class="figure-src">
-          <Doc size={12} /> {t("p. {page}", { page: c.page })}
+          <Doc size={12} /> {idx[c.sourceId]?.published ? `${t("Source {year}", { year: idx[c.sourceId].published.slice(0, 4) })} · ` : ""}
+          {t("p. {page}", { page: c.page })}
           <span class="sr-only">, {idx[c.sourceId]?.title ?? c.sourceId}</span>
         </span>
       </button>
@@ -140,7 +156,7 @@ export function FigureButton({ f, big = true }: { f: Figure; big?: boolean }) {
     <div class={`figure figure--static ${big ? "figure--big" : ""}`}>
       <button type="button" class="figure-hit" aria-expanded={open} onClick={() => setOpen(!open)}>
         <span class="figure-label">{f.label}</span>
-        <span class="figure-value">{f.display}</span>
+        <span class="figure-value">{figureDisplay(f)}</span>
         <span class={`figure-src figure-src--${f.kind}`}>{t(f.kind === "assumption" ? "Assumption" : "Computed")}</span>
       </button>
       {open && f.formula ? <p class="figure-formula">{f.formula}</p> : null}

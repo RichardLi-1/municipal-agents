@@ -79,3 +79,27 @@ test("an estimated date is tentative and says \"At the latest\"", () => {
   assert.match(events[2], /SUMMARY:Council vote/);
   assert.match(events[2], /STATUS:CONFIRMED/);
 });
+
+test("Add to calendar holds the next 3 dates with a way to take part; deadlines get a day-before reminder", async () => {
+  const { calendarFeed } = await import("./ics.ts");
+  const day = (n: number) => `2099-12-${String(n).padStart(2, "0")}`;
+  const many: Decision = {
+    ...decision,
+    timeline: [1, 5, 9, 13, 17].map((n, i) => ({
+      id: `m${i}`, date: `${day(n)}T18:00:00-05:00`, kind: "council" as const, title: `Meeting ${i}`, plain: "Council meets.",
+      participation: [{ method: "speak" as const, instructions: "Register to speak.", deadline: `${day(n - 0 || 1)}T12:00:00-05:00` }],
+      ...(i === 1 ? { estimated: true } : {}),
+    })),
+  };
+  many.timeline[0].participation![0].deadline = "2099-11-28T12:00:00-05:00";
+  const ics = decisionCalendar(many, { now: NOW }).replace(/\r\n /g, "");
+  const meetings = [...ics.matchAll(/^UID:fixture-budget\.(m\d)@/gm)].map((m) => m[1]);
+  assert.deepEqual(meetings, ["m0", "m1", "m2"]);
+  const deadline = ics.split("BEGIN:VEVENT").find((b) => b.includes("UID:fixture-budget.m0.deadline-0"))!;
+  assert.match(deadline, /BEGIN:VALARM[\s\S]*TRIGGER:-P1D[\s\S]*END:VALARM/);
+  assert.match(deadline, /STATUS:CONFIRMED/);
+  const est = ics.split("BEGIN:VEVENT").find((b) => b.includes("UID:fixture-budget.m1@"))!;
+  assert.match(est, /STATUS:TENTATIVE/);
+  const feed = calendarFeed([many], { now: NOW, name: "All" });
+  assert.equal([...feed.matchAll(/^UID:fixture-budget\.m\d@/gm)].length, 5, "the subscription feed keeps every date");
+});

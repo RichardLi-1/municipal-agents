@@ -228,6 +228,8 @@ function CostsFull({ lens }: { lens: CostLens }) {
   const shown = PARTS.filter((k) => model.series.some((r) => r[k] > 0));
   const missing = PARTS.filter((k) => !shown.includes(k));
   const households = (changed ? vals.households : undefined) ?? lens.households;
+  // A cited "share of the tax bill" figure, if the lens has one, sits beside the estimate.
+  const billFigure = (lens.figures ?? []).find((f) => f.citation && /tax bill|per household|household/i.test(f.label));
   const perHouseholdYear = households ? tot.lifecycle / households / years : undefined;
   const addsParts = (["operating", "maintenance", "renewal", "environmental"] as const).filter((k) => shown.includes(k)).map((k) => t(PART_LABEL[k]).toLowerCase());
   const fmtVal = (v: number, unit: string) =>
@@ -240,8 +242,10 @@ function CostsFull({ lens }: { lens: CostLens }) {
           <div class="big-stat big-stat--accent">
             <p class="big-label">{t("Per household, per year")}</p>
             <p class="big-num" aria-live="polite">{fmtMoney(perHouseholdYear, { compact: false })}</p>
+            <p class="small">{t("Gross plan cost ÷ households: about {x} a year (not your bill)", { x: fmtMoney(perHouseholdYear, { compact: false }) })}</p>
           </div>
         ) : null}
+        {billFigure ? <FigureButton f={billFigure} big={false} /> : null}
         <div class={`big-stat ${perHouseholdYear ? "" : "big-stat--accent"}`}>
           <p class="big-label">{t("Lifetime cost")} · {years} {t("years")}</p>
           <p class="big-num">{fmtMoney(tot.lifecycle)}</p>

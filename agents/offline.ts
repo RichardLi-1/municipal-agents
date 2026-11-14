@@ -70,8 +70,8 @@ const QUESTION_WORDS = new Set(
 
 // Everyday words residents use, mapped to the words the documents use.
 const SYNONYMS: Record<string, string[]> = {
-  propose: ["propos", "proposed", "draft", "present", "prepare"],
-  proposes: ["propos", "proposed", "draft", "present", "prepare"],
+  propose: ["propos", "proposed", "draft", "prepare"],
+  proposes: ["propos", "proposed", "draft", "prepare"],
   garbage: ["garbage", "waste", "recycling", "organic"],
   trash: ["garbage", "waste"],
   pickup: ["collection", "pickup"],
@@ -330,6 +330,9 @@ export function offlineAnswer(dataDir: string, decisionId: string, question: str
   return { type: "answer", offline: true, statements: [], text: `${L.none}${clerk(decision, L)}` };
 }
 
+// Places qualify a question ("I rent in Cambridge"); matching only a place isn't relevance.
+const PLACES = new Set(["kitchener", "waterloo", "cambridge", "woolwich", "wilmot", "wellesley", "dumfrie", "dumfries", "elmira", "ayr", "baden", "preston", "hespeler", "galt"]);
+
 /** Minimum BM25 score for an item to be shown (calibrated on the questions in offline.test.ts). */
 export const MIN_SCORE = 1.0;
 
@@ -339,11 +342,16 @@ function rankItems(items: Item[], words: string[][]): number[] {
   const toks = items.map((i) => terms(`${itemText(i)} ${i.context ?? ""}`));
   const scores = bm25(toks, words.flat());
   const need = words.length <= 2 ? 1 : 2;
+  const topical = words.filter((alts) => !PLACES.has(alts[0]));
   const best = Math.max(0, ...scores);
   const picked: number[] = [];
   for (const i of scores.map((_, i) => i).sort((a, b) => scores[b] - scores[a])) {
-    if (picked.length >= 5 || scores[i] < MIN_SCORE || scores[i] < best * 0.3) break;
+    // A clear best match (twice the minimum) raises the bar for the rest to half of it,
+    // so a side mention ("Cambridge" in an LRT statement) doesn't ride along.
+    const relative = best >= 2 * MIN_SCORE ? 0.5 : 0.3;
+    if (picked.length >= 5 || scores[i] < MIN_SCORE || scores[i] < best * relative) break;
     if (coveredWords(new Set(toks[i]), words) < need) continue;
+    if (topical.length && coveredWords(new Set(toks[i]), topical) === 0) continue;
     if (picked.some((p) => nearDuplicate(itemText(items[p]), itemText(items[i])))) continue;
     picked.push(i);
   }

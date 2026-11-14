@@ -118,3 +118,10 @@ test("offline: 'Will buses get better near the station?' on the hub gets the hub
   const a = offlineAnswer(DATA, "kitchener-transit-hub-variances", "Will buses get better near the station?");
   assert.ok(a.figures?.some((f) => /every 15 minutes or better/.test(f.label)), a.text);
 });
+
+test("offline: a place name alone doesn't make an item relevant ('I rent in Cambridge…')", () => {
+  const a = offlineAnswer(DATA, "row-2027-budget", "I rent in Cambridge, will my rent go up?");
+  assert.ok(a.statements.length >= 1);
+  for (const s of a.statements) assert.match(s.text, /rent/i);
+  assert.doesNotMatch(a.text, /LRT|light rail/i);
+});

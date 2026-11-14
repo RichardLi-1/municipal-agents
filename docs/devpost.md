@@ -10,7 +10,7 @@ Every figure links to its page; staff review every statement.
 - Live site: https://municipal-agents.fly.dev (the app: https://municipal-agents.fly.dev/decisions;
   the 2027 budget brief: https://municipal-agents.fly.dev/d/row-2027-budget)
 - Code: https://github.com/RichardLi-1/municipal-agents
-- Video: <link>
+- Video: (add the YouTube link when uploading)
 - Docs: https://municipal-agents.fly.dev/docs
 - Municipal Readiness Report (one page): `report/municipal-readiness-report.pdf` in the repo
 - API: https://municipal-agents.fly.dev/api/openapi.json

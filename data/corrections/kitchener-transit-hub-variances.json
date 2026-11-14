@@ -1,0 +1,99 @@
+[
+  {
+    "statementId": "s1",
+    "text": "The changes are needed to build the Region's transit hub, as set out in its site plan.",
+    "citations": [
+      {
+        "sourceId": "kitchener-cofa-2026-11-17",
+        "page": 1,
+        "quote": "facilitate the development of a the Region of Waterloo's Transit Hub in accordance with Site Plan Application SPF26/025/K"
+      }
+    ],
+    "note": "Reworded to what the notice says the variances are for.",
+    "by": "Municipal Agents team (not Region staff)",
+    "at": "2026-11-14T09:15:00-05:00"
+  },
+  {
+    "statementId": "s18",
+    "text": "The Region is requesting changes to Zoning By-law 2019-051, such as letting surface parking sit 3 m from the street.",
+    "citations": [
+      {
+        "sourceId": "kitchener-cofa-2026-11-17",
+        "page": 1,
+        "quote": "Requesting minor variances to Zoning By-law 2019-051 to permit a surface parking space to be located 3m from the street line"
+      }
+    ],
+    "note": "The count of six wasn't in the quote; now says what the notice asks, with an example.",
+    "by": "Municipal Agents team (not Region staff)",
+    "at": "2026-11-14T09:15:00-05:00"
+  },
+  {
+    "statementId": "s3",
+    "text": "The variances are tied to the hub's site plan application, SPF26/025/K.",
+    "citations": [
+      {
+        "sourceId": "kitchener-cofa-2026-11-17",
+        "page": 1,
+        "quote": "Transit Hub in accordance with Site Plan Application SPF26/025/K"
+      }
+    ],
+    "note": "The original quote was the notice's opening line; now cites the site plan application.",
+    "by": "Municipal Agents team (not Region staff)",
+    "at": "2026-11-14T09:15:00-05:00"
+  },
+  {
+    "statementId": "s5",
+    "text": "To be told the Committee's decision, you must make a written request to its Secretary-Treasurer.",
+    "citations": [
+      {
+        "sourceId": "kitchener-cofa-2026-11-17",
+        "page": 3,
+        "quote": "If you wish to be notified of a decision you must make a written request"
+      }
+    ],
+    "note": "The notice says a written request is needed, not email or phone.",
+    "by": "Municipal Agents team (not Region staff)",
+    "at": "2026-11-14T09:15:00-05:00"
+  },
+  {
+    "statementId": "s9",
+    "text": "The building could be 115 m long instead of 36 m, but the landscaped area would be 13% instead of the required 30%.",
+    "note": "Uses the notice's own numbers for both sides.",
+    "by": "Municipal Agents team (not Region staff)",
+    "at": "2026-11-14T09:15:00-05:00"
+  },
+  {
+    "statementId": "s22",
+    "text": "Riders may be able to switch between light rail, buses, GO trains and VIA Rail at the hub by 2030.",
+    "kind": "estimate",
+    "citations": [
+      {
+        "sourceId": "row-kcth-update-2026",
+        "page": 3,
+        "quote": "by providing access to Grand River Transit light rail and bus service, GO Transit rail and bus service, VIA Rail and allow for inter-city bus service"
+      },
+      {
+        "sourceId": "row-kcth-update-2026",
+        "page": 2,
+        "quote": "Substantial completion of Kitchener Central Transit Hub is currently expected in 2030."
+      }
+    ],
+    "note": "Re-cited to the report's list of services the hub connects.",
+    "by": "Municipal Agents team (not Region staff)",
+    "at": "2026-11-14T09:15:00-05:00"
+  },
+  {
+    "statementId": "s16",
+    "text": "Once the hub is complete, the remaining land will be developed.",
+    "note": "Reworded to the report's words.",
+    "by": "Municipal Agents team (not Region staff)",
+    "at": "2026-11-14T09:15:00-05:00"
+  },
+  {
+    "statementId": "s17",
+    "text": "Development on the remaining land may include commercial and residential uses, including affordable housing.",
+    "note": "Reworded to the report's words.",
+    "by": "Municipal Agents team (not Region staff)",
+    "at": "2026-11-14T09:15:00-05:00"
+  }
+]

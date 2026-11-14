@@ -554,7 +554,7 @@ ${fontPreload ? `<link rel="preload" href="${fontPreload}" as="font" type="font/
   <div class="topbar-inner glass">
     <button class="icon-btn menu-btn" type="button" aria-expanded="false" aria-controls="docs-nav" data-menu><span class="sr-only">Menu</span>${ICON.menu}</button>
     <a class="brand" href="/docs/" aria-label="Municipal Agents docs home">${ICON.mark}<span class="brand-name">Municipal Agents</span><span class="brand-tag">Docs</span></a>
-    <button class="search-btn" type="button" data-search-open aria-haspopup="dialog">${ICON.search}<span class="search-label">Search the docs</span><kbd class="search-kbd" data-kbd>Ctrl K</kbd></button>
+    <button class="search-btn" type="button" data-search-open aria-haspopup="dialog" aria-label="Search the docs">${ICON.search}<span class="search-label">Search the docs</span><kbd class="search-kbd" data-kbd>Ctrl K</kbd></button>
     <nav class="top-links" aria-label="Site">
       <a href="/">Product</a>
       <a href="/docs/api/">API</a>
@@ -633,7 +633,7 @@ fs.writeFileSync(
 const llms = [
   "# Municipal Agents documentation",
   "",
-  "> AI agents read a city's own documents and turn a proposed municipal decision into a brief a resident can read in five minutes, with every figure linked to its source page and every statement approved by city staff.",
+  "> AI agents read a city's own documents and turn a proposed municipal decision into a brief a resident can read in five minutes, with every figure linked to its source page and nothing official until a named staff member approves each statement.",
   "",
   ...NAV.flatMap((g) => {
     const ps = g.items.map((i) => bySrc.get(i.src)).filter((p): p is Page => !!p);

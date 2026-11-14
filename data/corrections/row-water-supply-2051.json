@@ -1,0 +1,112 @@
+[
+  {
+    "statementId": "s2",
+    "text": "The study looks at the community's future water needs through to 2051.",
+    "note": "Reworded to the notice's words.",
+    "by": "Municipal Agents team (not Region staff)",
+    "at": "2026-11-14T09:15:00-05:00"
+  },
+  {
+    "statementId": "s14",
+    "text": "The study will review current water sources and investigate possible new ones.",
+    "citations": [
+      {
+        "sourceId": "row-water-supply-slides-2024",
+        "page": 7,
+        "quote": "Review current water supply sources"
+      },
+      {
+        "sourceId": "row-water-supply-slides-2024",
+        "page": 7,
+        "quote": "Investigate possible new water supply sources"
+      }
+    ],
+    "note": "Repeated the statement above; replaced with what the study will do, from the 2024 meeting slides.",
+    "by": "Municipal Agents team (not Region staff)",
+    "at": "2026-11-14T09:15:00-05:00"
+  },
+  {
+    "statementId": "s3",
+    "text": "The Region will present a shortlist of options and explain how it will select the preferred one.",
+    "citations": [
+      {
+        "sourceId": "row-water-supply-notice-2",
+        "page": 1,
+        "quote": "present the shortlisted alternatives for water supply"
+      },
+      {
+        "sourceId": "row-water-supply-notice-2",
+        "page": 1,
+        "quote": "discuss the evaluation approach to select the preferred alternative"
+      }
+    ],
+    "note": "The original quote didn't show that no choice has been made; now cites the notice's shortlist and selection lines.",
+    "by": "Municipal Agents team (not Region staff)",
+    "at": "2026-11-14T09:15:00-05:00"
+  },
+  {
+    "statementId": "s16",
+    "text": "The study follows Phases 1 and 2 of the Municipal Class Environmental Assessment process.",
+    "note": "Reworded to the slides' words.",
+    "by": "Municipal Agents team (not Region staff)",
+    "at": "2026-11-14T09:15:00-05:00"
+  },
+  {
+    "statementId": "s5",
+    "text": "New supply sources and more storage could make the water system more reliable.",
+    "kind": "estimate",
+    "citations": [
+      {
+        "sourceId": "row-water-supply-charter",
+        "page": 10,
+        "quote": "Improve the reliability of the water supply system by increasing the amount of water storage and supply sources"
+      }
+    ],
+    "note": "The original quote was about staffing; re-cited to the project charter's objective.",
+    "by": "Municipal Agents team (not Region staff)",
+    "at": "2026-11-14T09:15:00-05:00"
+  },
+  {
+    "statementId": "s7",
+    "text": "Businesses may benefit: reliable service is one of the tests the Region will use to compare options.",
+    "kind": "estimate",
+    "citations": [
+      {
+        "sourceId": "row-water-supply-slides-2024",
+        "page": 18,
+        "quote": "Provides reliable service"
+      }
+    ],
+    "note": "The original quote was a daily supply figure; re-cited to the evaluation criteria.",
+    "by": "Municipal Agents team (not Region staff)",
+    "at": "2026-11-14T09:15:00-05:00"
+  },
+  {
+    "statementId": "s6",
+    "action": "rejected",
+    "note": "No source for this decision shows renters paying regional water rates, and Ontario's rent rules cap most rent increases.",
+    "by": "Municipal Agents team (not Region staff)",
+    "at": "2026-11-14T09:15:00-05:00"
+  },
+  {
+    "statementId": "s18",
+    "action": "rejected",
+    "note": "No source for this decision links water limits to slower home building; the quote was about staff workload.",
+    "by": "Municipal Agents team (not Region staff)",
+    "at": "2026-11-14T09:15:00-05:00"
+  },
+  {
+    "statementId": "s29",
+    "action": "rejected",
+    "note": "No source for this decision links water limits to slower housing development; the quote counted development applications.",
+    "by": "Municipal Agents team (not Region staff)",
+    "at": "2026-11-14T09:15:00-05:00"
+  },
+  {
+    "statementId": "s24",
+    "text": "The 10-year water capital plan for 2026 to 2035 totals about $847.6 million.",
+    "note": "Clearer wording: the table is in thousands of dollars.",
+    "by": "Municipal Agents team (not Region staff)",
+    "at": "2026-11-14T09:15:00-05:00"
+  }
+]

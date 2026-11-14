@@ -68,7 +68,8 @@ budget book are in **$ thousands** unless marked.
 
 - 2 Jun 2026: Council report "Plan and Budget Approach and Timeline" (`engagewr-row-2027-budget` p5).
   The report itself is on eSCRIBE (DocumentId=17628), which blocks scripted downloads, so it is NOT in sources.
-- 14 Sep 2026 to 26 Feb 2027 11:59 pm: online survey/quiz with prize draw (`row-2027-budget-contest-rules` p1).
+- 14 Sep 2026 to 26 Feb 2027 11:59 pm: the **prize draw** for the online survey/quiz runs (`row-2027-budget-contest-rules` p1).
+  The survey's own closing date is not published; do not call 26 Feb the survey deadline.
   Draws on 27 Nov 2026 and 26 Feb 2027 (same page).
 - 16 Dec 2026: Council, 2027 Plan and Budget Overview (`row-2027-budget-page` p7; also `engagewr-row-2027-budget` p5).
 - 19 Jan 2027: Detailed Budget Review Day #1 (`row-2027-budget-page` p7; `engagewr-row-2027-budget` p5).
@@ -183,3 +184,20 @@ money goes and how it is funded (property taxes $887M, other governments $524M, 
 - Rates are set with the budget: 2026 +5.9% water supply and wastewater treatment
   (`row-2026-budget-book` p5, p11). Water Supply 10-year capital $847.6M (p17). Linked to
   the separate Water Supply Strategy Update decision (`row-water-supply-2051`).
+
+## Renters: how a regional tax increase can reach rent
+
+- Ontario's rent increase guideline for 2027 is 1.9% (`ontario-rent-increase-guideline` p1;
+  2026 was 2.1%, table on p4). It does not apply to new buildings, additions and most new
+  basement apartments first occupied after 15 Nov 2018: "exempt from rent control" (p2-3).
+- A landlord can apply to the Landlord and Tenant Board to raise rent above the guideline
+  for "An extraordinary increase in the cost for municipal taxes and charges for the
+  residential complex" (`rta-s126` p1, Residential Tenancies Act s. 126(1) para 1).
+  "Extraordinary" is defined by regulation (s. 126(2)); that regulation is not in our sources.
+- For renters in post-2018 units there is no guideline cap, so cost increases can pass
+  through at the next lawful increase. Say "may", never "will".
+
+## Accessible formats
+
+- `row-2026-budget-book` p3: "Alternate formats of information are available upon request
+  through: Budgets@regionofwaterloo.ca".

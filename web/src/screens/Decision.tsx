@@ -27,6 +27,9 @@ const complete = {
   construction: (l: object) => ["steps", "sites"].every((k) => arr((l as Record<string, unknown>)[k])),
 };
 
+/** The Region's budget book names its own route for alternate formats (p. 3). */
+const BUDGET_BOOK = "row-2026-budget-book";
+
 type TabId = "overview" | "affects" | "say" | "transit" | "costs" | "commitments" | "housing" | "construction" | "unknowns" | "sources";
 
 const TABS: { id: TabId; label: string; lens?: LensId; needsBrief?: boolean }[] = [
@@ -68,6 +71,7 @@ export function DecisionScreen({ id }: { id: string }) {
   const [error, setError] = useState<string | null>(null);
   const [translated, setTranslated] = useState<Brief | null>(null);
   const [translating, setTranslating] = useState(false);
+  const [translateFailed, setTranslateFailed] = useState(false);
   const [showOriginal, setShowOriginal] = useState(false);
   const [audiences, setAudiences] = useState<string[]>([]);
   const [activeGap, setActiveGap] = useState<string | null>(null);
@@ -98,9 +102,11 @@ export function DecisionScreen({ id }: { id: string }) {
     setShowOriginal(false);
     if (!b || want === b.lang || want === "en") {
       setTranslated(null);
+      setTranslateFailed(false);
       return;
     }
     let dead = false;
+    setTranslateFailed(false);
     setTranslating(true);
     api
       .translate(id, want)
@@ -112,7 +118,8 @@ export function DecisionScreen({ id }: { id: string }) {
       .catch((e) => {
         if (dead) return;
         setTranslated(null);
-        toast({ title: t("Translation isn't available right now"), body: String(e.message ?? e).slice(0, 140), tone: "warn" });
+        setTranslateFailed(true);
+        void e;
       })
       .finally(() => !dead && setTranslating(false));
     return () => {
@@ -310,6 +317,10 @@ export function DecisionScreen({ id }: { id: string }) {
               <p class="translating" role="status">
                 <span class="spinner spinner--sm" aria-hidden="true" /> {t("Translating…")} {languageName(want)}
               </p>
+            ) : translateFailed ? (
+              <p class="translate-note" role="status">
+                {t("Translation unavailable for now; the brief is shown in English.")} {t("Suggested questions are in English.")}
+              </p>
             ) : translated ? (
               <p class="translated small">
                 {t("Machine translation by AI. The English brief is the reference.")}{" "}
@@ -320,7 +331,7 @@ export function DecisionScreen({ id }: { id: string }) {
             ) : null}
           </header>
           {(decision.notices ?? []).map((n) => (
-            <aside class="notice-callout" key={n.id} aria-labelledby={`notice-${n.id}`}>
+            <section class="notice-callout" key={n.id} aria-labelledby={`notice-${n.id}`}>
               <p class="notice-callout-head">
                 <Alert size={14} /> {t("Notice")} · <time dateTime={n.date}>{fmtDate(n.date)}</time>
               </p>
@@ -329,7 +340,7 @@ export function DecisionScreen({ id }: { id: string }) {
                 {n.text} {n.citation ? <CitationChip c={n.citation} /> : null}
               </p>
               <p class="notice-foot">{t("Hand-checked by the Municipal Agents team")}</p>
-            </aside>
+            </section>
           ))}
           <div class="tabs" role="tablist" aria-label={t("Brief sections")} onKeyDown={onTabKey as never}>
             {tabs.map((x) => (
@@ -399,20 +410,19 @@ export function DecisionScreen({ id }: { id: string }) {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <Flag size={14} /> {t("Report an error")}
+              <Flag size={14} /> {t("Report an error (public, needs a GitHub account)")}
             </a>
-            <a
-              class="link"
-              href={feedbackLink(
-                city,
-                `Accessible format request: ${decision.id}`,
-                `Decision: ${decision.plainTitle} (${decision.id})\n\nThe format or support I need (for example large print, braille, audio, plain text, an interpreter):\n`,
-              )}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <Access size={14} /> {t("Request another format")}
-            </a>
+            {decision.sources.includes(BUDGET_BOOK) ? (
+              <p class="alt-format">
+                <Access size={14} /> {t("Need the Region's budget documents in another format? Ask the Region:")}{" "}
+                <a class="link" href="mailto:Budgets@regionofwaterloo.ca">Budgets@regionofwaterloo.ca</a>{" "}
+                <CitationChip c={{ sourceId: BUDGET_BOOK, page: 3, quote: "Alternate formats of information are available upon request through: Budgets@regionofwaterloo.ca" }} />
+              </p>
+            ) : (
+              <a class="link" href={decision.officialUrl || city?.officialNoticeUrl || "#"} target="_blank" rel="noopener noreferrer">
+                <Access size={14} /> {t("Ask the city for the official documents in another format")}
+              </a>
+            )}
             <p class="small muted">
               {t("Accessible formats and communication supports are available on request.")} {t("Run by {who}.", { who: operatorOf(city) })}
             </p>

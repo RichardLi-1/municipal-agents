@@ -22,18 +22,20 @@
     "oreg-530-22",
     "municipal-act-part-vi1",
     "ontario-regional-head-of-council",
-    "row-2026-election-page"
+    "row-2026-election-page",
+    "rta-s126",
+    "ontario-rent-increase-guideline"
   ],
   "notices": [
     {
       "id": "strong-chair-budget",
       "date": "2026-11-15",
       "title": "New: the Regional Chair now proposes the budget",
-      "text": "From November 15, 2026 the Regional Chair has strong-mayor budget powers. The Chair proposes the 2027 budget, in 2027 and by February 1. Council then has 30 days to change it. The Chair can veto Council's changes, and Council can overturn a veto with a two-thirds vote. The brief below was written before this change and may say that Council decides the budget.",
+      "text": "From November 15, 2026 the Regional Chair has strong-mayor budget powers. The Chair proposes the 2027 budget, in 2027 and by February 1. Council then has 30 days to change it. The Chair can veto Council's changes, and Council can overturn a veto with a two-thirds vote.",
       "citation": {
         "sourceId": "oreg-530-22",
-        "page": 17,
-        "quote": "Note: On November 15, 2026, Schedule 1 to the Regulation is amended by adding the"
+        "page": 18,
+        "quote": "203.1 Regional Municipality of Waterloo"
       }
     }
   ],
@@ -55,13 +57,12 @@
       "date": "2026-09-14",
       "end": "2027-02-26T23:59:00-05:00",
       "kind": "public-input",
-      "title": "Online budget survey and quiz on EngageWR",
-      "plain": "Anyone can tell the Region what matters most to them in the 2027 budget by filling in the online survey or quiz. The prize draw for taking part runs until February 26, 2027.",
+      "title": "Prize draw for the budget survey closes",
+      "plain": "The Region is asking for input on the 2027 budget through an online survey and quiz on EngageWR. People who take part can enter a prize draw, which runs from September 14, 2026 to February 26, 2027. The survey's own closing date is not published; the February 26 date is when the prize draw closes.",
       "participation": [
         {
           "method": "survey",
-          "instructions": "Fill in the 2027 Plan and Budget survey or quiz on EngageWR. You can also post ideas and questions there. The prize draw linked to the survey closes at 11:59 pm on Friday, February 26, 2027.",
-          "deadline": "2027-02-26T23:59:00-05:00",
+          "instructions": "Fill in the 2027 Plan and Budget survey or quiz on EngageWR. You can also post ideas and questions there. The survey's closing date is not published; the prize draw linked to it closes at 11:59 pm on Friday, February 26, 2027.",
           "url": "https://www.engagewr.ca/ROW-2027-budget",
           "contact": "2027PlanAndBudget@regionofwaterloo.ca"
         }
@@ -358,9 +359,9 @@
         }
       ],
       "citation": {
-        "sourceId": "municipal-act-part-vi1",
-        "page": 8,
-        "quote": "Council may, in accordance with the regulations, override the head of council’s veto"
+        "sourceId": "oreg-530-22",
+        "page": 4,
+        "quote": "within 15 days after the expiry of the time period for the head of council to veto"
       }
     }
   ],

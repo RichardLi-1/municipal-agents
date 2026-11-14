@@ -1369,3 +1369,37 @@ details.funnel-src p { margin-top: 4px; overflow-wrap: anywhere; }
 @media (max-width: 900px) {
   .chat-form { position: static; }
 }
+
+/* ---------------------------------------------------------------- review round 2 */
+.report-link { width: 24px; height: 24px; }
+details.funnel-src > summary { min-height: 24px; display: flex; align-items: center; }
+.suggest-btn.is-first { box-shadow: var(--row-edge); background: var(--row-hover); font-weight: var(--w-medium); }
+.chip-toggle.is-empty:not([aria-pressed="true"]) { color: var(--quiet); background: transparent; box-shadow: inset 0 0 0 1px var(--hairline); }
+.translate-note { padding: 8px 12px; border-radius: var(--r-row); background: var(--amber-tint); color: var(--amber-ink); font-size: var(--t-small); }
+.corrected { color: var(--pass-ink); font-size: 12px; font-weight: var(--w-strong); }
+.cost-note { color: var(--muted); font-size: var(--t-small); }
+@media (max-width: 900px) {
+  html { scroll-padding-bottom: 170px; }
+  main, .layout { pointer-events: none; }
+  main > *, .layout > * { pointer-events: auto; }
+  .rail-list, .rail-foot { flex: 1 1 auto; min-width: 0; }
+  .rail { gap: 0; }
+  .rail-list > li { flex: 1 1 0; min-width: 0; display: flex; }
+  .rail-item { flex: 1 1 0; min-width: 0; width: auto; }
+  .rail-foot .rail-menu { flex: 1 1 0; min-width: 0; display: flex; }
+  .rail-label { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  input[type="text"], input[type="password"], input[type="search"], select, textarea, .chat-form textarea, .search-box input[type="text"] { font-size: 16px; }
+  .chat-head { order: 0; }
+  .chat-form { order: 1; margin-top: 4px; }
+  .chat-note { order: 2; }
+  .chat-log { order: 3; }
+  .mobile-switch { padding: 3px; bottom: 82px; }
+  .mobile-switch button { min-height: 34px; padding: 0 14px; font-size: var(--t-ui); }
+  .pane-left .pane-scroll, .layout-decision .pane-right { padding-bottom: 190px; }
+}
+.alt-format { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; font-size: var(--t-small); }
+.chip-cite { color: var(--accent-strong); }
+.notice-callout .chip-cite, .stmt-quotes .chip-cite { background: var(--pane-solid); }
+.chip-cite:hover { color: var(--on-accent); }
+@media (max-width: 900px) { .app > main { pointer-events: none; } .app > main > * { pointer-events: none; } .app > main .layout > * { pointer-events: auto; } .app > main .workspace { pointer-events: auto; } }
+@media (max-width: 900px) { .app > main .layout > .map-hole { pointer-events: none; } .app > main .layout > .map-hole > * { pointer-events: auto; } }

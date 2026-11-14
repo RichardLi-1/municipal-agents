@@ -66,7 +66,7 @@ export function CostChart({ series, parts = [...PARTS] }: { series: Row[]; parts
           <g key={v}>
             <line x1={L} x2={W - R} y1={y(v)} y2={y(v)} class="grid" />
             <text x={L - 8} y={y(v) + 4} class="tick" text-anchor="end">
-              {fmtMoney(v)}
+              {shortMoney(v)}
             </text>
           </g>
         ))}
@@ -107,6 +107,14 @@ export function CostChart({ series, parts = [...PARTS] }: { series: Row[]; parts
       </ul>
     </figure>
   );
+}
+
+/** Axis labels: $0, $500M, $1.5B. */
+function shortMoney(v: number) {
+  if (v >= 1e9) return "$" + +(v / 1e9).toFixed(v % 1e9 ? 1 : 0) + "B";
+  if (v >= 1e6) return "$" + +(v / 1e6).toFixed(v % 1e6 ? 1 : 0) + "M";
+  if (v >= 1e3) return "$" + +(v / 1e3).toFixed(0) + "K";
+  return "$" + v;
 }
 
 function niceStep(raw: number) {

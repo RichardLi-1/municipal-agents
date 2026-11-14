@@ -37,6 +37,9 @@
       a { color: var(--acc); }
       .demo-flag { background: #fff3c4; color: #3d2f00; border-bottom: 1px solid #e6d27a; padding: 10px 16px; font-size: 14px; text-align: center; }
       .demo-flag strong { font-weight: 700; }
+      .demo-flag a { color: #3d2f00; text-decoration: underline; }
+      body { overflow-x: hidden; }
+      img, iframe, pre { max-width: 100%; }
       header.city { background: var(--band); color: var(--band-fg); }
       header.city .inner, main, footer { max-width: 1080px; margin: 0 auto; padding: 0 16px; }
       header.city .inner { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-top: 14px; padding-bottom: 14px; flex-wrap: wrap; }
@@ -60,10 +63,10 @@
     </style>
   </head>
   <body>
-    <div class="demo-flag" role="note">
+    <aside class="demo-flag" aria-label="Demo notice">
       <strong>Demo.</strong> This is a mock municipal web page for the fictional "Town of Example", made to show how a city embeds a
       <a href="/">Municipal Agents</a> card. It is not a real city's site. The card on the right is live.
-    </div>
+    </aside>
 
     <header class="city">
       <div class="inner">

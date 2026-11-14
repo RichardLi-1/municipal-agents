@@ -110,9 +110,13 @@ function describe(decision: Decision, e: TimelineEvent): string {
   return lines.join("\n");
 }
 
-export function decisionCalendar(decision: Decision, opts: { now?: number; siteUrl?: string } = {}): string {
+/**
+ * One decision's "Add to calendar" file: the next `limit` (default 3) dates with a way to
+ * take part, so a resident's calendar isn't flooded. The subscription feed has them all.
+ */
+export function decisionCalendar(decision: Decision, opts: { now?: number; siteUrl?: string; limit?: number } = {}): string {
   const now = opts.now ?? Date.now();
-  const lines: string[] = [...calendarHead(decision.plainTitle), ...decisionEvents(decision, { now, siteUrl: opts.siteUrl })];
+  const lines: string[] = [...calendarHead(decision.plainTitle), ...decisionEvents(decision, { now, siteUrl: opts.siteUrl, limit: opts.limit ?? 3 })];
   lines.push("END:VCALENDAR");
   return lines.map(foldLine).join(CRLF) + CRLF;
 }
@@ -154,7 +158,7 @@ export function calendarFeed(
 }
 
 /** VEVENT lines for one decision: upcoming chances to take part (and, for feeds, recent past ones). */
-export function decisionEvents(decision: Decision, opts: { now: number; siteUrl?: string; pastDays?: number }): string[] {
+export function decisionEvents(decision: Decision, opts: { now: number; siteUrl?: string; pastDays?: number; limit?: number }): string[] {
   const { now } = opts;
   const stamp = utcStamp(now);
   const lines: string[] = [];
@@ -183,7 +187,7 @@ export function decisionEvents(decision: Decision, opts: { now: number; siteUrl?
     }
   }
 
-  for (const e of upcomingParticipation(decision, now)) {
+  for (const e of upcomingParticipation(decision, now).slice(0, opts.limit ?? Infinity)) {
     const url = e.participation?.find((p) => p.url)?.url ?? decision.officialUrl;
     // Something already open (a survey running for weeks) goes in on its closing day:
     // a calendar entry in the past would never remind anyone.
@@ -220,8 +224,14 @@ export function decisionEvents(decision: Decision, opts: { now: number; siteUrl?
         `SUMMARY:${escapeText(`${latest(e)}Deadline to ${METHOD_LABEL[p.method]?.toLowerCase() ?? p.method}: ${e.title}`)}`,
         `DESCRIPTION:${escapeText(`${p.instructions}\n${p.url ?? ""}\n\n${describe(decision, e)}`)}`,
         ...(p.url ? [`URL:${p.url}`] : []),
-        ...(e.estimated ? ["STATUS:TENTATIVE"] : []),
+        status(e),
         "TRANSP:TRANSPARENT",
+        // The same day-before reminder as the meeting: a deadline is easier to miss.
+        "BEGIN:VALARM",
+        "ACTION:DISPLAY",
+        `DESCRIPTION:${escapeText(`Deadline to ${METHOD_LABEL[p.method]?.toLowerCase() ?? p.method}: ${e.title}`)}`,
+        "TRIGGER:-P1D",
+        "END:VALARM",
         "END:VEVENT",
       );
     });

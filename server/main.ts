@@ -1,6 +1,7 @@
 // Entry point: `node server/main.ts`. Reads settings, mirrors committed data into the
 // data volume (on Fly), opens the log, tries to load the agents, and listens.
 import { createApp } from "./app.ts";
+import { syncCorrections } from "./corrections.ts";
 import { loadConfig } from "./config.ts";
 import { syncCommittedData } from "./data.ts";
 import { createServer } from "./server.ts";
@@ -13,6 +14,9 @@ if (synced.copied || synced.removed) console.log(`data: copied ${synced.copied},
 materializeUploads(cfg.dataDir);
 
 const app = createApp(cfg);
+// Operator corrections go on the public record the first time they're applied.
+const corrected = syncCorrections(app);
+if (corrected.logged || corrected.refused) console.log(`corrections: ${corrected.logged} logged, ${corrected.refused} refused`);
 await app.agents.load();
 const agents = app.agents.status();
 console.log(`agents: ${agents.available ? "loaded" : agents.error}`);
