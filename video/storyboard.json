@@ -1,0 +1,2152 @@
+{
+  "title": "Municipal Agents: CIVIC Hack 2026 demo",
+  "size": [
+    1920,
+    1080
+  ],
+  "fps": 30,
+  "music": "music.json",
+  "cueFormat": "bar.beat (1-based); bar.beat.5 is the 'and' of the beat. A scene runs from its first bar's downbeat to the next scene's.",
+  "boxes": [
+    {
+      "id": "c1a",
+      "group": "A",
+      "label": "1a. Understand the proposed decision"
+    },
+    {
+      "id": "c1b",
+      "group": "A",
+      "label": "1b. How it could affect me"
+    },
+    {
+      "id": "c1c",
+      "group": "A",
+      "label": "1c. When I can have a say"
+    },
+    {
+      "id": "c2",
+      "group": "A",
+      "label": "2. Gaps in transit access"
+    },
+    {
+      "id": "c3",
+      "group": "A",
+      "label": "3. Long-term infrastructure costs"
+    },
+    {
+      "id": "c4",
+      "group": "A",
+      "label": "4. Tracking commitments"
+    },
+    {
+      "id": "c5",
+      "group": "A",
+      "label": "5. Housing: approval to construction"
+    },
+    {
+      "id": "j1",
+      "group": "B",
+      "label": "Problem understanding & stakeholders"
+    },
+    {
+      "id": "j2",
+      "group": "B",
+      "label": "Quality & functionality"
+    },
+    {
+      "id": "j3",
+      "group": "B",
+      "label": "Design & clarity"
+    },
+    {
+      "id": "j4",
+      "group": "B",
+      "label": "Impact & adaptability"
+    },
+    {
+      "id": "j5",
+      "group": "B",
+      "label": "Requirements & UML"
+    },
+    {
+      "id": "j6",
+      "group": "B",
+      "label": "Architecture & scalability"
+    },
+    {
+      "id": "j7",
+      "group": "B",
+      "label": "Source code awareness"
+    },
+    {
+      "id": "j8",
+      "group": "B",
+      "label": "References"
+    },
+    {
+      "id": "j9",
+      "group": "B",
+      "label": "Municipal Readiness Report"
+    },
+    {
+      "id": "j10",
+      "group": "B",
+      "label": "Demo video"
+    }
+  ],
+  "scenes": [
+    {
+      "id": "hook-laptop",
+      "bars": [
+        1,
+        1
+      ],
+      "from": "start",
+      "part": "Hook",
+      "shot": {
+        "type": "laptop-open",
+        "screen": "budget-cover"
+      },
+      "tags": [
+        "Real data: Region of Waterloo"
+      ],
+      "words": [],
+      "notes": "Pre-roll on white with the laptop closed. The lid opens on the first downbeat; the camera pushes into the screen, which shows the real budget book's cover."
+    },
+    {
+      "id": "hook-pages",
+      "bars": [
+        2,
+        3
+      ],
+      "part": "Hook",
+      "shot": {
+        "type": "pdf-flip",
+        "doc": "budget-book",
+        "pages": 191
+      },
+      "tags": [
+        "Real data: Region of Waterloo"
+      ],
+      "words": [
+        {
+          "at": "2.1",
+          "to": "2.3",
+          "text": "The 2026 budget book.",
+          "style": "pill",
+          "pos": "center"
+        },
+        {
+          "at": "2.3",
+          "to": "3.1",
+          "text": "191 pages.",
+          "style": "pill",
+          "pos": "center"
+        },
+        {
+          "at": "3.1",
+          "to": "4.1",
+          "text": "Who has time?",
+          "style": "pill",
+          "pos": "center"
+        }
+      ],
+      "facts": [
+        {
+          "text": "191 pages",
+          "source": "data/sources/row-2026-budget-book.pdf (Region of Waterloo, 2026 Final Budget Book, the base for the 2027 budget)",
+          "page": "pdfinfo Pages: 191; data/sources/index.json pages 191; data/decisions/row-2027-budget.notes.md"
+        }
+      ],
+      "notes": "Every page of the real 2026 budget book (pdftoppm), flipping faster and faster."
+    },
+    {
+      "id": "title",
+      "bars": [
+        4,
+        4
+      ],
+      "part": "Hook",
+      "shot": {
+        "type": "title"
+      },
+      "words": [
+        {
+          "at": "4.1",
+          "to": "5.1",
+          "text": "Municipal Agents",
+          "style": "title",
+          "pos": "center"
+        },
+        {
+          "at": "4.2.5",
+          "to": "5.1",
+          "text": "A city decision, in five minutes.",
+          "style": "subtitle",
+          "pos": "center"
+        }
+      ],
+      "facts": [
+        {
+          "text": "a brief a resident can read in five minutes",
+          "source": "docs/spec.md",
+          "page": "One sentence"
+        }
+      ],
+      "notes": "The dip at bar 4. Name and the promise; nothing else."
+    },
+    {
+      "id": "find",
+      "bars": [
+        5,
+        8
+      ],
+      "part": "Resident",
+      "step": "Step 1 of 5 · Find it",
+      "tags": [
+        "Scenario: fictional resident",
+        "Real data: Region of Waterloo"
+      ],
+      "shot": {
+        "type": "footage",
+        "clip": "home",
+        "camera": [
+          {
+            "at": "5.1",
+            "z": 1.0,
+            "x": 0.5,
+            "y": 0.5
+          },
+          {
+            "at": "5.3",
+            "z": 1.5,
+            "x": 0.18,
+            "y": 0.28
+          },
+          {
+            "at": "6.3",
+            "z": 1.5,
+            "x": 0.18,
+            "y": 0.3
+          },
+          {
+            "at": "7.1",
+            "z": 1.35,
+            "x": 0.25,
+            "y": 0.6
+          },
+          {
+            "at": "7.3",
+            "z": 1.6,
+            "x": 0.2,
+            "y": 0.88
+          },
+          {
+            "at": "8.3",
+            "z": 1.8,
+            "x": 0.2,
+            "y": 0.9
+          },
+          {
+            "at": "8.4",
+            "z": 2.3,
+            "x": 0.2,
+            "y": 0.92
+          }
+        ]
+      },
+      "words": [
+        {
+          "at": "5.1",
+          "to": "6.3",
+          "text": "One resident. One decision.",
+          "style": "pill",
+          "pos": "right"
+        },
+        {
+          "at": "6.3",
+          "to": "7.3",
+          "text": "What's decided near me?",
+          "style": "pill",
+          "pos": "right"
+        },
+        {
+          "at": "7.3",
+          "to": "8.4",
+          "text": "The next chance, counted down.",
+          "style": "pill",
+          "pos": "right"
+        }
+      ],
+      "notes": "Decisions page (/decisions): map of the region, decision cards (2027 budget, Water Supply Strategy, Kitchener Central Transit Hub) with 'next chance to have a say' countdowns. She types her street; she clicks the 2027 budget card on 8.4 (the dip) and the camera dives into it.",
+      "facts": [
+        {
+          "text": "Decisions on the home page: Region of Waterloo 2027 Plan and Budget; Water Supply Strategy update; Kitchener Central Transit Hub variances",
+          "source": "data/decisions/*.json",
+          "page": "titles"
+        }
+      ]
+    },
+    {
+      "id": "understand",
+      "bars": [
+        9,
+        10
+      ],
+      "part": "Resident",
+      "step": "Step 2 of 5 · Understand it",
+      "tags": [
+        "Scenario: fictional resident",
+        "Real data: Region of Waterloo"
+      ],
+      "shot": {
+        "type": "footage",
+        "clip": "overview",
+        "align": {
+          "mark": "grade",
+          "at": "9.2.5"
+        },
+        "camera": [
+          {
+            "at": "9.1",
+            "z": 1.6,
+            "x": 0.18,
+            "y": 0.18
+          },
+          {
+            "at": "9.2.5",
+            "z": 1.9,
+            "x": 0.2,
+            "y": 0.27
+          },
+          {
+            "at": "9.4",
+            "z": 1.9,
+            "x": 0.2,
+            "y": 0.27
+          },
+          {
+            "at": "10.3",
+            "z": 1.6,
+            "x": 0.18,
+            "y": 0.9
+          },
+          {
+            "at": "10.4",
+            "z": 1.7,
+            "x": 0.18,
+            "y": 0.92
+          }
+        ]
+      },
+      "words": [
+        {
+          "at": "9.1",
+          "to": "9.3",
+          "text": "In plain words.",
+          "style": "pill",
+          "pos": "right"
+        },
+        {
+          "at": "9.3",
+          "to": "10.3",
+          "text": "Reading grade, measured.",
+          "style": "pill",
+          "pos": "right"
+        },
+        {
+          "at": "10.3",
+          "to": "11.1",
+          "text": "Every correction, labelled.",
+          "style": "pill",
+          "pos": "right"
+        }
+      ],
+      "notes": "Overview tab: the header (plain title, 'Draft: not yet reviewed by city staff', 'Grade 7 reading level', 'Register to speak by Wed, Dec 9, 12:00 p.m.'), then 'What's proposed', whose statements carry 'Corrected by the Municipal Agents team' labels where the team fixed them.",
+      "facts": [
+        {
+          "text": "Decision: Region of Waterloo 2027 Plan and Budget; decided by Regional Council",
+          "source": "data/decisions/row-2027-budget.json",
+          "page": "title, decidedBy"
+        },
+        {
+          "text": "Staff framing: 'a stability-focused budget'",
+          "source": "data/sources/row-2027-budget-page.pdf",
+          "page": 6
+        }
+      ]
+    },
+    {
+      "id": "source",
+      "bars": [
+        11,
+        12
+      ],
+      "part": "Resident",
+      "step": "Step 2 of 5 · Understand it",
+      "tags": [
+        "Scenario: fictional resident",
+        "Real data: Region of Waterloo"
+      ],
+      "shot": {
+        "type": "footage",
+        "clip": "source",
+        "align": {
+          "mark": "cite",
+          "at": "11.2"
+        },
+        "camera": [
+          {
+            "at": "11.1",
+            "z": 1.7,
+            "x": 0.2,
+            "y": 0.5
+          },
+          {
+            "at": "11.2.5",
+            "z": 1.7,
+            "x": 0.2,
+            "y": 0.5
+          },
+          {
+            "at": "11.3",
+            "z": 1.05,
+            "x": 0.5,
+            "y": 0.5
+          },
+          {
+            "at": "12.3",
+            "z": 1.5,
+            "x": 0.45,
+            "y": 0.62
+          }
+        ]
+      },
+      "words": [
+        {
+          "at": "11.1",
+          "to": "11.3",
+          "text": "Every figure.",
+          "style": "pill",
+          "pos": "top"
+        },
+        {
+          "at": "11.3",
+          "to": "12.3",
+          "text": "Its page, highlighted.",
+          "style": "pill",
+          "pos": "top"
+        }
+      ],
+      "ticks": [
+        {
+          "box": "c1a",
+          "at": "12.3"
+        }
+      ],
+      "notes": "She clicks the key figure '$3,473.86' (2026 total regional bill for an average home): the source viewer opens the 2026 Final Budget Book at page 11 of 191 with the Total row highlighted and 'Quote found and highlighted'.",
+      "facts": [
+        {
+          "text": "$3,473.86: 2026 annual cost of regional services per average household (Total row), page 11 of 191",
+          "source": "data/sources/row-2026-budget-book.pdf",
+          "page": 11
+        }
+      ]
+    },
+    {
+      "id": "affects",
+      "bars": [
+        13,
+        14
+      ],
+      "part": "Resident",
+      "step": "Step 3 of 5 · How it affects me",
+      "tags": [
+        "Scenario: fictional resident",
+        "Real data: Region of Waterloo"
+      ],
+      "shot": {
+        "type": "footage",
+        "clip": "affects",
+        "align": {
+          "mark": "chip1",
+          "at": "13.2"
+        },
+        "camera": [
+          {
+            "at": "13.1",
+            "z": 1.7,
+            "x": 0.18,
+            "y": 0.22
+          },
+          {
+            "at": "14.1",
+            "z": 1.6,
+            "x": 0.18,
+            "y": 0.45
+          },
+          {
+            "at": "14.4",
+            "z": 1.5,
+            "x": 0.18,
+            "y": 0.55
+          }
+        ]
+      },
+      "words": [
+        {
+          "at": "13.1",
+          "to": "14.1",
+          "text": "Pick who you are.",
+          "style": "pill",
+          "pos": "right"
+        },
+        {
+          "at": "14.1",
+          "to": "15.1",
+          "text": "See what may change.",
+          "style": "pill",
+          "pos": "right"
+        }
+      ],
+      "ticks": [],
+      "notes": "Affects you tab: she taps 'Renter' and 'Transit rider'; the cited impacts appear, in 'may' language with uncertainty.",
+      "to": "15.1"
+    },
+    {
+      "id": "opinion",
+      "bars": [
+        15,
+        15
+      ],
+      "part": "Resident",
+      "step": "Step 3 of 5 · How it affects me",
+      "tags": [
+        "Scenario: fictional resident",
+        "Replay of a real run"
+      ],
+      "shot": {
+        "type": "footage",
+        "clip": "ask-opinion",
+        "align": {
+          "mark": "answer",
+          "at": "15.2"
+        },
+        "camera": [
+          {
+            "at": "15.1",
+            "z": 2.2,
+            "x": 0.885,
+            "y": 0.3
+          },
+          {
+            "at": "15.4",
+            "z": 2.3,
+            "x": 0.885,
+            "y": 0.36
+          }
+        ]
+      },
+      "words": [
+        {
+          "at": "15.1",
+          "to": "16.1",
+          "text": "Not what to think.",
+          "style": "pill",
+          "pos": "left"
+        }
+      ],
+      "ticks": [
+        {
+          "box": "c1b",
+          "at": "15.4"
+        }
+      ],
+      "facts": [
+        {
+          "text": "Question asked: \"Should I support this budget or oppose it?\" (a replayable real run)",
+          "source": "live app, row-2027-budget chat",
+          "page": "answer labelled 'Answered by the agents on <time> · replayed from the record'"
+        }
+      ],
+      "notes": "Insert: in the chat she asks \"Should I support this budget or oppose it?\"; the agents' recorded answer lays out the trade-offs and declines to tell her what to think. Clip starts (in-point) where the answer appears; the replay label stays in frame."
+    },
+    {
+      "id": "say",
+      "bars": [
+        16,
+        18
+      ],
+      "to": "18.2",
+      "part": "Resident",
+      "step": "Step 4 of 5 · Have your say",
+      "tags": [
+        "Scenario: fictional resident",
+        "Real data: Region of Waterloo"
+      ],
+      "shot": {
+        "type": "cuts",
+        "cuts": [
+          {
+            "at": "16.1",
+            "clip": "say",
+            "align": {
+              "mark": "next",
+              "at": "17.1"
+            },
+            "camera": [
+              {
+                "at": "16.1",
+                "z": 1.5,
+                "x": 0.18,
+                "y": 0.45
+              },
+              {
+                "at": "16.3",
+                "z": 1.6,
+                "x": 0.18,
+                "y": 0.55
+              },
+              {
+                "at": "17.1",
+                "z": 1.7,
+                "x": 0.18,
+                "y": 0.75
+              }
+            ]
+          },
+          {
+            "at": "17.4",
+            "clip": "say",
+            "align": {
+              "mark": "calendar",
+              "at": "18.1"
+            },
+            "camera": [
+              {
+                "at": "17.4",
+                "z": 1.8,
+                "x": 0.2,
+                "y": 0.5
+              },
+              {
+                "at": "18.2",
+                "z": 2.0,
+                "x": 0.2,
+                "y": 0.5
+              }
+            ]
+          }
+        ]
+      },
+      "words": [
+        {
+          "at": "16.1",
+          "to": "17.1",
+          "text": "When you can have a say.",
+          "style": "pill",
+          "pos": "right"
+        },
+        {
+          "at": "17.1",
+          "to": "18.1",
+          "text": "How to take part.",
+          "style": "pill",
+          "pos": "right"
+        },
+        {
+          "at": "18.1",
+          "to": "18.2",
+          "text": "Add to calendar.",
+          "style": "pill",
+          "pos": "right"
+        }
+      ],
+      "notes": "Have your say tab: the ways to take part (survey, delegation, write, watch), then the timeline (survey, the Chair's strong-mayor powers from 15 Nov, the 16 Dec Council overview) scrolling to the next chance: '25 days' with how to take part (Speak, deadline, contact). Cut on 17.4 to her clicking 'Add to calendar' on 18.1.",
+      "facts": [
+        {
+          "text": "16 Dec 2026: Regional Council, 2027 Plan and Budget Overview (first look at the draft)",
+          "source": "data/sources/row-2027-budget-page.pdf",
+          "page": 7
+        },
+        {
+          "text": "Online survey open until 26 Feb 2027, 11:59 pm",
+          "source": "data/sources/row-2027-budget-contest-rules.pdf",
+          "page": 1
+        },
+        {
+          "text": "Register to speak by noon one week before the meeting (so 9 Dec is computed, not published)",
+          "source": "data/sources/row-delegation-guide.pdf",
+          "page": "1-2"
+        },
+        {
+          "text": "Strong-chair powers from 15 Nov 2026; the Chair proposes the 2027 budget by 1 Feb 2027",
+          "source": "data/decisions/row-2027-budget.json (timeline, being added by research)",
+          "page": "check the citation page when it lands"
+        }
+      ]
+    },
+    {
+      "id": "slip-1",
+      "bars": [
+        18,
+        18
+      ],
+      "from": "18.2",
+      "part": "Resident",
+      "shot": {
+        "type": "slip",
+        "focus": "A"
+      },
+      "ticks": [
+        {
+          "box": "c1c",
+          "at": "18.3"
+        }
+      ],
+      "words": [],
+      "notes": "First full view of the return slip, in the quiet: 1a and 1b already ticked, 1c ticks on beat 3."
+    },
+    {
+      "id": "ask",
+      "bars": [
+        19,
+        22
+      ],
+      "part": "Resident",
+      "step": "Step 5 of 5 · Ask anything",
+      "tags": [
+        "Scenario: fictional resident",
+        "Replay of a real run",
+        "2× speed"
+      ],
+      "shot": {
+        "type": "footage",
+        "clip": "ask",
+        "align": {
+          "mark": "answer",
+          "at": "21.4.5"
+        },
+        "camera": [
+          {
+            "at": "19.1",
+            "z": 2.2,
+            "x": 0.885,
+            "y": 0.92
+          },
+          {
+            "at": "20.1",
+            "z": 2.3,
+            "x": 0.885,
+            "y": 0.2
+          },
+          {
+            "at": "21.3",
+            "z": 2.2,
+            "x": 0.885,
+            "y": 0.3
+          },
+          {
+            "at": "22.3",
+            "z": 2.0,
+            "x": 0.885,
+            "y": 0.36
+          }
+        ]
+      },
+      "words": [
+        {
+          "at": "19.1",
+          "to": "20.1",
+          "text": "Ask anything.",
+          "style": "pill",
+          "pos": "left"
+        },
+        {
+          "at": "20.1",
+          "to": "21.1",
+          "text": "A lead agent plans it.",
+          "style": "pill",
+          "pos": "left"
+        },
+        {
+          "at": "21.1",
+          "to": "22.3",
+          "text": "Real agents. Real documents.",
+          "style": "pill",
+          "pos": "left"
+        }
+      ],
+      "notes": "Chat pane: she types exactly \"How much of my regional tax bill goes to public transit?\"; the app replays a real agent run from the record: the plan, the specialists' steps, the checked statements one by one (~8 s), then the cited answer with its label \"Answered by the agents on <time> · replayed from the record\" (kept in frame at the end). Recorded at 1x and sped up 2x (tagged).",
+      "facts": [
+        {
+          "text": "Answer: public transit 17.6% of the Region's property tax levy; $582 for an average urban household and $63 for a rural one in 2026 regional taxes",
+          "source": "data/sources/row-2026-budget-book.pdf",
+          "page": 12
+        }
+      ]
+    },
+    {
+      "id": "transit",
+      "bars": [
+        23,
+        26
+      ],
+      "part": "Resident",
+      "step": "Lens 1 of 4 · Transit",
+      "tags": [
+        "Real data: GRT and ION schedules (GTFS)"
+      ],
+      "shot": {
+        "type": "cuts",
+        "cuts": [
+          {
+            "at": "23.1",
+            "clip": "transit",
+            "align": {
+              "mark": "gap",
+              "at": "23.3"
+            },
+            "camera": [
+              {
+                "at": "23.1",
+                "z": 1.0,
+                "x": 0.5,
+                "y": 0.5
+              },
+              {
+                "at": "23.3",
+                "z": 1.15,
+                "x": 0.5,
+                "y": 0.5
+              },
+              {
+                "at": "24.3",
+                "z": 1.5,
+                "x": 0.55,
+                "y": 0.55
+              }
+            ]
+          },
+          {
+            "at": "24.3",
+            "clip": "transit",
+            "align": {
+              "mark": "gaps",
+              "at": "24.4"
+            },
+            "camera": [
+              {
+                "at": "24.3",
+                "z": 1.7,
+                "x": 0.18,
+                "y": 0.45
+              },
+              {
+                "at": "25.1",
+                "z": 1.7,
+                "x": 0.18,
+                "y": 0.42
+              },
+              {
+                "at": "26.1",
+                "z": 1.6,
+                "x": 0.18,
+                "y": 0.55
+              }
+            ]
+          },
+          {
+            "at": "26.1",
+            "clip": "transit",
+            "align": {
+              "mark": "fixes",
+              "at": "26.1.5"
+            },
+            "camera": [
+              {
+                "at": "26.1",
+                "z": 1.6,
+                "x": 0.18,
+                "y": 0.45
+              },
+              {
+                "at": "27.1",
+                "z": 1.7,
+                "x": 0.18,
+                "y": 0.5
+              }
+            ]
+          }
+        ]
+      },
+      "words": [
+        {
+          "at": "23.1",
+          "to": "24.1",
+          "text": "Transit gaps, mapped.",
+          "style": "pill",
+          "pos": "top"
+        },
+        {
+          "at": "24.1",
+          "to": "25.1",
+          "text": "Sunday mornings, before 6:30.",
+          "style": "pill",
+          "pos": "top"
+        },
+        {
+          "at": "25.1",
+          "to": "26.1",
+          "text": "The last 800 metres.",
+          "style": "pill",
+          "pos": "top"
+        },
+        {
+          "at": "26.1",
+          "to": "27.1",
+          "text": "Fixes ranked. Trade-offs stated.",
+          "style": "pill",
+          "pos": "top"
+        }
+      ],
+      "ticks": [
+        {
+          "box": "c2",
+          "at": "26.4"
+        }
+      ],
+      "facts": [
+        {
+          "text": "Gap: 'On Sundays, 462,606 people have no bus or train within 800 m before 6:30 am'",
+          "source": "data/lenses/transit-region.json (GRT and ION GTFS)",
+          "page": "gaps[0]"
+        }
+      ],
+      "notes": "Transit tab: stops, essential destinations, gaps in red; switch the time of day; the first/last-mile layer; the ranked fixes with their trade-offs."
+    },
+    {
+      "id": "cost-question",
+      "bars": [
+        27,
+        27
+      ],
+      "part": "Resident",
+      "shot": {
+        "type": "footage",
+        "clip": "costs",
+        "veil": true,
+        "camera": [
+          {
+            "at": "27.1",
+            "z": 1.3,
+            "x": 0.3,
+            "y": 0.4
+          },
+          {
+            "at": "28.1",
+            "z": 1.25,
+            "x": 0.3,
+            "y": 0.4
+          }
+        ]
+      },
+      "words": [
+        {
+          "at": "27.1",
+          "to": "28.1",
+          "text": "What will it really cost?",
+          "style": "hero",
+          "pos": "center",
+          "perWord": true
+        }
+      ],
+      "notes": "Near silence: one question in big type over the cost lens, blurred under a white veil; a word per half-beat. The veil snaps away on the drop."
+    },
+    {
+      "id": "costs",
+      "bars": [
+        28,
+        29
+      ],
+      "part": "Resident",
+      "step": "Lens 2 of 4 · Costs",
+      "tags": [
+        "Real data: Region of Waterloo"
+      ],
+      "shot": {
+        "type": "cuts",
+        "cuts": [
+          {
+            "at": "28.1",
+            "clip": "costs",
+            "in": 0,
+            "camera": [
+              {
+                "at": "28.1",
+                "z": 1.9,
+                "x": 0.22,
+                "y": 0.32
+              },
+              {
+                "at": "28.3",
+                "z": 1.6,
+                "x": 0.2,
+                "y": 0.52
+              },
+              {
+                "at": "29.1",
+                "z": 1.7,
+                "x": 0.18,
+                "y": 0.5
+              }
+            ]
+          },
+          {
+            "at": "29.3",
+            "clip": "costs",
+            "align": {
+              "mark": "result",
+              "at": "29.3.5"
+            },
+            "camera": [
+              {
+                "at": "29.3",
+                "z": 1.8,
+                "x": 0.22,
+                "y": 0.52
+              },
+              {
+                "at": "30.1",
+                "z": 1.9,
+                "x": 0.22,
+                "y": 0.52
+              }
+            ]
+          }
+        ]
+      },
+      "words": [
+        {
+          "at": "28.1",
+          "to": "28.3",
+          "text": "The upfront price.",
+          "style": "pill",
+          "pos": "right"
+        },
+        {
+          "at": "28.3",
+          "to": "29.1",
+          "text": "Plus decades of upkeep.",
+          "style": "pill",
+          "pos": "right"
+        },
+        {
+          "at": "29.1",
+          "to": "29.3",
+          "text": "Move a slider.",
+          "style": "pill",
+          "pos": "right"
+        },
+        {
+          "at": "29.3",
+          "to": "30.1",
+          "text": "Per household, per year.",
+          "style": "pill",
+          "pos": "right"
+        }
+      ],
+      "ticks": [
+        {
+          "box": "c3",
+          "at": "29.4"
+        }
+      ],
+      "notes": "Cost lens (GRT Business Plan lifecycle): per household per year $1,393, lifetime cost over 25 years $7,744 million, upfront $798 million, with the stacked chart. She drags 'Years counted' to 50 years; the headline recomputes to $1,285 a year and $14,294 million, marked 'With your assumptions'.",
+      "facts": [
+        {
+          "text": "$1,393 per household per year; $7,744 million lifetime over 25 years; $798 million upfront (GRT Business Plan, product-computed with cited inputs)",
+          "source": "live app, row-2027-budget Costs tab; data/sources/grt-business-plan-2025*.pdf",
+          "page": "per the tab's cited figures"
+        }
+      ]
+    },
+    {
+      "id": "scout",
+      "bars": [
+        30,
+        32
+      ],
+      "part": "Resident",
+      "step": "Construction scout",
+      "tags": [
+        "Illustrative scenario: not a Region plan",
+        "Renders: AI-generated"
+      ],
+      "shot": {
+        "type": "scout",
+        "cuts": [
+          {
+            "at": "30.1",
+            "clip": "scout-map",
+            "align": {
+              "mark": "tab",
+              "at": "30.1.5"
+            },
+            "camera": [
+              {
+                "at": "30.1",
+                "z": 1.0,
+                "x": 0.5,
+                "y": 0.5
+              },
+              {
+                "at": "30.3",
+                "z": 1.3,
+                "x": 0.62,
+                "y": 0.55
+              },
+              {
+                "at": "31.1",
+                "z": 1.5,
+                "x": 0.63,
+                "y": 0.55
+              }
+            ]
+          },
+          {
+            "at": "31.1",
+            "clip": "scout-section",
+            "in": 0.5,
+            "camera": [
+              {
+                "at": "31.1",
+                "z": 1.5,
+                "x": 0.18,
+                "y": 0.45
+              },
+              {
+                "at": "31.3",
+                "z": 1.6,
+                "x": 0.2,
+                "y": 0.5
+              }
+            ]
+          },
+          {
+            "at": "31.3",
+            "renders": "scout"
+          }
+        ]
+      },
+      "words": [
+        {
+          "at": "30.1",
+          "to": "30.3",
+          "text": "ION under the 401?",
+          "style": "pill",
+          "pos": "top"
+        },
+        {
+          "at": "30.3",
+          "to": "31.1",
+          "text": "Agents scout launch sites.",
+          "style": "pill",
+          "pos": "top"
+        },
+        {
+          "at": "31.1",
+          "to": "31.3",
+          "text": "49 boreholes. 11 cross-passages.",
+          "style": "pill",
+          "pos": "top"
+        },
+        {
+          "at": "31.3",
+          "to": "32.3",
+          "text": "Seven steps, each rendered.",
+          "style": "pill",
+          "pos": "top"
+        },
+        {
+          "at": "32.3",
+          "to": "33.1",
+          "text": "Then the land goes back.",
+          "style": "pill",
+          "pos": "top"
+        }
+      ],
+      "notes": "The flashiest beat of the first drop, on row-2027-budget's Construction tab. Bar 30: the map with the ranked candidate launch and extraction sites, the twin bores, boreholes and cross-passages. 31.1: the long-section with the animated TBM. 31.3 to 33.1: stepping 1 to 7, each step's render zooming past (about one every 0.86 beat) under the product's own step title, from 'Drill boreholes to read the ground' to 'Fit out, then give the land back'. The renders are the product's own files (data/renders); the recorder also captures the map flying between steps (clip scout-steps) if we'd rather cut to that.",
+      "facts": [
+        {
+          "text": "Scenario: 'What if ION Stage 2 went under Highway 401 and the Speed River? A 2.9 km twin-bore tunnel between Sportsworld and Preston', labelled 'Illustrative scenario: not a Region plan'",
+          "source": "data/lenses/construction-row-2027-budget.json",
+          "page": "scenario.title, scenario.label; numbers.sectionLengthM 2895"
+        },
+        {
+          "text": "49 boreholes, 11 cross-passages, 2,828 m bored, 7 steps",
+          "source": "data/lenses/construction-row-2027-budget.json",
+          "page": "boreholes (49), crossPassages (11), numbers.boredLengthM, steps"
+        },
+        {
+          "text": "ION Stage 2 (project 68030 'RT to Cambridge') in the 10-year capital forecast",
+          "source": "data/sources/row-2026-budget-book.pdf",
+          "page": 43
+        },
+        {
+          "text": "Renders made with gemini-3.1-flash-image; the app captions each 'Illustrative render · not a design'",
+          "source": "data/renders/construction-renders.json; web/src/construction/ConstructionPanel.tsx",
+          "page": "model, figcaption"
+        }
+      ]
+    },
+    {
+      "id": "commitments",
+      "bars": [
+        33,
+        34
+      ],
+      "part": "Resident",
+      "step": "Lens 3 of 4 · Commitments",
+      "tags": [
+        "Real data: Region of Waterloo"
+      ],
+      "shot": {
+        "type": "footage",
+        "clip": "commitments",
+        "align": {
+          "mark": "status",
+          "at": "33.3"
+        },
+        "camera": [
+          {
+            "at": "33.1",
+            "z": 1.5,
+            "x": 0.18,
+            "y": 0.35
+          },
+          {
+            "at": "33.3",
+            "z": 1.7,
+            "x": 0.18,
+            "y": 0.42
+          },
+          {
+            "at": "34.1",
+            "z": 1.7,
+            "x": 0.18,
+            "y": 0.78
+          }
+        ]
+      },
+      "words": [
+        {
+          "at": "33.1",
+          "to": "33.3",
+          "text": "Promises, tracked.",
+          "style": "pill",
+          "pos": "right"
+        },
+        {
+          "at": "33.3",
+          "to": "34.1",
+          "text": "On track? Behind?",
+          "style": "pill",
+          "pos": "right"
+        },
+        {
+          "at": "34.1",
+          "to": "34.3",
+          "text": "What's still unclear.",
+          "style": "pill",
+          "pos": "right"
+        }
+      ],
+      "ticks": [
+        {
+          "box": "c4",
+          "at": "34.1"
+        }
+      ],
+      "notes": "Commitments lens: each commitment with its status pill; expand one for the cited progress and 'What's still unclear'.",
+      "to": "34.3"
+    },
+    {
+      "id": "housing",
+      "bars": [
+        34,
+        35
+      ],
+      "part": "Resident",
+      "step": "Lens 4 of 4 · Housing",
+      "tags": [
+        "Real data: Region of Waterloo"
+      ],
+      "shot": {
+        "type": "footage",
+        "clip": "housing",
+        "in": 0.5,
+        "camera": [
+          {
+            "at": "34.3",
+            "z": 1.5,
+            "x": 0.18,
+            "y": 0.6
+          },
+          {
+            "at": "35.1",
+            "z": 1.5,
+            "x": 0.18,
+            "y": 0.55
+          },
+          {
+            "at": "35.3",
+            "z": 1.8,
+            "x": 0.18,
+            "y": 0.25
+          }
+        ]
+      },
+      "words": [
+        {
+          "at": "34.3",
+          "to": "35.1",
+          "text": "Approved isn't built.",
+          "style": "pill",
+          "pos": "right"
+        },
+        {
+          "at": "35.1",
+          "to": "35.3",
+          "text": "Units, stage by stage.",
+          "style": "pill",
+          "pos": "right"
+        },
+        {
+          "at": "35.3",
+          "to": "36.1",
+          "text": "Where the trail goes dark.",
+          "style": "pill",
+          "pos": "right"
+        }
+      ],
+      "ticks": [
+        {
+          "box": "c5",
+          "at": "35.3"
+        }
+      ],
+      "notes": "Housing lens: units by stage from approval to completion; the stages with no public data drawn as untracked.",
+      "from": "34.3"
+    },
+    {
+      "id": "slip-2",
+      "bars": [
+        36,
+        36
+      ],
+      "part": "Resident",
+      "shot": {
+        "type": "slip",
+        "focus": "A",
+        "stamp": {
+          "at": "36.1",
+          "text": "Part A complete"
+        }
+      },
+      "words": [],
+      "notes": "The first beat of the quiet breakdown: the slip, Part A all ticked, and the stamp lands on the downbeat.",
+      "to": "36.3"
+    },
+    {
+      "id": "unknowns",
+      "bars": [
+        36,
+        39
+      ],
+      "part": "Resident",
+      "step": "The brief · Unknowns & trade-offs",
+      "tags": [
+        "Scenario: fictional resident",
+        "Real data: Region of Waterloo"
+      ],
+      "shot": {
+        "type": "footage",
+        "clip": "unknowns",
+        "in": 0.5,
+        "camera": [
+          {
+            "at": "36.3",
+            "z": 1.4,
+            "x": 0.18,
+            "y": 0.3
+          },
+          {
+            "at": "38.1",
+            "z": 1.4,
+            "x": 0.18,
+            "y": 0.55
+          },
+          {
+            "at": "39.4",
+            "z": 1.4,
+            "x": 0.18,
+            "y": 0.8
+          }
+        ]
+      },
+      "words": [
+        {
+          "at": "36.3",
+          "to": "37.3",
+          "text": "What the documents don't say.",
+          "style": "pill",
+          "pos": "right"
+        },
+        {
+          "at": "37.3",
+          "to": "38.3",
+          "text": "And who can answer.",
+          "style": "pill",
+          "pos": "right"
+        },
+        {
+          "at": "38.3",
+          "to": "39.3",
+          "text": "Trade-offs, both ways.",
+          "style": "pill",
+          "pos": "right"
+        },
+        {
+          "at": "39.3",
+          "to": "40.1",
+          "text": "Who could be harmed.",
+          "style": "pill",
+          "pos": "right"
+        }
+      ],
+      "notes": "Quiet breakdown, slow scroll: unknowns with who can answer, trade-offs both ways, possible harms.",
+      "from": "36.3"
+    },
+    {
+      "id": "staff-draft",
+      "bars": [
+        40,
+        43
+      ],
+      "part": "Staff",
+      "step": "City staff · Step 1 of 3 · Draft",
+      "tags": [
+        "Scenario: fictional clerk",
+        "Replay of a real run"
+      ],
+      "shot": {
+        "type": "footage",
+        "clip": "staff-draft",
+        "align": {
+          "mark": "start",
+          "at": "41.1"
+        },
+        "camera": [
+          {
+            "at": "40.1",
+            "z": 1.3,
+            "x": 0.5,
+            "y": 0.3
+          },
+          {
+            "at": "41.1",
+            "z": 1.6,
+            "x": 0.4,
+            "y": 0.25
+          },
+          {
+            "at": "41.3",
+            "z": 1.5,
+            "x": 0.45,
+            "y": 0.5
+          },
+          {
+            "at": "43.1",
+            "z": 1.5,
+            "x": 0.5,
+            "y": 0.6
+          },
+          {
+            "at": "43.4",
+            "z": 1.6,
+            "x": 0.5,
+            "y": 0.55
+          }
+        ]
+      },
+      "words": [
+        {
+          "at": "40.1",
+          "to": "41.1",
+          "text": "Now, the city's side.",
+          "style": "pill",
+          "pos": "bottom"
+        },
+        {
+          "at": "41.1",
+          "to": "42.1",
+          "text": "A clerk starts a brief.",
+          "style": "pill",
+          "pos": "bottom"
+        },
+        {
+          "at": "42.1",
+          "to": "43.1",
+          "text": "Specialist agents draft it.",
+          "style": "pill",
+          "pos": "bottom"
+        },
+        {
+          "at": "43.1",
+          "to": "44.1",
+          "text": "Every quote checked on its page.",
+          "style": "pill",
+          "pos": "bottom"
+        }
+      ],
+      "notes": "Local throwaway copy of the app (scripts/staff-server.sh, port 4199). The clerk clicks \"Replay the agents' last real run\": the steps panel streams the lead's plan and each specialist's row with a 'Replay of the agents' real run on <time>' chip, ending 'Draft ready for review'; the statements arrive marked Checked. Shown at real speed."
+    },
+    {
+      "id": "staff-review",
+      "bars": [
+        44,
+        47
+      ],
+      "part": "Staff",
+      "step": "City staff · Step 2 of 3 · Review",
+      "steps": [
+        {
+          "at": "47.1",
+          "text": "City staff · Step 3 of 3 · Publish"
+        }
+      ],
+      "tags": [
+        "Scenario: fictional clerk"
+      ],
+      "shot": {
+        "type": "cuts",
+        "cuts": [
+          {
+            "at": "44.1",
+            "clip": "staff-review",
+            "align": {
+              "mark": "approve",
+              "at": "44.2"
+            },
+            "camera": [
+              {
+                "at": "44.1",
+                "z": 1.5,
+                "x": 0.55,
+                "y": 0.5
+              },
+              {
+                "at": "45.1",
+                "z": 1.6,
+                "x": 0.6,
+                "y": 0.5
+              },
+              {
+                "at": "46.3",
+                "z": 1.5,
+                "x": 0.55,
+                "y": 0.55
+              }
+            ]
+          },
+          {
+            "at": "47.2",
+            "clip": "staff-review",
+            "align": {
+              "mark": "publish",
+              "at": "47.3"
+            },
+            "camera": [
+              {
+                "at": "47.2",
+                "z": 1.4,
+                "x": 0.55,
+                "y": 0.5
+              },
+              {
+                "at": "48.1",
+                "z": 1.6,
+                "x": 0.6,
+                "y": 0.5
+              }
+            ]
+          }
+        ]
+      },
+      "words": [
+        {
+          "at": "44.1",
+          "to": "45.1",
+          "text": "Staff check every line.",
+          "style": "pill",
+          "pos": "bottom"
+        },
+        {
+          "at": "45.1",
+          "to": "46.1",
+          "text": "Approve. Edit. Reject.",
+          "style": "pill",
+          "pos": "bottom"
+        },
+        {
+          "at": "46.1",
+          "to": "47.1",
+          "text": "Agents never decide.",
+          "style": "pill",
+          "pos": "bottom"
+        },
+        {
+          "at": "47.1",
+          "to": "48.1",
+          "text": "A named person publishes.",
+          "style": "pill",
+          "pos": "bottom"
+        }
+      ],
+      "notes": "Local throwaway copy only. The fictional clerk approves one statement, edits the next (adds '(a forecast)'), rejects a third, then publishes as 'Jordan Lee'; the page shows 'Published · Jordan Lee'. Nothing here touches the live site."
+    },
+    {
+      "id": "record",
+      "bars": [
+        48,
+        49
+      ],
+      "part": "Record",
+      "step": "The record",
+      "tags": [
+        "Live log"
+      ],
+      "shot": {
+        "type": "footage",
+        "clip": "log",
+        "in": 0.5,
+        "camera": [
+          {
+            "at": "48.1",
+            "z": 1.3,
+            "x": 0.6,
+            "y": 0.45
+          },
+          {
+            "at": "49.1",
+            "z": 2.0,
+            "x": 0.42,
+            "y": 0.22
+          }
+        ]
+      },
+      "words": [
+        {
+          "at": "48.1",
+          "to": "49.1",
+          "text": "Every step, on the record.",
+          "style": "pill",
+          "pos": "bottom"
+        },
+        {
+          "at": "49.1",
+          "to": "50.1",
+          "text": "Hash-chained. Can't be edited quietly.",
+          "style": "pill",
+          "pos": "bottom"
+        }
+      ],
+      "notes": "The log, newest first; the browser re-checks the hash chain and shows 'Chain intact: N entries'."
+    },
+    {
+      "id": "spend",
+      "bars": [
+        50,
+        51
+      ],
+      "part": "Record",
+      "step": "Spend",
+      "tags": [
+        "Live usage"
+      ],
+      "shot": {
+        "type": "footage",
+        "clip": "spend",
+        "camera": [
+          {
+            "at": "50.1",
+            "z": 1.15,
+            "x": 0.5,
+            "y": 0.45
+          },
+          {
+            "at": "51.1",
+            "z": 1.35,
+            "x": 0.5,
+            "y": 0.5
+          }
+        ]
+      },
+      "words": [
+        {
+          "at": "50.1",
+          "to": "51.1",
+          "text": "Every model call, costed.",
+          "style": "pill",
+          "pos": "bottom"
+        },
+        {
+          "at": "51.1",
+          "to": "52.1",
+          "text": "Dollars, energy, carbon. Capped.",
+          "style": "pill",
+          "pos": "bottom"
+        }
+      ],
+      "notes": "Spend: calls, tokens, US dollars, estimated energy and CO2e, the daily limit."
+    },
+    {
+      "id": "who",
+      "bars": [
+        52,
+        53
+      ],
+      "part": "Who",
+      "shot": {
+        "type": "audiences",
+        "clip": "home"
+      },
+      "words": [
+        {
+          "at": "52.1",
+          "to": "53.1",
+          "text": "For residents.",
+          "style": "hero",
+          "pos": "top"
+        },
+        {
+          "at": "53.1",
+          "to": "54.1",
+          "text": "And the people who serve them.",
+          "style": "hero2",
+          "pos": "top"
+        }
+      ],
+      "ticks": [
+        {
+          "box": "j1",
+          "at": "53.4"
+        }
+      ],
+      "facts": [
+        {
+          "text": "audiences",
+          "source": "docs/spec.md",
+          "page": "Who it's for; shared/types.ts AudienceId"
+        }
+      ],
+      "notes": "Two quiet bars over the home page, blurred: the eleven audiences the product offers pop in as glass chips, then the staff side joins in blue."
+    },
+    {
+      "id": "design",
+      "bars": [
+        54,
+        55
+      ],
+      "part": "Design",
+      "step": "Design & clarity",
+      "tags": [
+        "Real data: Region of Waterloo"
+      ],
+      "shot": {
+        "type": "design"
+      },
+      "words": [
+        {
+          "at": "54.1",
+          "to": "55.1",
+          "text": "The whole brief, in your language.",
+          "style": "pill",
+          "pos": "bottom"
+        },
+        {
+          "at": "55.1",
+          "to": "56.1",
+          "text": "Light or dark. Any screen.",
+          "style": "pill",
+          "pos": "bottom"
+        }
+      ],
+      "notes": "Language menu switches the brief (clip 'language'); then a split: light and dark side by side, and the phone layout (stills 'dark' and 'phone')."
+    },
+    {
+      "id": "a11y",
+      "bars": [
+        56,
+        57
+      ],
+      "part": "Design",
+      "step": "Design & clarity",
+      "tags": [],
+      "shot": {
+        "type": "footage",
+        "clip": "a11y",
+        "in": 0.3,
+        "camera": [
+          {
+            "at": "56.1",
+            "z": 1.4,
+            "x": 0.22,
+            "y": 0.25
+          },
+          {
+            "at": "57.1",
+            "z": 1.4,
+            "x": 0.22,
+            "y": 0.35
+          }
+        ]
+      },
+      "words": [
+        {
+          "at": "56.1",
+          "to": "57.1",
+          "text": "Keyboard first. Screen-reader labelled.",
+          "style": "pill",
+          "pos": "top"
+        },
+        {
+          "at": "57.1",
+          "to": "58.1",
+          "text": "0 axe accessibility violations.",
+          "style": "pill",
+          "pos": "top"
+        }
+      ],
+      "ticks": [
+        {
+          "box": "j3",
+          "at": "57.4"
+        }
+      ],
+      "notes": "Tabbing through the brief with the keyboard: the focus ring moves through the navigation and the brief.",
+      "facts": [
+        {
+          "text": "axe-core: 0 violations on all 10 tabs of /d/row-2027-budget, /decisions, /log, /spend, /staff at 1280 and 390 px, light and dark",
+          "source": "team's axe-core run on the live site, 14 Nov 2026 (coordinator-confirmed)",
+          "page": "n/a"
+        }
+      ]
+    },
+    {
+      "id": "adapt",
+      "bars": [
+        58,
+        58
+      ],
+      "part": "Adapt",
+      "step": "Another city",
+      "tags": [],
+      "shot": {
+        "type": "config"
+      },
+      "words": [
+        {
+          "at": "58.1",
+          "to": "58.3",
+          "text": "Another city?",
+          "style": "pill",
+          "pos": "right"
+        },
+        {
+          "at": "58.3",
+          "to": "59.1",
+          "text": "One config file.",
+          "style": "pill",
+          "pos": "right"
+        }
+      ],
+      "ticks": [],
+      "facts": [
+        {
+          "text": "city config",
+          "source": "cities/waterloo-region.json",
+          "page": "the real file, typed out"
+        }
+      ],
+      "notes": "A code card types out the real cities/waterloo-region.json; on 58.3 a second card with the CityConfig shape (shared/types.ts) slides in for 'cities/<your-city>.json'."
+    },
+    {
+      "id": "for-cities",
+      "bars": [
+        59,
+        59
+      ],
+      "part": "Adapt",
+      "step": "For cities",
+      "tags": [
+        "Embed demo: a fictional town's page"
+      ],
+      "shot": {
+        "type": "cuts",
+        "cuts": [
+          {
+            "at": "59.1",
+            "clip": "landing",
+            "in": 0.3,
+            "camera": [
+              {
+                "at": "59.1",
+                "z": 1.0,
+                "x": 0.5,
+                "y": 0.45
+              },
+              {
+                "at": "59.2",
+                "z": 1.08,
+                "x": 0.5,
+                "y": 0.4
+              }
+            ]
+          },
+          {
+            "at": "59.2",
+            "clip": "docs",
+            "in": 0.3,
+            "camera": [
+              {
+                "at": "59.2",
+                "z": 1.15,
+                "x": 0.35,
+                "y": 0.35
+              },
+              {
+                "at": "59.3",
+                "z": 1.25,
+                "x": 0.35,
+                "y": 0.35
+              }
+            ]
+          },
+          {
+            "at": "59.3",
+            "clip": "embed",
+            "in": 0.3,
+            "camera": [
+              {
+                "at": "59.3",
+                "z": 1.1,
+                "x": 0.45,
+                "y": 0.4
+              },
+              {
+                "at": "60.1",
+                "z": 1.3,
+                "x": 0.55,
+                "y": 0.45
+              }
+            ]
+          }
+        ]
+      },
+      "words": [
+        {
+          "at": "59.1",
+          "to": "60.1",
+          "text": "Docs, and a widget to embed.",
+          "style": "pill",
+          "pos": "bottom"
+        }
+      ],
+      "ticks": [
+        {
+          "box": "j4",
+          "at": "59.4"
+        }
+      ],
+      "notes": "A two-second flash for cities: the landing page (/), the docs (/docs), and the embeddable widget demo (/embed/demo), one beat each, the widget held for two."
+    },
+    {
+      "id": "under-hood",
+      "bars": [
+        60,
+        61
+      ],
+      "part": "Under the hood",
+      "shot": {
+        "type": "requirements"
+      },
+      "words": [
+        {
+          "at": "60.1",
+          "to": "61.1",
+          "text": "Under the hood.",
+          "style": "hero",
+          "pos": "center"
+        },
+        {
+          "at": "61.1",
+          "to": "62.1",
+          "text": "Requirements first.",
+          "style": "pill",
+          "pos": "bottom"
+        }
+      ],
+      "notes": "Big words on white, then the requirements document scrolling (docs/requirements.md)."
+    },
+    {
+      "id": "drop",
+      "bars": [
+        62,
+        68
+      ],
+      "part": "Under the hood",
+      "shot": {
+        "type": "drop",
+        "items": [
+          {
+            "at": "62.1",
+            "kind": "image",
+            "src": "uml/use-case.png",
+            "label": "Use cases"
+          },
+          {
+            "at": "62.2",
+            "kind": "image",
+            "src": "uml/class.png",
+            "label": "Classes"
+          },
+          {
+            "at": "62.3",
+            "kind": "image",
+            "src": "uml/seq-ask.png",
+            "label": "Sequence: ask"
+          },
+          {
+            "at": "62.4",
+            "kind": "image",
+            "src": "uml/state-statement.png",
+            "label": "States: a statement"
+          },
+          {
+            "at": "63.1",
+            "kind": "text",
+            "src": "architecture",
+            "label": "docs/architecture.md"
+          },
+          {
+            "at": "63.3",
+            "kind": "image",
+            "src": "uml/deployment.png",
+            "label": "Deployment"
+          },
+          {
+            "at": "64.1",
+            "kind": "code",
+            "src": "code-tour",
+            "label": "Code tour"
+          },
+          {
+            "at": "64.3",
+            "kind": "terminal",
+            "src": "tests",
+            "label": "Tests"
+          },
+          {
+            "at": "65.1",
+            "kind": "scroll",
+            "src": "evals",
+            "label": "Agent evals"
+          },
+          {
+            "at": "66.1",
+            "kind": "scroll",
+            "src": "credits",
+            "label": "CREDITS.md"
+          },
+          {
+            "at": "67.1",
+            "kind": "image",
+            "src": "report/readiness.png",
+            "label": "Municipal Readiness Report"
+          },
+          {
+            "at": "68.1",
+            "kind": "self",
+            "src": "this",
+            "label": "This video"
+          }
+        ]
+      },
+      "ticks": [
+        {
+          "box": "j5",
+          "at": "62.4.5"
+        },
+        {
+          "box": "j6",
+          "at": "63.4.5"
+        },
+        {
+          "box": "j7",
+          "at": "64.4.5"
+        },
+        {
+          "box": "j2",
+          "at": "65.4.5"
+        },
+        {
+          "box": "j8",
+          "at": "66.4.5"
+        },
+        {
+          "box": "j9",
+          "at": "67.4.5"
+        },
+        {
+          "box": "j10",
+          "at": "68.4.5"
+        }
+      ],
+      "words": [],
+      "notes": "The final drop. Left: the evidence, cut on the beat. Right: the slip's Part B, the camera moving row by row; each box ticks on the last 'and' of its bar."
+    },
+    {
+      "id": "slip-final",
+      "bars": [
+        69,
+        69
+      ],
+      "part": "Finale",
+      "shot": {
+        "type": "slip-final",
+        "stamp": {
+          "at": "69.2",
+          "text": "All boxes ticked"
+        }
+      },
+      "words": [],
+      "notes": "Every box ticked; stamp on 69.2; on 69.3 the camera pulls back and the slip is on the laptop's screen."
+    },
+    {
+      "id": "end",
+      "bars": [
+        70,
+        70
+      ],
+      "to": "end",
+      "part": "End",
+      "shot": {
+        "type": "endcard"
+      },
+      "words": [],
+      "notes": "The lid closes on the last hit; the end card holds while the hit rings out."
+    }
+  ]
+}

@@ -1,0 +1,166 @@
+{
+  "home": {
+    "typed": 1.89,
+    "card": 5.22,
+    "open": 7.1,
+    "speed": 1,
+    "recordedAt": "2026-11-14T08:20:03.464Z",
+    "url": "https://municipal-agents.fly.dev/decisions"
+  },
+  "overview": {
+    "grade": 1.56,
+    "speed": 1,
+    "recordedAt": "2026-11-14T09:03:02.426Z",
+    "url": "https://municipal-agents.fly.dev/d/row-2027-budget"
+  },
+  "source": {
+    "cite": 1.61,
+    "speed": 1,
+    "recordedAt": "2026-11-14T08:20:32.372Z",
+    "url": "https://municipal-agents.fly.dev/d/row-2027-budget"
+  },
+  "affects": {
+    "chip1": 1.42,
+    "chip2": 2.98,
+    "speed": 1,
+    "recordedAt": "2026-11-14T09:03:17.629Z",
+    "url": "https://municipal-agents.fly.dev/d/row-2027-budget?tab=affects"
+  },
+  "ask-opinion": {
+    "typed": 1.66,
+    "asked": 4.95,
+    "answer": 8.26,
+    "speed": 1,
+    "recordedAt": "2026-11-14T08:26:39.523Z",
+    "url": "https://municipal-agents.fly.dev/d/row-2027-budget"
+  },
+  "say": {
+    "timeline": 0.9,
+    "next": 2.7,
+    "calendar": 6.79,
+    "speed": 1,
+    "recordedAt": "2026-11-14T09:05:09.005Z",
+    "url": "https://municipal-agents.fly.dev/d/row-2027-budget?tab=say"
+  },
+  "ask": {
+    "typed": 0.85,
+    "asked": 3.06,
+    "answer": 7.24,
+    "speed": 2,
+    "recordedAt": "2026-11-14T08:27:06.176Z",
+    "url": "https://municipal-agents.fly.dev/d/row-2027-budget"
+  },
+  "transit": {
+    "gap": 2.01,
+    "gaps": 8.3,
+    "fixes": 11.1,
+    "speed": 1,
+    "recordedAt": "2026-11-14T08:22:13.191Z",
+    "url": "https://municipal-agents.fly.dev/d/row-2027-budget?tab=transit"
+  },
+  "costs": {
+    "chart": 0,
+    "slide": 2.3,
+    "result": 4.57,
+    "speed": 1,
+    "recordedAt": "2026-11-14T09:03:49.981Z",
+    "url": "https://municipal-agents.fly.dev/d/row-2027-budget?tab=costs"
+  },
+  "scout-map": {
+    "tab": 1.54,
+    "speed": 1,
+    "recordedAt": "2026-11-14T08:22:44.105Z",
+    "url": "https://municipal-agents.fly.dev/d/row-2027-budget"
+  },
+  "scout-section": {
+    "section": 0,
+    "speed": 1,
+    "recordedAt": "2026-11-14T08:22:55.657Z",
+    "url": "https://municipal-agents.fly.dev/d/row-2027-budget?tab=construction"
+  },
+  "scout-steps": {
+    "step1": 2.09,
+    "step2": 4.88,
+    "step3": 7.52,
+    "step4": 10.29,
+    "step5": 13.3,
+    "step6": 16.34,
+    "step7": 19.35,
+    "speed": 1,
+    "recordedAt": "2026-11-14T08:09:28.354Z",
+    "url": "https://municipal-agents.fly.dev/d/row-2027-budget?tab=construction"
+  },
+  "commitments": {
+    "status": 1.33,
+    "unclear": 3.08,
+    "speed": 1,
+    "recordedAt": "2026-11-14T08:28:17.963Z",
+    "url": "https://municipal-agents.fly.dev/d/row-2027-budget?tab=commitments"
+  },
+  "housing": {
+    "speed": 1,
+    "recordedAt": "2026-11-14T08:23:19.269Z",
+    "url": "https://municipal-agents.fly.dev/d/row-2027-budget?tab=housing"
+  },
+  "unknowns": {
+    "speed": 1,
+    "recordedAt": "2026-11-14T08:23:45.887Z",
+    "url": "https://municipal-agents.fly.dev/d/row-2027-budget?tab=unknowns"
+  },
+  "log": {
+    "chain": 2.8,
+    "speed": 1,
+    "recordedAt": "2026-11-14T08:24:44.164Z",
+    "url": "https://municipal-agents.fly.dev/log"
+  },
+  "spend": {
+    "speed": 1,
+    "recordedAt": "2026-11-14T08:24:54.829Z",
+    "url": "https://municipal-agents.fly.dev/spend"
+  },
+  "language": {
+    "menu": 1.66,
+    "pick": 3.29,
+    "speed": 1,
+    "recordedAt": "2026-11-14T08:25:09.770Z",
+    "url": "https://municipal-agents.fly.dev/d/row-2027-budget"
+  },
+  "a11y": {
+    "tabbed": 4.38,
+    "speed": 1,
+    "recordedAt": "2026-11-14T08:25:19.260Z",
+    "url": "https://municipal-agents.fly.dev/d/row-2027-budget"
+  },
+  "staff-draft": {
+    "start": 1.85,
+    "drafted": 6.26,
+    "speed": 1,
+    "recordedAt": "2026-11-14T08:24:06.248Z",
+    "url": "http://127.0.0.1:4199/staff"
+  },
+  "staff-review": {
+    "approve": 0.89,
+    "edit": 3,
+    "saved": 5.47,
+    "reject": 6.54,
+    "publish": 9.06,
+    "speed": 1,
+    "recordedAt": "2026-11-14T08:24:33.298Z",
+    "url": "http://127.0.0.1:4199/staff"
+  },
+  "landing": {
+    "speed": 1,
+    "recordedAt": "2026-11-14T08:25:29.134Z",
+    "url": "https://municipal-agents.fly.dev/"
+  },
+  "docs": {
+    "speed": 1,
+    "recordedAt": "2026-11-14T08:25:37.307Z",
+    "url": "https://municipal-agents.fly.dev/docs"
+  },
+  "embed": {
+    "speed": 1,
+    "recordedAt": "2026-11-14T08:25:46.617Z",
+    "url": "https://municipal-agents.fly.dev/embed/demo"
+  }
+}

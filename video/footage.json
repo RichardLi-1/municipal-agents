@@ -1,0 +1,191 @@
+{
+  "about": "Product clips the video needs, recorded by scripts/record.mjs against the live site at 1920x1080 with a visible cursor. Files land in public/footage/<id>.mp4 (gitignored). 'marks' are filled in by the recorder: seconds into the clip where each action happens, so scenes can line up actions with beats.",
+  "clips": {
+    "home": {
+      "what": "Decisions page: the region map, decision cards with countdowns; type a street; click the 2027 budget card",
+      "path": "/decisions",
+      "layout": "home",
+      "seconds": 8.3,
+      "marks": {}
+    },
+    "overview": {
+      "what": "Decision brief, Overview tab: plain summary, reading grade, review status",
+      "path": "/d/:id",
+      "layout": "brief",
+      "seconds": 4.2,
+      "marks": {}
+    },
+    "source": {
+      "what": "Click a figure: the source viewer opens on its PDF page with the quote highlighted",
+      "path": "/d/:id",
+      "layout": "viewer",
+      "seconds": 4.2,
+      "marks": {}
+    },
+    "affects": {
+      "what": "Affects you: tap Renter and Transit rider; cited impacts appear",
+      "path": "/d/:id#affects",
+      "layout": "brief",
+      "seconds": 6.3,
+      "marks": {}
+    },
+    "ask-opinion": {
+      "what": "Ask 'Should I support this budget or oppose it?': the recorded answer (after ~3 s) lays out both sides and does not take one; replay label visible",
+      "path": "/d/:id",
+      "layout": "brief",
+      "seconds": 2.1,
+      "marks": {}
+    },
+    "say": {
+      "what": "Have your say: timeline, next chance with countdown, how to take part, Add to calendar",
+      "path": "/d/:id#say",
+      "layout": "brief",
+      "seconds": 4.7,
+      "marks": {}
+    },
+    "ask": {
+      "what": "Ask: type exactly 'How much of my regional tax bill goes to public transit?'; a real run replays from the record (plan, specialist steps, checked statements, ~8 s), then the answer with 'Answered by the agents on <time> · replayed from the record'. Recorded at 1x, sped up 2x",
+      "path": "/d/:id",
+      "layout": "brief",
+      "seconds": 8.3,
+      "marks": {}
+    },
+    "transit": {
+      "what": "Transit lens: gaps and destinations on the map, time-of-day switch, first/last mile, ranked fixes",
+      "path": "/d/:id#transit",
+      "layout": "brief",
+      "seconds": 8.3,
+      "marks": {}
+    },
+    "costs": {
+      "what": "Cost lens: stacked lifecycle chart; drag a slider; per household recomputes; discount toggle",
+      "path": "/d/:id#costs",
+      "layout": "brief",
+      "seconds": 6.2,
+      "marks": {}
+    },
+    "commitments": {
+      "what": "Commitments lens: status pills; expand one; what's still unclear",
+      "path": "/d/:id#commitments",
+      "layout": "brief",
+      "seconds": 4.2,
+      "marks": {}
+    },
+    "housing": {
+      "what": "Housing lens: units by stage, approval to completion; untracked stages",
+      "path": "/d/:id#housing",
+      "layout": "brief",
+      "seconds": 4.2,
+      "marks": {}
+    },
+    "unknowns": {
+      "what": "Unknowns & trade-offs: what the documents don't answer, who can; trade-offs both ways; harms. Slow scroll",
+      "path": "/d/:id#unknowns",
+      "layout": "brief",
+      "seconds": 8.3,
+      "marks": {}
+    },
+    "staff-draft": {
+      "what": "Staff: passcode, pick row-2027-budget, start the brief as a replay of the agents' real run (labelled 'Replay of the agents' real run on <time>'); the agents panel; statements checked; any rejected quote. Sped up 4x. LOCAL ONLY: recorded against a throwaway copy of the data on http://127.0.0.1:4199 (scripts/staff-server.sh), never the live site",
+      "path": "local:/staff",
+      "layout": "staff",
+      "seconds": 8.3,
+      "marks": {}
+    },
+    "staff-review": {
+      "what": "Staff review: approve, edit with a note, reject; reviewer name; Publish; public page shows Approved by. LOCAL ONLY: recorded against a throwaway copy of the data on http://127.0.0.1:4199 (scripts/staff-server.sh), never the live site",
+      "path": "local:/staff",
+      "layout": "staff",
+      "seconds": 8.3,
+      "marks": {}
+    },
+    "log": {
+      "what": "Record: the log newest first; the chain check runs: Chain intact",
+      "path": "/log",
+      "layout": "page",
+      "seconds": 4.2,
+      "marks": {}
+    },
+    "spend": {
+      "what": "Spend: calls, tokens, US$, energy and CO2e, daily limit",
+      "path": "/spend",
+      "layout": "page",
+      "seconds": 4.2,
+      "marks": {}
+    },
+    "language": {
+      "what": "Language menu: the brief switches to another language",
+      "path": "/d/:id",
+      "layout": "brief",
+      "seconds": 2.1,
+      "marks": {}
+    },
+    "a11y": {
+      "what": "Keyboard only: tabbing through the brief with visible focus rings",
+      "path": "/d/:id",
+      "layout": "brief",
+      "seconds": 4.2,
+      "marks": {}
+    },
+    "scout-map": {
+      "what": "Construction tab on row-2027-budget: the map with ranked candidate launch and extraction sites, the 2.9 km twin bores under Highway 401 and the Speed River, 49 boreholes, 11 cross-passages",
+      "path": "/d/:id?tab=construction",
+      "layout": "brief",
+      "seconds": 2.1,
+      "marks": {}
+    },
+    "scout-section": {
+      "what": "Construction tab: the long-section ('Under the ground') with the animated TBM",
+      "path": "/d/:id?tab=construction",
+      "layout": "page",
+      "seconds": 1.1,
+      "marks": {}
+    },
+    "scout-steps": {
+      "what": "Construction tab: stepping 1 to 7; each step flies the map and shows its render (spare, if we cut to it instead of the stills)",
+      "path": "/d/:id?tab=construction",
+      "layout": "brief",
+      "seconds": 6.0,
+      "marks": {}
+    },
+    "landing": {
+      "what": "The landing page for cities (/)",
+      "path": "/",
+      "layout": "page",
+      "seconds": 0.6,
+      "marks": {}
+    },
+    "docs": {
+      "what": "The docs (/docs)",
+      "path": "/docs",
+      "layout": "page",
+      "seconds": 0.6,
+      "marks": {}
+    },
+    "embed": {
+      "what": "The embeddable widget demo (/embed/demo)",
+      "path": "/embed/demo",
+      "layout": "page",
+      "seconds": 1.1,
+      "marks": {}
+    }
+  },
+  "stills": {
+    "dark": {
+      "what": "The brief in dark mode, 2x screenshot",
+      "file": "shots/dark.png"
+    },
+    "phone": {
+      "what": "The brief on a phone (390x844, 3x), screenshot",
+      "file": "shots/phone.png"
+    },
+    "readiness": {
+      "what": "The Municipal Readiness Report, page 1, rendered from report/*.pdf",
+      "file": "docs/report/readiness.png"
+    },
+    "scout-renders": {
+      "what": "The construction scout's seven stage renders, copied from data/renders by npm run gen (real product files, no recording needed)",
+      "file": "docs/renders/*.jpg"
+    }
+  }
+}

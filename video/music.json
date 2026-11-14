@@ -1,0 +1,29 @@
+{
+  "file": "music/bass-brain.mp3",
+  "title": "Bass Brain",
+  "artist": "Dresage x Hark Madley",
+  "bpm": 116,
+  "beatsPerBar": 4,
+  "firstDownbeat": 0.576,
+  "bars": 70,
+  "lastHit": 143.33,
+  "fileDuration": 146.333,
+  "fps": 30,
+  "measured": "ffmpeg mono 22.05 kHz decode; per-bar RMS and onset checks. Strong onsets land within 5 ms of the grid at bars 16, 19, 28, 44, 48, 62 and 69.",
+  "sections": [
+    { "id": "groove-a", "bars": [1, 4], "energy": "groove", "note": "dip at 4" },
+    { "id": "groove-b", "bars": [5, 10], "energy": "groove", "note": "dip at 8" },
+    { "id": "groove-c", "bars": [11, 14], "energy": "groove" },
+    { "id": "lift", "bars": [15, 18], "energy": "lift", "note": "lift at 16, then 17-18 quiet" },
+    { "id": "groove-d", "bars": [19, 26], "energy": "groove" },
+    { "id": "silence", "bars": [27, 27], "energy": "silence" },
+    { "id": "drop-1", "bars": [28, 35], "energy": "drop" },
+    { "id": "breakdown", "bars": [36, 39], "energy": "quiet" },
+    { "id": "build", "bars": [40, 43], "energy": "build", "note": "dip at 43" },
+    { "id": "groove-e", "bars": [44, 47], "energy": "groove" },
+    { "id": "groove-f", "bars": [48, 51], "energy": "groove" },
+    { "id": "quiet-groove", "bars": [52, 61], "energy": "groove", "note": "52-53 quiet, then groove" },
+    { "id": "drop-2", "bars": [62, 69], "energy": "drop" },
+    { "id": "end", "bars": [70, 70], "energy": "ring-out", "note": "the last hit rings out" }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "name": "municipal-agents-video",
+  "private": true,
+  "type": "module",
+  "description": "The CIVIC Hack 2026 demo video for Municipal Agents, made with Remotion.",
+  "scripts": {
+    "gen": "node scripts/gen.mjs",
+    "studio": "node scripts/gen.mjs && remotion studio src/index.ts",
+    "preview": "node scripts/preview.mjs",
+    "render": "node scripts/render.mjs",
+    "stills": "node scripts/stills.mjs",
+    "sheet": "sh scripts/contact-sheet.sh",
+    "check": "node scripts/check.mjs",
+    "script": "node scripts/script-md.mjs",
+    "typecheck": "node scripts/gen.mjs && tsc --noEmit",
+    "record": "node --env-file-if-exists=../.env scripts/record.mjs",
+    "loop": "node scripts/render.mjs out/municipal-agents-loop.mp4 --comp=ShowcaseLoop --crf=18",
+    "staff-server": "sh scripts/staff-server.sh"
+  },
+  "dependencies": {
+    "@remotion/cli": "4.0.541",
+    "@remotion/google-fonts": "4.0.541",
+    "react": "19.2.0",
+    "react-dom": "19.2.0",
+    "remotion": "4.0.541"
+  },
+  "devDependencies": {
+    "@types/react": "19.2.2",
+    "playwright-core": "1.65.1",
+    "typescript": "5.9.3"
+  }
+}

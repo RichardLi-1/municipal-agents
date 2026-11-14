@@ -1,0 +1,8 @@
+node_modules/
+out/
+public/music/
+public/footage/*.mp4
+public/footage/*.webm
+public/shots/
+public/docs/
+src/generated/
