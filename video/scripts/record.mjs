@@ -282,33 +282,44 @@ const clips = {
     await h.scrollAt({ x: 960, y: 700 }, 500, 1500);
     await h.wait(2500);
   } },
-  // One statement approved, one edited, one rejected, then a named person publishes.
+  // Every statement reviewed: one edited and one rejected at readable speed at the top,
+  // the rest approved quickly, then a named person publishes.
   "staff-review": { path: "/staff", staff: true, prep: async (page) => {
     await signIn(page);
     await page.locator('button:has-text("Replay the agents")').first().click().catch(() => {});
     await page.waitForSelector(':text("Draft ready for review")', { timeout: 120000 }).catch(() => {});
     await page.waitForTimeout(1500);
-    await centre(page, ".review-row");
+    await page.locator(".review-row").first().evaluate((el) => el.scrollIntoView({ block: "start" })).catch(() => {});
+    await page.evaluate(() => window.scrollBy(0, -140)).catch(() => {});
+    await page.waitForTimeout(400);
   }, act: async (h) => {
-    await h.wait(300);
+    await h.wait(400);
     const rows = h.page.locator(".review-row");
-    await h.moveTo(rows.nth(0).locator('button:has-text("Approve")'), 500);
-    h.mark("approve");
-    await h.click(rows.nth(0).locator('button:has-text("Approve")'));
-    await h.wait(450);
-    await h.moveTo(rows.nth(1).locator('button:has-text("Edit")'), 450);
+    await h.moveTo(rows.nth(0).locator('button:has-text("Edit")'), 500);
     h.mark("edit");
-    await h.click(rows.nth(1).locator('button:has-text("Edit")'));
-    await rows.nth(1).locator("textarea").press("End").catch(() => {});
-    await h.page.keyboard.type(" (a forecast)", { delay: 30 });
-    await h.click(rows.nth(1).locator('button:has-text("Save")'), "saved");
-    await h.wait(350);
-    await h.moveTo(rows.nth(2).locator('button:has-text("Reject")'), 450);
+    await h.click(rows.nth(0).locator('button:has-text("Edit")'));
+    await rows.nth(0).locator("textarea").press("End").catch(() => {});
+    await h.page.keyboard.type(" (a forecast)", { delay: 45 });
+    await h.wait(250);
+    await h.click(rows.nth(0).locator('button:has-text("Save")'), "saved");
+    await h.wait(500);
+    await h.moveTo(rows.nth(1).locator('button:has-text("Reject")'), 500);
     h.mark("reject");
-    await h.click(rows.nth(2).locator('button:has-text("Reject")'));
-    await h.wait(600);
+    await h.click(rows.nth(1).locator('button:has-text("Reject")'));
+    await h.wait(700);
+    const n = await rows.count();
+    h.mark("approve");
+    await h.moveTo(rows.nth(2).locator('button:has-text("Approve")'), 450);
+    for (let i = 2; i < n; i++) {
+      await rows.nth(i).locator('button:has-text("Approve")').click({ timeout: 3000 }).catch(() => {});
+      await h.wait(40);
+    }
+    h.mark("approved-all");
+    await h.wait(400);
     await h.click('button:has-text("Publish")', "publish");
-    await h.wait(2500);
+    await h.page.waitForSelector(':text("Published ·")', { timeout: 20000 }).catch(() => {});
+    h.mark("published");
+    await h.wait(3000);
   } },
   log: { path: "/log", act: async (h) => { await h.wait(2800); h.mark("chain"); await h.scrollAt({ x: 960, y: 700 }, 380, 1000); await h.wait(1000); } },
   spend: { path: "/spend", act: async (h) => { await h.wait(4500); } },
@@ -321,7 +332,7 @@ const clips = {
     else { await h.page.keyboard.press("ArrowDown"); await h.page.keyboard.press("Enter"); h.mark("pick"); }
     await h.wait(3500);
   } },
-  a11y: { path: D, act: async (h) => { await h.wait(500); for (let i = 0; i < 10; i++) { await h.page.keyboard.press("Tab"); await h.wait(380); } h.mark("tabbed"); } },
+  a11y: { path: D, noCursor: true, act: async (h) => { await h.wait(500); for (let i = 0; i < 10; i++) { await h.page.keyboard.press("Tab"); await h.wait(380); } h.mark("tabbed"); } },
   // For cities: a quick flash of each (record after they're polished).
   landing: { path: "/", act: async (h) => { await h.wait(1500); await h.scrollAt({ x: 960, y: 600 }, 300, 800); await h.wait(500); } },
   docs: { path: "/docs", act: async (h) => { await h.wait(1500); await h.scrollAt({ x: 960, y: 600 }, 300, 800); await h.wait(500); } },
@@ -333,7 +344,7 @@ const browser = await chromium.launch({ channel: "chrome", args: ["--hide-scroll
 async function record(id, spec) {
   const root = spec.staff ? staffBase : base;
   const ctx = await browser.newContext({ viewport: { width: 1920, height: 1080 }, deviceScaleFactor: dsf, colorScheme: "light" });
-  await ctx.addInitScript(cursorScript);
+  if (!spec.noCursor) await ctx.addInitScript(cursorScript);
   const page = await ctx.newPage();
   await page.goto(root + withQuery(spec.path), { waitUntil: "load" }).catch(() => {});
   await page.waitForTimeout(2200);

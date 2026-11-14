@@ -27,7 +27,7 @@ A paper civic form, “CIVIC Hack 2026 · Return slip”, Part A (the challenges
 | Box | Ticked at | Scene |
 |---|---|---|
 | 1a. Understand the proposed decision | 12.3 (0:24.4) | source |
-| 1b. How it could affect me | 15.4 (0:31.1) | opinion |
+| 1b. How it could affect me | 14.4 (0:29.0) | affects |
 | 1c. When I can have a say | 18.3 (0:36.8) | slip-1 |
 | 2. Gaps in transit access | 26.4 (0:53.9) | transit |
 | 3. Long-term infrastructure costs | 29.4 (1:00.1) | costs |
@@ -72,9 +72,9 @@ A paper civic form, “CIVIC Hack 2026 · Return slip”, Part A (the challenges
 - **Shot:** title
 - **Words:**
   - 4.1 to 5.1: “Municipal Agents” (title)
-  - 4.2.5 to 5.1: “A city decision, in five minutes.” (subtitle)
+  - 4.1.5 to 5.1: “Every city decision, explained in five minutes.” (subtitle)
 - **Facts and sources:**
-  - a brief a resident can read in five minutes: `docs/spec.md`, page One sentence
+  - Every city decision, explained in five minutes.: `the product's landing page (/)`, page headline
 - **Action:** The dip at bar 4. Name and the promise; nothing else.
 
 ### find · bars 5-8 · 0:08.9 to 0:17.1
@@ -85,7 +85,7 @@ A paper civic form, “CIVIC Hack 2026 · Return slip”, Part A (the challenges
 - **Shot:** footage `home`: Decisions page: the region map, decision cards with countdowns; type a street; click the 2027 budget card
 - **Camera:** 5.1 zoom 1 at (0.5, 0.5) → 5.3 zoom 1.5 at (0.18, 0.28) → 6.3 zoom 1.5 at (0.18, 0.3) → 7.1 zoom 1.35 at (0.25, 0.6) → 7.3 zoom 1.6 at (0.2, 0.88) → 8.3 zoom 1.8 at (0.2, 0.9) → 8.4 zoom 2.3 at (0.2, 0.92)
 - **Words:**
-  - 5.1 to 6.3: “One resident. One decision.”
+  - 5.1 to 6.3: “For residents. One real decision.”
   - 6.3 to 7.3: “What's decided near me?”
   - 7.3 to 8.4: “The next chance, counted down.”
 - **Facts and sources:**
@@ -98,7 +98,7 @@ A paper civic form, “CIVIC Hack 2026 · Return slip”, Part A (the challenges
 - **Step label:** Step 2 of 5 · Understand it
 - **Tags:** “Scenario: fictional resident”, “Real data: Region of Waterloo”
 - **Shot:** footage `overview`: Decision brief, Overview tab: plain summary, reading grade, review status
-- **Camera:** 9.1 zoom 1.6 at (0.18, 0.18) → 9.2.5 zoom 1.9 at (0.2, 0.27) → 9.4 zoom 1.9 at (0.2, 0.27) → 10.3 zoom 1.6 at (0.18, 0.9) → 10.4 zoom 1.7 at (0.18, 0.92)
+- **Camera:** 9.1 zoom 1.6 at (0.18, 0.18) → 9.2.5 zoom 1.9 at (0.2, 0.27) → 9.4 zoom 1.9 at (0.2, 0.27) → 10.3 zoom 1.5 at (0.18, 0.9) → 10.4 zoom 1.5 at (0.18, 0.92)
 - **Words:**
   - 9.1 to 9.3: “In plain words.”
   - 9.3 to 10.3: “Reading grade, measured.”
@@ -113,8 +113,7 @@ A paper civic form, “CIVIC Hack 2026 · Return slip”, Part A (the challenges
 - **Music:** groove
 - **Step label:** Step 2 of 5 · Understand it
 - **Tags:** “Scenario: fictional resident”, “Real data: Region of Waterloo”
-- **Shot:** footage `source`: Click a figure: the source viewer opens on its PDF page with the quote highlighted
-- **Camera:** 11.1 zoom 1.7 at (0.2, 0.5) → 11.2.5 zoom 1.7 at (0.2, 0.5) → 11.3 zoom 1.05 at (0.5, 0.5) → 12.3 zoom 1.5 at (0.45, 0.62)
+- **Shot:** cuts: `source` at 11.1; `source` at 11.3
 - **Words:**
   - 11.1 to 11.3: “Every figure.”
   - 11.3 to 12.3: “Its page, highlighted.”
@@ -133,6 +132,7 @@ A paper civic form, “CIVIC Hack 2026 · Return slip”, Part A (the challenges
 - **Words:**
   - 13.1 to 14.1: “Pick who you are.”
   - 14.1 to 15.1: “See what may change.”
+- **Ticks:** 1b. How it could affect me at 14.4
 - **Action:** Affects you tab: she taps 'Renter' and 'Transit rider'; the cited impacts appear, in 'may' language with uncertainty.
 
 ### opinion · bars 15 · 0:29.5 to 0:31.6
@@ -141,10 +141,9 @@ A paper civic form, “CIVIC Hack 2026 · Return slip”, Part A (the challenges
 - **Step label:** Step 3 of 5 · How it affects me
 - **Tags:** “Scenario: fictional resident”, “Replay of a real run”
 - **Shot:** footage `ask-opinion`: Ask 'Should I support this budget or oppose it?': the recorded answer (after ~3 s) lays out both sides and does not take one; replay label visible
-- **Camera:** 15.1 zoom 2.2 at (0.885, 0.3) → 15.4 zoom 2.3 at (0.885, 0.36)
+- **Camera:** 15.1 zoom 2.2 at (0.885, 0.2) → 15.4 zoom 2.3 at (0.885, 0.28)
 - **Words:**
   - 15.1 to 16.1: “Not what to think.”
-- **Ticks:** 1b. How it could affect me at 15.4
 - **Facts and sources:**
   - Question asked: "Should I support this budget or oppose it?" (a replayable real run): `live app, row-2027-budget chat`, page answer labelled 'Answered by the agents on <time> · replayed from the record'
 - **Action:** Insert: in the chat she asks "Should I support this budget or oppose it?"; the agents' recorded answer lays out the trade-offs and declines to tell her what to think. Clip starts (in-point) where the answer appears; the replay label stays in frame.
@@ -178,15 +177,14 @@ A paper civic form, “CIVIC Hack 2026 · Return slip”, Part A (the challenges
 - **Music:** groove
 - **Step label:** Step 5 of 5 · Ask anything
 - **Tags:** “Scenario: fictional resident”, “Replay of a real run”, “2× speed”
-- **Shot:** footage `ask`: Ask: type exactly 'How much of my regional tax bill goes to public transit?'; a real run replays from the record (plan, specialist steps, checked statements, ~8 s), then the answer with 'Answered by the agents on <time> · replayed from the record'. Recorded at 1x, sped up 2x
-- **Camera:** 19.1 zoom 2.2 at (0.885, 0.92) → 20.1 zoom 2.3 at (0.885, 0.2) → 21.3 zoom 2.2 at (0.885, 0.3) → 22.3 zoom 2 at (0.885, 0.36)
+- **Shot:** cuts: `ask` at 19.1; `ask` at 20.1
 - **Words:**
-  - 19.1 to 20.1: “Ask anything.”
-  - 20.1 to 21.1: “A lead agent plans it.”
-  - 21.1 to 22.3: “Real agents. Real documents.”
+  - 19.1 to 19.3: “Ask anything.”
+  - 19.3 to 20.1: “Posted without your name.”
+  - 20.1 to 22.3: “Real agents. Real documents.”
 - **Facts and sources:**
   - Answer: public transit 17.6% of the Region's property tax levy; $582 for an average urban household and $63 for a rural one in 2026 regional taxes: `data/sources/row-2026-budget-book.pdf`, page 12
-- **Action:** Chat pane: she types exactly "How much of my regional tax bill goes to public transit?"; the app replays a real agent run from the record: the plan, the specialists' steps, the checked statements one by one (~8 s), then the cited answer with its label "Answered by the agents on <time> · replayed from the record" (kept in frame at the end). Recorded at 1x and sped up 2x (tagged).
+- **Action:** Cut 1: she types "How much of my regional tax bill goes to public transit?" in the chat box; under it the footnote reads that questions are posted without your name on the public record. Cut 2: the agents' recorded run replays and the cited answer lands (17.6% of the levy; $582 urban, $63 rural, budget book p.12) with its label 'Answered by the agents on … · replayed from the record'. Recorded at 1x, shown at 2x (tagged).
 
 ### transit · bars 23-26 · 0:46.1 to 0:54.4
 
@@ -197,7 +195,7 @@ A paper civic form, “CIVIC Hack 2026 · Return slip”, Part A (the challenges
 - **Words:**
   - 23.1 to 24.1: “Transit gaps, mapped.”
   - 24.1 to 25.1: “Sunday mornings, before 6:30.”
-  - 25.1 to 26.1: “The last 800 metres.”
+  - 25.1 to 26.1: “The walk to the stop.”
   - 26.1 to 27.1: “Fixes ranked. Trade-offs stated.”
 - **Ticks:** 2. Gaps in transit access at 26.4
 - **Facts and sources:**
@@ -223,7 +221,7 @@ A paper civic form, “CIVIC Hack 2026 · Return slip”, Part A (the challenges
   - 28.1 to 28.3: “The upfront price.”
   - 28.3 to 29.1: “Plus decades of upkeep.”
   - 29.1 to 29.3: “Move a slider.”
-  - 29.3 to 30.1: “Per household, per year.”
+  - 29.3 to 30.1: “Spread per household.”
 - **Ticks:** 3. Long-term infrastructure costs at 29.4
 - **Facts and sources:**
   - $1,393 per household per year; $7,744 million lifetime over 25 years; $798 million upfront (GRT Business Plan, product-computed with cited inputs): `live app, row-2027-budget Costs tab; data/sources/grt-business-plan-2025*.pdf`, page per the tab's cited figures
@@ -237,8 +235,7 @@ A paper civic form, “CIVIC Hack 2026 · Return slip”, Part A (the challenges
 - **Shot:** cuts: `scout-map` at 30.1; `scout-section` at 31.1; the scout's seven stage renders (data/renders), stepping 1 to 7, from 31.3
 - **Words:**
   - 30.1 to 30.3: “ION under the 401?”
-  - 30.3 to 31.1: “Agents scout launch sites.”
-  - 31.1 to 31.3: “49 boreholes. 11 cross-passages.”
+  - 30.3 to 31.3: “Sites ranked by a stated rule.”
   - 31.3 to 32.3: “Seven steps, each rendered.”
   - 32.3 to 33.1: “Then the land goes back.”
 - **Facts and sources:**
@@ -246,6 +243,7 @@ A paper civic form, “CIVIC Hack 2026 · Return slip”, Part A (the challenges
   - 49 boreholes, 11 cross-passages, 2,828 m bored, 7 steps: `data/lenses/construction-row-2027-budget.json`, page boreholes (49), crossPassages (11), numbers.boredLengthM, steps
   - ION Stage 2 (project 68030 'RT to Cambridge') in the 10-year capital forecast: `data/sources/row-2026-budget-book.pdf`, page 43
   - Renders made with gemini-3.1-flash-image; the app captions each 'Illustrative render · not a design': `data/renders/construction-renders.json; web/src/construction/ConstructionPanel.tsx`, page model, figcaption
+  - 'The scout ranks candidate sites by a stated rule. It does not choose one: engineers and Region staff would evaluate, and Council decides.': `web/src/construction/ConstructionPanel.tsx (on screen in the Construction tab)`, page cx-fine
 - **Action:** The flashiest beat of the first drop, on row-2027-budget's Construction tab. Bar 30: the map with the ranked candidate launch and extraction sites, the twin bores, boreholes and cross-passages. 31.1: the long-section with the animated TBM. 31.3 to 33.1: stepping 1 to 7, each step's render zooming past (about one every 0.86 beat) under the product's own step title, from 'Drill boreholes to read the ground' to 'Fit out, then give the land back'. The renders are the product's own files (data/renders); the recorder also captures the map flying between steps (clip scout-steps) if we'd rather cut to that.
 
 ### commitments · bars 33-34 · 1:06.8 to 1:09.9
@@ -268,12 +266,13 @@ A paper civic form, “CIVIC Hack 2026 · Return slip”, Part A (the challenges
 - **Step label:** Lens 4 of 4 · Housing
 - **Tags:** “Real data: Region of Waterloo”
 - **Shot:** footage `housing`: Housing lens: units by stage, approval to completion; untracked stages
-- **Camera:** 34.3 zoom 1.5 at (0.18, 0.6) → 35.1 zoom 1.5 at (0.18, 0.55) → 35.3 zoom 1.8 at (0.18, 0.25)
+- **Camera:** 34.3 zoom 1.7 at (0.17, 0.84) → 35.2 zoom 1.8 at (0.17, 0.72) → 35.3 zoom 1.6 at (0.18, 0.32)
 - **Words:**
-  - 34.3 to 35.1: “Approved isn't built.”
-  - 35.1 to 35.3: “Units, stage by stage.”
+  - 34.3 to 35.3: “Approved isn't built.”
   - 35.3 to 36.1: “Where the trail goes dark.”
 - **Ticks:** 5. Housing: approval to construction at 35.3
+- **Facts and sources:**
+  - Target 70,000 homes by 2031; 15,902 of 70,000 counted by the province as of Dec 31, 2024: `live app, row-2027-budget Housing tab (Ontario housing supply progress, Open Government Licence – Ontario)`, page target card
 - **Action:** Housing lens: units by stage from approval to completion; the stages with no public data drawn as untracked.
 
 ### slip-2 · bars 36 · 1:13.0 to 1:14.0
@@ -302,12 +301,12 @@ A paper civic form, “CIVIC Hack 2026 · Return slip”, Part A (the challenges
 - **Step label:** City staff · Step 1 of 3 · Draft
 - **Tags:** “Scenario: fictional clerk”, “Replay of a real run”
 - **Shot:** footage `staff-draft`: Staff: passcode, pick row-2027-budget, start the brief as a replay of the agents' real run (labelled 'Replay of the agents' real run on <time>'); the agents panel; statements checked; any rejected quote. Sped up 4x. LOCAL ONLY: recorded against a throwaway copy of the data on http://127.0.0.1:4199 (scripts/staff-server.sh), never the live site
-- **Camera:** 40.1 zoom 1.3 at (0.5, 0.3) → 41.1 zoom 1.6 at (0.4, 0.25) → 41.3 zoom 1.5 at (0.45, 0.5) → 43.1 zoom 1.5 at (0.5, 0.6) → 43.4 zoom 1.6 at (0.5, 0.55)
+- **Camera:** 40.1 zoom 1.3 at (0.5, 0.3) → 41.1 zoom 1.6 at (0.4, 0.25) → 41.3 zoom 1.5 at (0.45, 0.5) → 42.2 zoom 2.4 at (0.42, 0.54) → 43.2 zoom 2.4 at (0.42, 0.54) → 43.4 zoom 2.2 at (0.45, 0.56)
 - **Words:**
   - 40.1 to 41.1: “Now, the city's side.”
   - 41.1 to 42.1: “A clerk starts a brief.”
-  - 42.1 to 43.1: “Specialist agents draft it.”
-  - 43.1 to 44.1: “Every quote checked on its page.”
+  - 42.1 to 43.1: “A quote not on its page? Rejected.”
+  - 43.1 to 44.1: “Specialist agents draft it.”
 - **Action:** Local throwaway copy of the app (scripts/staff-server.sh, port 4199). The clerk clicks "Replay the agents' last real run": the steps panel streams the lead's plan and each specialist's row with a 'Replay of the agents' real run on <time>' chip, ending 'Draft ready for review'; the statements arrive marked Checked. Shown at real speed.
 
 ### staff-review · bars 44-47 · 1:29.5 to 1:37.8
@@ -315,13 +314,13 @@ A paper civic form, “CIVIC Hack 2026 · Return slip”, Part A (the challenges
 - **Music:** groove
 - **Step label:** City staff · Step 2 of 3 · Review; from 47.1: City staff · Step 3 of 3 · Publish
 - **Tags:** “Scenario: fictional clerk”
-- **Shot:** cuts: `staff-review` at 44.1; `staff-review` at 47.2
+- **Shot:** cuts: `staff-review` at 44.1; `staff-review` at 46.3; `staff-review` at 47.1
 - **Words:**
   - 44.1 to 45.1: “Staff check every line.”
   - 45.1 to 46.1: “Approve. Edit. Reject.”
   - 46.1 to 47.1: “Agents never decide.”
-  - 47.1 to 48.1: “A named person publishes.”
-- **Action:** Local throwaway copy only. The fictional clerk approves one statement, edits the next (adds '(a forecast)'), rejects a third, then publishes as 'Jordan Lee'; the page shows 'Published · Jordan Lee'. Nothing here touches the live site.
+  - 47.1 to 48.1: “Only a named person can publish.”
+- **Action:** Local throwaway copy only. The fictional clerk edits the first statement (adds '(a forecast)') and rejects the second at readable speed, approves every other statement, then publishes: 'Published · Jordan Lee'.
 
 ### record · bars 48-49 · 1:37.8 to 1:42.0
 
@@ -341,7 +340,7 @@ A paper civic form, “CIVIC Hack 2026 · Return slip”, Part A (the challenges
 - **Step label:** Spend
 - **Tags:** “Live usage”
 - **Shot:** footage `spend`: Spend: calls, tokens, US$, energy and CO2e, daily limit
-- **Camera:** 50.1 zoom 1.15 at (0.5, 0.45) → 51.1 zoom 1.35 at (0.5, 0.5)
+- **Camera:** 50.1 zoom 1 at (0.5, 0.5) → 51.1 zoom 1.25 at (0.5, 0.62)
 - **Words:**
   - 50.1 to 51.1: “Every model call, costed.”
   - 51.1 to 52.1: “Dollars, energy, carbon. Capped.”
@@ -366,16 +365,16 @@ A paper civic form, “CIVIC Hack 2026 · Return slip”, Part A (the challenges
 - **Tags:** “Real data: Region of Waterloo”
 - **Shot:** design
 - **Words:**
-  - 54.1 to 55.1: “The whole brief, in your language.”
+  - 54.1 to 55.1: “Menus in your language.”
   - 55.1 to 56.1: “Light or dark. Any screen.”
-- **Action:** Language menu switches the brief (clip 'language'); then a split: light and dark side by side, and the phone layout (stills 'dark' and 'phone').
+- **Action:** Bar 54: the language menu opens and a language is picked (the clip holds on the menus; live translation of the brief needs model credit, so the video doesn't claim it). Bar 55: dark mode and the phone layout (stills).
 
 ### a11y · bars 56-57 · 1:54.4 to 1:58.5
 
 - **Music:** groove (52-53 quiet, then groove)
 - **Step label:** Design & clarity
 - **Shot:** footage `a11y`: Keyboard only: tabbing through the brief with visible focus rings
-- **Camera:** 56.1 zoom 1.4 at (0.22, 0.25) → 57.1 zoom 1.4 at (0.22, 0.35)
+- **Camera:** 56.1 zoom 1.05 at (0.3, 0.4) → 57.1 zoom 1.12 at (0.3, 0.4)
 - **Words:**
   - 56.1 to 57.1: “Keyboard first. Screen-reader labelled.”
   - 57.1 to 58.1: “0 axe accessibility violations.”
@@ -403,7 +402,7 @@ A paper civic form, “CIVIC Hack 2026 · Return slip”, Part A (the challenges
 - **Tags:** “Embed demo: a fictional town's page”
 - **Shot:** cuts: `landing` at 59.1; `docs` at 59.2; `embed` at 59.3
 - **Words:**
-  - 59.1 to 60.1: “Docs, and a widget to embed.”
+  - 59.1 to 59.3: “Docs, and a widget to embed.”
 - **Ticks:** Impact & adaptability at 59.4
 - **Action:** A two-second flash for cities: the landing page (/), the docs (/docs), and the embeddable widget demo (/embed/demo), one beat each, the widget held for two.
 
@@ -419,7 +418,7 @@ A paper civic form, “CIVIC Hack 2026 · Return slip”, Part A (the challenges
 ### drop · bars 62-68 · 2:06.8 to 2:21.3
 
 - **Music:** drop
-- **Shot:** split: evidence left (62.1 Use cases; 62.2 Classes; 62.3 Sequence: ask; 62.4 States: a statement; 63.1 docs/architecture.md; 63.3 Deployment; 64.1 Code tour; 64.3 Tests; 65.1 Agent evals; 66.1 CREDITS.md; 67.1 Municipal Readiness Report; 68.1 This video), the slip's Part B right
+- **Shot:** split: evidence left (62.1 Use cases; 62.2 Classes; 62.3 Sequence: ask; 62.4 States: a statement; 63.1 docs/architecture.md; 63.3 Deployment; 64.1 Code tour; 64.3 Agent evals: failures listed; 65.1 Tests; 66.1 CREDITS.md; 67.1 Municipal Readiness Report; 68.1 This video), the slip's Part B right
 - **Ticks:** Requirements & UML at 62.4.5; Architecture & scalability at 63.4.5; Source code awareness at 64.4.5; Quality & functionality at 65.4.5; References at 66.4.5; Municipal Readiness Report at 67.4.5; Demo video at 68.4.5
 - **Action:** The final drop. Left: the evidence, cut on the beat. Right: the slip's Part B, the camera moving row by row; each box ticks on the last 'and' of its bar.
 

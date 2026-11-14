@@ -28,7 +28,7 @@ const serveUrl = await bundle({ entryPoint: join(root, "src", "index.ts") });
 const composition = await selectComposition({ serveUrl, id: "MunicipalAgents", inputProps: {} });
 for (const cue of cues) {
   const frame = frameOf(cue);
-  const output = join(outDir, `still-${cue.replace(/[:.]/g, "_")}.jpg`);
+  const output = join(outDir, `still-${String(frame).padStart(5, "0")}-${cue.replace(/[:.]/g, "_")}.jpg`);
   await renderStill({ serveUrl, composition, frame, output, imageFormat: "jpeg", jpegQuality: 85, scale, chromiumOptions: { gl: "angle" } });
   console.log(`${cue} -> frame ${frame} -> ${output}`);
 }

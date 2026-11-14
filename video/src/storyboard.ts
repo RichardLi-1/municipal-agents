@@ -11,6 +11,8 @@ export type Word = {
   pos: "center" | "bottom" | "top" | "left" | "right";
   perWord?: boolean;
   tone?: "bad";
+  /** Optional vertical centre (0..1 of the frame) for a pill, to sit in an empty band. */
+  y?: number;
 };
 export type Tick = { box: string; at: string };
 export type DropItem = { at: string; kind: "image" | "code" | "terminal" | "scroll" | "self" | "text"; src: string; label: string };

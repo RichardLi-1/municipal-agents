@@ -142,7 +142,7 @@ export const StandIn: React.FC<{ id: string; label?: string; layout?: string; da
 };
 
 /** The clip (or its stand-in) for a scene, starting at the scene's first frame. */
-export const Footage: React.FC<{ clip: string; camera?: CameraKey[]; start: number; rate?: number; trimFrames?: number; veil?: number; blur?: number }> = ({
+export const Footage: React.FC<{ clip: string; camera?: CameraKey[]; start: number; rate?: number; trimFrames?: number; veil?: number; blur?: number; holdAfter?: number }> = ({
   clip,
   camera,
   start,
@@ -150,6 +150,7 @@ export const Footage: React.FC<{ clip: string; camera?: CameraKey[]; start: numb
   trimFrames = 0,
   veil,
   blur = 0,
+  holdAfter,
 }) => {
   const frame = useCurrentFrame();
   const cam = cameraAt(camera, frame + start);
@@ -160,17 +161,19 @@ export const Footage: React.FC<{ clip: string; camera?: CameraKey[]; start: numb
   return (
     <AbsoluteFill>
       <AbsoluteFill style={{ filter: b > 0 ? `blur(${b}px)` : undefined }}>
-        <FootageInner clip={clip} c={c} cam={cam} rate={rate} trimFrames={trimFrames} />
+        <FootageInner clip={clip} c={c} cam={cam} rate={rate} trimFrames={trimFrames} holdAfter={holdAfter} />
       </AbsoluteFill>
       {v > 0 ? <AbsoluteFill style={{ background: `rgba(255,255,255,${0.72 * v})` }} /> : null}
     </AbsoluteFill>
   );
 };
 
-const FootageInner: React.FC<{ clip: string; c: Clip | undefined; cam: { z: number; x: number; y: number }; rate: number; trimFrames: number }> = ({ clip, c, cam, rate, trimFrames }) => {
+const FootageInner: React.FC<{ clip: string; c: Clip | undefined; cam: { z: number; x: number; y: number }; rate: number; trimFrames: number; holdAfter?: number }> = ({ clip, c, cam, rate, trimFrames, holdAfter }) => {
   const local = useCurrentFrame();
-  // If a clip runs out before its scene does, hold its last frame rather than going blank.
-  const last = c?.frames ? Math.floor((c.frames - trimFrames) / rate) - 2 : Infinity;
+  // If a clip runs out before its scene does, hold its last frame rather than going blank;
+  // `holdAfter` (seconds into the clip) holds earlier, on a chosen moment.
+  const end = c?.frames ? Math.floor((c.frames - trimFrames) / rate) - 2 : Infinity;
+  const last = holdAfter !== undefined ? Math.min(end, Math.round((holdAfter * 30 - trimFrames) / rate)) : end;
   const video = c ? <OffthreadVideo src={staticFile(c.file)} muted playbackRate={rate} trimBefore={trimFrames} style={{ width: W, height: H }} /> : null;
   return (
     <Camera {...cam}>

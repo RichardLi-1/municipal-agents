@@ -54,12 +54,12 @@ export const Audiences: React.FC<{ frame: number; scene: Scene }> = ({ frame, sc
           <AbsoluteFill style={{ background: "rgba(255,255,255,0.62)" }} />
         </AbsoluteFill>
       ) : null}
-      <div style={{ position: "absolute", top: 380, left: 120, right: 120, display: "flex", flexWrap: "wrap", gap: 18, justifyContent: "center" }}>
+      <div style={{ position: "absolute", top: 340, left: 120, right: 120, display: "flex", flexWrap: "wrap", gap: 18, justifyContent: "center" }}>
         {residents.map((r, i) => (
           <Chip key={r} text={r} p={pop(frame, a + i * step, { damping: 14, stiffness: 260 })} />
         ))}
       </div>
-      <div style={{ position: "absolute", top: 760, left: 120, right: 120, display: "flex", flexWrap: "wrap", gap: 18, justifyContent: "center" }}>
+      <div style={{ position: "absolute", top: 650, left: 120, right: 120, display: "flex", flexWrap: "wrap", gap: 18, justifyContent: "center" }}>
         {serving.map((r, i) => (
           <Chip key={r} text={r} staff p={pop(frame, b + 3 + i * step, { damping: 14, stiffness: 260 })} />
         ))}
@@ -81,7 +81,17 @@ const Still: React.FC<{ src: string; id: string; dark?: boolean; label: string }
 export const Design: React.FC<{ scene: Scene; frame: number }> = ({ scene, frame }) => {
   const split = f(55, 1);
   if (frame < split) {
-    return <Footage clip="language" start={scene.start} trimFrames={trimFor("language", { align: { mark: "pick", at: "54.2" } }, scene.start)} camera={[{ at: "54.1", z: 1.4, x: 0.18, y: 0.35 }, { at: "55.1", z: 1.5, x: 0.18, y: 0.45 }]} />;
+    // Opening the language menu and picking one; the clip holds 0.2 s after the pick, on the menus.
+    const pick = (manifest as unknown as { marks: Record<string, Record<string, number>> }).marks?.language?.pick;
+    return (
+      <Footage
+        clip="language"
+        start={scene.start}
+        trimFrames={trimFor("language", { align: { mark: "pick", at: "54.4" } }, scene.start)}
+        holdAfter={pick !== undefined ? pick + 0.2 : undefined}
+        camera={[{ at: "54.1", z: 1.8, x: 0.12, y: 0.62 }, { at: "55.1", z: 1.8, x: 0.12, y: 0.62 }]}
+      />
+    );
   }
   const a = pop(frame, split, { damping: 18, stiffness: 220 });
   const b = pop(frame, cf("55.2"), { damping: 18, stiffness: 220 });
@@ -303,7 +313,21 @@ const Evidence: React.FC<{ item: DropItem; frame: number; next: number }> = ({ i
     return (
       <AbsoluteFill style={{ background: "#0b0d10", padding: 40, fontFamily: font.mono, fontSize: 22, lineHeight: 1.5, color: "#d6dde6", whiteSpace: "pre-wrap" }}>
         {t ? (
-          <div style={{ transform: `translateY(${-Math.max(0, local - 0.2) * 300}px)` }}>{t.text.slice(-2400)}</div>
+          // Anchored to the end of the output: it scrolls up so the summary
+          // (tests, pass, fail) is in view for the last quarter of the item.
+          <div style={{ position: "absolute", left: 40, right: 40, bottom: 70, transform: `translateY(${interpolate(local, [0, 0.72], [520, 0], { ...clamp, easing: easeInOut })}px)` }}>
+            {t.text
+              .split("\n")
+              .slice(-36)
+              .map((l, i) => {
+                const summary = /^ℹ (tests|pass|fail)/.test(l);
+                return (
+                  <div key={i} style={{ color: summary ? "#7ee2a8" : l.startsWith("✔") ? "#c8d1db" : "#9aa4af", fontWeight: summary ? 700 : 400, fontSize: summary ? 30 : 21 }}>
+                    {l}
+                  </div>
+                );
+              })}
+          </div>
         ) : (
           <div style={{ color: "#9aa0a6" }}>
             STAND-IN · capture real output to video/public/docs/{item.src}.txt

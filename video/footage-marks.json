@@ -27,11 +27,11 @@
     "url": "https://municipal-agents.fly.dev/d/row-2027-budget?tab=affects"
   },
   "ask-opinion": {
-    "typed": 1.66,
-    "asked": 4.95,
-    "answer": 8.26,
+    "typed": 1.63,
+    "asked": 4.93,
+    "answer": 8.23,
     "speed": 1,
-    "recordedAt": "2026-11-14T08:26:39.523Z",
+    "recordedAt": "2026-11-14T09:33:15.418Z",
     "url": "https://municipal-agents.fly.dev/d/row-2027-budget"
   },
   "say": {
@@ -43,11 +43,11 @@
     "url": "https://municipal-agents.fly.dev/d/row-2027-budget?tab=say"
   },
   "ask": {
-    "typed": 0.85,
-    "asked": 3.06,
-    "answer": 7.24,
+    "typed": 0.79,
+    "asked": 2.99,
+    "answer": 7.16,
     "speed": 2,
-    "recordedAt": "2026-11-14T08:27:06.176Z",
+    "recordedAt": "2026-11-14T09:30:42.314Z",
     "url": "https://municipal-agents.fly.dev/d/row-2027-budget"
   },
   "transit": {
@@ -104,7 +104,7 @@
   },
   "unknowns": {
     "speed": 1,
-    "recordedAt": "2026-11-14T08:23:45.887Z",
+    "recordedAt": "2026-11-14T09:31:06.461Z",
     "url": "https://municipal-agents.fly.dev/d/row-2027-budget?tab=unknowns"
   },
   "log": {
@@ -119,16 +119,16 @@
     "url": "https://municipal-agents.fly.dev/spend"
   },
   "language": {
-    "menu": 1.66,
-    "pick": 3.29,
+    "menu": 1.58,
+    "pick": 3.16,
     "speed": 1,
-    "recordedAt": "2026-11-14T08:25:09.770Z",
+    "recordedAt": "2026-11-14T09:31:20.773Z",
     "url": "https://municipal-agents.fly.dev/d/row-2027-budget"
   },
   "a11y": {
-    "tabbed": 4.38,
+    "tabbed": 4.42,
     "speed": 1,
-    "recordedAt": "2026-11-14T08:25:19.260Z",
+    "recordedAt": "2026-11-14T09:29:51.723Z",
     "url": "https://municipal-agents.fly.dev/d/row-2027-budget"
   },
   "staff-draft": {
@@ -139,13 +139,15 @@
     "url": "http://127.0.0.1:4199/staff"
   },
   "staff-review": {
-    "approve": 0.89,
-    "edit": 3,
-    "saved": 5.47,
-    "reject": 6.54,
-    "publish": 9.06,
+    "edit": 1.08,
+    "saved": 3.91,
+    "reject": 5.17,
+    "approve": 6.87,
+    "approved-all": 9.89,
+    "publish": 11.22,
+    "published": 11.32,
     "speed": 1,
-    "recordedAt": "2026-11-14T08:24:33.298Z",
+    "recordedAt": "2026-11-14T09:29:42.317Z",
     "url": "http://127.0.0.1:4199/staff"
   },
   "landing": {

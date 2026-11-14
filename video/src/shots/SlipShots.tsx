@@ -83,14 +83,15 @@ export const EndCard: React.FC<{ frame: number }> = ({ frame }) => {
         glow={1 - close * 0.6}
       />
       <AbsoluteFill style={{ alignItems: "center", fontFamily: font.sans, color: color.ink }}>
-        <div style={{ marginTop: 150, fontSize: 132, fontWeight: 900, letterSpacing: "-0.05em", ...line(0) }}>Municipal Agents</div>
-        <div style={{ marginTop: 18, display: "flex", gap: 22, fontSize: 38, fontWeight: 600, letterSpacing: "-0.02em", ...line(1) }}>
+        <div style={{ marginTop: 120, fontSize: 128, fontWeight: 900, letterSpacing: "-0.05em", ...line(0) }}>Municipal Agents</div>
+        <div style={{ marginTop: 6, fontSize: 40, fontWeight: 600, letterSpacing: "-0.02em", color: "#3b3f45", ...line(1) }}>For residents, and the people who serve them.</div>
+        <div style={{ marginTop: 26, display: "flex", gap: 22, fontSize: 36, fontWeight: 600, letterSpacing: "-0.02em", ...line(2) }}>
           <span style={{ color: color.accent }}>{links.live}</span>
           <span style={{ color: "#b0b4ba" }}>·</span>
           <span>{links.github}</span>
         </div>
-        <div style={{ marginTop: 22, fontSize: 30, fontWeight: 500, color: "#3b3f45", ...line(2) }}>Built by Richard Li for CIVIC Hack 2026</div>
-        <div style={{ marginTop: 10, fontSize: 24, fontWeight: 500, color: color.muted, ...line(3) }}>Music: “Bass Brain”, Dresage x Hark Madley</div>
+        <div style={{ marginTop: 20, fontSize: 28, fontWeight: 500, color: "#3b3f45", ...line(3) }}>Built by Richard Li for CIVIC Hack 2026</div>
+        <div style={{ marginTop: 8, fontSize: 23, fontWeight: 500, color: color.muted, ...line(4) }}>Music: “Bass Brain”, Dresage x Hark Madley</div>
       </AbsoluteFill>
     </AbsoluteFill>
   );

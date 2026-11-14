@@ -30,7 +30,7 @@ const place = (pos: W["pos"], style: W["style"]): React.CSSProperties => {
   if (style === "subtitle") return { top: 590, bottom: 0, left: 0, right: 0, alignItems: "flex-start", justifyContent: "center" };
   switch (pos) {
     case "bottom":
-      return { top: 0, bottom: 92, left: 0, right: 0, alignItems: "flex-end", justifyContent: "center" };
+      return { top: 0, bottom: 118, left: 0, right: 0, alignItems: "flex-end", justifyContent: "center" };
     case "top":
       return { top: 150, bottom: 0, left: 0, right: 0, alignItems: "flex-start", justifyContent: "center" };
     case "left":
@@ -91,7 +91,14 @@ const Phrase: React.FC<{ w: W; frame: number }> = ({ w, frame }) => {
   );
 
   return (
-    <AbsoluteFill style={{ display: "flex", flexDirection: "row", pointerEvents: "none", ...place(w.pos, w.style) }}>
+    <AbsoluteFill
+      style={{
+        display: "flex",
+        flexDirection: "row",
+        pointerEvents: "none",
+        ...(w.y !== undefined ? { top: w.y * 1080 - 60, bottom: "auto", height: 120, left: 0, right: 0, alignItems: "center", justifyContent: "center" } : place(w.pos, w.style)),
+      }}
+    >
       <div
         style={{
           opacity: 1 - exit,

@@ -179,18 +179,18 @@
           "pos": "center"
         },
         {
-          "at": "4.2.5",
+          "at": "4.1.5",
           "to": "5.1",
-          "text": "A city decision, in five minutes.",
+          "text": "Every city decision, explained in five minutes.",
           "style": "subtitle",
           "pos": "center"
         }
       ],
       "facts": [
         {
-          "text": "a brief a resident can read in five minutes",
-          "source": "docs/spec.md",
-          "page": "One sentence"
+          "text": "Every city decision, explained in five minutes.",
+          "source": "the product's landing page (/)",
+          "page": "headline"
         }
       ],
       "notes": "The dip at bar 4. Name and the promise; nothing else."
@@ -259,7 +259,7 @@
         {
           "at": "5.1",
           "to": "6.3",
-          "text": "One resident. One decision.",
+          "text": "For residents. One real decision.",
           "style": "pill",
           "pos": "right"
         },
@@ -327,13 +327,13 @@
           },
           {
             "at": "10.3",
-            "z": 1.6,
+            "z": 1.5,
             "x": 0.18,
             "y": 0.9
           },
           {
             "at": "10.4",
-            "z": 1.7,
+            "z": 1.5,
             "x": 0.18,
             "y": 0.92
           }
@@ -352,7 +352,7 @@
           "to": "10.3",
           "text": "Reading grade, measured.",
           "style": "pill",
-          "pos": "right"
+          "pos": "bottom"
         },
         {
           "at": "10.3",
@@ -389,36 +389,48 @@
         "Real data: Region of Waterloo"
       ],
       "shot": {
-        "type": "footage",
-        "clip": "source",
-        "align": {
-          "mark": "cite",
-          "at": "11.2"
-        },
-        "camera": [
+        "type": "cuts",
+        "cuts": [
           {
             "at": "11.1",
-            "z": 1.7,
-            "x": 0.2,
-            "y": 0.5
-          },
-          {
-            "at": "11.2.5",
-            "z": 1.7,
-            "x": 0.2,
-            "y": 0.5
+            "clip": "source",
+            "align": {
+              "mark": "cite",
+              "at": "11.2"
+            },
+            "camera": [
+              {
+                "at": "11.1",
+                "z": 1.7,
+                "x": 0.2,
+                "y": 0.5
+              },
+              {
+                "at": "11.3",
+                "z": 1.7,
+                "x": 0.2,
+                "y": 0.5
+              }
+            ]
           },
           {
             "at": "11.3",
-            "z": 1.05,
-            "x": 0.5,
-            "y": 0.5
-          },
-          {
-            "at": "12.3",
-            "z": 1.5,
-            "x": 0.45,
-            "y": 0.62
+            "clip": "source",
+            "in": 3.05,
+            "camera": [
+              {
+                "at": "11.3",
+                "z": 1.05,
+                "x": 0.5,
+                "y": 0.5
+              },
+              {
+                "at": "12.3",
+                "z": 1.5,
+                "x": 0.45,
+                "y": 0.62
+              }
+            ]
           }
         ]
       },
@@ -428,14 +440,14 @@
           "to": "11.3",
           "text": "Every figure.",
           "style": "pill",
-          "pos": "top"
+          "pos": "right"
         },
         {
           "at": "11.3",
           "to": "12.3",
           "text": "Its page, highlighted.",
           "style": "pill",
-          "pos": "top"
+          "pos": "bottom"
         }
       ],
       "ticks": [
@@ -509,7 +521,12 @@
           "pos": "right"
         }
       ],
-      "ticks": [],
+      "ticks": [
+        {
+          "box": "c1b",
+          "at": "14.4"
+        }
+      ],
       "notes": "Affects you tab: she taps 'Renter' and 'Transit rider'; the cited impacts appear, in 'may' language with uncertainty.",
       "to": "15.1"
     },
@@ -537,13 +554,13 @@
             "at": "15.1",
             "z": 2.2,
             "x": 0.885,
-            "y": 0.3
+            "y": 0.2
           },
           {
             "at": "15.4",
             "z": 2.3,
             "x": 0.885,
-            "y": 0.36
+            "y": 0.28
           }
         ]
       },
@@ -556,12 +573,7 @@
           "pos": "left"
         }
       ],
-      "ticks": [
-        {
-          "box": "c1b",
-          "at": "15.4"
-        }
-      ],
+      "ticks": [],
       "facts": [
         {
           "text": "Question asked: \"Should I support this budget or oppose it?\" (a replayable real run)",
@@ -721,63 +733,90 @@
         "2× speed"
       ],
       "shot": {
-        "type": "footage",
-        "clip": "ask",
-        "align": {
-          "mark": "answer",
-          "at": "21.4.5"
-        },
-        "camera": [
+        "type": "cuts",
+        "cuts": [
           {
             "at": "19.1",
-            "z": 2.2,
-            "x": 0.885,
-            "y": 0.92
+            "clip": "ask",
+            "align": {
+              "mark": "typed",
+              "at": "19.1.5"
+            },
+            "camera": [
+              {
+                "at": "19.1",
+                "z": 2.4,
+                "x": 0.885,
+                "y": 0.93
+              },
+              {
+                "at": "20.1",
+                "z": 2.4,
+                "x": 0.885,
+                "y": 0.93
+              }
+            ]
           },
           {
             "at": "20.1",
-            "z": 2.3,
-            "x": 0.885,
-            "y": 0.2
-          },
-          {
-            "at": "21.3",
-            "z": 2.2,
-            "x": 0.885,
-            "y": 0.3
-          },
-          {
-            "at": "22.3",
-            "z": 2.0,
-            "x": 0.885,
-            "y": 0.36
+            "clip": "ask",
+            "align": {
+              "mark": "answer",
+              "at": "20.2"
+            },
+            "camera": [
+              {
+                "at": "20.1",
+                "z": 2.3,
+                "x": 0.885,
+                "y": 0.4
+              },
+              {
+                "at": "20.2",
+                "z": 2.3,
+                "x": 0.885,
+                "y": 0.4
+              },
+              {
+                "at": "21.3",
+                "z": 2.6,
+                "x": 0.87,
+                "y": 0.5
+              },
+              {
+                "at": "22.4",
+                "z": 2.6,
+                "x": 0.87,
+                "y": 0.5
+              }
+            ]
           }
         ]
       },
       "words": [
         {
           "at": "19.1",
-          "to": "20.1",
+          "to": "19.3",
           "text": "Ask anything.",
           "style": "pill",
           "pos": "left"
         },
         {
-          "at": "20.1",
-          "to": "21.1",
-          "text": "A lead agent plans it.",
+          "at": "19.3",
+          "to": "20.1",
+          "text": "Posted without your name.",
           "style": "pill",
           "pos": "left"
         },
         {
-          "at": "21.1",
+          "at": "20.1",
           "to": "22.3",
           "text": "Real agents. Real documents.",
           "style": "pill",
           "pos": "left"
         }
       ],
-      "notes": "Chat pane: she types exactly \"How much of my regional tax bill goes to public transit?\"; the app replays a real agent run from the record: the plan, the specialists' steps, the checked statements one by one (~8 s), then the cited answer with its label \"Answered by the agents on <time> · replayed from the record\" (kept in frame at the end). Recorded at 1x and sped up 2x (tagged).",
+      "notes": "Cut 1: she types \"How much of my regional tax bill goes to public transit?\" in the chat box; under it the footnote reads that questions are posted without your name on the public record. Cut 2: the agents' recorded run replays and the cited answer lands (17.6% of the levy; $582 urban, $63 rural, budget book p.12) with its label 'Answered by the agents on … · replayed from the record'. Recorded at 1x, shown at 2x (tagged).",
       "facts": [
         {
           "text": "Answer: public transit 17.6% of the Region's property tax levy; $582 for an average urban household and $63 for a rural one in 2026 regional taxes",
@@ -838,19 +877,19 @@
             "camera": [
               {
                 "at": "24.3",
-                "z": 1.7,
+                "z": 1.5,
                 "x": 0.18,
                 "y": 0.45
               },
               {
                 "at": "25.1",
-                "z": 1.7,
+                "z": 1.5,
                 "x": 0.18,
                 "y": 0.42
               },
               {
                 "at": "26.1",
-                "z": 1.6,
+                "z": 1.5,
                 "x": 0.18,
                 "y": 0.55
               }
@@ -866,13 +905,13 @@
             "camera": [
               {
                 "at": "26.1",
-                "z": 1.6,
+                "z": 1.5,
                 "x": 0.18,
                 "y": 0.45
               },
               {
                 "at": "27.1",
-                "z": 1.7,
+                "z": 1.55,
                 "x": 0.18,
                 "y": 0.5
               }
@@ -886,28 +925,28 @@
           "to": "24.1",
           "text": "Transit gaps, mapped.",
           "style": "pill",
-          "pos": "top"
+          "pos": "right"
         },
         {
           "at": "24.1",
           "to": "25.1",
           "text": "Sunday mornings, before 6:30.",
           "style": "pill",
-          "pos": "top"
+          "pos": "right"
         },
         {
           "at": "25.1",
           "to": "26.1",
-          "text": "The last 800 metres.",
+          "text": "The walk to the stop.",
           "style": "pill",
-          "pos": "top"
+          "pos": "right"
         },
         {
           "at": "26.1",
           "to": "27.1",
           "text": "Fixes ranked. Trade-offs stated.",
           "style": "pill",
-          "pos": "top"
+          "pos": "right"
         }
       ],
       "ticks": [
@@ -984,9 +1023,9 @@
             "camera": [
               {
                 "at": "28.1",
-                "z": 1.9,
-                "x": 0.22,
-                "y": 0.32
+                "z": 2.0,
+                "x": 0.2,
+                "y": 0.36
               },
               {
                 "at": "28.3",
@@ -1051,7 +1090,7 @@
         {
           "at": "29.3",
           "to": "30.1",
-          "text": "Per household, per year.",
+          "text": "Spread per household.",
           "style": "pill",
           "pos": "right"
         }
@@ -1121,15 +1160,15 @@
             "camera": [
               {
                 "at": "31.1",
-                "z": 1.5,
-                "x": 0.18,
+                "z": 1.8,
+                "x": 0.17,
                 "y": 0.45
               },
               {
                 "at": "31.3",
-                "z": 1.6,
-                "x": 0.2,
-                "y": 0.5
+                "z": 1.8,
+                "x": 0.17,
+                "y": 0.47
               }
             ]
           },
@@ -1145,35 +1184,28 @@
           "to": "30.3",
           "text": "ION under the 401?",
           "style": "pill",
-          "pos": "top"
+          "pos": "bottom"
         },
         {
           "at": "30.3",
-          "to": "31.1",
-          "text": "Agents scout launch sites.",
-          "style": "pill",
-          "pos": "top"
-        },
-        {
-          "at": "31.1",
           "to": "31.3",
-          "text": "49 boreholes. 11 cross-passages.",
+          "text": "Sites ranked by a stated rule.",
           "style": "pill",
-          "pos": "top"
+          "pos": "bottom"
         },
         {
           "at": "31.3",
           "to": "32.3",
           "text": "Seven steps, each rendered.",
           "style": "pill",
-          "pos": "top"
+          "pos": "bottom"
         },
         {
           "at": "32.3",
           "to": "33.1",
           "text": "Then the land goes back.",
           "style": "pill",
-          "pos": "top"
+          "pos": "bottom"
         }
       ],
       "notes": "The flashiest beat of the first drop, on row-2027-budget's Construction tab. Bar 30: the map with the ranked candidate launch and extraction sites, the twin bores, boreholes and cross-passages. 31.1: the long-section with the animated TBM. 31.3 to 33.1: stepping 1 to 7, each step's render zooming past (about one every 0.86 beat) under the product's own step title, from 'Drill boreholes to read the ground' to 'Fit out, then give the land back'. The renders are the product's own files (data/renders); the recorder also captures the map flying between steps (clip scout-steps) if we'd rather cut to that.",
@@ -1197,6 +1229,11 @@
           "text": "Renders made with gemini-3.1-flash-image; the app captions each 'Illustrative render · not a design'",
           "source": "data/renders/construction-renders.json; web/src/construction/ConstructionPanel.tsx",
           "page": "model, figcaption"
+        },
+        {
+          "text": "'The scout ranks candidate sites by a stated rule. It does not choose one: engineers and Region staff would evaluate, and Council decides.'",
+          "source": "web/src/construction/ConstructionPanel.tsx (on screen in the Construction tab)",
+          "page": "cx-fine"
         }
       ]
     },
@@ -1289,36 +1326,29 @@
         "camera": [
           {
             "at": "34.3",
-            "z": 1.5,
-            "x": 0.18,
-            "y": 0.6
+            "z": 1.7,
+            "x": 0.17,
+            "y": 0.84
           },
           {
-            "at": "35.1",
-            "z": 1.5,
-            "x": 0.18,
-            "y": 0.55
+            "at": "35.2",
+            "z": 1.8,
+            "x": 0.17,
+            "y": 0.72
           },
           {
             "at": "35.3",
-            "z": 1.8,
+            "z": 1.6,
             "x": 0.18,
-            "y": 0.25
+            "y": 0.32
           }
         ]
       },
       "words": [
         {
           "at": "34.3",
-          "to": "35.1",
-          "text": "Approved isn't built.",
-          "style": "pill",
-          "pos": "right"
-        },
-        {
-          "at": "35.1",
           "to": "35.3",
-          "text": "Units, stage by stage.",
+          "text": "Approved isn't built.",
           "style": "pill",
           "pos": "right"
         },
@@ -1337,7 +1367,14 @@
         }
       ],
       "notes": "Housing lens: units by stage from approval to completion; the stages with no public data drawn as untracked.",
-      "from": "34.3"
+      "from": "34.3",
+      "facts": [
+        {
+          "text": "Target 70,000 homes by 2031; 15,902 of 70,000 counted by the province as of Dec 31, 2024",
+          "source": "live app, row-2027-budget Housing tab (Ontario housing supply progress, Open Government Licence – Ontario)",
+          "page": "target card"
+        }
+      ]
     },
     {
       "id": "slip-2",
@@ -1467,16 +1504,22 @@
             "y": 0.5
           },
           {
-            "at": "43.1",
-            "z": 1.5,
-            "x": 0.5,
-            "y": 0.6
+            "at": "42.2",
+            "z": 2.4,
+            "x": 0.42,
+            "y": 0.54
+          },
+          {
+            "at": "43.2",
+            "z": 2.4,
+            "x": 0.42,
+            "y": 0.54
           },
           {
             "at": "43.4",
-            "z": 1.6,
-            "x": 0.5,
-            "y": 0.55
+            "z": 2.2,
+            "x": 0.45,
+            "y": 0.56
           }
         ]
       },
@@ -1498,14 +1541,14 @@
         {
           "at": "42.1",
           "to": "43.1",
-          "text": "Specialist agents draft it.",
+          "text": "A quote not on its page? Rejected.",
           "style": "pill",
           "pos": "bottom"
         },
         {
           "at": "43.1",
           "to": "44.1",
-          "text": "Every quote checked on its page.",
+          "text": "Specialist agents draft it.",
           "style": "pill",
           "pos": "bottom"
         }
@@ -1536,49 +1579,77 @@
             "at": "44.1",
             "clip": "staff-review",
             "align": {
-              "mark": "approve",
+              "mark": "edit",
               "at": "44.2"
             },
             "camera": [
               {
                 "at": "44.1",
-                "z": 1.5,
-                "x": 0.55,
-                "y": 0.5
+                "z": 1.6,
+                "x": 0.5,
+                "y": 0.2
               },
               {
                 "at": "45.1",
-                "z": 1.6,
+                "z": 1.7,
+                "x": 0.55,
+                "y": 0.22
+              },
+              {
+                "at": "45.4",
+                "z": 1.7,
                 "x": 0.6,
-                "y": 0.5
+                "y": 0.3
               },
               {
                 "at": "46.3",
-                "z": 1.5,
-                "x": 0.55,
+                "z": 1.7,
+                "x": 0.6,
+                "y": 0.3
+              }
+            ]
+          },
+          {
+            "at": "46.3",
+            "clip": "staff-review",
+            "align": {
+              "mark": "approve",
+              "at": "46.3"
+            },
+            "camera": [
+              {
+                "at": "46.3",
+                "z": 1.25,
+                "x": 0.5,
+                "y": 0.5
+              },
+              {
+                "at": "47.1",
+                "z": 1.3,
+                "x": 0.5,
                 "y": 0.55
               }
             ]
           },
           {
-            "at": "47.2",
+            "at": "47.1",
             "clip": "staff-review",
             "align": {
-              "mark": "publish",
-              "at": "47.3"
+              "mark": "published",
+              "at": "47.1.5"
             },
             "camera": [
               {
-                "at": "47.2",
-                "z": 1.4,
+                "at": "47.1",
+                "z": 1.5,
                 "x": 0.55,
-                "y": 0.5
+                "y": 0.75
               },
               {
                 "at": "48.1",
-                "z": 1.6,
+                "z": 1.7,
                 "x": 0.6,
-                "y": 0.5
+                "y": 0.8
               }
             ]
           }
@@ -1609,12 +1680,12 @@
         {
           "at": "47.1",
           "to": "48.1",
-          "text": "A named person publishes.",
+          "text": "Only a named person can publish.",
           "style": "pill",
-          "pos": "bottom"
+          "pos": "top"
         }
       ],
-      "notes": "Local throwaway copy only. The fictional clerk approves one statement, edits the next (adds '(a forecast)'), rejects a third, then publishes as 'Jordan Lee'; the page shows 'Published · Jordan Lee'. Nothing here touches the live site."
+      "notes": "Local throwaway copy only. The fictional clerk edits the first statement (adds '(a forecast)') and rejects the second at readable speed, approves every other statement, then publishes: 'Published · Jordan Lee'."
     },
     {
       "id": "record",
@@ -1681,15 +1752,15 @@
         "camera": [
           {
             "at": "50.1",
-            "z": 1.15,
+            "z": 1.0,
             "x": 0.5,
-            "y": 0.45
+            "y": 0.5
           },
           {
             "at": "51.1",
-            "z": 1.35,
+            "z": 1.25,
             "x": 0.5,
-            "y": 0.5
+            "y": 0.62
           }
         ]
       },
@@ -1699,14 +1770,16 @@
           "to": "51.1",
           "text": "Every model call, costed.",
           "style": "pill",
-          "pos": "bottom"
+          "pos": "center",
+          "y": 0.69
         },
         {
           "at": "51.1",
           "to": "52.1",
           "text": "Dollars, energy, carbon. Capped.",
           "style": "pill",
-          "pos": "bottom"
+          "pos": "center",
+          "y": 0.65
         }
       ],
       "notes": "Spend: calls, tokens, US dollars, estimated energy and CO2e, the daily limit."
@@ -1771,7 +1844,7 @@
         {
           "at": "54.1",
           "to": "55.1",
-          "text": "The whole brief, in your language.",
+          "text": "Menus in your language.",
           "style": "pill",
           "pos": "bottom"
         },
@@ -1783,7 +1856,7 @@
           "pos": "bottom"
         }
       ],
-      "notes": "Language menu switches the brief (clip 'language'); then a split: light and dark side by side, and the phone layout (stills 'dark' and 'phone')."
+      "notes": "Bar 54: the language menu opens and a language is picked (the clip holds on the menus; live translation of the brief needs model credit, so the video doesn't claim it). Bar 55: dark mode and the phone layout (stills)."
     },
     {
       "id": "a11y",
@@ -1801,15 +1874,15 @@
         "camera": [
           {
             "at": "56.1",
-            "z": 1.4,
-            "x": 0.22,
-            "y": 0.25
+            "z": 1.05,
+            "x": 0.3,
+            "y": 0.4
           },
           {
             "at": "57.1",
-            "z": 1.4,
-            "x": 0.22,
-            "y": 0.35
+            "z": 1.12,
+            "x": 0.3,
+            "y": 0.4
           }
         ]
       },
@@ -1819,14 +1892,14 @@
           "to": "57.1",
           "text": "Keyboard first. Screen-reader labelled.",
           "style": "pill",
-          "pos": "top"
+          "pos": "right"
         },
         {
           "at": "57.1",
           "to": "58.1",
           "text": "0 axe accessibility violations.",
           "style": "pill",
-          "pos": "top"
+          "pos": "right"
         }
       ],
       "ticks": [
@@ -1941,15 +2014,15 @@
             "camera": [
               {
                 "at": "59.3",
-                "z": 1.1,
-                "x": 0.45,
-                "y": 0.4
+                "z": 1.05,
+                "x": 0.5,
+                "y": 0.48
               },
               {
                 "at": "60.1",
-                "z": 1.3,
-                "x": 0.55,
-                "y": 0.45
+                "z": 1.2,
+                "x": 0.5,
+                "y": 0.42
               }
             ]
           }
@@ -1958,7 +2031,7 @@
       "words": [
         {
           "at": "59.1",
-          "to": "60.1",
+          "to": "59.3",
           "text": "Docs, and a widget to embed.",
           "style": "pill",
           "pos": "bottom"
@@ -2054,15 +2127,15 @@
           },
           {
             "at": "64.3",
-            "kind": "terminal",
-            "src": "tests",
-            "label": "Tests"
+            "kind": "scroll",
+            "src": "evals",
+            "label": "Agent evals: failures listed"
           },
           {
             "at": "65.1",
-            "kind": "scroll",
-            "src": "evals",
-            "label": "Agent evals"
+            "kind": "terminal",
+            "src": "tests",
+            "label": "Tests"
           },
           {
             "at": "66.1",

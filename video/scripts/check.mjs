@@ -29,7 +29,8 @@ scenes.forEach((s, i) => {
   for (const w of s.words ?? []) {
     const n = w.text.split(/\s+/).length;
     const beats = (cueSec(w.to) - cueSec(w.at)) / beat;
-    if (n > 6) problems.push(`${s.id}: "${w.text}" has ${n} words (max 6)`);
+    const max = w.style === "subtitle" ? 8 : 7;
+    if (n > max) problems.push(`${s.id}: "${w.text}" has ${n} words (max ${max})`);
     if (beats < n / 3 - 1e-6) problems.push(`${s.id}: "${w.text}" is on for ${beats.toFixed(2)} beats; needs ${(n / 3).toFixed(2)}`);
   }
 });

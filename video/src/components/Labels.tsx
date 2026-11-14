@@ -49,13 +49,29 @@ export const Labels: React.FC = () => {
   const enter = prev === text ? 1 : pop(frame, since, { damping: 20, stiffness: 260 });
   const tags = scene.tags ?? [];
   const prevScene = sceneAt(scene.start - 1);
+  // Over product footage the step label sits bottom-left on an opaque pill, so it never
+  // reads as part of the app's own header; on dark footage it turns dark.
+  const overFootage = ["footage", "cuts", "scout", "design", "audiences"].includes(scene.shot.type);
+  const dark = scene.id === "spend";
+  const pill: React.CSSProperties = overFootage
+    ? {
+        ...small,
+        background: dark ? "rgba(22,23,26,0.94)" : "rgba(255,255,255,0.97)",
+        backdropFilter: "none",
+        WebkitBackdropFilter: "none",
+        border: dark ? "1px solid rgba(255,255,255,0.14)" : "1px solid rgba(10,12,20,0.08)",
+      }
+    : small;
+  const ink = dark ? "#f1f3f5" : color.ink;
+  const sub = dark ? "#b9bec6" : "#3b3f45";
+  const place: React.CSSProperties = overFootage ? { bottom: 44, left: 56 } : { top: 48, left: 56 };
   return (
     <AbsoluteFill style={{ pointerEvents: "none" }}>
       {text ? (
-        <div style={{ position: "absolute", top: 48, left: 56, opacity: enter, transform: `translateY(${(1 - enter) * -16}px)` }}>
-          <div style={small}>
+        <div style={{ position: "absolute", ...place, opacity: enter, transform: `translateY(${(1 - enter) * (overFootage ? 16 : -16)}px)` }}>
+          <div style={pill}>
             {text.split(" · ").map((part, i) => (
-              <span key={i} style={{ fontWeight: i === 0 ? 700 : 500, color: i === 0 ? color.ink : "#3b3f45" }}>
+              <span key={i} style={{ fontWeight: i === 0 ? 700 : 500, color: i === 0 ? ink : sub }}>
                 {i > 0 ? <span style={{ color: "#a0a4ab", marginRight: 10 }}>·</span> : null}
                 {part}
               </span>
@@ -68,7 +84,7 @@ export const Labels: React.FC = () => {
           const was = (prevScene?.tags ?? []).includes(t);
           const e = was ? 1 : pop(frame, scene.start + i * 3, { damping: 20, stiffness: 260 });
           return (
-            <div key={t} style={{ ...small, fontWeight: 600, opacity: e, transform: `translateY(${(1 - e) * -16}px)` }}>
+            <div key={t} style={{ ...small, background: "rgba(255,255,255,0.93)", fontWeight: 600, opacity: e, transform: `translateY(${(1 - e) * -16}px)` }}>
               <span style={{ width: 10, height: 10, borderRadius: 5, background: dotFor(t) }} />
               {t}
             </div>
