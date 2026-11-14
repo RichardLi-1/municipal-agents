@@ -165,6 +165,44 @@ export const MANIFEST: Entry[] = [
     licence: PUBLIC,
     kind: "other",
   },
+  // Kitchener Central Transit Hub minor variances (secondary decision)
+  {
+    id: "kitchener-cofa-2026-11-17",
+    title: "Committee of Adjustment Meeting - Tuesday, November 17, 2026 (notice web page)",
+    publisher: "City of Kitchener",
+    url: "https://www.kitchener.ca/news/posts/committee-of-adjustment-meeting-tuesday-november-17-2026/",
+    published: "2026-10-30",
+    licence: PUBLIC,
+    kind: "notice",
+    printed: true,
+  },
+  {
+    id: "row-kcth-update-2026",
+    title: "Kitchener Central Transit Hub 2026 Project Update (Report EES-FFM-26-002)",
+    publisher: ROW,
+    url: "https://www.engagewr.ca/download_file/9744/1865",
+    published: "2026-05-05",
+    licence: PUBLIC,
+    kind: "staff-report",
+  },
+  {
+    id: "row-kcth-update-2024",
+    title: "Kitchener Central Update (Report EES-SAM-24-002)",
+    publisher: ROW,
+    url: "https://www.engagewr.ca/download_file/5618/1865",
+    published: "2024-12-03",
+    licence: PUBLIC,
+    kind: "staff-report",
+  },
+  {
+    id: "row-kcth-rumpel-notice",
+    title: "Construction notice: Rumpel Felt partial demolition",
+    publisher: ROW,
+    url: "https://www.engagewr.ca/download_file/view/11318/1865",
+    published: "2026-11-09",
+    licence: PUBLIC,
+    kind: "notice",
+  },
 ];
 
 function pdftotext(): string {

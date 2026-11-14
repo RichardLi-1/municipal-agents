@@ -1,0 +1,133 @@
+{
+  "id": "kitchener-transit-hub-variances",
+  "city": "waterloo-region",
+  "title": "Minor Variance Application A 2026-070, 50 Victoria Street North (Region of Waterloo's Kitchener Central Transit Hub)",
+  "plainTitle": "Kitchener's new central transit hub asks to bend six zoning rules",
+  "decidedBy": "City of Kitchener Committee of Adjustment",
+  "status": "proposed",
+  "officialUrl": "https://www.kitchener.ca/news/posts/committee-of-adjustment-meeting-tuesday-november-17-2026/",
+  "sources": [
+    "kitchener-cofa-2026-11-17",
+    "row-kcth-update-2026",
+    "row-kcth-update-2024",
+    "row-kcth-rumpel-notice",
+    "row-2026-budget-book",
+    "grt-business-plan-2025"
+  ],
+  "timeline": [
+    {
+      "id": "update-2024",
+      "date": "2024-12-03",
+      "kind": "report",
+      "title": "Kitchener Central Update (Regional committee report)",
+      "plain": "Regional staff reported on the transit hub: what it will include and that the leftover land may later hold homes and shops.",
+      "citation": {
+        "sourceId": "row-kcth-update-2024",
+        "page": 1,
+        "quote": "Report Title: Kitchener Central Update"
+      }
+    },
+    {
+      "id": "update-2026",
+      "date": "2026-05-05",
+      "kind": "report",
+      "title": "Kitchener Central Transit Hub 2026 Project Update",
+      "plain": "Regional staff reported that design was 60% done, funding was confirmed and the hub should be mostly finished in 2030.",
+      "citation": {
+        "sourceId": "row-kcth-update-2026",
+        "page": 1,
+        "quote": "Report Title: Kitchener Central Transit Hub 2026 Project Update"
+      }
+    },
+    {
+      "id": "notice",
+      "date": "2026-10-30",
+      "kind": "report",
+      "title": "Notice of the Committee of Adjustment hearing",
+      "plain": "The City posted the list of applications to be heard on November 17, including the transit hub.",
+      "citation": {
+        "sourceId": "kitchener-cofa-2026-11-17",
+        "page": 3,
+        "quote": "Dated the 30th day of October, 2026."
+      }
+    },
+    {
+      "id": "demolition",
+      "date": "2026-11-12",
+      "kind": "implementation",
+      "title": "Partial demolition of the Rumpel Felt building starts",
+      "plain": "The newer, non-heritage parts of the Rumpel Felt building at 60 Victoria Street North come down to make room for the hub entrance. The 1913 building stays. Work runs to late March 2027; expect some sidewalk and lane closures.",
+      "location": "60 Victoria Street North, Kitchener",
+      "citation": {
+        "sourceId": "row-kcth-rumpel-notice",
+        "page": 1,
+        "quote": "Work will begin on or about November 12, 2026, and extend through late March 2027."
+      }
+    },
+    {
+      "id": "hearing",
+      "date": "2026-11-17T10:00:00-05:00",
+      "kind": "committee",
+      "title": "Committee of Adjustment hearing (application A 2026-070)",
+      "plain": "A city committee decides whether the transit hub can have less green space, a longer building, a smaller building for its lot, and parking and walls closer to the street than the zoning rules allow. Anyone can speak or write.",
+      "location": "Council Chambers, 2nd Floor, Kitchener City Hall, 200 King Street West",
+      "participation": [
+        {
+          "method": "speak",
+          "instructions": "Come to the meeting and speak (make an oral submission) when application A 2026-070 is heard. The meeting starts at 10:00 am.",
+          "deadline": "2026-11-17T10:00:00-05:00",
+          "url": "https://www.kitchener.ca/news/posts/committee-of-adjustment-meeting-tuesday-november-17-2026/",
+          "contact": "Committee of Adjustment, Legislated Services, Kitchener City Hall: CofA@kitchener.ca, 519-741-2203"
+        },
+        {
+          "method": "write",
+          "instructions": "Send a written submission to the Committee of Adjustment before the meeting. The notice gives no deadline; submissions already received are posted the Friday afternoon before. To be told the decision, send a written request to the Secretary-Treasurer.",
+          "contact": "Committee of Adjustment, Legislated Services, Kitchener City Hall: CofA@kitchener.ca, 519-741-2203"
+        },
+        {
+          "method": "watch",
+          "instructions": "The meeting is livestreamed and archived.",
+          "url": "https://www.kitchener.ca/watchnow"
+        }
+      ],
+      "citation": {
+        "sourceId": "kitchener-cofa-2026-11-17",
+        "page": 1,
+        "quote": "on TUESDAY, NOVEMBER 17, 2026, commencing at"
+      }
+    }
+  ],
+  "area": {
+    "type": "Feature",
+    "properties": {
+      "name": "50 Victoria Street North, Kitchener (Kitchener Central Transit Hub site)",
+      "source": "Address point from OpenStreetMap Nominatim (ODbL)"
+    },
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        -80.49749,
+        43.45397
+      ]
+    }
+  },
+  "center": [
+    -80.49749,
+    43.45397
+  ],
+  "zoom": 15.5,
+  "lenses": [
+    "transit",
+    "cost",
+    "commitments",
+    "housing"
+  ],
+  "tags": [
+    "transit",
+    "ION",
+    "GO Transit",
+    "zoning",
+    "minor variance",
+    "downtown Kitchener"
+  ]
+}

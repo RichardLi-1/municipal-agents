@@ -1,0 +1,6638 @@
+{
+ "city": "cambridge",
+ "stages": [
+  {
+   "id": "approved",
+   "label": "Approved by council (zoning or subdivision)",
+   "units": null,
+   "projects": null,
+   "tracked": false,
+   "source": "The City of Cambridge publishes no zoning or subdivision application data on its open data portal."
+  },
+  {
+   "id": "site-plan",
+   "label": "Site plan approved",
+   "units": null,
+   "projects": 23,
+   "tracked": true,
+   "source": "Site Plans (City of Cambridge GeoHub), City of Cambridge, https://www.arcgis.com/home/item.html?id=a73c7cb57adc4384ad1b3765abfa00ff, retrieved 2026-11-14, City of Cambridge Open Data Licence v2.1 (https://www.cambridge.ca/mayor-city-council-government/open-data/): residential or mixed residential/commercial site plans received 2022-01-01 to 2026-03-20 with status Approved. The data give no unit counts."
+  },
+  {
+   "id": "permit-issued",
+   "label": "Building permit issued",
+   "units": 3188,
+   "projects": 2977,
+   "source": "Building Permits (City of Cambridge GeoHub), City of Cambridge, https://www.arcgis.com/home/item.html?id=9093dbbced88444fb61134187737c547, retrieved 2026-11-14, City of Cambridge Open Data Licence v2.1 (https://www.cambridge.ca/mayor-city-council-government/open-data/): new units on residential permits issued 2022-01-01 to 2026-11-06 (cancelled or revoked permits left out).",
+   "tracked": true
+  },
+  {
+   "id": "under-construction",
+   "label": "Under construction",
+   "units": 495,
+   "projects": 439,
+   "source": "Building Permits (City of Cambridge GeoHub), City of Cambridge, https://www.arcgis.com/home/item.html?id=9093dbbced88444fb61134187737c547, retrieved 2026-11-14, City of Cambridge Open Data Licence v2.1 (https://www.cambridge.ca/mayor-city-council-government/open-data/): permits issued 2022-01-01 to 2026-11-06 that are still open. Status Issued or similar, not dormant, not closed, no occupancy yet. Foundation-only permits are left out because their units repeat on the full permit.",
+   "tracked": true
+  },
+  {
+   "id": "completed",
+   "label": "Completed",
+   "units": 3388,
+   "projects": 3152,
+   "source": "Building Permits (City of Cambridge GeoHub), City of Cambridge, https://www.arcgis.com/home/item.html?id=9093dbbced88444fb61134187737c547, retrieved 2026-11-14, City of Cambridge Open Data Licence v2.1 (https://www.cambridge.ca/mayor-city-council-government/open-data/): new units on permits closed after final inspection in the window, plus permits marked 'Occupancy Permitted - Not Closed' (2022-01-01 to 2026-11-09). Date used: FINALDATE on closed permits (cancelled permits also carry a FINALDATE and are left out). Includes 228 units on 222 permits issued since 2022-01-01 that are marked finished but carry no finish date.",
+   "tracked": true
+  }
+ ],
+ "timeBetween": [
+  {
+   "from": "approved",
+   "to": "permit-issued",
+   "medianDays": null,
+   "note": "Not measurable from public data: planning approvals and building permits are published in separate lists with no shared file number, so the same project can't be followed from approval to permit."
+  },
+  {
+   "from": "permit-issued",
+   "to": "completed",
+   "medianDays": 567,
+   "note": "Median days from permit issued to final inspection or occupancy, over 2,922 residential permits finished 2022-01-01 to 2026-11-06 (the same permit followed across both dates). For permits with 10 or more new units: 752 days (11 permits). Only finished permits count, so slow projects still under way are not in it yet; most permits are single homes and basement units, which finish fastest."
+  }
+ ],
+ "target": {
+  "label": "Ontario's housing target for Cambridge: 19,000 new homes from 2022 to 2031. The province counts 3,023 homes toward it from 2022 through 2024. In 2024: 741 against a 2024 target of 1,583 (Not met). Source: \"Ontario’s housing supply: January – December 2024\", https://data.ontario.ca/dataset/ontario-s-housing-supply-progress (Open Government Licence – Ontario).",
+  "units": 19000,
+  "by": "2031"
+ },
+ "statements": [],
+ "hardToTrack": [
+  "Approved but no building permit yet: no city publishes a list that links a council approval (zoning, subdivision or site plan) to the building permits that follow, so nobody outside city hall can count the homes waiting between approval and permit.",
+  "Construction start: permits show the day a permit was issued, not the day work began. Here 'under construction' means a permit issued since 2022 with no final inspection or occupancy yet; some of those may not have started, and some may have lapsed.",
+  "Units in permits vs units built: a permit's unit count is what was proposed. The cities don't publish how many units were finally built, so completed units here are the permit's units on permits marked finished.",
+  "One building, several permits: big projects can be split into phases or permits (and townhouse blocks into one permit per unit), so 'projects' counts permits, not buildings.",
+  "Who the homes are for: permits don't say whether units are rentals, condos or affordable homes.",
+  "Finish dates: a permit's final inspection or closing date can come months or years after people moved in, so permits 'completed' in a period are not the same as CMHC's completions for that period.",
+  "Council approvals: Cambridge publishes site plans (without unit counts) but no zoning or subdivision applications as open data.",
+  "Starts and completions by city: CMHC counts housing starts and completions for the whole Kitchener-Cambridge-Waterloo area (including Woolwich and North Dumfries), not for each city."
+ ],
+ "layers": {
+  "recent-residential-permits": {
+   "type": "FeatureCollection",
+   "name": "Cambridge: residential permits with new units issued 2025-11-06 to 2026-11-06",
+   "features": [
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.28745,
+       43.3934
+      ]
+     },
+     "properties": {
+      "id": "26 008895 000 00",
+      "address": "60 GARLAND AVE",
+      "issued": "2026-06-26",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.30059,
+       43.35815
+      ]
+     },
+     "properties": {
+      "id": "25 003098 000 00",
+      "address": "91 POLLOCK AVE",
+      "issued": "2026-06-01",
+      "units": 2,
+      "status": "Issued",
+      "kind": "Residential Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.2872,
+       43.39259
+      ]
+     },
+     "properties": {
+      "id": "26 012714 000 00",
+      "address": "88 GARLAND AVE",
+      "issued": "2026-08-31",
+      "units": 1,
+      "status": "Closed",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "completed"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.32392,
+       43.36639
+      ]
+     },
+     "properties": {
+      "id": "24 010815 000 00",
+      "address": "87 PARK AVE",
+      "issued": "2026-07-03",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Accessory Structure Permit / New Additional Residential Unit",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.2717,
+       43.33855
+      ]
+     },
+     "properties": {
+      "id": "26 004611 000 00",
+      "address": "91 YATES AVE",
+      "issued": "2026-04-23",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.34545,
+       43.422
+      ]
+     },
+     "properties": {
+      "id": "26 015237 000 00",
+      "address": "19 RIDGE RD",
+      "issued": "2026-10-16",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.31174,
+       43.335
+      ]
+     },
+     "properties": {
+      "id": "26 008903 000 00",
+      "address": "156 BIRKINSHAW RD",
+      "issued": "2026-07-16",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.30802,
+       43.44954
+      ]
+     },
+     "properties": {
+      "id": "26 003148 000 00",
+      "address": "359 BALDWIN DR",
+      "issued": "2026-06-23",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.31604,
+       43.37784
+      ]
+     },
+     "properties": {
+      "id": "25 004143 000 00",
+      "address": "35 AVENUE RD",
+      "issued": "2026-03-10",
+      "units": 2,
+      "status": "Issued",
+      "kind": "Residential Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.31604,
+       43.37784
+      ]
+     },
+     "properties": {
+      "id": "25 003726 000 00",
+      "address": "35 AVENUE RD",
+      "issued": "2026-06-01",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Accessory Structure Permit / New Additional Residential Unit",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.29714,
+       43.3881
+      ]
+     },
+     "properties": {
+      "id": "26 008527 000 00",
+      "address": "31 CRANSTON AVE",
+      "issued": "2026-08-11",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.34869,
+       43.35554
+      ]
+     },
+     "properties": {
+      "id": "26 015107 000 00",
+      "address": "268 FREURE DR",
+      "issued": "2026-09-25",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.30026,
+       43.38686
+      ]
+     },
+     "properties": {
+      "id": "25 018323 000 00",
+      "address": "138 CRANSTON AVE",
+      "issued": "2025-12-19",
+      "units": 1,
+      "status": "Closed",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "completed"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.29328,
+       43.43168
+      ]
+     },
+     "properties": {
+      "id": "25 017677 000 00",
+      "address": "239 KERWOOD DR",
+      "issued": "2026-03-23",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.34083,
+       43.3666
+      ]
+     },
+     "properties": {
+      "id": "25 016358 000 00",
+      "address": "39 CROSSMORE CRES",
+      "issued": "2025-12-09",
+      "units": 1,
+      "status": "Closed",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "completed"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.32016,
+       43.42625
+      ]
+     },
+     "properties": {
+      "id": "25 017248 000 00",
+      "address": "10 WEAVER ST",
+      "issued": "2025-11-13",
+      "units": 1,
+      "status": "Closed",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "completed"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.33988,
+       43.36671
+      ]
+     },
+     "properties": {
+      "id": "26 002841 000 00",
+      "address": "63 CROSSMORE CRES",
+      "issued": "2026-03-27",
+      "units": 1,
+      "status": "Closed",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "completed"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.34259,
+       43.36801
+      ]
+     },
+     "properties": {
+      "id": "26 007873 000 00",
+      "address": "173 BLACKLOCK ST",
+      "issued": "2026-06-02",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.31689,
+       43.37526
+      ]
+     },
+     "properties": {
+      "id": "23 011091 000 00",
+      "address": "26 NORFOLK AVE",
+      "issued": "2026-02-02",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Alteration Permit / New Additional Residential Unit",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.28428,
+       43.38809
+      ]
+     },
+     "properties": {
+      "id": "26 009110 000 00",
+      "address": "84 MCTAGUE DR",
+      "issued": "2026-07-20",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.34035,
+       43.35848
+      ]
+     },
+     "properties": {
+      "id": "26 011990 000 00",
+      "address": "89 QUEENSBROOK CRES",
+      "issued": "2026-09-22",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.31809,
+       43.42509
+      ]
+     },
+     "properties": {
+      "id": "26 013655 000 00",
+      "address": "71 WEAVER ST",
+      "issued": "2026-08-25",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.34913,
+       43.35682
+      ]
+     },
+     "properties": {
+      "id": "26 013012 000 00",
+      "address": "232 FREURE DR",
+      "issued": "2026-09-29",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.30535,
+       43.37221
+      ]
+     },
+     "properties": {
+      "id": "26 003455 000 00",
+      "address": "30 PRETORIA RD",
+      "issued": "2026-04-15",
+      "units": 1,
+      "status": "Closed",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "completed"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.34529,
+       43.36763
+      ]
+     },
+     "properties": {
+      "id": "26 014731 000 00",
+      "address": "43 BLACKBURN ST",
+      "issued": "2026-10-06",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.3456,
+       43.36931
+      ]
+     },
+     "properties": {
+      "id": "26 010917 000 00",
+      "address": "60 BLACKLOCK ST",
+      "issued": "2026-09-01",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.28448,
+       43.39302
+      ]
+     },
+     "properties": {
+      "id": "26 008996 000 00",
+      "address": "43 PEREGRINE CRES",
+      "issued": "2026-10-19",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.30374,
+       43.37108
+      ]
+     },
+     "properties": {
+      "id": "25 005177 000 00",
+      "address": "8 KIMBERLEY RD",
+      "issued": "2025-11-28",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.34701,
+       43.3568
+      ]
+     },
+     "properties": {
+      "id": "26 011996 000 00",
+      "address": "179 FREURE DR",
+      "issued": "2026-08-10",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.34885,
+       43.35689
+      ]
+     },
+     "properties": {
+      "id": "26 011999 000 00",
+      "address": "228 FREURE DR",
+      "issued": "2026-10-20",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.34248,
+       43.36795
+      ]
+     },
+     "properties": {
+      "id": "26 007392 000 00",
+      "address": "177 BLACKLOCK ST",
+      "issued": "2026-05-22",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.2773,
+       43.39414
+      ]
+     },
+     "properties": {
+      "id": "26 002129 000 00",
+      "address": "764 SAGINAW PKY",
+      "issued": "2026-03-11",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.37549,
+       43.3927
+      ]
+     },
+     "properties": {
+      "id": "26 004345 000 00",
+      "address": "611 HILLVIEW RD",
+      "issued": "2026-04-01",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.29161,
+       43.44113
+      ]
+     },
+     "properties": {
+      "id": "26 008902 000 00",
+      "address": "268 MELRAN DR",
+      "issued": "2026-06-19",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.28446,
+       43.38545
+      ]
+     },
+     "properties": {
+      "id": "26 003415 000 00",
+      "address": "88 ATTWOOD DR",
+      "issued": "2026-04-24",
+      "units": 1,
+      "status": "Closed",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "completed"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.32625,
+       43.35093
+      ]
+     },
+     "properties": {
+      "id": "26 006061 000 00",
+      "address": "172 FOREST RD",
+      "issued": "2026-07-27",
+      "units": 1,
+      "status": "Closed",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "completed"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.36019,
+       43.38948
+      ]
+     },
+     "properties": {
+      "id": "26 013668 000 00",
+      "address": "643 LOWTHER ST S",
+      "issued": "2026-09-01",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.31567,
+       43.44277
+      ]
+     },
+     "properties": {
+      "id": "26 013262 000 00",
+      "address": "83 DAWN CRES",
+      "issued": "2026-08-21",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.29892,
+       43.35828
+      ]
+     },
+     "properties": {
+      "id": "26 017665 000 00",
+      "address": "44 LOWELL ST N",
+      "issued": "2026-10-19",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.2835,
+       43.40274
+      ]
+     },
+     "properties": {
+      "id": "25 019429 000 00",
+      "address": "112 GLAZEBROOK CRES",
+      "issued": "2026-01-16",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.30471,
+       43.37235
+      ]
+     },
+     "properties": {
+      "id": "25 017311 000 00",
+      "address": "29 PRETORIA RD",
+      "issued": "2026-01-06",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.31915,
+       43.4394
+      ]
+     },
+     "properties": {
+      "id": "25 012396 000 00",
+      "address": "123 MILTON AVE W",
+      "issued": "2025-11-07",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.30995,
+       43.3813
+      ]
+     },
+     "properties": {
+      "id": "26 006036 000 00",
+      "address": "136 FERGUSON AVE",
+      "issued": "2026-05-01",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.29404,
+       43.43197
+      ]
+     },
+     "properties": {
+      "id": "25 017956 000 00",
+      "address": "226 KERWOOD DR",
+      "issued": "2025-12-02",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.29717,
+       43.41976
+      ]
+     },
+     "properties": {
+      "id": "26 011663 000 00",
+      "address": "38 HANDORF DR",
+      "issued": "2026-07-24",
+      "units": 1,
+      "status": "Closed",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "completed"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.29541,
+       43.35819
+      ]
+     },
+     "properties": {
+      "id": "26 013798 000 00",
+      "address": "23 AMBER RD",
+      "issued": "2026-09-08",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.29416,
+       43.38546
+      ]
+     },
+     "properties": {
+      "id": "26 010266 000 00",
+      "address": "109 COWAN BLVD",
+      "issued": "2026-09-04",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.29374,
+       43.43909
+      ]
+     },
+     "properties": {
+      "id": "25 019573 000 00",
+      "address": "99 MCMEEKEN DR",
+      "issued": "2026-02-02",
+      "units": 1,
+      "status": "Closed",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "completed"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.29844,
+       43.37321
+      ]
+     },
+     "properties": {
+      "id": "25 015646 000 00",
+      "address": "40 MILLCREEK RD",
+      "issued": "2025-12-01",
+      "units": 2,
+      "status": "Closed",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "completed"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.28775,
+       43.38902
+      ]
+     },
+     "properties": {
+      "id": "25 016372 000 00",
+      "address": "39 CHAMBERLIN DR",
+      "issued": "2025-11-18",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.34729,
+       43.37172
+      ]
+     },
+     "properties": {
+      "id": "26 008470 000 00",
+      "address": "11 ROSECLIFF PL",
+      "issued": "2026-06-05",
+      "units": 1,
+      "status": "Closed",
+      "kind": "Residential Building Permit / New",
+      "stage": "completed"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.2803,
+       43.34063
+      ]
+     },
+     "properties": {
+      "id": "26 008158 000 00",
+      "address": "20 WHEELER DR",
+      "issued": "2026-06-09",
+      "units": 1,
+      "status": "Closed",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "completed"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.31346,
+       43.43039
+      ]
+     },
+     "properties": {
+      "id": "25 013356 000 00",
+      "address": "61 QUEEN ST W",
+      "issued": "2026-05-06",
+      "units": 2,
+      "status": "Issued",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.36572,
+       43.38789
+      ]
+     },
+     "properties": {
+      "id": "26 015893 000 00",
+      "address": "727 RIVERSIDE DR",
+      "issued": "2026-10-05",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.29305,
+       43.3833
+      ]
+     },
+     "properties": {
+      "id": "25 019048 000 00",
+      "address": "273 BURNETT AVE",
+      "issued": "2026-01-09",
+      "units": 1,
+      "status": "Closed",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "completed"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.34639,
+       43.37029
+      ]
+     },
+     "properties": {
+      "id": "26 017197 000 00",
+      "address": "72 MOON CRES",
+      "issued": "2026-10-19",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.36106,
+       43.40061
+      ]
+     },
+     "properties": {
+      "id": "25 017353 000 00",
+      "address": "324 AGNES ST",
+      "issued": "2025-12-09",
+      "units": 1,
+      "status": "Closed",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "completed"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.34716,
+       43.3718
+      ]
+     },
+     "properties": {
+      "id": "26 009097 000 00",
+      "address": "7 ROSECLIFF PL",
+      "issued": "2026-06-10",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.34538,
+       43.36976
+      ]
+     },
+     "properties": {
+      "id": "25 019471 000 00",
+      "address": "17 WILKINSON AVE",
+      "issued": "2026-01-16",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.34655,
+       43.37108
+      ]
+     },
+     "properties": {
+      "id": "25 019611 000 00",
+      "address": "44 MOON CRES",
+      "issued": "2026-01-12",
+      "units": 1,
+      "status": "Closed",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "completed"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.31263,
+       43.37707
+      ]
+     },
+     "properties": {
+      "id": "24 005348 000 00",
+      "address": "76 BROOKLYNE RD",
+      "issued": "2025-12-12",
+      "units": 1,
+      "status": "Closed",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "completed"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.34764,
+       43.37133
+      ]
+     },
+     "properties": {
+      "id": "25 016161 000 00",
+      "address": "12 MOON CRES",
+      "issued": "2026-03-03",
+      "units": 1,
+      "status": "Closed",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "completed"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.30002,
+       43.34822
+      ]
+     },
+     "properties": {
+      "id": "25 015990 000 00",
+      "address": "93 CHRISTOPHER DR",
+      "issued": "2025-11-07",
+      "units": 1,
+      "status": "Closed",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "completed"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.27394,
+       43.39446
+      ]
+     },
+     "properties": {
+      "id": "26 011238 000 00",
+      "address": "31 HADDAWAY CRT",
+      "issued": "2026-07-22",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.33311,
+       43.35554
+      ]
+     },
+     "properties": {
+      "id": "26 004939 000 00",
+      "address": "28 HIGHLAND CRES",
+      "issued": "2026-06-16",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Accessory Structure Permit / New Additional Residential Unit",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.28092,
+       43.34161
+      ]
+     },
+     "properties": {
+      "id": "25 016724 000 00",
+      "address": "147 GATEHOUSE DR",
+      "issued": "2025-12-04",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.33656,
+       43.40177
+      ]
+     },
+     "properties": {
+      "id": "26 008310 000 00",
+      "address": "118 CHATEAU CRES",
+      "issued": "2026-06-26",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.33731,
+       43.40333
+      ]
+     },
+     "properties": {
+      "id": "26 009365 000 00",
+      "address": "396 NEWPORT DR",
+      "issued": "2026-07-10",
+      "units": 1,
+      "status": "Closed",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "completed"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.29387,
+       43.35603
+      ]
+     },
+     "properties": {
+      "id": "26 015799 000 00",
+      "address": "8 ALEXANDER AVE",
+      "issued": "2026-10-06",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Accessory Structure Permit / New Additional Residential Unit",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.32327,
+       43.37993
+      ]
+     },
+     "properties": {
+      "id": "25 017579 000 00",
+      "address": "39 WAUCHOPE AVE",
+      "issued": "2026-02-20",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.33828,
+       43.40181
+      ]
+     },
+     "properties": {
+      "id": "25 017438 000 00",
+      "address": "88 CHRYSLER CRES",
+      "issued": "2025-11-28",
+      "units": 1,
+      "status": "Closed",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "completed"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.34814,
+       43.39679
+      ]
+     },
+     "properties": {
+      "id": "26 004475 000 00",
+      "address": "256 ERB ST",
+      "issued": "2026-04-14",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.35083,
+       43.40342
+      ]
+     },
+     "properties": {
+      "id": "26 010968 000 00",
+      "address": "134 HICKORY ST",
+      "issued": "2026-10-05",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.33623,
+       43.40463
+      ]
+     },
+     "properties": {
+      "id": "26 012408 000 00",
+      "address": "260 NEWPORT DR",
+      "issued": "2026-09-02",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.27944,
+       43.40937
+      ]
+     },
+     "properties": {
+      "id": "25 016083 000 00",
+      "address": "4 REDSTART DR",
+      "issued": "2025-11-11",
+      "units": 1,
+      "status": "Closed",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "completed"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.28343,
+       43.34114
+      ]
+     },
+     "properties": {
+      "id": "26 005974 000 00",
+      "address": "20 FLOCKHART RD",
+      "issued": "2026-06-23",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.33611,
+       43.40275
+      ]
+     },
+     "properties": {
+      "id": "25 017573 000 00",
+      "address": "47 LIVINGSTONE CRES",
+      "issued": "2025-12-01",
+      "units": 1,
+      "status": "Closed",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "completed"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.30247,
+       43.33662
+      ]
+     },
+     "properties": {
+      "id": "26 013957 000 00",
+      "address": "278 LANGLAW DR",
+      "issued": "2026-09-28",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.34975,
+       43.4051
+      ]
+     },
+     "properties": {
+      "id": "26 015987 000 00",
+      "address": "1339 LYDIA ST",
+      "issued": "2026-09-25",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.30529,
+       43.4461
+      ]
+     },
+     "properties": {
+      "id": "25 016897 000 00",
+      "address": "31 WEIR ST",
+      "issued": "2025-11-11",
+      "units": 1,
+      "status": "Closed",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "completed"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.28693,
+       43.34039
+      ]
+     },
+     "properties": {
+      "id": "25 011775 000 00",
+      "address": "19 YEAMAN DR",
+      "issued": "2025-11-19",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.35048,
+       43.39495
+      ]
+     },
+     "properties": {
+      "id": "26 005725 000 00",
+      "address": "1127 BLEILER ST",
+      "issued": "2026-06-12",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.30979,
+       43.4249
+      ]
+     },
+     "properties": {
+      "id": "26 010799 000 00",
+      "address": "1631 FRANKLIN BLVD",
+      "issued": "2026-10-01",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.31269,
+       43.34594
+      ]
+     },
+     "properties": {
+      "id": "26 010025 000 00",
+      "address": "32 RAVINE DR",
+      "issued": "2026-07-06",
+      "units": 1,
+      "status": "Closed",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "completed"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.32716,
+       43.3895
+      ]
+     },
+     "properties": {
+      "id": "26 001890 000 00",
+      "address": "1236 DUNBAR RD",
+      "issued": "2026-06-02",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.29424,
+       43.35563
+      ]
+     },
+     "properties": {
+      "id": "25 016837 000 00",
+      "address": "19 RICHARDS AVE",
+      "issued": "2026-01-09",
+      "units": 1,
+      "status": "Closed",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "completed"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.30721,
+       43.35298
+      ]
+     },
+     "properties": {
+      "id": "25 014607 000 00",
+      "address": "85 ELLIOTT ST",
+      "issued": "2026-05-21",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.30623,
+       43.35309
+      ]
+     },
+     "properties": {
+      "id": "26 004633 000 00",
+      "address": "103 ELLIOTT ST",
+      "issued": "2026-04-08",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.34495,
+       43.35608
+      ]
+     },
+     "properties": {
+      "id": "25 016904 000 00",
+      "address": "412 FREURE DR",
+      "issued": "2025-12-05",
+      "units": 1,
+      "status": "Closed",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "completed"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.34033,
+       43.39322
+      ]
+     },
+     "properties": {
+      "id": "26 012001 000 00",
+      "address": "1452 MARY AVE",
+      "issued": "2026-07-29",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.30967,
+       43.36721
+      ]
+     },
+     "properties": {
+      "id": "26 017961 000 00",
+      "address": "144 CAMBRIDGE ST",
+      "issued": "2026-10-27",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Accessory Structure Permit / New Additional Residential Unit",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.34341,
+       43.3936
+      ]
+     },
+     "properties": {
+      "id": "26 010979 000 00",
+      "address": "1381 CONCESSION RD",
+      "issued": "2026-08-24",
+      "units": 2,
+      "status": "Issued",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.27994,
+       43.33918
+      ]
+     },
+     "properties": {
+      "id": "26 005591 000 00",
+      "address": "84 DRINKWATER DR",
+      "issued": "2026-05-14",
+      "units": 1,
+      "status": "Closed",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "completed"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.29427,
+       43.34645
+      ]
+     },
+     "properties": {
+      "id": "26 011026 000 00",
+      "address": "45 HILLMER RD",
+      "issued": "2026-07-30",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.35601,
+       43.38881
+      ]
+     },
+     "properties": {
+      "id": "26 005128 000 00",
+      "address": "147 CHERRY HILL",
+      "issued": "2026-06-24",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Accessory Structure Permit / New Additional Residential Unit",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.30462,
+       43.37212
+      ]
+     },
+     "properties": {
+      "id": "26 001015 000 00",
+      "address": "25 PRETORIA RD",
+      "issued": "2026-06-04",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Alteration Permit / Conversion - Multiple RUs to Multiple RUs",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.38319,
+       43.39749
+      ]
+     },
+     "properties": {
+      "id": "26 000235 000 00",
+      "address": "471 LINDEN DR",
+      "issued": "2026-01-23",
+      "units": 1,
+      "status": "Closed",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "completed"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.31665,
+       43.3708
+      ]
+     },
+     "properties": {
+      "id": "26 012576 000 00",
+      "address": "50 HADDINGTON ST",
+      "issued": "2026-08-04",
+      "units": 1,
+      "status": "Closed",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "completed"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.27646,
+       43.35454
+      ]
+     },
+     "properties": {
+      "id": "26 006266 000 00",
+      "address": "305 WESLEY BLVD",
+      "issued": "2026-05-01",
+      "units": 1,
+      "status": "Closed",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "completed"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.34563,
+       43.35342
+      ]
+     },
+     "properties": {
+      "id": "25 017663 000 00",
+      "address": "160 HARDCASTLE DR",
+      "issued": "2025-12-05",
+      "units": 1,
+      "status": "Closed",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "completed"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.32008,
+       43.37997
+      ]
+     },
+     "properties": {
+      "id": "25 019968 000 00",
+      "address": "2 WAUCHOPE AVE",
+      "issued": "2026-01-16",
+      "units": 1,
+      "status": "Closed",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "completed"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.38285,
+       43.39759
+      ]
+     },
+     "properties": {
+      "id": "26 001612 000 00",
+      "address": "459 LINDEN DR",
+      "issued": "2026-06-08",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.35479,
+       43.38834
+      ]
+     },
+     "properties": {
+      "id": "25 018899 000 00",
+      "address": "1027 BERNHARDT ST",
+      "issued": "2026-03-27",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.35384,
+       43.401
+      ]
+     },
+     "properties": {
+      "id": "26 006056 000 00",
+      "address": "318 MIDDLE ST",
+      "issued": "2026-06-03",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.38126,
+       43.39773
+      ]
+     },
+     "properties": {
+      "id": "25 016907 000 00",
+      "address": "12 DUCKWORTH RD",
+      "issued": "2025-11-11",
+      "units": 1,
+      "status": "Closed",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "completed"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.36238,
+       43.39305
+      ]
+     },
+     "properties": {
+      "id": "26 006533 000 00",
+      "address": "625 VINE ST",
+      "issued": "2026-05-20",
+      "units": 1,
+      "status": "Closed",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "completed"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.38211,
+       43.39628
+      ]
+     },
+     "properties": {
+      "id": "26 007084 000 00",
+      "address": "52 WEATHERALL AVE",
+      "issued": "2026-05-19",
+      "units": 1,
+      "status": "Closed",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "completed"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.35691,
+       43.40274
+      ]
+     },
+     "properties": {
+      "id": "26 016925 000 00",
+      "address": "148 HEDLEY ST",
+      "issued": "2026-11-04",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.34516,
+       43.35718
+      ]
+     },
+     "properties": {
+      "id": "26 009167 000 00",
+      "address": "132 FREURE DR",
+      "issued": "2026-06-24",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.29618,
+       43.36697
+      ]
+     },
+     "properties": {
+      "id": "26 014509 000 00",
+      "address": "100 LAURIS AVE",
+      "issued": "2026-09-03",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.34815,
+       43.39892
+      ]
+     },
+     "properties": {
+      "id": "26 002914 000 00",
+      "address": "624 DOLPH ST N",
+      "issued": "2026-09-18",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.34479,
+       43.35625
+      ]
+     },
+     "properties": {
+      "id": "26 015793 000 00",
+      "address": "420 FREURE DR",
+      "issued": "2026-10-15",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.3109,
+       43.38065
+      ]
+     },
+     "properties": {
+      "id": "26 005379 000 00",
+      "address": "51 ROUSE AVE",
+      "issued": "2026-07-13",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Accessory Structure Permit / New Additional Residential Unit",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.34647,
+       43.36873
+      ]
+     },
+     "properties": {
+      "id": "25 018681 000 00",
+      "address": "23 BLACKLOCK ST",
+      "issued": "2026-01-28",
+      "units": 1,
+      "status": "Closed",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "completed"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.31215,
+       43.38453
+      ]
+     },
+     "properties": {
+      "id": "25 014285 000 00",
+      "address": "162 CARTER CRES",
+      "issued": "2025-11-17",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.28061,
+       43.34115
+      ]
+     },
+     "properties": {
+      "id": "25 016435 000 00",
+      "address": "3 PRENTICE CRT",
+      "issued": "2025-11-11",
+      "units": 1,
+      "status": "Closed",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "completed"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.29101,
+       43.38142
+      ]
+     },
+     "properties": {
+      "id": "26 010047 000 00",
+      "address": "408 AVENUE RD",
+      "issued": "2026-09-08",
+      "units": 2,
+      "status": "Issued",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.2951,
+       43.3465
+      ]
+     },
+     "properties": {
+      "id": "25 017442 000 00",
+      "address": "52 HILLMER RD",
+      "issued": "2025-12-23",
+      "units": 1,
+      "status": "Closed",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "completed"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.38127,
+       43.39253
+      ]
+     },
+     "properties": {
+      "id": "25 018582 000 00",
+      "address": "8 CLIFFSIDE CRT",
+      "issued": "2026-01-28",
+      "units": 1,
+      "status": "Closed",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "completed"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.30463,
+       43.37329
+      ]
+     },
+     "properties": {
+      "id": "25 013931 000 00",
+      "address": "46 KIMBERLEY RD",
+      "issued": "2026-06-01",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Accessory Structure Permit / New Additional Residential Unit",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.3463,
+       43.4297
+      ]
+     },
+     "properties": {
+      "id": "26 010442 000 00",
+      "address": "875 BRIARDEAN RD",
+      "issued": "2026-11-03",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Townhouse Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.3463,
+       43.4297
+      ]
+     },
+     "properties": {
+      "id": "26 010443 000 00",
+      "address": "875 BRIARDEAN RD",
+      "issued": "2026-11-03",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Townhouse Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.3463,
+       43.4297
+      ]
+     },
+     "properties": {
+      "id": "26 010231 BLK 00",
+      "address": "875 BRIARDEAN RD",
+      "issued": "2026-11-03",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Townhouse Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.34183,
+       43.41989
+      ]
+     },
+     "properties": {
+      "id": "26 001379 000 00",
+      "address": "39 WANNAMAKER CRES",
+      "issued": "2026-02-12",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.34072,
+       43.35652
+      ]
+     },
+     "properties": {
+      "id": "26 008338 000 00",
+      "address": "288 SALISBURY AVE",
+      "issued": "2026-07-10",
+      "units": 2,
+      "status": "Issued",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.29374,
+       43.35737
+      ]
+     },
+     "properties": {
+      "id": "25 019417 000 00",
+      "address": "340 MAIN ST",
+      "issued": "2026-01-05",
+      "units": 1,
+      "status": "Closed",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "completed"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.34188,
+       43.42427
+      ]
+     },
+     "properties": {
+      "id": "25 017583 000 00",
+      "address": "296 RIDGE RD",
+      "issued": "2025-12-01",
+      "units": 1,
+      "status": "Closed",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "completed"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.34146,
+       43.4284
+      ]
+     },
+     "properties": {
+      "id": "26 009269 000 00",
+      "address": "479 EQUESTRIAN WAY",
+      "issued": "2026-06-26",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.27842,
+       43.40418
+      ]
+     },
+     "properties": {
+      "id": "26 010119 000 00",
+      "address": "12 BRAYSHAW DR",
+      "issued": "2026-07-30",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.34305,
+       43.42035
+      ]
+     },
+     "properties": {
+      "id": "25 018308 000 00",
+      "address": "4 WANNAMAKER CRES",
+      "issued": "2026-02-03",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.32093,
+       43.36331
+      ]
+     },
+     "properties": {
+      "id": "26 005533 000 00",
+      "address": "20 PARK AVE",
+      "issued": "2026-04-30",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Accessory Structure Permit / New Additional Residential Unit",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.31756,
+       43.44543
+      ]
+     },
+     "properties": {
+      "id": "26 010965 000 00",
+      "address": "38 POPLAR DR",
+      "issued": "2026-07-20",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.28306,
+       43.35424
+      ]
+     },
+     "properties": {
+      "id": "26 001094 000 00",
+      "address": "31 BROADOAKS DR",
+      "issued": "2026-03-27",
+      "units": 1,
+      "status": "Closed",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "completed"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.31032,
+       43.438
+      ]
+     },
+     "properties": {
+      "id": "26 015427 000 00",
+      "address": "155 GUELPH AVE",
+      "issued": "2026-11-02",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.31032,
+       43.438
+      ]
+     },
+     "properties": {
+      "id": "26 015430 000 00",
+      "address": "155 GUELPH AVE",
+      "issued": "2026-11-02",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.31032,
+       43.438
+      ]
+     },
+     "properties": {
+      "id": "26 018563 000 00",
+      "address": "155 GUELPH AVE",
+      "issued": "2026-11-03",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.31032,
+       43.438
+      ]
+     },
+     "properties": {
+      "id": "26 018376 000 00",
+      "address": "155 GUELPH AVE",
+      "issued": "2026-11-04",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.27666,
+       43.35507
+      ]
+     },
+     "properties": {
+      "id": "26 006372 000 00",
+      "address": "285 WESLEY BLVD",
+      "issued": "2026-05-26",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.27646,
+       43.39025
+      ]
+     },
+     "properties": {
+      "id": "26 009765 000 00",
+      "address": "264 GRANITE HILL RD",
+      "issued": "2026-07-27",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.29809,
+       43.35822
+      ]
+     },
+     "properties": {
+      "id": "26 017604 000 00",
+      "address": "33 LOWELL ST N",
+      "issued": "2026-10-29",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.30921,
+       43.44966
+      ]
+     },
+     "properties": {
+      "id": "26 013989 000 00",
+      "address": "130 HOLLAND CIR",
+      "issued": "2026-09-16",
+      "units": 1,
+      "status": "Closed",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "completed"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.38263,
+       43.39619
+      ]
+     },
+     "properties": {
+      "id": "26 006347 000 00",
+      "address": "36 WEATHERALL AVE",
+      "issued": "2026-05-19",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.30399,
+       43.34081
+      ]
+     },
+     "properties": {
+      "id": "26 013522 000 00",
+      "address": "104 MYERS RD",
+      "issued": "2026-09-11",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.34368,
+       43.39617
+      ]
+     },
+     "properties": {
+      "id": "25 018246 000 00",
+      "address": "1246 FAIRVIEW RD",
+      "issued": "2025-12-03",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.30601,
+       43.42463
+      ]
+     },
+     "properties": {
+      "id": "26 012459 000 00",
+      "address": "109 GREY ABBEY TRAIL",
+      "issued": "2026-08-04",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.34232,
+       43.4212
+      ]
+     },
+     "properties": {
+      "id": "26 001876 000 00",
+      "address": "140 RIDGE RD",
+      "issued": "2026-06-02",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.28029,
+       43.3565
+      ]
+     },
+     "properties": {
+      "id": "26 002579 000 00",
+      "address": "67 HONEY ST",
+      "issued": "2026-04-09",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.30543,
+       43.44522
+      ]
+     },
+     "properties": {
+      "id": "26 013220 000 00",
+      "address": "16 LANDS CRT",
+      "issued": "2026-08-17",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.31817,
+       43.42411
+      ]
+     },
+     "properties": {
+      "id": "25 016844 000 00",
+      "address": "86 WEAVER ST",
+      "issued": "2025-11-20",
+      "units": 1,
+      "status": "Closed",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "completed"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.37345,
+       43.40016
+      ]
+     },
+     "properties": {
+      "id": "26 000302 000 00",
+      "address": "248 CYRUS ST",
+      "issued": "2026-02-18",
+      "units": 1,
+      "status": "Closed",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "completed"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.29983,
+       43.34204
+      ]
+     },
+     "properties": {
+      "id": "26 007834 000 00",
+      "address": "57 TUTTON PL",
+      "issued": "2026-06-04",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.29279,
+       43.4369
+      ]
+     },
+     "properties": {
+      "id": "26 005325 000 00",
+      "address": "62 KERWOOD DR",
+      "issued": "2026-05-07",
+      "units": 1,
+      "status": "Closed",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "completed"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.28366,
+       43.33866
+      ]
+     },
+     "properties": {
+      "id": "26 002970 000 00",
+      "address": "136 BAILEY DR",
+      "issued": "2026-03-13",
+      "units": 1,
+      "status": "Closed",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "completed"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.25808,
+       43.34667
+      ]
+     },
+     "properties": {
+      "id": "26 017148 000 00",
+      "address": "34 SEAHORSE COMMON",
+      "issued": "2026-10-15",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.2979,
+       43.39188
+      ]
+     },
+     "properties": {
+      "id": "26 015515 000 00",
+      "address": "20 MOSS DR",
+      "issued": "2026-10-02",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.29505,
+       43.39361
+      ]
+     },
+     "properties": {
+      "id": "26 010975 000 00",
+      "address": "116 MOSS DR",
+      "issued": "2026-07-29",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.29762,
+       43.39209
+      ]
+     },
+     "properties": {
+      "id": "26 008981 000 00",
+      "address": "28 MOSS DR",
+      "issued": "2026-08-14",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.29584,
+       43.39312
+      ]
+     },
+     "properties": {
+      "id": "26 015495 000 00",
+      "address": "88 MOSS DR",
+      "issued": "2026-11-04",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.29768,
+       43.39164
+      ]
+     },
+     "properties": {
+      "id": "26 008946 000 00",
+      "address": "12 MOSS DR",
+      "issued": "2026-07-23",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.29607,
+       43.39298
+      ]
+     },
+     "properties": {
+      "id": "26 010967 000 00",
+      "address": "80 MOSS DR",
+      "issued": "2026-08-14",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.29544,
+       43.3917
+      ]
+     },
+     "properties": {
+      "id": "26 010285 000 00",
+      "address": "89 PAPERBIRCH DR",
+      "issued": "2026-07-23",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.33924,
+       43.36288
+      ]
+     },
+     "properties": {
+      "id": "26 008553 000 00",
+      "address": "160 RIVERGREEN CRES",
+      "issued": "2026-06-09",
+      "units": 1,
+      "status": "Closed",
+      "kind": "Residential Building Permit / New",
+      "stage": "completed"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.33935,
+       43.36287
+      ]
+     },
+     "properties": {
+      "id": "26 009219 000 00",
+      "address": "164 RIVERGREEN CRES",
+      "issued": "2026-06-19",
+      "units": 1,
+      "status": "Closed",
+      "kind": "Residential Building Permit / New",
+      "stage": "completed"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.33946,
+       43.36286
+      ]
+     },
+     "properties": {
+      "id": "26 007793 000 00",
+      "address": "168 RIVERGREEN CRES",
+      "issued": "2026-06-09",
+      "units": 1,
+      "status": "Closed",
+      "kind": "Residential Building Permit / New",
+      "stage": "completed"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.33958,
+       43.36286
+      ]
+     },
+     "properties": {
+      "id": "26 007791 000 00",
+      "address": "172 RIVERGREEN CRES",
+      "issued": "2026-06-02",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.3398,
+       43.36284
+      ]
+     },
+     "properties": {
+      "id": "26 009741 000 00",
+      "address": "180 RIVERGREEN CRES",
+      "issued": "2026-06-26",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.33819,
+       43.36321
+      ]
+     },
+     "properties": {
+      "id": "26 008872 000 00",
+      "address": "131 RIVERGREEN CRES",
+      "issued": "2026-06-10",
+      "units": 1,
+      "status": "Closed",
+      "kind": "Residential Building Permit / New",
+      "stage": "completed"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.33809,
+       43.36313
+      ]
+     },
+     "properties": {
+      "id": "26 012417 000 00",
+      "address": "129 RIVERGREEN CRES",
+      "issued": "2026-07-27",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.33797,
+       43.36297
+      ]
+     },
+     "properties": {
+      "id": "25 019458 000 00",
+      "address": "121 RIVERGREEN CRES",
+      "issued": "2025-12-23",
+      "units": 1,
+      "status": "Closed",
+      "kind": "Residential Building Permit / New",
+      "stage": "completed"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.33795,
+       43.36289
+      ]
+     },
+     "properties": {
+      "id": "25 018227 000 00",
+      "address": "117 RIVERGREEN CRES",
+      "issued": "2025-11-28",
+      "units": 1,
+      "status": "Occupancy Permitted - Not Closed",
+      "kind": "Residential Building Permit / New",
+      "stage": "completed"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.33793,
+       43.36281
+      ]
+     },
+     "properties": {
+      "id": "25 016835 000 00",
+      "address": "113 RIVERGREEN CRES",
+      "issued": "2025-11-12",
+      "units": 1,
+      "status": "Closed",
+      "kind": "Residential Building Permit / New",
+      "stage": "completed"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.33791,
+       43.36272
+      ]
+     },
+     "properties": {
+      "id": "25 016834 000 00",
+      "address": "109 RIVERGREEN CRES",
+      "issued": "2025-11-12",
+      "units": 1,
+      "status": "Closed",
+      "kind": "Residential Building Permit / New",
+      "stage": "completed"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.33788,
+       43.36264
+      ]
+     },
+     "properties": {
+      "id": "26 009238 000 00",
+      "address": "105 RIVERGREEN CRES",
+      "issued": "2026-06-23",
+      "units": 1,
+      "status": "Closed",
+      "kind": "Residential Building Permit / New",
+      "stage": "completed"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.27338,
+       43.35709
+      ]
+     },
+     "properties": {
+      "id": "26 008298 000 00",
+      "address": "315 GREEN GATE BLVD",
+      "issued": "2026-09-02",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.27316,
+       43.35759
+      ]
+     },
+     "properties": {
+      "id": "26 017615 000 00",
+      "address": "295 GREEN GATE BLVD",
+      "issued": "2026-11-06",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.29778,
+       43.39199
+      ]
+     },
+     "properties": {
+      "id": "26 010900 000 00",
+      "address": "24 MOSS DR",
+      "issued": "2026-07-23",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.2761,
+       43.3567
+      ]
+     },
+     "properties": {
+      "id": "26 012429 000 00",
+      "address": "500 GREEN GATE BLVD",
+      "issued": "2026-07-30",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.27497,
+       43.35538
+      ]
+     },
+     "properties": {
+      "id": "26 015475 000 00",
+      "address": "GREEN GATE BLVD",
+      "issued": "2026-09-18",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Townhouse Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.27497,
+       43.35538
+      ]
+     },
+     "properties": {
+      "id": "26 009776 000 00",
+      "address": "GREEN GATE BLVD",
+      "issued": "2026-06-23",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Townhouse Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.27497,
+       43.35538
+      ]
+     },
+     "properties": {
+      "id": "26 009777 000 00",
+      "address": "GREEN GATE BLVD",
+      "issued": "2026-06-23",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Townhouse Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.27497,
+       43.35538
+      ]
+     },
+     "properties": {
+      "id": "26 015477 000 00",
+      "address": "GREEN GATE BLVD",
+      "issued": "2026-09-18",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Townhouse Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.27497,
+       43.35538
+      ]
+     },
+     "properties": {
+      "id": "26 015473 000 00",
+      "address": "GREEN GATE BLVD",
+      "issued": "2026-09-18",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Townhouse Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.27497,
+       43.35538
+      ]
+     },
+     "properties": {
+      "id": "26 009774 000 00",
+      "address": "GREEN GATE BLVD",
+      "issued": "2026-06-23",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Townhouse Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.27497,
+       43.35538
+      ]
+     },
+     "properties": {
+      "id": "26 015482 000 00",
+      "address": "GREEN GATE BLVD",
+      "issued": "2026-09-18",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Townhouse Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.27497,
+       43.35538
+      ]
+     },
+     "properties": {
+      "id": "26 015479 000 00",
+      "address": "GREEN GATE BLVD",
+      "issued": "2026-09-18",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Townhouse Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.27497,
+       43.35538
+      ]
+     },
+     "properties": {
+      "id": "26 009772 000 00",
+      "address": "GREEN GATE BLVD",
+      "issued": "2026-06-23",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Townhouse Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.27497,
+       43.35538
+      ]
+     },
+     "properties": {
+      "id": "26 009770 000 00",
+      "address": "GREEN GATE BLVD",
+      "issued": "2026-06-23",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Townhouse Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.27497,
+       43.35538
+      ]
+     },
+     "properties": {
+      "id": "26 015485 000 00",
+      "address": "GREEN GATE BLVD",
+      "issued": "2026-09-18",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Townhouse Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.34089,
+       43.36773
+      ]
+     },
+     "properties": {
+      "id": "25 018235 000 00",
+      "address": "20 STEADMAN ST",
+      "issued": "2025-12-19",
+      "units": 1,
+      "status": "Closed",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "completed"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.3411,
+       43.3577
+      ]
+     },
+     "properties": {
+      "id": "26 010791 027 00",
+      "address": "3 BUR OAK COMMON",
+      "issued": "2026-08-14",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Townhouse Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.34118,
+       43.35769
+      ]
+     },
+     "properties": {
+      "id": "26 010791 028 00",
+      "address": "5 BUR OAK COMMON",
+      "issued": "2026-08-14",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Townhouse Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.34125,
+       43.35768
+      ]
+     },
+     "properties": {
+      "id": "26 010791 029 00",
+      "address": "7 BUR OAK COMMON",
+      "issued": "2026-08-14",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Townhouse Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.34133,
+       43.35767
+      ]
+     },
+     "properties": {
+      "id": "26 010791 030 00",
+      "address": "9 BUR OAK COMMON",
+      "issued": "2026-08-14",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Townhouse Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.29708,
+       43.39184
+      ]
+     },
+     "properties": {
+      "id": "25 017337 000 00",
+      "address": "19 MOSS DR",
+      "issued": "2025-11-20",
+      "units": 1,
+      "status": "Closed",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "completed"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.29578,
+       43.39186
+      ]
+     },
+     "properties": {
+      "id": "26 010394 000 00",
+      "address": "7 SHRUBSALL ST",
+      "issued": "2026-07-23",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.29459,
+       43.39133
+      ]
+     },
+     "properties": {
+      "id": "26 015557 000 00",
+      "address": "108 PAPERBIRCH DR",
+      "issued": "2026-09-18",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.29843,
+       43.39117
+      ]
+     },
+     "properties": {
+      "id": "26 010342 000 00",
+      "address": "24 PAPERBIRCH DR",
+      "issued": "2026-08-14",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.33801,
+       43.36305
+      ]
+     },
+     "properties": {
+      "id": "26 009285 000 00",
+      "address": "125 RIVERGREEN CRES",
+      "issued": "2026-06-22",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.33954,
+       43.36215
+      ]
+     },
+     "properties": {
+      "id": "25 016058 000 00",
+      "address": "61 RIVERGREEN CRES",
+      "issued": "2025-11-10",
+      "units": 1,
+      "status": "Closed",
+      "kind": "Residential Townhouse Building Permit / New",
+      "stage": "completed"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.27326,
+       43.35811
+      ]
+     },
+     "properties": {
+      "id": "26 013408 000 00",
+      "address": "275 GREEN GATE BLVD",
+      "issued": "2026-09-11",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.27607,
+       43.35662
+      ]
+     },
+     "properties": {
+      "id": "26 012469 000 00",
+      "address": "496 GREEN GATE BLVD",
+      "issued": "2026-07-30",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.3414,
+       43.35767
+      ]
+     },
+     "properties": {
+      "id": "26 010791 031 00",
+      "address": "11 BUR OAK COMMON",
+      "issued": "2026-08-14",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Townhouse Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.34149,
+       43.35766
+      ]
+     },
+     "properties": {
+      "id": "26 010791 032 00",
+      "address": "13 BUR OAK COMMON",
+      "issued": "2026-08-14",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Townhouse Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.29534,
+       43.39191
+      ]
+     },
+     "properties": {
+      "id": "26 008977 000 00",
+      "address": "8 GOODARE ST",
+      "issued": "2026-07-23",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.29547,
+       43.39198
+      ]
+     },
+     "properties": {
+      "id": "26 008993 000 00",
+      "address": "12 GOODARE ST",
+      "issued": "2026-08-14",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.29554,
+       43.39204
+      ]
+     },
+     "properties": {
+      "id": "26 010915 000 00",
+      "address": "16 GOODARE ST",
+      "issued": "2026-07-23",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.29562,
+       43.3921
+      ]
+     },
+     "properties": {
+      "id": "26 015465 000 00",
+      "address": "20 GOODARE ST",
+      "issued": "2026-09-18",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.29483,
+       43.3921
+      ]
+     },
+     "properties": {
+      "id": "26 010467 000 00",
+      "address": "11 GOODARE ST",
+      "issued": "2026-08-20",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.29493,
+       43.39218
+      ]
+     },
+     "properties": {
+      "id": "26 010904 000 00",
+      "address": "15 GOODARE ST",
+      "issued": "2026-08-20",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.29576,
+       43.39223
+      ]
+     },
+     "properties": {
+      "id": "26 010294 000 00",
+      "address": "28 GOODARE ST",
+      "issued": "2026-07-23",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.29502,
+       43.39226
+      ]
+     },
+     "properties": {
+      "id": "26 015468 000 00",
+      "address": "19",
+      "issued": "2026-09-18",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.29583,
+       43.39229
+      ]
+     },
+     "properties": {
+      "id": "26 010299 000 00",
+      "address": "32 GOODARE ST",
+      "issued": "2026-08-14",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.29511,
+       43.39234
+      ]
+     },
+     "properties": {
+      "id": "26 015489 000 00",
+      "address": "23 GOODARE ST",
+      "issued": "2026-09-18",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.29519,
+       43.39242
+      ]
+     },
+     "properties": {
+      "id": "26 015503 000 00",
+      "address": "27 GOODARE ST",
+      "issued": "2026-09-18",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.29528,
+       43.39249
+      ]
+     },
+     "properties": {
+      "id": "26 015507 000 00",
+      "address": "31 GOODARE ST",
+      "issued": "2026-09-18",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.29537,
+       43.39257
+      ]
+     },
+     "properties": {
+      "id": "26 015510 000 00",
+      "address": "35 GOODARE ST",
+      "issued": "2026-09-18",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.2956,
+       43.39266
+      ]
+     },
+     "properties": {
+      "id": "26 010460 000 00",
+      "address": "83 MOSS DR",
+      "issued": "2026-07-29",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.29795,
+       43.39083
+      ]
+     },
+     "properties": {
+      "id": "26 015524 000 00",
+      "address": "36 PAPERBIRCH DR",
+      "issued": "2026-09-18",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.29477,
+       43.39131
+      ]
+     },
+     "properties": {
+      "id": "26 015551 000 00",
+      "address": "104 PAPERBIRCH DR",
+      "issued": "2026-10-02",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.34075,
+       43.35852
+      ]
+     },
+     "properties": {
+      "id": "26 015853 000 00",
+      "address": "99 QUEENSBROOK CRES",
+      "issued": "2026-10-08",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.34074,
+       43.36278
+      ]
+     },
+     "properties": {
+      "id": "26 017731 000 00",
+      "address": "212 RIVERGREEN CRES",
+      "issued": "2026-11-02",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.34008,
+       43.36282
+      ]
+     },
+     "properties": {
+      "id": "26 008831 000 00",
+      "address": "188 RIVERGREEN CRES",
+      "issued": "2026-06-09",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.29624,
+       43.39156
+      ]
+     },
+     "properties": {
+      "id": "26 006445 000 00",
+      "address": "4 SHRUBSALL ST",
+      "issued": "2026-04-30",
+      "units": 1,
+      "status": "Closed",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "completed"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.2953,
+       43.39172
+      ]
+     },
+     "properties": {
+      "id": "26 010981 000 00",
+      "address": "93 PAPERBIRCH DR",
+      "issued": "2026-07-29",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.29527,
+       43.39347
+      ]
+     },
+     "properties": {
+      "id": "26 008997 000 00",
+      "address": "108 MOSS DR",
+      "issued": "2026-07-29",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.29573,
+       43.39319
+      ]
+     },
+     "properties": {
+      "id": "26 010421 000 00",
+      "address": "92 MOSS DR",
+      "issued": "2026-07-23",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.29778,
+       43.39175
+      ]
+     },
+     "properties": {
+      "id": "26 015521 000 00",
+      "address": "16 MOSS DR",
+      "issued": "2026-10-02",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.29516,
+       43.39354
+      ]
+     },
+     "properties": {
+      "id": "26 010409 000 00",
+      "address": "112 MOSS DR",
+      "issued": "2026-08-14",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.33855,
+       43.36292
+      ]
+     },
+     "properties": {
+      "id": "26 015525 000 00",
+      "address": "136 RIVERGREEN CRES",
+      "issued": "2026-09-17",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.3388,
+       43.36291
+      ]
+     },
+     "properties": {
+      "id": "26 011402 000 00",
+      "address": "144 RIVERGREEN CRES",
+      "issued": "2026-07-16",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.33891,
+       43.3629
+      ]
+     },
+     "properties": {
+      "id": "26 008247 000 00",
+      "address": "148 RIVERGREEN CRES",
+      "issued": "2026-06-09",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.33902,
+       43.36289
+      ]
+     },
+     "properties": {
+      "id": "26 009212 000 00",
+      "address": "152 RIVERGREEN CRES",
+      "issued": "2026-06-19",
+      "units": 1,
+      "status": "Closed",
+      "kind": "Residential Building Permit / New",
+      "stage": "completed"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.29514,
+       43.39127
+      ]
+     },
+     "properties": {
+      "id": "25 018079 000 00",
+      "address": "96 PAPERBIRCH DR",
+      "issued": "2025-11-28",
+      "units": 1,
+      "status": "Closed",
+      "kind": "Residential Building Permit / New",
+      "stage": "completed"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.29539,
+       43.3934
+      ]
+     },
+     "properties": {
+      "id": "26 010432 000 00",
+      "address": "104 MOSS DR",
+      "issued": "2026-07-23",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.29738,
+       43.39143
+      ]
+     },
+     "properties": {
+      "id": "26 010247 000 00",
+      "address": "4 MOSS DR",
+      "issued": "2026-08-20",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.29561,
+       43.39326
+      ]
+     },
+     "properties": {
+      "id": "26 010969 000 00",
+      "address": "96 MOSS DR",
+      "issued": "2026-07-29",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.25502,
+       43.34464
+      ]
+     },
+     "properties": {
+      "id": "25 001390 000 00",
+      "address": "25 GLEDHILL CRES",
+      "issued": "2026-03-04",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.25309,
+       43.34482
+      ]
+     },
+     "properties": {
+      "id": "26 003416 000 00",
+      "address": "88 BLOOMFIELD CRES",
+      "issued": "2026-04-17",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.25535,
+       43.34546
+      ]
+     },
+     "properties": {
+      "id": "26 009394 000 00",
+      "address": "61 GLEDHILL CRES",
+      "issued": "2026-06-24",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.25618,
+       43.3449
+      ]
+     },
+     "properties": {
+      "id": "26 012571 000 00",
+      "address": "73 ATTWATER DR",
+      "issued": "2026-08-28",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.25626,
+       43.34511
+      ]
+     },
+     "properties": {
+      "id": "26 016889 000 00",
+      "address": "81 ATTWATER DR",
+      "issued": "2026-11-03",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.34375,
+       43.36284
+      ]
+     },
+     "properties": {
+      "id": "26 012487 000 00",
+      "address": "95 LANGRIDGE WAY",
+      "issued": "2026-10-13",
+      "units": 2,
+      "status": "Issued",
+      "kind": "Residential Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.34398,
+       43.36396
+      ]
+     },
+     "properties": {
+      "id": "26 012495 000 00",
+      "address": "19 FOXLEIGH ST",
+      "issued": "2026-09-23",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.34328,
+       43.36256
+      ]
+     },
+     "properties": {
+      "id": "26 012798 000 00",
+      "address": "115 LANGRIDGE WAY",
+      "issued": "2026-09-23",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.34455,
+       43.36367
+      ]
+     },
+     "properties": {
+      "id": "26 009914 000 00",
+      "address": "32 FOXLEIGH ST",
+      "issued": "2026-10-09",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.34399,
+       43.36404
+      ]
+     },
+     "properties": {
+      "id": "26 010634 000 00",
+      "address": "15 FOXLEIGH ST",
+      "issued": "2026-09-01",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.25439,
+       43.34545
+      ]
+     },
+     "properties": {
+      "id": "26 014994 000 00",
+      "address": "78 GLEDHILL CRES",
+      "issued": "2026-09-14",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.25559,
+       43.34588
+      ]
+     },
+     "properties": {
+      "id": "25 017917 000 00",
+      "address": "126 ATTWATER DR",
+      "issued": "2026-01-16",
+      "units": 1,
+      "status": "Closed",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "completed"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.25531,
+       43.34563
+      ]
+     },
+     "properties": {
+      "id": "26 012666 000 00",
+      "address": "65 GLEDHILL CRES",
+      "issued": "2026-08-06",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.2563,
+       43.34521
+      ]
+     },
+     "properties": {
+      "id": "25 016651 000 00",
+      "address": "85 ATTWATER DR",
+      "issued": "2025-12-02",
+      "units": 1,
+      "status": "Closed",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "completed"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.34385,
+       43.3629
+      ]
+     },
+     "properties": {
+      "id": "26 012493 000 00",
+      "address": "91 LANGRIDGE WAY",
+      "issued": "2026-10-13",
+      "units": 2,
+      "status": "Issued",
+      "kind": "Residential Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.34364,
+       43.36278
+      ]
+     },
+     "properties": {
+      "id": "26 012489 000 00",
+      "address": "99 LANGRIDGE WAY",
+      "issued": "2026-08-31",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.34392,
+       43.36346
+      ]
+     },
+     "properties": {
+      "id": "26 010627 000 00",
+      "address": "43 FOXLEIGH ST",
+      "issued": "2026-10-30",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.34552,
+       43.36357
+      ]
+     },
+     "properties": {
+      "id": "26 001224 000 00",
+      "address": "36 LANGRIDGE WAY",
+      "issued": "2026-02-17",
+      "units": 1,
+      "status": "Closed",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "completed"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.34395,
+       43.36371
+      ]
+     },
+     "properties": {
+      "id": "26 010621 000 00",
+      "address": "31 FOXLEIGH ST",
+      "issued": "2026-09-25",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.34457,
+       43.36383
+      ]
+     },
+     "properties": {
+      "id": "26 010630 000 00",
+      "address": "24 FOXLEIGH ST",
+      "issued": "2026-08-28",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.27204,
+       43.34902
+      ]
+     },
+     "properties": {
+      "id": "26 017526 000 00",
+      "address": "51 FAITH ST",
+      "issued": "2026-10-16",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.34458,
+       43.36391
+      ]
+     },
+     "properties": {
+      "id": "26 010632 000 00",
+      "address": "20 FOXLEIGH ST",
+      "issued": "2026-09-01",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.3446,
+       43.36399
+      ]
+     },
+     "properties": {
+      "id": "26 013289 000 00",
+      "address": "16 FOXLEIGH ST",
+      "issued": "2026-10-30",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.3445,
+       43.36417
+      ]
+     },
+     "properties": {
+      "id": "26 012794 000 00",
+      "address": "425 NEWMAN DR",
+      "issued": "2026-08-28",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.35246,
+       43.39188
+      ]
+     },
+     "properties": {
+      "id": "25 005422 000 00",
+      "address": "1169 QUEENSTON RD",
+      "issued": "2026-06-01",
+      "units": 2,
+      "status": "Issued",
+      "kind": "Residential Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.34488,
+       43.36497
+      ]
+     },
+     "properties": {
+      "id": "25 019583 000 00",
+      "address": "400 NEWMAN DR",
+      "issued": "2026-01-12",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.34359,
+       43.36382
+      ]
+     },
+     "properties": {
+      "id": "26 013206 000 00",
+      "address": "24 PILKINGTON WAY",
+      "issued": "2026-08-21",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Townhouse Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.34358,
+       43.36376
+      ]
+     },
+     "properties": {
+      "id": "26 013209 000 00",
+      "address": "26 PILKINGTON WAY",
+      "issued": "2026-08-21",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Townhouse Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.34358,
+       43.36371
+      ]
+     },
+     "properties": {
+      "id": "26 013210 000 00",
+      "address": "28 PILKINGTON WAY",
+      "issued": "2026-08-21",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Townhouse Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.34357,
+       43.36365
+      ]
+     },
+     "properties": {
+      "id": "26 013211 000 00",
+      "address": "30 PILKINGTON WAY",
+      "issued": "2026-08-21",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Townhouse Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.34356,
+       43.3636
+      ]
+     },
+     "properties": {
+      "id": "26 013214 000 00",
+      "address": "32 PILKINGTON WAY",
+      "issued": "2026-08-21",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Townhouse Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.34356,
+       43.36354
+      ]
+     },
+     "properties": {
+      "id": "26 013217 000 00",
+      "address": "34 PILKINGTON WAY",
+      "issued": "2026-08-21",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Townhouse Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.26906,
+       43.34908
+      ]
+     },
+     "properties": {
+      "id": "26 006591 010 00",
+      "address": "43 BASTIEN ST",
+      "issued": "2026-07-16",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Townhouse Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.26906,
+       43.34908
+      ]
+     },
+     "properties": {
+      "id": "26 006591 008 00",
+      "address": "43 BASTIEN ST",
+      "issued": "2026-07-16",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Townhouse Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.26906,
+       43.34908
+      ]
+     },
+     "properties": {
+      "id": "26 006591 004 00",
+      "address": "43 BASTIEN ST",
+      "issued": "2026-07-16",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Townhouse Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.26906,
+       43.34908
+      ]
+     },
+     "properties": {
+      "id": "26 006591 006 00",
+      "address": "43 BASTIEN ST",
+      "issued": "2026-07-16",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Townhouse Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.33938,
+       43.36216
+      ]
+     },
+     "properties": {
+      "id": "25 016066 000 00",
+      "address": "65 RIVERGREEN CRES",
+      "issued": "2025-11-10",
+      "units": 1,
+      "status": "Closed",
+      "kind": "Residential Townhouse Building Permit / New",
+      "stage": "completed"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.33945,
+       43.36216
+      ]
+     },
+     "properties": {
+      "id": "25 016065 000 00",
+      "address": "63 RIVERGREEN CRES",
+      "issued": "2025-11-10",
+      "units": 1,
+      "status": "Closed",
+      "kind": "Residential Townhouse Building Permit / New",
+      "stage": "completed"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.3393,
+       43.36216
+      ]
+     },
+     "properties": {
+      "id": "25 016067 000 00",
+      "address": "67 RIVERGREEN CRES",
+      "issued": "2025-11-10",
+      "units": 1,
+      "status": "Closed",
+      "kind": "Residential Townhouse Building Permit / New",
+      "stage": "completed"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.33923,
+       43.36217
+      ]
+     },
+     "properties": {
+      "id": "25 016068 000 00",
+      "address": "69 RIVERGREEN CRES",
+      "issued": "2025-11-10",
+      "units": 1,
+      "status": "Closed",
+      "kind": "Residential Townhouse Building Permit / New",
+      "stage": "completed"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.33915,
+       43.36218
+      ]
+     },
+     "properties": {
+      "id": "25 016070 000 00",
+      "address": "71 RIVERGREEN CRES",
+      "issued": "2025-11-10",
+      "units": 1,
+      "status": "Closed",
+      "kind": "Residential Townhouse Building Permit / New",
+      "stage": "completed"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.33906,
+       43.36218
+      ]
+     },
+     "properties": {
+      "id": "25 019453 000 00",
+      "address": "75 RIVERGREEN CRES",
+      "issued": "2025-12-23",
+      "units": 1,
+      "status": "Closed",
+      "kind": "Residential Townhouse Building Permit / New",
+      "stage": "completed"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.33897,
+       43.36219
+      ]
+     },
+     "properties": {
+      "id": "25 019454 000 00",
+      "address": "77 RIVERGREEN CRES",
+      "issued": "2025-12-23",
+      "units": 1,
+      "status": "Closed",
+      "kind": "Residential Townhouse Building Permit / New",
+      "stage": "completed"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.3389,
+       43.36219
+      ]
+     },
+     "properties": {
+      "id": "25 019455 000 00",
+      "address": "79 RIVERGREEN CRES",
+      "issued": "2025-12-23",
+      "units": 1,
+      "status": "Closed",
+      "kind": "Residential Townhouse Building Permit / New",
+      "stage": "completed"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.33882,
+       43.3622
+      ]
+     },
+     "properties": {
+      "id": "25 019456 000 00",
+      "address": "81 RIVERGREEN CRES",
+      "issued": "2025-12-23",
+      "units": 1,
+      "status": "Closed",
+      "kind": "Residential Townhouse Building Permit / New",
+      "stage": "completed"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.33874,
+       43.3622
+      ]
+     },
+     "properties": {
+      "id": "25 019457 000 00",
+      "address": "83 RIVERGREEN CRES",
+      "issued": "2025-12-23",
+      "units": 1,
+      "status": "Closed",
+      "kind": "Residential Townhouse Building Permit / New",
+      "stage": "completed"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.33865,
+       43.36221
+      ]
+     },
+     "properties": {
+      "id": "25 019491 000 00",
+      "address": "87 RIVERGREEN CRES",
+      "issued": "2026-01-21",
+      "units": 1,
+      "status": "Closed",
+      "kind": "Residential Townhouse Building Permit / New",
+      "stage": "completed"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.33857,
+       43.36221
+      ]
+     },
+     "properties": {
+      "id": "25 019493 000 00",
+      "address": "89 RIVERGREEN CRES",
+      "issued": "2026-01-21",
+      "units": 1,
+      "status": "Closed",
+      "kind": "Residential Townhouse Building Permit / New",
+      "stage": "completed"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.33849,
+       43.36222
+      ]
+     },
+     "properties": {
+      "id": "25 019495 000 00",
+      "address": "91 RIVERGREEN CRES",
+      "issued": "2026-01-21",
+      "units": 1,
+      "status": "Closed",
+      "kind": "Residential Townhouse Building Permit / New",
+      "stage": "completed"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.33841,
+       43.36222
+      ]
+     },
+     "properties": {
+      "id": "25 019496 000 00",
+      "address": "93 RIVERGREEN CRES",
+      "issued": "2026-01-21",
+      "units": 1,
+      "status": "Closed",
+      "kind": "Residential Townhouse Building Permit / New",
+      "stage": "completed"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.3465,
+       43.36673
+      ]
+     },
+     "properties": {
+      "id": "25 005761 000 00",
+      "address": "294 NEWMAN DR",
+      "issued": "2026-01-22",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.34637,
+       43.3664
+      ]
+     },
+     "properties": {
+      "id": "26 013949 000 00",
+      "address": "310 NEWMAN DR",
+      "issued": "2026-08-26",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.34361,
+       43.35831
+      ]
+     },
+     "properties": {
+      "id": "26 011279 074 00",
+      "address": "86 BUR OAK COMMON",
+      "issued": "2026-08-04",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Townhouse Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.34361,
+       43.35837
+      ]
+     },
+     "properties": {
+      "id": "26 011279 073 00",
+      "address": "88 BUR OAK COMMON",
+      "issued": "2026-08-04",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Townhouse Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.3436,
+       43.35842
+      ]
+     },
+     "properties": {
+      "id": "26 011279 072 00",
+      "address": "90 BUR OAK COMMON",
+      "issued": "2026-08-04",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Townhouse Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.34358,
+       43.35848
+      ]
+     },
+     "properties": {
+      "id": "26 011279 071 00",
+      "address": "92 BUR OAK COMMON",
+      "issued": "2026-08-04",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Townhouse Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.34269,
+       43.35879
+      ]
+     },
+     "properties": {
+      "id": "25 016059 093 00",
+      "address": "111 BUR OAK COMMON",
+      "issued": "2025-11-20",
+      "units": 1,
+      "status": "Closed",
+      "kind": "Residential Townhouse Building Permit / New",
+      "stage": "completed"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.3427,
+       43.35873
+      ]
+     },
+     "properties": {
+      "id": "25 016059 094 00",
+      "address": "113 BUR OAK COMMON",
+      "issued": "2025-11-20",
+      "units": 1,
+      "status": "Closed",
+      "kind": "Residential Townhouse Building Permit / New",
+      "stage": "completed"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.34271,
+       43.35868
+      ]
+     },
+     "properties": {
+      "id": "25 016059 095 00",
+      "address": "115 BUR OAK COMMON",
+      "issued": "2025-11-20",
+      "units": 1,
+      "status": "Closed",
+      "kind": "Residential Townhouse Building Permit / New",
+      "stage": "completed"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.34272,
+       43.35864
+      ]
+     },
+     "properties": {
+      "id": "25 016059 096 00",
+      "address": "117 BUR OAK COMMON",
+      "issued": "2025-11-20",
+      "units": 1,
+      "status": "Closed",
+      "kind": "Residential Townhouse Building Permit / New",
+      "stage": "completed"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.34273,
+       43.35859
+      ]
+     },
+     "properties": {
+      "id": "25 016059 097 00",
+      "address": "119 BUR OAK COMMON",
+      "issued": "2025-11-20",
+      "units": 1,
+      "status": "Closed",
+      "kind": "Residential Townhouse Building Permit / New",
+      "stage": "completed"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.34275,
+       43.35853
+      ]
+     },
+     "properties": {
+      "id": "25 016059 098 00",
+      "address": "121 BUR OAK COMMON",
+      "issued": "2025-11-20",
+      "units": 1,
+      "status": "Closed",
+      "kind": "Residential Townhouse Building Permit / New",
+      "stage": "completed"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.34283,
+       43.35814
+      ]
+     },
+     "properties": {
+      "id": "26 008343 105 00",
+      "address": "139 BUR OAK COMMON",
+      "issued": "2026-06-18",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Townhouse Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.34284,
+       43.35808
+      ]
+     },
+     "properties": {
+      "id": "26 008343 106 00",
+      "address": "141 BUR OAK COMMON",
+      "issued": "2026-06-18",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Townhouse Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.34286,
+       43.35803
+      ]
+     },
+     "properties": {
+      "id": "26 008343 107 00",
+      "address": "143 BUR OAK COMMON",
+      "issued": "2026-06-18",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Townhouse Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.34287,
+       43.35797
+      ]
+     },
+     "properties": {
+      "id": "26 008343 108 00",
+      "address": "145 BUR OAK COMMON",
+      "issued": "2026-06-18",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Townhouse Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.34202,
+       43.35809
+      ]
+     },
+     "properties": {
+      "id": "26 000523 149 00",
+      "address": "31 RED OAK COMMON",
+      "issued": "2026-03-05",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Townhouse Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.34203,
+       43.35803
+      ]
+     },
+     "properties": {
+      "id": "26 000523 150 00",
+      "address": "33 RED OAK COMMON",
+      "issued": "2026-03-05",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Townhouse Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.34204,
+       43.35797
+      ]
+     },
+     "properties": {
+      "id": "26 000523 151 00",
+      "address": "35 RED OAK COMMON",
+      "issued": "2026-03-05",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Townhouse Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.34206,
+       43.35791
+      ]
+     },
+     "properties": {
+      "id": "26 000523 152 00",
+      "address": "37 RED OAK COMMON",
+      "issued": "2026-03-05",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Townhouse Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.30379,
+       43.37118
+      ]
+     },
+     "properties": {
+      "id": "21 008757 000 00",
+      "address": "10 KIMBERLEY RD",
+      "issued": "2025-11-28",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.30383,
+       43.37129
+      ]
+     },
+     "properties": {
+      "id": "21 008758 000 00",
+      "address": "12 KIMBERLEY RD",
+      "issued": "2025-11-28",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.27572,
+       43.35549
+      ]
+     },
+     "properties": {
+      "id": "26 004580 000 00",
+      "address": "35 ASHFORD ST",
+      "issued": "2026-04-02",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Townhouse Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.27562,
+       43.35552
+      ]
+     },
+     "properties": {
+      "id": "26 004581 000 00",
+      "address": "33 ASHFORD ST",
+      "issued": "2026-04-02",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Townhouse Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.27555,
+       43.35553
+      ]
+     },
+     "properties": {
+      "id": "26 004582 000 00",
+      "address": "31 ASHFORD ST",
+      "issued": "2026-04-02",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Townhouse Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.27548,
+       43.35555
+      ]
+     },
+     "properties": {
+      "id": "26 004583 000 00",
+      "address": "29 ASHFORD ST",
+      "issued": "2026-04-02",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Townhouse Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.27541,
+       43.35557
+      ]
+     },
+     "properties": {
+      "id": "26 004585 000 00",
+      "address": "27 ASHFORD ST",
+      "issued": "2026-04-02",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Townhouse Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.27534,
+       43.35558
+      ]
+     },
+     "properties": {
+      "id": "26 004586 000 00",
+      "address": "25 ASHFORD ST",
+      "issued": "2026-04-02",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Townhouse Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.27523,
+       43.35561
+      ]
+     },
+     "properties": {
+      "id": "25 019081 000 00",
+      "address": "23 ASHFORD ST",
+      "issued": "2026-02-17",
+      "units": 1,
+      "status": "Occupancy Permitted - Not Closed",
+      "kind": "Residential Townhouse Building Permit / New",
+      "stage": "completed"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.27515,
+       43.35562
+      ]
+     },
+     "properties": {
+      "id": "25 019083 000 00",
+      "address": "21 ASHFORD ST",
+      "issued": "2026-02-17",
+      "units": 1,
+      "status": "Closed",
+      "kind": "Residential Townhouse Building Permit / New",
+      "stage": "completed"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.27508,
+       43.35564
+      ]
+     },
+     "properties": {
+      "id": "25 019084 000 00",
+      "address": "19 ASHFORD ST",
+      "issued": "2026-02-17",
+      "units": 1,
+      "status": "Occupancy Permitted - Not Closed",
+      "kind": "Residential Townhouse Building Permit / New",
+      "stage": "completed"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.27501,
+       43.35566
+      ]
+     },
+     "properties": {
+      "id": "25 019085 000 00",
+      "address": "17 ASHFORD ST",
+      "issued": "2026-02-17",
+      "units": 1,
+      "status": "Closed",
+      "kind": "Residential Townhouse Building Permit / New",
+      "stage": "completed"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.27493,
+       43.35567
+      ]
+     },
+     "properties": {
+      "id": "25 019086 000 00",
+      "address": "15 ASHFORD ST",
+      "issued": "2026-02-17",
+      "units": 1,
+      "status": "Closed",
+      "kind": "Residential Townhouse Building Permit / New",
+      "stage": "completed"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.27483,
+       43.3557
+      ]
+     },
+     "properties": {
+      "id": "26 002834 000 00",
+      "address": "13 ASHFORD ST",
+      "issued": "2026-03-24",
+      "units": 1,
+      "status": "Occupancy Permitted - Not Closed",
+      "kind": "Residential Townhouse Building Permit / New",
+      "stage": "completed"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.27476,
+       43.35571
+      ]
+     },
+     "properties": {
+      "id": "26 002835 000 00",
+      "address": "11 ASHFORD ST",
+      "issued": "2026-03-24",
+      "units": 1,
+      "status": "Occupancy Permitted - Not Closed",
+      "kind": "Residential Townhouse Building Permit / New",
+      "stage": "completed"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.27469,
+       43.35573
+      ]
+     },
+     "properties": {
+      "id": "26 002837 000 00",
+      "address": "9 ASHFORD ST",
+      "issued": "2026-03-24",
+      "units": 1,
+      "status": "Occupancy Permitted - Not Closed",
+      "kind": "Residential Townhouse Building Permit / New",
+      "stage": "completed"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.27461,
+       43.35575
+      ]
+     },
+     "properties": {
+      "id": "26 002839 000 00",
+      "address": "7 ASHFORD ST",
+      "issued": "2026-03-24",
+      "units": 1,
+      "status": "Occupancy Permitted - Not Closed",
+      "kind": "Residential Townhouse Building Permit / New",
+      "stage": "completed"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.27454,
+       43.35576
+      ]
+     },
+     "properties": {
+      "id": "26 002840 000 00",
+      "address": "5 ASHFORD ST",
+      "issued": "2026-03-24",
+      "units": 1,
+      "status": "Occupancy Permitted - Not Closed",
+      "kind": "Residential Townhouse Building Permit / New",
+      "stage": "completed"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.27444,
+       43.35578
+      ]
+     },
+     "properties": {
+      "id": "26 002860 000 00",
+      "address": "3 ASHFORD ST",
+      "issued": "2026-03-24",
+      "units": 1,
+      "status": "Occupancy Permitted - Not Closed",
+      "kind": "Residential Townhouse Building Permit / New",
+      "stage": "completed"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.29569,
+       43.39217
+      ]
+     },
+     "properties": {
+      "id": "26 010922 000 00",
+      "address": "24 GOODARE ST",
+      "issued": "2026-07-23",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.27721,
+       43.35768
+      ]
+     },
+     "properties": {
+      "id": "26 006306 000 00",
+      "address": "3 SAGE DR",
+      "issued": "2026-05-05",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Townhouse Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.27725,
+       43.35774
+      ]
+     },
+     "properties": {
+      "id": "26 006308 000 00",
+      "address": "5 SAGE DR",
+      "issued": "2026-05-05",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Townhouse Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.27727,
+       43.35779
+      ]
+     },
+     "properties": {
+      "id": "26 006309 000 00",
+      "address": "7 SAGE DR",
+      "issued": "2026-05-05",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Townhouse Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.2773,
+       43.35784
+      ]
+     },
+     "properties": {
+      "id": "26 006312 000 00",
+      "address": "9 SAGE DR",
+      "issued": "2026-05-05",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Townhouse Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.27732,
+       43.35789
+      ]
+     },
+     "properties": {
+      "id": "26 006313 000 00",
+      "address": "11 SAGE DR",
+      "issued": "2026-05-05",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Townhouse Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.27735,
+       43.35795
+      ]
+     },
+     "properties": {
+      "id": "26 006314 000 00",
+      "address": "13 SAGE DR",
+      "issued": "2026-05-05",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Townhouse Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.27737,
+       43.358
+      ]
+     },
+     "properties": {
+      "id": "26 006315 000 00",
+      "address": "15 SAGE DR",
+      "issued": "2026-05-05",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Townhouse Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.2774,
+       43.35806
+      ]
+     },
+     "properties": {
+      "id": "26 006316 000 00",
+      "address": "17 SAGE DR",
+      "issued": "2026-05-05",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Townhouse Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.29537,
+       43.35808
+      ]
+     },
+     "properties": {
+      "id": "26 013799 000 00",
+      "address": "21 AMBER RD",
+      "issued": "2026-09-08",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.29513,
+       43.39174
+      ]
+     },
+     "properties": {
+      "id": "26 010908 000 00",
+      "address": "97 PAPERBIRCH DR",
+      "issued": "2026-08-14",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.34365,
+       43.36431
+      ]
+     },
+     "properties": {
+      "id": "26 007318 000 00",
+      "address": "4 PILKINGTON WAY",
+      "issued": "2026-06-04",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Townhouse Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.34364,
+       43.36422
+      ]
+     },
+     "properties": {
+      "id": "26 007322 000 00",
+      "address": "8 PILKINGTON WAY",
+      "issued": "2026-06-02",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Townhouse Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.34363,
+       43.36417
+      ]
+     },
+     "properties": {
+      "id": "26 007323 000 00",
+      "address": "10 PILKINGTON WAY",
+      "issued": "2026-06-02",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Townhouse Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.34362,
+       43.36411
+      ]
+     },
+     "properties": {
+      "id": "26 007326 000 00",
+      "address": "12 PILKINGTON WAY",
+      "issued": "2026-06-02",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Townhouse Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.34362,
+       43.36406
+      ]
+     },
+     "properties": {
+      "id": "26 007328 000 00",
+      "address": "14 PILKINGTON WAY",
+      "issued": "2026-06-02",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Townhouse Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.34361,
+       43.364
+      ]
+     },
+     "properties": {
+      "id": "26 007330 000 00",
+      "address": "16 PILKINGTON WAY",
+      "issued": "2026-06-02",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Townhouse Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.3436,
+       43.36395
+      ]
+     },
+     "properties": {
+      "id": "26 007331 000 00",
+      "address": "18 PILKINGTON WAY",
+      "issued": "2026-06-02",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Townhouse Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.3436,
+       43.36389
+      ]
+     },
+     "properties": {
+      "id": "26 007332 000 00",
+      "address": "20 PILKINGTON WAY",
+      "issued": "2026-06-02",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Townhouse Building Permit / New",
+      "stage": "under-construction"
+     }
+    },
+    {
+     "type": "Feature",
+     "geometry": {
+      "type": "Point",
+      "coordinates": [
+       -80.37938,
+       43.39097
+      ]
+     },
+     "properties": {
+      "id": "26 018148 000 00",
+      "address": "755 LINDEN DR",
+      "issued": "2026-11-03",
+      "units": 1,
+      "status": "Issued",
+      "kind": "Residential Alteration Permit / Conversion - Single RU to Multiple RU(s)",
+      "stage": "under-construction"
+     }
+    }
+   ]
+  }
+ }
+}

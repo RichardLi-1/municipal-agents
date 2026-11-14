@@ -47,18 +47,21 @@ export function agentRoutes(app: App, r: Router): void {
       const sse = openSse(req, res);
       const run = startRun(app, { signal: sse.signal, serverKinds: ["question.asked"] });
       let answer: Extract<AgentEvent, { type: "answer" }> | undefined;
+      let reportedError = false;
       const emit = (e: AgentEvent) => {
         if (e.type === "answer") answer = e;
+        if (e.type === "error") reportedError = true;
         if (e.type === "usage") run.lastUsage = e;
         if (e.type === "done") return; // the server sends the one "done", last
         sse.send(e as AgentEvent & Record<string, unknown>);
       };
       try {
         await agents.ask(run.ctx, { decisionId: decision.id, question, audiences, lang }, emit);
-        if (!answer && !run.signal.aborted) sse.send({ type: "error", message: "The agents finished without an answer. Please try rephrasing." });
+        if (!answer && !reportedError && !run.signal.aborted) sse.send({ type: "error", message: "The agents finished without an answer. Please try rephrasing." });
       } catch (err) {
         sse.send({ type: "error", message: failureMessage(err, run) });
       } finally {
+        if (run.signal.aborted && !reportedError && !answer) sse.send({ type: "error", message: failureMessage(undefined, run) });
         if (answer && !run.loggedKinds.has("answer.given")) {
           app.log.append({
             actor: "agent:lead",

@@ -1,0 +1,75 @@
+{
+ "city": "region",
+ "stages": [
+  {
+   "id": "approved",
+   "label": "Approved by council (zoning or subdivision)",
+   "units": null,
+   "projects": null,
+   "tracked": false,
+   "source": "No region-wide list: only Kitchener publishes zoning and subdivision applications, without unit counts. See the Kitchener lens."
+  },
+  {
+   "id": "site-plan",
+   "label": "Site plan approved",
+   "units": null,
+   "projects": null,
+   "tracked": false,
+   "source": "No region-wide list: Kitchener and Cambridge publish site plan statuses without unit counts; Waterloo publishes none. See the city lenses."
+  },
+  {
+   "id": "permit-issued",
+   "label": "Building permit issued",
+   "units": 22486,
+   "projects": 8237,
+   "source": "Sum of the three cities' building permit data (Kitchener, Waterloo, Cambridge; not the townships), new units on residential permits issued 2022-01-01 to each city's latest date: Kitchener 14,312, Waterloo 4,986, Cambridge 3,188. See each city lens for its dataset and licence.",
+   "tracked": true
+  },
+  {
+   "id": "under-construction",
+   "label": "Under construction",
+   "units": 6820,
+   "projects": null,
+   "source": "Table 34-10-0154-01: CMHC housing starts, under construction and completions in selected census metropolitan areas, monthly, Statistics Canada (data from Canada Mortgage and Housing Corporation), https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=3410015401, retrieved 2026-11-14, Statistics Canada Open Licence: housing units under construction (all types) in the Kitchener-Cambridge-Waterloo census metropolitan area at the end of 2026-09. CMHC housing starts over 2022-01 to 2026-09: 20,210 units.",
+   "tracked": true
+  },
+  {
+   "id": "completed",
+   "label": "Completed",
+   "units": 20646,
+   "projects": null,
+   "source": "Table 34-10-0154-01: CMHC housing starts, under construction and completions in selected census metropolitan areas, monthly, Statistics Canada (data from Canada Mortgage and Housing Corporation), https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=3410015401, retrieved 2026-11-14, Statistics Canada Open Licence: housing completions (all types) in the Kitchener-Cambridge-Waterloo census metropolitan area, 2022-01 to 2026-09, summed by month.",
+   "tracked": true
+  }
+ ],
+ "timeBetween": [
+  {
+   "from": "approved",
+   "to": "permit-issued",
+   "medianDays": null,
+   "note": "Not measurable from public data: planning approvals and building permits are published in separate lists with no shared file number, so the same project can't be followed from approval to permit."
+  },
+  {
+   "from": "permit-issued",
+   "to": "completed",
+   "medianDays": null,
+   "note": "Not computed for the region: CMHC counts starts and completions in aggregate and doesn't follow individual projects. See the Kitchener and Cambridge lenses for permit-level medians."
+  }
+ ],
+ "target": {
+  "label": "Sum of Ontario's housing targets for Kitchener (35,000), Waterloo (16,000) and Cambridge (19,000): 70,000 new homes from 2022 to 2031. The province counts 15,902 homes toward them from 2022 through 2024. The townships have no provincial target. Source: https://data.ontario.ca/dataset/ontario-s-housing-supply-progress (Open Government Licence – Ontario).",
+  "units": 70000,
+  "by": "2031"
+ },
+ "statements": [],
+ "hardToTrack": [
+  "Approved but no building permit yet: no city publishes a list that links a council approval (zoning, subdivision or site plan) to the building permits that follow, so nobody outside city hall can count the homes waiting between approval and permit.",
+  "Construction start: permits show the day a permit was issued, not the day work began. Here 'under construction' means a permit issued since 2022 with no final inspection or occupancy yet; some of those may not have started, and some may have lapsed.",
+  "Units in permits vs units built: a permit's unit count is what was proposed. The cities don't publish how many units were finally built, so completed units here are the permit's units on permits marked finished.",
+  "One building, several permits: big projects can be split into phases or permits (and townhouse blocks into one permit per unit), so 'projects' counts permits, not buildings.",
+  "Who the homes are for: permits don't say whether units are rentals, condos or affordable homes.",
+  "Finish dates: a permit's final inspection or closing date can come months or years after people moved in, so permits 'completed' in a period are not the same as CMHC's completions for that period.",
+  "Mixed geographies: permits here cover the three cities only, while CMHC's under-construction and completion counts cover the Kitchener-Cambridge-Waterloo census metropolitan area, which also includes Woolwich and North Dumfries. The two can't be subtracted from each other.",
+  "Approval and site plan stages: only Kitchener (zoning, subdivision, site plans) and Cambridge (site plans) publish application data, and neither gives unit counts."
+ ]
+}

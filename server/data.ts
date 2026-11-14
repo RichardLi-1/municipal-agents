@@ -275,7 +275,8 @@ function mirror(src: string, dst: string, stats: { copied: number; removed: numb
     const want = new Set(fs.readdirSync(src));
     for (const n of want) mirror(path.join(src, n), path.join(dst, n), stats);
     for (const n of fs.readdirSync(dst)) {
-      if (!want.has(n)) {
+      // Staff uploads live beside committed files; they're re-applied after the mirror.
+      if (!want.has(n) && !n.startsWith("upload-") && n !== "index.json") {
         fs.rmSync(path.join(dst, n), { recursive: true, force: true });
         stats.removed++;
       }

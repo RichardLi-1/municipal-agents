@@ -31,7 +31,9 @@ const fakeAgents: AgentsModule = {
   },
   async generateBrief(ctx, req, emit) {
     emit({ type: "step.start", id: "b", specialist: "explainer", question: "summary" });
-    const old = JSON.parse(fs.readFileSync(path.join(ctx.dataDir, "briefs", `${req.decisionId}.json`), "utf8")) as Brief;
+    const file = path.join(ctx.dataDir, "briefs", `${req.decisionId}.json`);
+    const fallback = path.join(ctx.dataDir, "briefs", "fixture-budget.json");
+    const old = JSON.parse(fs.readFileSync(fs.existsSync(file) ? file : fallback, "utf8")) as Brief;
     emit({ type: "usage", calls: 2, inputTokens: 500, outputTokens: 50, costUsd: 0.002 });
     return { ...old, generatedAt: new Date().toISOString(), review: { status: "published", by: "agent" } };
   },
@@ -203,6 +205,30 @@ test("staff brief run streams, saves a draft and logs it", async () => {
   assert.equal(saved.review.status, "draft");
   const kinds = app.log.list({ decisionId: "fixture-budget", order: "desc", limit: 3 }).map((e) => e.kind);
   assert.deepEqual(kinds, ["usage", "brief.generated", "brief.started"]);
+});
+
+test("a staff PDF upload becomes a source and a decision, then gets a draft brief", async () => {
+  const pdf = fs.readFileSync(path.join(import.meta.dirname, "fixtures/data/sources/fixture-report.pdf"));
+  const form = new FormData();
+  form.set("title", "Bike lanes on King Street");
+  form.set("reviewer", "Ana");
+  form.set("file", new Blob([pdf], { type: "application/pdf" }), "king-st.pdf");
+  const res = await fetch(base + "/api/staff/briefs", { method: "POST", headers: staff, body: form });
+  assert.equal(res.status, 200);
+  const events = await sseEvents(res);
+  const brief = events.find((e) => e.type === "brief") as Extract<AgentEvent, { type: "brief" }>;
+  assert.match(brief.brief.decisionId, /^upload-bike-lanes-on-king-street-[0-9a-f]{6}$/);
+  const id = brief.brief.decisionId;
+  const page = await (await get(`/api/sources/${id}/pages/1`)).json();
+  assert.match(page.text, /levy rises/);
+  const detail = await (await get(`/api/decisions/${id}`)).json();
+  assert.equal(detail.decision.plainTitle, "Bike lanes on King Street");
+  assert.equal(detail.sources[0].pages, 2);
+  assert.equal(detail.brief.review.status, "draft");
+  assert.ok(app.log.list({ decisionId: id }).some((e) => e.kind === "source.added"));
+  const notPdf = new FormData();
+  notPdf.set("file", new Blob(["hello"], { type: "text/plain" }), "x.txt");
+  assert.equal((await fetch(base + "/api/staff/briefs", { method: "POST", headers: staff, body: notPdf })).status, 415);
 });
 
 test("the log endpoint returns a chain that verifies", async () => {

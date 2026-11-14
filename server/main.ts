@@ -4,10 +4,13 @@ import { createApp } from "./app.ts";
 import { loadConfig } from "./config.ts";
 import { syncCommittedData } from "./data.ts";
 import { createServer } from "./server.ts";
+import { materializeUploads } from "./upload.ts";
 
 const cfg = loadConfig();
 const synced = syncCommittedData(cfg.appData, cfg.dataDir);
 if (synced.copied || synced.removed) console.log(`data: copied ${synced.copied}, removed ${synced.removed} into ${cfg.dataDir}`);
+// The mirror rewrote sources/index.json from the image; put staff uploads back in.
+materializeUploads(cfg.dataDir);
 
 const app = createApp(cfg);
 await app.agents.load();

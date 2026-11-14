@@ -88,6 +88,7 @@ export function summarise(log: Log, limitUsd: number, at = new Date()): UsageRes
   s.co2eGrams = (s.energyWh / 1000) * GRID_G_CO2E_PER_KWH;
   const round = (n: number, d: number) => Math.round(n * 10 ** d) / 10 ** d;
   s.costUsd = round(s.costUsd, 6);
+  for (const m of Object.values(s.byModel)) m.costUsd = round(m.costUsd, 6);
   s.today.costUsd = round(s.today.costUsd, 6);
   s.energyWh = round(s.energyWh, 3);
   s.co2eGrams = round(s.co2eGrams, 4);
