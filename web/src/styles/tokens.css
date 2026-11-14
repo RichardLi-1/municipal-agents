@@ -1,0 +1,208 @@
+/* Municipal Agents design tokens. Every colour, radius, shadow, blur, size and timing
+   the display uses lives here, as CSS custom properties, so other parts of web/
+   (the construction lens in web/src/construction/) can follow the same look.
+
+   The look: the map is the ground under the whole app; what you use floats over it
+   as glass (the rail, the chat, the map's tools, menus and toasts); what you read
+   sits on near-opaque panes so its words stay crisp. Warm stone greys, black ink,
+   one civic blue for links, focus, selection and the decision's area; green, red
+   and amber only where they mean checked, failed and "needs attention". */
+
+:root {
+  color-scheme: light;
+
+  /* Type */
+  --font: "Inter Variable", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --t-small: 13px;
+  --t-ui: 14px;
+  --t-text: 15px;
+  --t-lead: 17px;
+  --t-title: 26px;
+  --t-hero: 34px;
+  --t-figure: 30px;
+  --w-regular: 400;
+  --w-medium: 500;
+  --w-strong: 600;
+
+  /* Words */
+  --ink: #1c1917;
+  --muted: #3d3935; /* secondary words, 11:1 on white */
+  --quiet: #57534e; /* tertiary words, 7.4:1 on white */
+
+  /* The one accent: links, focus, selection, the decision's area */
+  --accent: #1f5fd6;
+  --accent-strong: #184fb6;
+  --accent-tint: rgba(31, 95, 214, 0.1);
+  --accent-tint-2: rgba(31, 95, 214, 0.18);
+  --on-accent: #ffffff;
+  --focus: #1f5fd6;
+  --selection: rgba(31, 95, 214, 0.2);
+
+  /* Status: for meaning only */
+  --pass: #1a7f37;
+  --pass-ink: #0f5a25;
+  --pass-tint: #e7f4ea;
+  --fail: #b42318;
+  --fail-ink: #8f1d14;
+  --fail-tint: #fcebe9;
+  --amber: #a35407;
+  --amber-ink: #6e3800;
+  --amber-tint: #fcf0e0;
+  --gap-mark: #d9480f; /* transit gaps on the map */
+
+  /* Ground and panes */
+  --ground: #f2f1ee;
+  --pane: rgba(255, 255, 255, 0.95);
+  --pane-solid: #ffffff;
+  --pane-lift: 0 0 0 0.5px rgba(28, 25, 23, 0.14), 0 1px 3px rgba(28, 25, 23, 0.06), 0 18px 48px -18px rgba(28, 25, 23, 0.22);
+  --inset: #f5f5f4; /* cards set into a pane */
+  --inset-2: #ecebe9;
+  --hairline: rgba(28, 25, 23, 0.16);
+  --divider: rgba(28, 25, 23, 0.09);
+  --hover: rgba(28, 25, 23, 0.06);
+  --press: rgba(28, 25, 23, 0.11);
+  --tag: rgba(28, 25, 23, 0.08);
+  --bubble: #e7e5e4; /* the resident's words in the chat */
+
+  /* Glass: clear, the map behind it blurred and brighter, lit along the top-left edge */
+  --glass: linear-gradient(155deg, rgba(255, 255, 255, 0.76), rgba(255, 255, 255, 0.62) 55%, rgba(255, 255, 255, 0.7));
+  --glass-chip: linear-gradient(155deg, rgba(255, 255, 255, 0.86), rgba(255, 255, 255, 0.68));
+  --glass-menu: linear-gradient(155deg, rgba(255, 255, 255, 0.93), rgba(255, 255, 255, 0.86));
+  --glass-solid: #f7f7f6;
+  --glass-rim: rgba(255, 255, 255, 0.7);
+  --sheen: inset 1.5px 1.5px 0 -0.5px rgba(255, 255, 255, 0.95), inset -1px -1px 0 -0.5px rgba(255, 255, 255, 0.55), inset 0 0 24px rgba(255, 255, 255, 0.45);
+  --chip-sheen: inset 1px 1px 0 -0.25px rgba(255, 255, 255, 0.95), inset -1px -1px 0 -0.5px rgba(255, 255, 255, 0.5), inset 0 0 10px rgba(255, 255, 255, 0.5);
+  --lift: 0 0 0 0.5px rgba(28, 25, 23, 0.16), 0 1px 2px rgba(28, 25, 23, 0.06), 0 10px 24px -6px rgba(28, 25, 23, 0.12), 0 28px 64px -12px rgba(28, 25, 23, 0.18);
+  --chip-lift: 0 0 0 0.5px rgba(28, 25, 23, 0.2), 0 1px 2px rgba(28, 25, 23, 0.08), 0 8px 20px -6px rgba(28, 25, 23, 0.18);
+  --frost: blur(10px) saturate(200%) brightness(1.06);
+  --frost-chip: blur(6px) saturate(200%) brightness(1.06);
+  --frost-menu: blur(24px) saturate(180%);
+  --row: rgba(255, 255, 255, 0.62); /* a row of glass inside a glass pane */
+  --row-hover: rgba(255, 255, 255, 0.92);
+  --row-edge: 0 0 0 0.5px rgba(28, 25, 23, 0.14), inset 1px 1px 0 -0.25px rgba(255, 255, 255, 0.9);
+  --well: rgba(255, 255, 255, 0.85); /* fields */
+  --well-edge: inset 0 1px 1px rgba(28, 25, 23, 0.06), 0 0 0 0.5px rgba(28, 25, 23, 0.22), 0 1px 0 rgba(255, 255, 255, 0.9);
+  --scrim: rgba(245, 245, 244, 0.55);
+
+  /* The one filled button: ink, with white words */
+  --primary: #1c1917;
+  --primary-hover: #44403c;
+  --on-primary: #ffffff;
+
+  /* Chart series (costs) and scenarios (transit) */
+  --c-capital: #1f5fd6;
+  --c-operating: #0f8f8f;
+  --c-maintenance: #d99a12;
+  --c-renewal: #8e4fc8;
+  --c-environmental: #3f8f47;
+  --c-scen0: #1f5fd6;
+  --c-scen1: #292524;
+  --c-scen2: #93b4f0;
+
+  /* Shape: squircle-style corners (corner-shape where the browser has it) */
+  --r-pane: 38px;
+  --r-card: 24px;
+  --r-row: 18px;
+  --r-menu: 22px;
+  --r-bubble: 20px;
+  --r-field: 16px;
+  --r-pill: 999px;
+
+  /* The frame: rail, panes and chat, a gap apart, each floating over the map */
+  --gap: 10px;
+  --rail: 72px;
+  --brief: clamp(400px, 31vw, 600px);
+  --home: clamp(380px, 29vw, 540px);
+  --chat: clamp(340px, 22vw, 420px);
+  --pad-pane: 30px;
+
+  /* Motion: short and purposeful */
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --t-fast: 140ms;
+  --t-med: 240ms;
+  --t-slow: 420ms;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --ink: #f5f5f4;
+  --muted: #d6d3d1;
+  --quiet: #b5b0ab;
+  --accent: #82abff;
+  --accent-strong: #a3c1ff;
+  --accent-tint: rgba(130, 171, 255, 0.14);
+  --accent-tint-2: rgba(130, 171, 255, 0.24);
+  --on-accent: #0c1424;
+  --focus: #82abff;
+  --selection: rgba(130, 171, 255, 0.28);
+  --pass: #3fb760;
+  --pass-ink: #8fe3a7;
+  --pass-tint: #15301d;
+  --fail: #f0675d;
+  --fail-ink: #ffb4ad;
+  --fail-tint: #3a1a17;
+  --amber: #e09a3e;
+  --amber-ink: #fcd29a;
+  --amber-tint: #3a2a14;
+  --gap-mark: #ff8a4c;
+  --ground: #161618;
+  --pane: rgba(28, 25, 23, 0.95);
+  --pane-solid: #1c1917;
+  --pane-lift: 0 0 0 0.5px rgba(0, 0, 0, 0.8), 0 1px 3px rgba(0, 0, 0, 0.35), 0 18px 48px -18px rgba(0, 0, 0, 0.7);
+  --inset: #292524;
+  --inset-2: #322d2b;
+  --hairline: rgba(255, 255, 255, 0.16);
+  --divider: rgba(255, 255, 255, 0.1);
+  --hover: rgba(255, 255, 255, 0.08);
+  --press: rgba(255, 255, 255, 0.14);
+  --tag: rgba(255, 255, 255, 0.12);
+  --bubble: #3a3633;
+  --glass: linear-gradient(155deg, rgba(54, 50, 47, 0.82), rgba(30, 27, 25, 0.72) 55%, rgba(44, 40, 37, 0.78));
+  --glass-chip: linear-gradient(155deg, rgba(58, 54, 51, 0.88), rgba(36, 32, 30, 0.8));
+  --glass-menu: linear-gradient(155deg, rgba(50, 46, 43, 0.94), rgba(30, 27, 25, 0.88));
+  --glass-solid: #1f1c1a;
+  --glass-rim: rgba(255, 255, 255, 0.14);
+  --sheen: inset 1.5px 1.5px 0 -0.5px rgba(255, 255, 255, 0.32), inset -1px -1px 0 -0.5px rgba(255, 255, 255, 0.1), inset 0 0 24px rgba(255, 255, 255, 0.04);
+  --chip-sheen: inset 1px 1px 0 -0.25px rgba(255, 255, 255, 0.32), inset -1px -1px 0 -0.5px rgba(255, 255, 255, 0.1), inset 0 0 10px rgba(255, 255, 255, 0.04);
+  --lift: 0 0 0 0.5px rgba(0, 0, 0, 0.85), 0 1px 2px rgba(0, 0, 0, 0.35), 0 10px 24px -6px rgba(0, 0, 0, 0.5), 0 28px 64px -12px rgba(0, 0, 0, 0.65);
+  --chip-lift: 0 0 0 0.5px rgba(0, 0, 0, 0.85), 0 1px 2px rgba(0, 0, 0, 0.35), 0 8px 20px -6px rgba(0, 0, 0, 0.55);
+  --frost: blur(10px) saturate(170%) brightness(0.92);
+  --frost-chip: blur(6px) saturate(170%) brightness(0.92);
+  --row: rgba(255, 255, 255, 0.07);
+  --row-hover: rgba(255, 255, 255, 0.13);
+  --row-edge: 0 0 0 0.5px rgba(255, 255, 255, 0.12), inset 1px 1px 0 -0.25px rgba(255, 255, 255, 0.14);
+  --well: rgba(255, 255, 255, 0.07);
+  --well-edge: inset 0 1px 2px rgba(0, 0, 0, 0.35), 0 0 0 0.5px rgba(255, 255, 255, 0.22), 0 1px 0 rgba(255, 255, 255, 0.04);
+  --scrim: rgba(0, 0, 0, 0.5);
+  --primary: #f5f5f4;
+  --primary-hover: #d6d3d1;
+  --on-primary: #1c1917;
+  --c-capital: #6f9cf5;
+  --c-operating: #2fb5b5;
+  --c-maintenance: #e9b23c;
+  --c-renewal: #b07ee6;
+  --c-environmental: #64b46b;
+  --c-scen0: #82abff;
+  --c-scen1: #e7e5e4;
+  --c-scen2: #3d63ad;
+}
+
+/* More contrast, when the system asks for it: solid panes with firm edges. */
+@media (prefers-contrast: more) {
+  :root {
+    --muted: #1c1917;
+    --quiet: #292524;
+    --hairline: rgba(0, 0, 0, 0.6);
+    --divider: rgba(0, 0, 0, 0.45);
+    --pane: #fff;
+    --glass: #fff;
+    --glass-chip: #fff;
+    --glass-menu: #fff;
+    --frost: none;
+    --frost-chip: none;
+    --frost-menu: none;
+    --row: #fff;
+    --row-edge: 0 0 0 1px #1c1917;
+  }
+}
