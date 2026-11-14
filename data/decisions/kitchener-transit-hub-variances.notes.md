@@ -28,6 +28,32 @@ Pages are 1-based pages of `data/sources/<id>.pages.json`. Budget tables are in 
   Secretary-Treasurer. Only the applicant, the Minister, a specified person or a public
   body can appeal (p3) — residents cannot appeal a minor variance decision.
 
+## The law the Committee applies (checked on e-Laws, 14 Nov 2026)
+
+- **Four tests, Planning Act s. 45(1)** (`planning-act-s45` p2): the Committee may
+  "authorize such minor variance from the provisions of the by-law" that in its opinion is
+  (1) **minor**, (2) "desirable for the appropriate development or use of the land,
+  building or structure", and keeps (3) the general intent and purpose of the **official
+  plan** and (4) of the **zoning by-law** ("the general intent and purpose of the by-law and
+  of the official plan, if any, are maintained"). s. 45(1.0.1) (same source) adds any
+  prescribed criteria and any criteria the city sets by by-law; none are in our sources.
+- **Appeals, s. 45(12)** (`planning-act-s45` p5): only "The applicant, the Minister or a
+  specified person or public body that has an interest in the matter may within 20 days of
+  the making of the decision" appeal to the Ontario Land Tribunal. The text cites the
+  amendment "2022, c. 21, Sched. 9, s. 13 (2)", the More Homes Built Faster Act, 2022
+  ("Bill 23"; named in s. 45(12.1), same page). e-Laws lists it in force 28 Nov 2022 (the
+  amendment table is hidden in our PDF). "Specified
+  person" (s. 1(1), `planning-act-s45` p1) is a closed list: utilities, OPG, Hydro One,
+  pipelines, a railway within 300 m, telecom providers, NAV Canada, airports and a few
+  others; not neighbours. The notice says the same (`kitchener-cofa-2026-11-17` p3).
+- The JSON's appeal deadline (7 Dec 2026) is **estimated**: 20 days after 17 Nov, assuming
+  the Committee decides that day (it can defer).
+- **Notice timing**: O. Reg. 200/96 s. 3(1) requires notice "At least 10 days before the day
+  of the hearing" (`oreg-200-96` p3). The City's notice is dated 30 Oct 2026 ("Dated the 30th
+  day of October, 2026.", `kitchener-cofa-2026-11-17` p3; posted "Oct 30, 2026", p1):
+  **18 days** before the 17 Nov hearing. The posting date is confirmed; the mailing date to
+  neighbours within 60 m (s. 3(2)) is not in our sources.
+
 ## The project (transit lens)
 
 - Hub will connect ION light rail and GRT buses, GO Transit rail and bus, VIA Rail and

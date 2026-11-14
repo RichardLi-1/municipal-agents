@@ -2,7 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { distM, offsetLine, polygonAreaM2, projectOnLine, rectangle, ringAreaM2, sliceLine, lineLengthM, type LngLat } from "./geo.ts";
 import { areaFit, candidateUse, factorsFor, isExcluded, receptorKind, scoreOf, scoutSites, WEIGHTS, type Feature } from "./scout.ts";
-import { boreholeChainages, boreholeDepth, crossPassageChainages, gradeLimitedCrown, layoutTunnel, requiredCrown, RULES } from "./layout.ts";
+import { boreholeChainages, boreholeDepth, crossPassageChainages, gradeLimitedCrown, layoutTunnel, requiredCrown, RULES, shaftBoreholeDepth } from "./layout.ts";
 import { boreVolumeM3, spoilPlan } from "./steps.ts";
 import { constructionSummary } from "./index.ts";
 import { chainSegments } from "./build.ts";
@@ -107,6 +107,9 @@ test("boreholes: every ~75 m, and 1.5 diameters below the invert", () => {
   assert.equal(b[b.length - 1], 3000);
   near(b[1] - b[0], 75, 1);
   assert.equal(boreholeDepth(300, 280), Math.ceil(20 + 1.5 * RULES.diameterM));
+  // At a shaft: at least 1.5 times the shaft depth (FHWA-NHI-10-034 s. 3.5.2.1).
+  assert.equal(shaftBoreholeDepth(300, 280, 22), 33);
+  assert.equal(shaftBoreholeDepth(300, 260, 10), boreholeDepth(300, 260));
 });
 
 test("depth: cover rule and grade-limited profile", () => {

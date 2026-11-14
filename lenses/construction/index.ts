@@ -34,7 +34,7 @@ export function constructionSummary(lens: ConstructionLens): string {
   for (const s of n.shafts ?? []) out.push(`${s.id === "launch" ? "Launch" : "Extraction"} shaft: about ${s.lengthM} by ${s.widthM} m, about ${s.depthM} m deep, at chainage ${n0(s.chainageM)} m.`);
   if (n.crossings?.length) out.push(`Crossings: ${n.crossings.map((c: any) => `${c.name} at ${n0(c.chainageM)} m`).join("; ")}.`);
   out.push(
-    `Cross-passages: ${lens.crossPassages.length}, no more than 244 m apart (NFPA 130). Geotechnical boreholes: ${lens.boreholes.length} (every 75 m, 3 per shaft, 2 each side of each crossing), each at least 1.5 tunnel diameters below the tunnel bottom (FHWA-NHI-10-034, ch. 3), so ${Math.min(...lens.boreholes.map((b) => b.depthM))}-${Math.max(...lens.boreholes.map((b) => b.depthM))} m deep.`,
+    `Cross-passages: ${lens.crossPassages.length}, no more than 244 m apart (NFPA 130). Geotechnical boreholes: ${lens.boreholes.length} (every 75 m, 3 per shaft, 2 each side of each crossing), each at least 1.5 tunnel diameters below the tunnel bottom, and at shafts at least 1.5 times the shaft depth (FHWA-NHI-10-034, s. 3.5.2.1), so ${Math.min(...lens.boreholes.map((b) => b.depthM))}-${Math.max(...lens.boreholes.map((b) => b.depthM))} m deep.`,
   );
   if (n.spoil) {
     const sp = n.spoil;

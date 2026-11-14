@@ -66,15 +66,23 @@ the river valley at Preston. It is a what-if for engineers, staff and residents 
    - Cross-passages are evenly spaced and **no more than 244 m (800 ft) apart**, per
      NFPA 130, *Standard for Fixed Guideway Transit and Passenger Rail Systems*.
    - Geotechnical boreholes go every ~75 m along the line, 3 at each shaft, and 2 on each
-     side of each crossing. Each goes **at least 1.5 tunnel diameters below the invert**, per
-     FHWA-NHI-10-034, *Technical Manual for Design and Construction of Road Tunnels — Civil
-     Elements* (FHWA, 2009), chapter 3. They are drilled between the bores, so no grouted
-     hole sits in a machine's path.
+     side of each crossing. FHWA-NHI-10-034, *Technical Manual for Design and Construction of
+     Road Tunnels — Civil Elements* (FHWA, 2009), s. 3.5.2.1, p. 3-16, says: "In general,
+     borings should be extended to at least 1.5 tunnel diameters below the proposed tunnel
+     invert" and "Borings at shafts should extend at least 1.5 times the depth of the shaft".
+     Both rules are applied. The 75 m spacing is a planning assumption: the guide's Table 3-4
+     (after AASHTO, 1988) gives 50 to 100 ft (15 to 30 m) for soft ground in adverse
+     conditions and 300 to 500 ft (90 to 150 m) in favourable conditions. Boreholes are
+     drilled between the bores, so no grouted hole sits in a machine's path.
    - Ground levels come from NRCan's CDEM altitude service, sampled every 50 m and at each crossing.
    - Shaft boxes (assumed): launch 45 × 24 m, extraction 22 × 24 m. Each floor sits 2 m below
      the invert.
 6. **Steps** (`steps.ts`): 7 steps with plain words, an assumed duration, what residents
-   would notice, and a map camera. Spoil estimate: bore volume π(D/2)²L for each bore,
+   would notice, and a map camera. Work hours follow each city's noise rule (`NOISE_RULES`).
+   Kitchener, where the launch site is, allows construction noise from 7 am to 7 pm, seven
+   days a week (City of Kitchener, *Noise complaints and exemptions*). Cambridge, where the
+   extraction site is in Preston, has By-law 32-04, s. 2 (b): no noise from material
+   handling equipment from 8 pm Saturday to 7 am Monday, except in an emergency. Spoil estimate: bore volume π(D/2)²L for each bore,
    bulking 1.3, 10 m³ per truck, 12 m a day per machine, two machines, trucks leaving
    7 am to 7 pm.
 7. **Renders** (`render.ts`): one per step from `gemini-3.1-flash-image`, falling back to
@@ -93,10 +101,21 @@ the river valley at Preston. It is a what-if for engineers, staff and residents 
 - Natural Resources Canada, Canadian Digital Elevation Model, altitude service
   (geogratis.gc.ca/services/elevation/cdem/altitude). Open Government Licence – Canada.
 - Region of Waterloo, 2026 Plan and Budget (Budget Book), p. 43 (project 68030).
+- City of Kitchener, Noise complaints and exemptions (kitchener.ca). City of Cambridge,
+  By-law 32-04 (Noise By-law), cambridge.ca/media/1gvdnrdg/noise-by-law-032-04.pdf.
+- Ontario Regulation 231/08, Transit and Rail Project Assessment Process, s. 15 (addendum
+  after the statement of completion). Region of Waterloo, Stage 2 ION Notice of Completion
+  of Environmental Project Report (review April 6 to May 6, 2021).
 
 ## Limits
 
 - A scenario only. The Region has not proposed a tunnel here.
+- Approvals: Stage 2 went through the Transit Project Assessment Process, and its
+  Environmental Project Report was completed in 2021. A tunnel would be a change that is
+  inconsistent with that report. It would need an addendum under O. Reg. 231/08 s. 15 (1).
+  If the change is significant, it would also need a public notice with 30 days for written
+  objections to the Minister (s. 15 (3) and (12)).
+- The 75 m borehole spacing is an assumption that a geotechnical engineer would set.
 - No geotechnical data. Soil, rock and groundwater stay unknown until boreholes are drilled.
 - No utilities data. Pipes, cables and the Highway 401 bridge foundations are not mapped.
 - No property ownership data. OpenStreetMap tags can be out of date.

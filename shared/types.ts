@@ -104,6 +104,11 @@ export interface Decision {
   zoom: number;
   lenses: LensId[];
   tags?: string[];
+  /**
+   * Hand-checked notices that change how to read the brief (e.g. a new rule on who
+   * proposes the budget). Shown above the brief until staff regenerate it.
+   */
+  notices?: { id: string; date: IsoDate; title: string; text: string; citation?: Citation }[];
 }
 
 export type LensId = "transit" | "cost" | "commitments" | "housing" | "construction";

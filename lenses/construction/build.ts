@@ -14,7 +14,7 @@ import {
 } from "./geo.ts";
 import { fetchOsm, receptorKind, scoutSites, toFeatures, WEIGHT_LABELS, WEIGHTS, type Feature } from "./scout.ts";
 import { CDEM_URL, groundElevations, layoutTunnel, RULES, type Crossing } from "./layout.ts";
-import { buildSteps, spoilPlan, SPOIL, L } from "./steps.ts";
+import { buildSteps, spoilPlan, SPOIL, NOISE_RULES } from "./steps.ts";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
 const CACHE = path.join(ROOT, "data/cache/construction");
@@ -257,6 +257,8 @@ export async function buildLens(decisionId: string): Promise<ConstructionLens> {
       `Ground levels are from a national elevation model (CDEM, about 20 m cells, rounded to 1 m). The river bed is assumed ${RULES.riverbedBelowSurfaceM} m below the water surface.`,
       `Durations, advance rate (${SPOIL.advanceMPerDay} m a day per machine), bulking (${SPOIL.bulking}) and truck size (${SPOIL.truckM3} m³) are typical assumptions, not a schedule. Cost is not estimated: tunnels usually cost several times more per kilometre than street-level track.`,
       "Near Preston the line follows the Speed River valley: the extraction shaft as placed would likely sit in the river's regulated floodplain, which could move it east, deepen the dewatering effort or change the method.",
+      "A tunnel would change the Stage 2 project the Region assessed under the Transit Project Assessment Process, with its Environmental Project Report completed in 2021. A change that is inconsistent with that report needs an addendum under O. Reg. 231/08 s. 15 (1), and if significant a public notice of addendum with 30 days for written objections to the Minister (s. 15 (3) and (12)). That adds time and consultation the scenario does not count.",
+      "Borehole spacing (every 75 m) is a planning assumption: FHWA's guide gives 15 to 30 m in adverse soft ground and 90 to 150 m in favourable ground, and a geotechnical engineer would set the real spacing.",
       "Stations: the scenario keeps Sportsworld and Preston stations where the Region placed them and does not design the portals or ramps that would connect the tunnel to them.",
       "Renders are illustrative pictures made by an image model. They show the kind of work, not a design.",
     ],
@@ -264,7 +266,11 @@ export async function buildLens(decisionId: string): Promise<ConstructionLens> {
       "Region of Waterloo, 2026 Plan and Budget (Budget Book), p. 43: project 68030 RT to Cambridge (ION Stage 2).",
       `Region of Waterloo Open Data, ION Routes and ION Stops (${ROW_ION_ROUTES}, ${ROW_ION_STOPS}). ${ROW_LICENCE}.`,
       "NFPA 130, Standard for Fixed Guideway Transit and Passenger Rail Systems (National Fire Protection Association): cross-passages between twin bores no more than 244 m (800 ft) apart, in place of exit stairs.",
-      "FHWA-NHI-10-034, Technical Manual for Design and Construction of Road Tunnels: Civil Elements (US Federal Highway Administration, 2009), chapter 3, Geotechnical Investigations: borings along the alignment and at shafts and portals, extending at least 1.5 tunnel diameters below the invert.",
+      "FHWA-NHI-10-034, Technical Manual for Design and Construction of Road Tunnels: Civil Elements (US Federal Highway Administration, 2009), s. 3.5.2.1, p. 3-16: \"In general, borings should be extended to at least 1.5 tunnel diameters below the proposed tunnel invert\" and \"Borings at shafts should extend at least 1.5 times the depth of the shaft\". Its Table 3-4 (after AASHTO, 1988) gives typical spacing for soft-ground tunnels of 50 to 100 ft (15 to 30 m) in adverse ground and 300 to 500 ft (90 to 150 m) in favourable ground; the 75 m used here is a planning assumption between them.",
+      NOISE_RULES.kitchener.source,
+      NOISE_RULES.cambridge.source,
+      "Ontario Regulation 231/08, Transit and Rail Project Assessment Process (Environmental Assessment Act), s. 15: a change after the statement of completion that is inconsistent with the environmental project report needs an addendum (s. 15 (1)); a significant change needs a public notice of addendum (s. 15 (3)), and the Minister considers written objections received within 30 days (s. 15 (12)).",
+      "Region of Waterloo, Notice of Completion of Environmental Project Report, Stage 2 ION: LRT from Kitchener to Cambridge, Transit Project Assessment Process (30-day public review April 6 to May 6, 2021).",
       `Natural Resources Canada, Canadian Digital Elevation Model, altitude service (${CDEM_URL}). Open Government Licence – Canada.`,
       "OpenStreetMap contributors, via the Overpass API. Open Database Licence (ODbL) 1.0.",
       "Ontario Regulation 41/24 (Conservation Authorities Act): permits for development in regulated floodplains, administered here by the Grand River Conservation Authority.",

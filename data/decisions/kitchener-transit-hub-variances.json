@@ -12,7 +12,9 @@
     "row-kcth-update-2024",
     "row-kcth-rumpel-notice",
     "row-2026-budget-book",
-    "grt-business-plan-2025"
+    "grt-business-plan-2025",
+    "planning-act-s45",
+    "oreg-200-96"
   ],
   "timeline": [
     {
@@ -94,6 +96,26 @@
         "sourceId": "kitchener-cofa-2026-11-17",
         "page": 1,
         "quote": "on TUESDAY, NOVEMBER 17, 2026, commencing at"
+      }
+    },
+    {
+      "id": "appeal-deadline",
+      "date": "2026-12-07",
+      "kind": "deadline",
+      "estimated": true,
+      "title": "Last day to appeal the decision to the Ontario Land Tribunal (7 December 2026 at the latest)",
+      "plain": "An appeal must be filed within 20 days of the decision. If the Committee decides on November 17, that is December 7. Only the applicant, the Minister, a \"specified person\" (such as a utility or a railway nearby) or a public body with an interest can appeal. Neighbours and other residents cannot, since the 2022 changes to the Planning Act (Bill 23). That makes speaking or writing before the hearing the main way to have a say.",
+      "participation": [
+        {
+          "method": "write",
+          "instructions": "To be told the Committee's decision, send a written request to the Secretary-Treasurer of the Committee of Adjustment, City Hall, 200 King St. W., Kitchener ON N2G 4G7.",
+          "contact": "Committee of Adjustment, Legislated Services, Kitchener City Hall: CofA@kitchener.ca, 519-741-2203"
+        }
+      ],
+      "citation": {
+        "sourceId": "planning-act-s45",
+        "page": 5,
+        "quote": "public body that has an interest in the matter may within 20 days of the making of the decision"
       }
     }
   ],

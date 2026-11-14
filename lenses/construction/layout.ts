@@ -26,8 +26,10 @@ export const RULES = {
   crossPassageMaxM: 244,
   /** Geotechnical boreholes along the line, metres apart. */
   boreholeSpacingM: 75,
-  /** Boreholes go at least this many diameters below the invert (FHWA-NHI-10-034, ch. 3). */
+  /** Boreholes go at least this many diameters below the invert (FHWA-NHI-10-034, s. 3.5.2.1, p. 3-16). */
   boreholeBelowInvertDiameters: 1.5,
+  /** Boreholes at shafts go at least this many times the shaft's depth (same section). */
+  shaftBoreholeDepthFactor: 1.5,
   /** Ground elevation sample spacing, metres. */
   sampleM: 50,
   /** Shaft boxes (assumed): launch long enough to assemble the machine and its first gantries. */
@@ -137,6 +139,11 @@ export function boreholeDepth(groundM: number, invertM: number, r = RULES): numb
   return Math.ceil(groundM - invertM + r.boreholeBelowInvertDiameters * r.diameterM);
 }
 
+/** Borehole depth at a shaft: the deeper of the invert rule and 1.5 times the shaft depth. */
+export function shaftBoreholeDepth(groundM: number, invertM: number, shaftDepthM: number, r = RULES): number {
+  return Math.max(boreholeDepth(groundM, invertM, r), Math.ceil(r.shaftBoreholeDepthFactor * shaftDepthM));
+}
+
 /** Interpolate y at x from sorted samples. */
 export function interp(xs: number[], ys: number[], x: number): number {
   if (x <= xs[0]) return ys[0];
@@ -207,11 +214,12 @@ export async function layoutTunnel(input: LayoutInput, r = RULES): Promise<Layou
 
   const at = (x: number) => ({ g: interp(xs, ground, x), inv: interp(xs, invert, x) });
   const boreholes: Layout["boreholes"] = [];
-  const add = (x: number, purpose: string, sideM = 0) => {
+  const add = (x: number, purpose: string, sideM = 0, shaftDepthM = 0) => {
     const xc = Math.max(0, Math.min(L, x));
     const p = sideM ? pointAt(offsetLine(section, sideM), xc).point : pointAt(section, xc).point;
     const { g, inv } = at(xc);
-    boreholes.push({ id: "", location: roundPt(p), chainageM: Math.round(xc), depthM: boreholeDepth(g, inv, r), purpose });
+    const depthM = shaftDepthM ? shaftBoreholeDepth(g, inv, shaftDepthM, r) : boreholeDepth(g, inv, r);
+    boreholes.push({ id: "", location: roundPt(p), chainageM: Math.round(xc), depthM, purpose });
   };
   for (const x of boreholeChainages(b - a, r.boreholeSpacingM)) add(a + x, "Along the line, between the two bores, every 75 m");
 
@@ -225,9 +233,9 @@ export async function layoutTunnel(input: LayoutInput, r = RULES): Promise<Layou
   for (const s of shafts) {
     const name = s.id === "launch" ? "Launch shaft" : "Extraction shaft";
     const half = s.lengthM / 2 - 3;
-    add(s.chainageM - half, `${name}, corner`, -(s.widthM / 2 - 2));
-    add(s.chainageM, `${name}, centre`);
-    add(s.chainageM + half, `${name}, corner`, s.widthM / 2 - 2);
+    add(s.chainageM - half, `${name}, corner (1.5 times the shaft depth)`, -(s.widthM / 2 - 2), s.depthM);
+    add(s.chainageM, `${name}, centre (1.5 times the shaft depth)`, 0, s.depthM);
+    add(s.chainageM + half, `${name}, corner (1.5 times the shaft depth)`, s.widthM / 2 - 2, s.depthM);
   }
   for (const c of crossings) {
     add(c.chainageM - 30, `${c.name} crossing, west side`, -r.boreOffsetM * 2);

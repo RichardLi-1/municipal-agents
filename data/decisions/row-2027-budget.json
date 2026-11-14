@@ -3,7 +3,7 @@
   "city": "waterloo-region",
   "title": "Region of Waterloo 2027 Plan and Budget",
   "plainTitle": "The Region's 2027 budget: what your regional taxes and water bills will pay for next year",
-  "decidedBy": "Regional Council, Region of Waterloo",
+  "decidedBy": "Regional Chair proposes; Regional Council amends and adopts",
   "status": "in-consultation",
   "officialUrl": "https://www.regionofwaterloo.ca/planandbudget",
   "sources": [
@@ -23,6 +23,19 @@
     "municipal-act-part-vi1",
     "ontario-regional-head-of-council",
     "row-2026-election-page"
+  ],
+  "notices": [
+    {
+      "id": "strong-chair-budget",
+      "date": "2026-11-15",
+      "title": "New: the Regional Chair now proposes the budget",
+      "text": "From November 15, 2026 the Regional Chair has strong-mayor budget powers. The Chair proposes the 2027 budget, in 2027 and by February 1. Council then has 30 days to change it. The Chair can veto Council's changes, and Council can overturn a veto with a two-thirds vote. The brief below was written before this change and may say that Council decides the budget.",
+      "citation": {
+        "sourceId": "oreg-530-22",
+        "page": 17,
+        "quote": "Note: On November 15, 2026, Schedule 1 to the Regulation is amended by adding the"
+      }
+    }
   ],
   "timeline": [
     {
@@ -267,6 +280,7 @@
     },
     {
       "id": "council-amendments",
+      "estimated": true,
       "date": "2027-03-03",
       "kind": "budget-vote",
       "title": "Council's 30 days to change the budget (ends 3 March 2027 at the latest)",
@@ -300,11 +314,11 @@
         "sourceId": "oreg-530-22",
         "page": 3,
         "quote": "within 30 days after receiving the proposed budget from the head of council"
-      },
-      "estimated": true
+      }
     },
     {
       "id": "chair-veto",
+      "estimated": true,
       "date": "2027-03-13",
       "kind": "other",
       "title": "Chair's 10 days to veto Council's changes (ends 13 March 2027 at the latest)",
@@ -321,11 +335,11 @@
         "sourceId": "oreg-530-22",
         "page": 3,
         "quote": "within 10 days after the expiry of the time period for council to"
-      },
-      "estimated": true
+      }
     },
     {
       "id": "veto-override",
+      "estimated": true,
       "date": "2027-03-28",
       "kind": "budget-vote",
       "title": "Council's 15 days to overturn a veto with a two-thirds vote (ends 28 March 2027 at the latest)",
@@ -347,8 +361,7 @@
         "sourceId": "municipal-act-part-vi1",
         "page": 8,
         "quote": "Council may, in accordance with the regulations, override the head of council’s veto"
-      },
-      "estimated": true
+      }
     }
   ],
   "area": {

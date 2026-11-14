@@ -51,7 +51,11 @@ found", "engineers would need to check", "could", "would", "if".
 ## What an engineer must check (say this when asked "could this really work?")
 
 - Ground: boreholes along the line, at both shafts and at each crossing, deep enough
-  (at least 1.5 tunnel diameters below the tunnel bottom, FHWA-NHI-10-034 ch. 3).
+  (at least 1.5 tunnel diameters below the tunnel bottom, and 1.5 times the shaft depth at
+  shafts: FHWA-NHI-10-034, s. 3.5.2.1, p. 3-16). The 75 m spacing is an assumption.
+- Approvals: Stage 2 went through the Transit Project Assessment Process (Environmental
+  Project Report completed in 2021). A tunnel would need an addendum to that report
+  (O. Reg. 231/08 s. 15), with a public notice and 30 days for objections if significant.
 - Groundwater and the river: dewatering, the floodplain permit, freezing or grouting
   around cross-passages near the river.
 - Settlement under Highway 401, King Street East and buildings: monitoring and limits
@@ -65,7 +69,11 @@ found", "engineers would need to check", "could", "would", "if".
 
 - Drill rigs for a day or three at each borehole, daytime, with short lane closures.
 - Tall hoarding and lost parking at the work sites for several years.
-- Piling and digging noise while the shafts go in, pumps that may run at night.
+- Piling and digging noise while the shafts go in. Work hours follow each city's rule:
+  Kitchener (the launch site at Sportsworld) allows construction noise 7 am to 7 pm, seven
+  days a week, and anything outside that needs a noise exemption; Cambridge (Preston)
+  By-law 32-04 bans heavy equipment from 8 pm Saturday to 7 am Monday, except emergencies.
+- Pumps, the gantry crane and boring may run day and night, which would need exemptions.
 - Heavy crane lifts and oversize loads at night when the machines arrive.
 - About 100 dump trucks a day at the launch site while both machines bore (an
   estimate, with its assumptions stated in the scenario), heading for Highway 8 and 401.
