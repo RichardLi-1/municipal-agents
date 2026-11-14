@@ -22,6 +22,8 @@ export class Budget {
   /** Calls and dollars held back for the lead's final answer. */
   heldCalls = 0;
   heldUsd = 0;
+  /** Optional caps on groups of steps, e.g. calls kept for the explainer so lenses can't use them up. */
+  pools: Record<string, { max: number; used: number }> = {};
   private inFlight = 0;
   // Specialists run in parallel, so a call's cost isn't known until it returns. Assume
   // each in-flight call may cost this much, so parallel calls can't overshoot together.
@@ -32,17 +34,20 @@ export class Budget {
     this.maxUsd = maxUsd;
   }
 
-  canCall(forLead = false): boolean {
+  canCall(forLead = false, pool?: string): boolean {
     const calls = forLead ? this.maxCalls : this.maxCalls - this.heldCalls;
     const usd = forLead ? this.maxUsd : this.maxUsd - this.heldUsd;
+    const p = pool ? this.pools[pool] : undefined;
+    if (p && p.used >= p.max) return false;
     return this.calls < calls && this.usd + this.inFlight * Budget.EST_CALL_USD < usd;
   }
 
   /** Take a call slot before calling; returns false if none is left. */
-  reserve(forLead = false): boolean {
-    if (!this.canCall(forLead)) return false;
+  reserve(forLead = false, pool?: string): boolean {
+    if (!this.canCall(forLead, pool)) return false;
     this.calls++;
     this.inFlight++;
+    if (pool && this.pools[pool]) this.pools[pool].used++;
     return true;
   }
 
@@ -75,6 +80,45 @@ export interface Run {
   emit: (e: AgentEvent) => void;
   callModel: CallModel;
   model: string;
+  /** Set when the model can't be reached (no credit, rate limit, outage, no key). */
+  unreachable?: Error;
+}
+
+/** True for errors that mean the model can't be reached at all, as opposed to a bad request. */
+export function isUnreachable(err: unknown): boolean {
+  const e = err as { status?: unknown; message?: unknown } | undefined;
+  if (!e || typeof e.status !== "number" || typeof e.message !== "string" || !/^Gemini|GEMINI_API_KEY/.test(e.message)) return false;
+  return e.status === 0 || [401, 402, 403, 429].includes(e.status) || e.status >= 500;
+}
+
+/**
+ * What a resident may be told about any failure: plain words, never the provider's
+ * response, a URL or a stack. The details go to the server's console only.
+ */
+export function publicError(err: unknown): string {
+  if (isUnreachable(err)) return `The AI model can't be reached right now: ${unreachableReason(err)}.`;
+  const e = err as { name?: string; message?: string; status?: number; detail?: string } | undefined;
+  if (e?.name === "TimeoutError" || e?.name === "AbortError" || /aborted|cancelled|timed? ?out/i.test(e?.message ?? "")) return "The run was stopped before it finished.";
+  if (typeof e?.status === "number") return "The AI model returned an error. Please try again.";
+  return "Something went wrong while the agents were working.";
+}
+
+/** Server-side log of a failure, without secrets (provider bodies never contain the key). */
+export function logFailure(where: string, err: unknown): void {
+  const e = err as { message?: string; status?: number; detail?: string };
+  console.error(`${where}: ${e?.message ?? String(err)}${e?.status !== undefined ? ` (status ${e.status})` : ""}${e?.detail ? ` ${e.detail.slice(0, 300)}` : ""}`);
+}
+
+/** Why the model is unreachable, in plain words. */
+export function unreachableReason(err: unknown): string {
+  const status = (err as { status?: number })?.status ?? 0;
+  const msg = String((err as Error)?.message ?? "");
+  if (status === 402) return "the model service's prepaid credit is used up";
+  if (status === 429) return "the model service is rate-limiting requests";
+  if (status === 401 || status === 403) return "the model service refused the API key";
+  if (status >= 500) return "the model service is having an outage";
+  if (/GEMINI_API_KEY/.test(msg)) return "no API key is set";
+  return "there is no connection to the model service";
 }
 
 export interface StepSpec {
@@ -86,6 +130,8 @@ export interface StepSpec {
   task: string;
   maxCalls: number;
   lens?: LensId;
+  /** Budget pool this step draws from (see Budget.pools). */
+  pool?: string;
 }
 
 export interface StepResult {
@@ -101,12 +147,16 @@ export async function budgetedCall(
   actor: string,
   req: Parameters<CallModel>[0],
   forLead = false,
+  pool?: string,
 ): Promise<GeminiResult | null> {
-  if (!run.budget.reserve(forLead)) return null;
+  if (!run.budget.reserve(forLead, pool)) return null;
   let res: GeminiResult | null = null;
   try {
     res = await run.callModel({ ...req, signal: run.ctx.signal });
     return res;
+  } catch (err) {
+    if (isUnreachable(err)) run.unreachable ??= err as Error;
+    throw err;
   } finally {
     run.budget.settle(res);
     if (res) {
@@ -206,7 +256,8 @@ export async function runStep(run: Run, step: StepSpec): Promise<StepResult> {
   };
   const system = systemPrompt(skill, run.corpus);
   const contents: Content[] = [{ role: "user", parts: [{ text: step.task }] }];
-  const before = run.findings.statements.length + run.findings.figures.length + run.findings.unknowns.length + run.findings.commitments.length;
+  // Counted per step: steps run in parallel over shared findings.
+  let recorded = 0;
   let calls = 0;
   let finalText = "";
   let stopped = "";
@@ -229,7 +280,7 @@ export async function runStep(run: Run, step: StepSpec): Promise<StepResult> {
         contents,
         tools: tools.map((t) => t.decl),
         thinking: "low",
-      });
+      }, false, step.pool);
       if (!res) {
         stopped = "the run's budget was used up";
         break;
@@ -259,9 +310,10 @@ export async function runStep(run: Run, step: StepSpec): Promise<StepResult> {
             ({ response, summary } = await tool.run(call.args ?? {}, env));
           } catch (err) {
             response = { error: (err as Error).message };
-            summary = `${call.name} failed: ${(err as Error).message}`;
+            summary = `${call.name} failed`;
           }
         }
+        if (call.name.startsWith("record_") && response.accepted === true && !response.note) recorded++;
         if (left <= 2) response = { ...response, budget: `${left} model call(s) left: record what you have now.` };
         run.emit({ type: "tool", id: step.id, specialist: step.specialist, tool: call.name, summary });
         parts.push({ functionResponse: { name: call.name, ...(call.id ? { id: call.id } : {}), response } });
@@ -269,13 +321,12 @@ export async function runStep(run: Run, step: StepSpec): Promise<StepResult> {
       contents.push({ role: "user", parts });
     }
   } catch (err) {
-    const message = (err as Error).message;
-    run.emit({ type: "step.end", id: step.id, specialist: step.specialist, status: "failed", summary: `Stopped: ${message.slice(0, 200)}` });
+    logFailure(`${step.specialist} step ${step.id}`, err);
+    const message = publicError(err);
+    run.emit({ type: "step.end", id: step.id, specialist: step.specialist, status: "failed", summary: `Stopped: ${message}` });
     return { id: step.id, status: "failed", summary: message, calls };
   }
 
-  const after = run.findings.statements.length + run.findings.figures.length + run.findings.unknowns.length + run.findings.commitments.length;
-  const recorded = after - before;
   const summary =
     (finalText ? finalText.split("\n")[0].slice(0, 240) : `Recorded ${recorded} item${recorded === 1 ? "" : "s"}.`) +
     (stopped ? ` (Stopped: ${stopped}.)` : "");

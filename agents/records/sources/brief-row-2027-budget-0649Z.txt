@@ -1,0 +1,206 @@
+plan overview=explainer: What's proposed, why now, how to have a say | impacts=explainer: How it may affect people, trade-offs, unknowns | transit=transit-access: Transit access | cost=lifecycle-cost: Lifecycle cost | commitments=commitments: Commitments | housing=housing-pipeline: Housing pipeline
+▶ overview (explainer) What's proposed, why now, how to have a say
+▶ impacts (explainer) How it may affect people, trade-offs, unknowns
+▶ transit (transit-access) Transit access
+▶ cost (lifecycle-cost) Lifecycle cost
+▶ commitments (commitments) Commitments
+▶ housing (housing-pipeline) Housing pipeline
+  usage: 6 calls, $0.0058
+  commitments · Looked for tracked commitments: none yet
+  usage: 7 calls, $0.0116
+  housing · Looked up housing units by stage for region
+  usage: 8 calls, $0.0176
+  cost · Looked for a computed lifecycle cost: none yet
+  usage: 9 calls, $0.0241
+  impacts · Searched the documents for "annual cost of regional services per average hous…": row-2026-budget-book p.11, row-2026-budget-book p.12, row-affordable-housing-plan-page p.23
+  impacts · Searched the documents for "conventional bus replacements": row-2026-budget-book p.40, row-2026-budget-book p.190, grt-business-plan-2025-appendix-a p.1
+  impacts · Searched the documents for "RT to Cambridge": row-2026-budget-book p.184, row-2026-budget-book p.43, row-2026-budget-book p.191
+  impacts · Searched the documents for "infrastructure funding gap": row-infrastructure-gap-2026 p.2, row-asset-management-review-2026 p.4, row-infrastructure-gap-2026 p.3
+  usage: 10 calls, $0.0302
+  transit · Looked for computed transit access: none yet
+  usage: 11 calls, $0.0370
+  overview · Searched the documents for "2027 Plan and Budget Overview": row-2027-budget-page p.7, row-2027-budget-page p.1, row-2027-budget-page p.6
+  overview · Searched the documents for "average household property tax": row-2026-budget-book p.11, row-2026-budget-book p.12, row-2026-budget-book p.5
+  overview · Searched the documents for "delegation": row-delegation-guide p.2, row-delegation-guide p.1, row-delegation-guide p.3
+  overview · Searched the documents for "contest rules": row-2027-budget-contest-rules p.2, row-2027-budget-contest-rules p.1
+  usage: 12 calls, $0.0431
+  commitments · Searched the documents for "emissions target 2030 50%": wr-ghg-inventory-2022 p.2, wr-ghg-inventory-2022 p.3, wr-ghg-inventory-2022 p.11
+  commitments · Searched the documents for "Building Better Futures 3,500": row-affordable-housing-plan-page p.22, row-2026-budget-book p.21, row-2026-budget-summary p.8
+  commitments · Searched the documents for "asset management gap 87.6": row-asset-management-review-2026 p.3, row-infrastructure-gap-2026 p.2, row-asset-management-review-2026 p.6
+  usage: 13 calls, $0.0500
+  housing · Searched the documents for "affordable homes 3500 2029": row-affordable-housing-plan-page p.23, row-2026-budget-summary p.8, row-affordable-housing-plan-page p.22
+  housing · Searched the documents for "Waterloo Region Housing 80483": row-affordable-housing-plan-page p.1, row-2026-budget-book p.9, row-affordable-housing-plan-page p.23
+  usage: 14 calls, $0.0560
+  cost · Searched the documents for "operating spending capital program tax levy deben…": row-2026-budget-book p.9, row-2026-budget-book p.5, row-2026-budget-book p.10
+  usage: 15 calls, $0.0641
+  housing · Read page 17 of 2026 Final Budget Book
+  usage: 16 calls, $0.0710
+  cost · Searched the documents for "infrastructure funding gap 87.6 million": row-asset-management-review-2026 p.3, row-asset-management-review-2026 p.4, row-asset-management-review-2026 p.1
+  usage: 17 calls, $0.0777
+  transit · Searched the documents for "GRT bus LRT Stage 2 conventional transit business…": grt-business-plan-2025 p.7, grt-business-plan-2025-appendix-a p.9, grt-business-plan-2025 p.6
+  usage: 18 calls, $0.0853
+  cost · Read page 5 of 2026 Final Budget Book
+  usage: 19 calls, $0.0924
+  cost · Read page 11 of 2026 Final Budget Book
+  usage: 20 calls, $0.1002
+  transit · Read page 2 of Grand River Transit Business Plan (Report TSD-TRS-25-005)
+  transit · Read page 5 of Grand River Transit Business Plan (Report TSD-TRS-25-005)
+  transit · Read page 17 of 2026 Final Budget Book
+  transit · Read page 43 of 2026 Final Budget Book
+  usage: 21 calls, $0.1070
+  cost · Read page 1 of Annual Review of Asset Management Planning Progress (Report…
+  usage: 22 calls, $0.1191
+    ✓ The Region plans to create or preserve up to 3,500 affordable homes by the end of 2029.
+  housing · Checked and recorded: "The Region plans to create or preserve up to 3,500 affordable homes b…" (row-affordable-housing-plan-page p.23)
+    ✓ Low income renters may get access to 2,100 of the planned affordable homes.
+  housing · Checked and recorded: "Low income renters may get access to 2,100 of the planned affordable …" (row-affordable-housing-plan-page p.23)
+  housing · Checked and recorded a figure: Target affordable homes by 2029, 3,500 affordable homes (row-affordable-housing-plan-page p.23)
+  housing · Checked and recorded a figure: 2027 forecasted capital spending for Waterloo Region Housing, $80.5 million (row-2026-budget-book p.17)
+  housing · Noted an unknown: How many approved housing units across the Region have started construction thi…
+  usage: 23 calls, $0.1342
+    ✗ rejected Every number you state must be in one of your quotes; 2026 is not. Quote the words with that number (a table row is fine), add a citation, or drop the number.
+  impacts · Rejected a statement: Every number you state must be in one of your quotes; 2026 is not. Quote the words with that number…
+    ✗ rejected Every number you state must be in one of your quotes; 2026 is not. Quote the words with that number (a table row is fine), add a citation, or drop the number.
+  impacts · Rejected a statement: Every number you state must be in one of your quotes; 2026 is not. Quote the words with that number…
+    ✓ Your rent could rise if regional property taxes go up and landlords pass on costs.
+  impacts · Checked and recorded: "Your rent could rise if regional property taxes go up and landlords p…" (row-2026-budget-book p.11)
+    ✓ Bus service expansion plans may change depending on how much funding Council approves for 2027.
+  impacts · Checked and recorded: "Bus service expansion plans may change depending on how much funding …" (grt-business-plan-2025 p.5)
+    ✓ Future LRT extension work to Cambridge could move forward; 2027 forecasts included $85 million.
+  impacts · Checked and recorded: "Future LRT extension work to Cambridge could move forward; 2027 forec…" (row-2026-budget-book p.43)
+    ✓ Raising taxes can help fix an $87.6 million annual repair gap, but residents pay higher bills.
+  impacts · Checked and recorded: "Raising taxes can help fix an $87.6 million annual repair gap, but re…" (row-asset-management-review-2026 p.3, row-2026-budget-book p.11)
+    ✓ Expanding bus service improves regional transit access, but it requires higher property tax support.
+  impacts · Checked and recorded: "Expanding bus service improves regional transit access, but it requir…" (grt-business-plan-2025 p.5, row-2026-budget-book p.12)
+  impacts · Noted an unknown: What will the official property tax rate increase be for 2027?
+  impacts · Noted an unknown: How much will Stage 2 ION light rail to Cambridge cost to operate once built?
+  usage: 24 calls, $0.1435
+■ housing done I have recorded the facts, figures, impacts, and unknowns for the housing lens.
+  usage: 24 calls, $0.1559
+  impacts · Searched the documents for "2026 Budget per $354,500 Residential Assessment V…": row-2026-budget-book p.12, row-2026-budget-book p.11, row-asset-management-review-2026 p.1
+  usage: 25 calls, $0.1647
+    ✗ rejected Quote not found on row-2026-budget-book page 5. Closest text on that page: " Total operating budget expenditure of $1,801 million ($1,593 million". Copy the words exactly as they appear (no paraphrase, no added words, no '|'), or call read_page first.
+  cost · Rejected a figure: Quote not found on row-2026-budget-book page 5. Closest text on that page: " Total operating budge…
+  cost · Checked and recorded a figure: Total replacement value of regional infrastructure, $11.3 billion (row-asset-management-review-2026 p.1)
+  cost · Checked and recorded a figure: Annual infrastructure funding gap, $87.6 million (row-asset-management-review-2026 p.1)
+    ✗ rejected Quote not found on row-2026-budget-book page 5. Closest text on that page: "The 10 year capital program is $8.1 billion (constant 2026 dollars)". Copy the words exactly as they appear (no paraphrase, no added words, no '|'), or call read_page first.
+  cost · Rejected a statement: Quote not found on row-2026-budget-book page 5. Closest text on that page: "The 10 year capital pro…
+    ✗ rejected Impacts are not certain: say what "may" happen next (use "may", "might" or "could"), with any past fact as context: "Your tax may rise again; in 2026 it rose $142."
+  cost · Rejected a statement: Impacts are not certain: say what "may" happen next (use "may", "might" or "could"), with any past …
+■ cost done Recorded 2 items. (Stopped: reached its call limit.)
+  usage: 25 calls, $0.1780
+    ✗ rejected Progress 1: That quote is on page 2 of wr-ghg-inventory-2022, not page 3. Cite page 2.
+  commitments · Rejected a commitment: Progress 1: That quote is on page 2 of wr-ghg-inventory-2022, not page 3. Cite page 2.
+    ✓ The Region set a target to create or preserve up to 3,500 affordable homes by the end of 2029.
+    ✓ The Region reported increasing housing generation from 50 units per year to 500 units per year after exceeding its first phase target.
+  commitments · Checked and recorded a commitment: Building Better Futures affordable housing target (unclear)
+    ✗ rejected Progress 1: Hard to read (grade 20.4). Use a shorter sentence (8 to 15 words) and everyday words ("the Region", "upkeep", "money set aside").
+  commitments · Rejected a commitment: Progress 1: Hard to read (grade 20.4). Use a shorter sentence (8 to 15 words) and everyday words ("…
+    ✓ Waterloo Region is behind on its target to cut greenhouse gas emissions 50% by 2030.
+  commitments · Checked and recorded: "Waterloo Region is behind on its target to cut greenhouse gas emissio…" (wr-ghg-inventory-2022 p.2)
+    ✓ The Region plans to create or preserve up to 3,500 affordable homes by late 2029.
+  commitments · Checked and recorded: "The Region plans to create or preserve up to 3,500 affordable homes b…" (row-affordable-housing-plan-page p.23)
+    ✓ The Region faces an $87.6 million annual infrastructure funding gap to keep assets in repair.
+  commitments · Checked and recorded: "The Region faces an $87.6 million annual infrastructure funding gap t…" (row-asset-management-review-2026 p.1)
+  commitments · Noted an unknown: What is the Region's total community greenhouse gas emissions total for 2023 or…
+  usage: 26 calls, $0.1925
+    ✓ Regional Council decides the 2027 plan and budget for regional services.
+  overview · Checked and recorded: "Regional Council decides the 2027 plan and budget for regional servic…" (row-2027-budget-page p.7)
+    ✓ Staff first present the draft budget proposal on December 16, 2026.
+  overview · Checked and recorded: "Staff first present the draft budget proposal on December 16, 2026." (row-2027-budget-page p.7)
+    ✓ The proposed detailed budget numbers are not published yet.
+  overview · Checked and recorded: "The proposed detailed budget numbers are not published yet." (row-2027-budget-page p.6)
+    ✓ Property taxes and user fees pay for regional spending.
+  overview · Checked and recorded: "Property taxes and user fees pay for regional spending." (row-2026-budget-book p.11)
+    ✗ rejected Every number you state must be in one of your quotes; 2026 is not. Quote the words with that number (a table row is fine), add a citation, or drop the number.
+  overview · Rejected a statement: Every number you state must be in one of your quotes; 2026 is not. Quote the words with that number…
+    ✓ Council sets a new plan and budget every year.
+  overview · Checked and recorded: "Council sets a new plan and budget every year." (row-2027-budget-page p.6)
+    ✓ Staff aim to protect key services while balancing local cost pressures.
+  overview · Checked and recorded: "Staff aim to protect key services while balancing local cost pressure…" (row-2027-budget-page p.6)
+    ✓ Fill in the online survey or quiz by February 26, 2027.
+  overview · Checked and recorded: "Fill in the online survey or quiz by February 26, 2027." (row-2027-budget-contest-rules p.1, row-2027-budget-contest-rules p.1)
+    ✓ Register as a delegation to speak at budget council meetings.
+  overview · Checked and recorded: "Register as a delegation to speak at budget council meetings." (row-delegation-guide p.1, row-2027-budget-page p.7)
+    ✓ You can submit written comments to Council through the Clerk.
+  overview · Checked and recorded: "You can submit written comments to Council through the Clerk." (row-delegation-guide p.1)
+    ✓ You can watch budget meeting broadcasts live online.
+  overview · Checked and recorded: "You can watch budget meeting broadcasts live online." (row-2027-budget-page p.6)
+  overview · Checked and recorded a figure: 2026 operating spending, $1,801 million (row-2026-budget-book p.5)
+  overview · Checked and recorded a figure: 2026 regional tax for average home, $2,928.62 (row-2026-budget-book p.11)
+  overview · Checked and recorded a figure: 2026 total regional bill for average home, $3,473.86 (row-2026-budget-book p.11)
+    ✗ rejected Quote not found on row-2026-budget-book page 17. Copy the words exactly as they appear (no paraphrase, no added words, no '|'), or call read_page first.
+  overview · Rejected a figure: Quote not found on row-2026-budget-book page 17. Copy the words exactly as they appear (no paraphra…
+  overview · Explained a term: operating budget
+  overview · Explained a term: capital program
+  usage: 27 calls, $0.2024
+    ✗ rejected Citation 2: That quote is on page 2, 4, 6, 12, 16, 22, 23, 27, 29, 31, 32, 33, 34, 35, 38, 39, 44, 56, 60, 61, 62, 70, 76, 80, 84, 85, 89, 91, 94, 96, 98, 102, 103, 107, 109, 111, 112, 113, 114, 115, 118, 120, 122, 126, 127, 130, 131, 132, 133, 135, 138, 139, 140, 141, 144, 145, 146, 147, 151, 152, 154, 155, 157, 161, 162, 163, 164, 165, 166, 169, 172 of row-2026-budget-book, not page 11. Cite page 2.
+  impacts · Rejected a statement: Citation 2: That quote is on page 2, 4, 6, 12, 16, 22, 23, 27, 29, 31, 32, 33, 34, 35, 38, 39, 44, …
+    ✗ rejected Citation 1: That quote is on page 2, 4, 6, 12, 16, 22, 23, 27, 29, 31, 32, 33, 34, 35, 38, 39, 44, 56, 60, 61, 62, 70, 76, 80, 84, 85, 89, 91, 94, 96, 98, 102, 103, 107, 109, 111, 112, 113, 114, 115, 118, 120, 122, 126, 127, 130, 131, 132, 133, 135, 138, 139, 140, 141, 144, 145, 146, 147, 151, 152, 154, 155, 157, 161, 162, 163, 164, 165, 166, 169, 172 of row-2026-budget-book, not page 11. Cite page 2.
+  impacts · Rejected a statement: Citation 1: That quote is on page 2, 4, 6, 12, 16, 22, 23, 27, 29, 31, 32, 33, 34, 35, 38, 39, 44, …
+  usage: 28 calls, $0.2120
+  commitments · Searched the documents for "12% below 2010 levels": wr-ghg-inventory-2022 p.3, wr-ghg-inventory-2022 p.2, wr-ghg-inventory-2022 p.10
+  commitments · Searched the documents for "growth from $82.8M per year to $87.6M per year": row-asset-management-review-2026 p.1, row-asset-management-review-2026 p.2, row-asset-management-review-2026 p.3
+  usage: 29 calls, $0.2223
+  overview · Searched the documents for "796,003": row-2026-budget-book p.17, row-2026-budget-book p.18, row-2026-budget-book p.93
+  overview · Searched the documents for "delegation": row-delegation-guide p.2, row-delegation-guide p.1, row-delegation-guide p.3
+  usage: 30 calls, $0.2377
+  transit · Checked and recorded a figure: 2027 bus transit capital forecast, $66.1 million (row-2026-budget-book p.17)
+  transit · Checked and recorded a figure: 2027 light rail transit capital forecast, $98.5 million (row-2026-budget-book p.17)
+  transit · Checked and recorded a figure: 10-year Stage 2 ION capital forecast, $2.05 billion (row-2026-budget-book p.43)
+    ✓ The transit plan aims to offer 10-minute weekday bus service on 16 routes.
+  transit · Checked and recorded: "The transit plan aims to offer 10-minute weekday bus service on 16 ro…" (grt-business-plan-2025 p.2)
+    ✓ Under the transit plan, riders may reach 15,000 more jobs within a one-hour bus trip.
+  transit · Checked and recorded: "Under the transit plan, riders may reach 15,000 more jobs within a on…" (grt-business-plan-2025 p.2)
+    ✗ rejected Hard to read (grade 15.4). Use a shorter sentence (8 to 15 words) and everyday words ("the Region", "upkeep", "money set aside").
+  transit · Rejected a statement: Hard to read (grade 15.4). Use a shorter sentence (8 to 15 words) and everyday words ("the Region",…
+  transit · Noted an unknown: When Stage 2 ION light rail to Cambridge will open and what its yearly operatin…
+  usage: 31 calls, $0.2481
+  overview · Checked and recorded a figure: 2027 capital forecast (from 2026 plan), $796 million (row-2026-budget-book p.17)
+  usage: 32 calls, $0.2589
+    ✗ rejected Citation 2: Quote not found on row-2026-budget-book page 11. Closest text on that page: "Annual Cost of Regional Services Per Average Household*". Copy the words exactly as they appear (no paraphrase, no added words, no '|'), or call read_page first.
+  impacts · Rejected a statement: Citation 2: Quote not found on row-2026-budget-book page 11. Closest text on that page: "Annual Cos…
+    ✗ rejected Citation 1: Quote not found on row-2026-budget-book page 11. Closest text on that page: "Annual Cost of Regional Services Per Average Household*". Copy the words exactly as they appear (no paraphrase, no added words, no '|'), or call read_page first.
+  impacts · Rejected a statement: Citation 1: Quote not found on row-2026-budget-book page 11. Closest text on that page: "Annual Cos…
+  usage: 33 calls, $0.2711
+    ✓ Expanding bus service brings more frequent trips, but higher costs increase regional property taxes.
+  transit · Checked and recorded: "Expanding bus service brings more frequent trips, but higher costs in…" (grt-business-plan-2025 p.5, grt-business-plan-2025 p.5)
+  usage: 34 calls, $0.2814
+  overview · Explained a term: property tax levy
+  overview · Explained a term: user rates
+  usage: 35 calls, $0.2930
+    ✓ The community target requires cutting emissions 50% below 2010 levels by 2030.
+    ✓ In 2022, emissions were 12% below 2010 levels, leaving the region behind its 2030 goal.
+  commitments · Checked and recorded a commitment: Cut community emissions 50% by 2030 (behind)
+    ✗ rejected Progress 2: Hard to read (grade 15.8). Use a shorter sentence (8 to 15 words) and everyday words ("the Region", "upkeep", "money set aside").
+  commitments · Rejected a commitment: Progress 2: Hard to read (grade 15.8). Use a shorter sentence (8 to 15 words) and everyday words ("…
+  usage: 36 calls, $0.3014
+  overview · Searched the documents for "2026 Plan and Budget": row-2026-budget-book p.140, row-2026-budget-book p.20, row-2026-budget-book p.143
+  usage: 37 calls, $0.3115
+    ✗ rejected Every number you state must be in one of your quotes; 2026 is not. Quote the words with that number (a table row is fine), add a citation, or drop the number.
+  impacts · Rejected a statement: Every number you state must be in one of your quotes; 2026 is not. Quote the words with that number…
+    ✗ rejected Every number you state must be in one of your quotes; 2026 is not. Quote the words with that number (a table row is fine), add a citation, or drop the number.
+  impacts · Rejected a statement: Every number you state must be in one of your quotes; 2026 is not. Quote the words with that number…
+  usage: 38 calls, $0.3196
+  transit · Searched the documents for "active transportation walking cycling stops acces…": grt-business-plan-2025 p.7, grt-business-plan-2025 p.6, grt-business-plan-2025 p.8
+  usage: 39 calls, $0.3285
+  overview · Searched the documents for "2026 Household Impact": row-2026-budget-book p.12, row-2026-budget-book p.11, row-2026-budget-book p.124
+  usage: 40 calls, $0.3372
+■ transit done I recorded figures, facts, impacts, trade-offs, and unknowns for the transit lens.
+  usage: 40 calls, $0.3475
+    ✓ Your regional tax bill may increase again; for an average home it recently rose $142.
+  impacts · Checked and recorded: "Your regional tax bill may increase again; for an average home it rec…" (row-2026-budget-book p.11)
+    ✓ Your regional water and sewer rates may go up; both recently rose 5.9 percent.
+  impacts · Checked and recorded: "Your regional water and sewer rates may go up; both recently rose 5.9…" (row-2026-budget-book p.11, row-2026-budget-book p.11)
+■ impacts done Recorded 9 items. (Stopped: the run's budget was used up.)
+  usage: 40 calls, $0.3574
+    ✗ rejected Every number you state must be in one of your quotes; 2026, 2928 are not. Quote the words with that number (a table row is fine), add a citation, or drop the number.
+  overview · Rejected a statement: Every number you state must be in one of your quotes; 2026, 2928 are not. Quote the words with that…
+■ overview done Recorded 18 items. (Stopped: the run's budget was used up.)
+  usage: 40 calls, $0.3684
+    ✓ Optimal yearly upkeep needs were set at $321.5 million.
+    ✓ Ten-year spending averages $233.9 million, leaving an $87.6 million yearly gap.
+  commitments · Checked and recorded a commitment: Close the municipal infrastructure funding gap (behind)
+■ commitments done Recorded 7 items. (Stopped: the run's budget was used up.)
+
+wrote data/briefs/row-2027-budget.json: 20 statements, 11 figures, 5 unknowns, grade 7.3, $0.3684

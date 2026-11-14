@@ -1,0 +1,726 @@
+{
+  "decisionId": "row-2027-budget",
+  "lang": "en",
+  "generatedAt": "2026-11-14T06:49:30.766Z",
+  "models": [
+    "gemini-3.6-flash"
+  ],
+  "costUsd": 0.368356,
+  "readingGrade": 7.3,
+  "summary": [
+    {
+      "id": "s22",
+      "text": "Regional Council decides the 2027 plan and budget for regional services.",
+      "kind": "fact",
+      "citations": [
+        {
+          "sourceId": "row-2027-budget-page",
+          "page": 7,
+          "quote": "December 16, 2026 - 2027 Plan and Budget Overview"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "s23",
+      "text": "Staff first present the draft budget proposal on December 16, 2026.",
+      "kind": "fact",
+      "citations": [
+        {
+          "sourceId": "row-2027-budget-page",
+          "page": 7,
+          "quote": "December 16, 2026 - 2027 Plan and Budget Overview"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "s24",
+      "text": "The proposed detailed budget numbers are not published yet.",
+      "kind": "fact",
+      "citations": [
+        {
+          "sourceId": "row-2027-budget-page",
+          "page": 6,
+          "quote": "This is a stability-focused budget to ensure that the services our residents rely on remain strong"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "s25",
+      "text": "Property taxes and user fees pay for regional spending.",
+      "kind": "fact",
+      "citations": [
+        {
+          "sourceId": "row-2026-budget-book",
+          "page": 11,
+          "quote": "Property Tax 2,786.44 $2,928.62 142.18 5.10%"
+        }
+      ],
+      "verified": true
+    }
+  ],
+  "whyNow": [
+    {
+      "id": "s26",
+      "text": "Council sets a new plan and budget every year.",
+      "kind": "fact",
+      "citations": [
+        {
+          "sourceId": "row-2027-budget-page",
+          "page": 6,
+          "quote": "affordability for residents; maintaining critical services; and protecting essential infrastructure."
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "s27",
+      "text": "Staff aim to protect key services while balancing local cost pressures.",
+      "kind": "fact",
+      "citations": [
+        {
+          "sourceId": "row-2027-budget-page",
+          "page": 6,
+          "quote": "affordability for residents; maintaining critical services; and protecting essential infrastructure."
+        }
+      ],
+      "verified": true
+    }
+  ],
+  "impacts": [
+    {
+      "audience": "renter",
+      "label": "If you rent",
+      "statements": [
+        {
+          "id": "s2",
+          "text": "Low income renters may get access to 2,100 of the planned affordable homes.",
+          "kind": "fact",
+          "citations": [
+            {
+              "sourceId": "row-affordable-housing-plan-page",
+              "page": 23,
+              "quote": "2,100 of those (60%) dedicated to households with very-low-to-low income"
+            }
+          ],
+          "verified": true
+        },
+        {
+          "id": "s5",
+          "text": "Your rent could rise if regional property taxes go up and landlords pass on costs.",
+          "kind": "harm",
+          "citations": [
+            {
+              "sourceId": "row-2026-budget-book",
+              "page": 11,
+              "quote": "Property Tax 2,786.44 $2,928.62 142.18 5.10%"
+            }
+          ],
+          "verified": true
+        }
+      ]
+    },
+    {
+      "audience": "homeowner",
+      "label": "If you own a home",
+      "statements": [
+        {
+          "id": "s47",
+          "text": "Your regional tax bill may increase again; for an average home it recently rose $142.",
+          "kind": "harm",
+          "citations": [
+            {
+              "sourceId": "row-2026-budget-book",
+              "page": 11,
+              "quote": "Property Tax 2,786.44 $2,928.62 142.18 5.10%"
+            }
+          ],
+          "verified": true
+        },
+        {
+          "id": "s48",
+          "text": "Your regional water and sewer rates may go up; both recently rose 5.9 percent.",
+          "kind": "harm",
+          "citations": [
+            {
+              "sourceId": "row-2026-budget-book",
+              "page": 11,
+              "quote": "Water $230.05 $243.63 $13.58 5.90%"
+            },
+            {
+              "sourceId": "row-2026-budget-book",
+              "page": 11,
+              "quote": "Wastewater $284.81 $301.61 $16.80 5.90%"
+            }
+          ],
+          "verified": true
+        }
+      ]
+    },
+    {
+      "audience": "transit-rider",
+      "label": "If you ride transit",
+      "statements": [
+        {
+          "id": "s6",
+          "text": "Bus service expansion plans may change depending on how much funding Council approves for 2027.",
+          "kind": "fact",
+          "citations": [
+            {
+              "sourceId": "grt-business-plan-2025",
+              "page": 5,
+              "quote": "Transit operating costs will be refined on an ongoing basis as staff prepares annual service expansion plans"
+            }
+          ],
+          "verified": true
+        },
+        {
+          "id": "s7",
+          "text": "Future LRT extension work to Cambridge could move forward; 2027 forecasts included $85 million.",
+          "kind": "fact",
+          "citations": [
+            {
+              "sourceId": "row-2026-budget-book",
+              "page": 43,
+              "quote": "68030 RT to Cambridge-Project Development 85,000"
+            }
+          ],
+          "verified": true
+        },
+        {
+          "id": "s39",
+          "text": "Under the transit plan, riders may reach 15,000 more jobs within a one-hour bus trip.",
+          "kind": "fact",
+          "citations": [
+            {
+              "sourceId": "grt-business-plan-2025",
+              "page": 2,
+              "quote": "On average, residents and visitors will be able to reach approximately 38,000 more people and 15,000 more jobs within a one-hour trip compared to today."
+            }
+          ],
+          "verified": true
+        }
+      ]
+    }
+  ],
+  "haveYourSay": [
+    {
+      "id": "s28",
+      "text": "Fill in the online survey or quiz by February 26, 2027.",
+      "kind": "fact",
+      "citations": [
+        {
+          "sourceId": "row-2027-budget-contest-rules",
+          "page": 1,
+          "quote": "Complete our survey or quiz for one chance to enter a draw"
+        },
+        {
+          "sourceId": "row-2027-budget-contest-rules",
+          "page": 1,
+          "quote": "closes at 11:59 pm. (E.T.) on Friday, February 26, 2027."
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "s29",
+      "text": "Register as a delegation to speak at budget council meetings.",
+      "kind": "fact",
+      "citations": [
+        {
+          "sourceId": "row-delegation-guide",
+          "page": 1,
+          "quote": "A delegation is a person or group who would like to speak at a Council or Committee meeting"
+        },
+        {
+          "sourceId": "row-2027-budget-page",
+          "page": 7,
+          "quote": "December 16, 2026 - 2027 Plan and Budget Overview"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "s30",
+      "text": "You can submit written comments to Council through the Clerk.",
+      "kind": "fact",
+      "citations": [
+        {
+          "sourceId": "row-delegation-guide",
+          "page": 1,
+          "quote": "A delegation is a person or group who would like to speak at a Council or Committee meeting"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "s31",
+      "text": "You can watch budget meeting broadcasts live online.",
+      "kind": "fact",
+      "citations": [
+        {
+          "sourceId": "row-2027-budget-page",
+          "page": 6,
+          "quote": "Visit the EngageWR webpage (https://www.engagewr.ca/ROW-2027-budget) to share your thoughts"
+        }
+      ],
+      "verified": true
+    }
+  ],
+  "figures": [
+    {
+      "id": "f3",
+      "label": "Target affordable homes by 2029",
+      "value": 3500,
+      "unit": "units",
+      "display": "3,500 affordable homes",
+      "citation": {
+        "sourceId": "row-affordable-housing-plan-page",
+        "page": 23,
+        "quote": "create or preserve up to 3,500 affordable homes by the end of 2029"
+      },
+      "kind": "cited"
+    },
+    {
+      "id": "f4",
+      "label": "2027 forecasted capital spending for Waterloo Region Housing",
+      "value": 80483000,
+      "unit": "CAD",
+      "display": "$80.5 million",
+      "citation": {
+        "sourceId": "row-2026-budget-book",
+        "page": 17,
+        "quote": "24 Waterloo Region Housing 20,528 46,381 66,909 80,483"
+      },
+      "kind": "cited"
+    },
+    {
+      "id": "f10",
+      "label": "Total replacement value of regional infrastructure",
+      "value": 11300000000,
+      "unit": "CAD",
+      "display": "$11.3 billion",
+      "citation": {
+        "sourceId": "row-asset-management-review-2026",
+        "page": 1,
+        "quote": "The Region’s infrastructure portfolio has a total replacement value of $11.3 billion."
+      },
+      "kind": "cited"
+    },
+    {
+      "id": "f11",
+      "label": "Annual infrastructure funding gap",
+      "value": 87600000,
+      "unit": "CAD",
+      "display": "$87.6 million",
+      "citation": {
+        "sourceId": "row-asset-management-review-2026",
+        "page": 1,
+        "quote": "In 2026, the Region’s infrastructure funding gap has grown from $82.8M per year to $87.6M per year."
+      },
+      "kind": "cited"
+    },
+    {
+      "id": "f32",
+      "label": "2026 operating spending",
+      "value": 1801000000,
+      "unit": "CAD",
+      "display": "$1,801 million",
+      "citation": {
+        "sourceId": "row-2026-budget-book",
+        "page": 5,
+        "quote": "Total operating budget expenditure of $1,801 million"
+      },
+      "kind": "cited"
+    },
+    {
+      "id": "f33",
+      "label": "2026 regional tax for average home",
+      "value": 2928.62,
+      "unit": "CAD",
+      "display": "$2,928.62",
+      "citation": {
+        "sourceId": "row-2026-budget-book",
+        "page": 11,
+        "quote": "Property Tax 2,786.44 $2,928.62 142.18 5.10%"
+      },
+      "kind": "cited"
+    },
+    {
+      "id": "f34",
+      "label": "2026 total regional bill for average home",
+      "value": 3473.86,
+      "unit": "CAD",
+      "display": "$3,473.86",
+      "citation": {
+        "sourceId": "row-2026-budget-book",
+        "page": 11,
+        "quote": "Total $3,301.30 $3,473.86 $172.56 5.23%"
+      },
+      "kind": "cited"
+    },
+    {
+      "id": "f35",
+      "label": "2027 bus transit capital forecast",
+      "value": 66082000,
+      "unit": "CAD",
+      "display": "$66.1 million",
+      "citation": {
+        "sourceId": "row-2026-budget-book",
+        "page": 17,
+        "quote": "40 Grand River Transit Bus Services 35,803 44,713 80,515 66,082"
+      },
+      "kind": "cited"
+    },
+    {
+      "id": "f36",
+      "label": "2027 light rail transit capital forecast",
+      "value": 98465000,
+      "unit": "CAD",
+      "display": "$98.5 million",
+      "citation": {
+        "sourceId": "row-2026-budget-book",
+        "page": 17,
+        "quote": "38 Light Rail Transit 15,586 12,275 27,861 98,465"
+      },
+      "kind": "cited"
+    },
+    {
+      "id": "f37",
+      "label": "10-year Stage 2 ION capital forecast",
+      "value": 2045600000,
+      "unit": "CAD",
+      "display": "$2.05 billion",
+      "citation": {
+        "sourceId": "row-2026-budget-book",
+        "page": 43,
+        "quote": "68030 RT to Cambridge-Project Development 85,000 72,000 78,000 78,000 313,000 1,732,600 2,045,600"
+      },
+      "kind": "cited"
+    },
+    {
+      "id": "f40",
+      "label": "2027 capital forecast (from 2026 plan)",
+      "value": 796000000,
+      "unit": "CAD",
+      "display": "$796 million",
+      "citation": {
+        "sourceId": "row-2026-budget-book",
+        "page": 17,
+        "quote": "TOTAL EXPENDITURE 338,013 434,395 772,408 796,003"
+      },
+      "kind": "cited"
+    }
+  ],
+  "unknowns": [
+    {
+      "question": "How many approved housing units across the Region have started construction this year",
+      "why": "Residents cannot tell from public regional reports how fast approved housing turns into built homes.",
+      "whoCanAnswer": "Region of Waterloo Housing Services and local city planning departments",
+      "contact": "Housing Services, Region of Waterloo, housing@regionofwaterloo.ca, 519-575-4400"
+    },
+    {
+      "question": "What will the official property tax rate increase be for 2027?",
+      "why": "Homeowners and renters need to know how much their living expenses will change next year.",
+      "whoCanAnswer": "Region of Waterloo Corporate Finance"
+    },
+    {
+      "question": "How much will Stage 2 ION light rail to Cambridge cost to operate once built?",
+      "why": "Taxpayers will need to cover ongoing operating expenses for light rail after construction.",
+      "whoCanAnswer": "Grand River Transit and Regional Council"
+    },
+    {
+      "question": "What is the Region's total community greenhouse gas emissions total for 2023 or later?",
+      "why": "Residents need recent data to see whether current budget investments are accelerating climate action.",
+      "whoCanAnswer": "ClimateActionWR and Region of Waterloo Sustainability Office"
+    },
+    {
+      "question": "When Stage 2 ION light rail to Cambridge will open and what its yearly operating cost will be",
+      "why": "Residents need to know when light rail service reaches Cambridge and how it will affect annual operating taxes.",
+      "whoCanAnswer": "Region of Waterloo",
+      "contact": "regionalclerk@regionofwaterloo.ca"
+    }
+  ],
+  "tradeoffs": [
+    {
+      "id": "s8",
+      "text": "Raising taxes can help fix an $87.6 million annual repair gap, but residents pay higher bills.",
+      "kind": "tradeoff",
+      "citations": [
+        {
+          "sourceId": "row-asset-management-review-2026",
+          "page": 3,
+          "quote": "infrastructure funding gap of $87.6 million per year"
+        },
+        {
+          "sourceId": "row-2026-budget-book",
+          "page": 11,
+          "quote": "Property Tax 2,786.44 $2,928.62 142.18 5.10%"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "s9",
+      "text": "Expanding bus service improves regional transit access, but it requires higher property tax support.",
+      "kind": "tradeoff",
+      "citations": [
+        {
+          "sourceId": "grt-business-plan-2025",
+          "page": 5,
+          "quote": "Transit operating costs will be refined on an ongoing basis as staff prepares annual service expansion plans"
+        },
+        {
+          "sourceId": "row-2026-budget-book",
+          "page": 12,
+          "quote": "Public Transit(2) 231,203 156,402 17.6 $516"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "s41",
+      "text": "Expanding bus service brings more frequent trips, but higher costs increase regional property taxes.",
+      "kind": "tradeoff",
+      "citations": [
+        {
+          "sourceId": "grt-business-plan-2025",
+          "page": 5,
+          "quote": "The total estimated operating costs to achieve all priorities of the GRT Business Plan by 2035, in today’s values, are shown in Table 1"
+        },
+        {
+          "sourceId": "grt-business-plan-2025",
+          "page": 5,
+          "quote": "Transit operating costs will be refined on an ongoing basis as staff prepares annual service expansion plans, which will be subject to Regional Council’s review and approval"
+        }
+      ],
+      "verified": true
+    }
+  ],
+  "glossary": [
+    {
+      "term": "operating budget",
+      "plain": "The money spent on day-to-day services and operations."
+    },
+    {
+      "term": "capital program",
+      "plain": "The plan for building or upgrading long-lasting facilities and roads."
+    },
+    {
+      "term": "property tax levy",
+      "plain": "The regional tax bill on your property for shared services."
+    },
+    {
+      "term": "user rates",
+      "plain": "Fees charged directly for using specific services like regional water."
+    }
+  ],
+  "lenses": {
+    "transit": {
+      "statements": [
+        {
+          "id": "s38",
+          "text": "The transit plan aims to offer 10-minute weekday bus service on 16 routes.",
+          "kind": "fact",
+          "citations": [
+            {
+              "sourceId": "grt-business-plan-2025",
+              "page": 2,
+              "quote": "Improve frequency to 10 minutes on weekdays (7 a.m. - 7 p.m.), and 15 minutes all other times, on 16 routes."
+            }
+          ],
+          "verified": true
+        }
+      ]
+    },
+    "commitments": {
+      "commitments": [
+        {
+          "id": "c16",
+          "title": "Building Better Futures affordable housing target",
+          "madeBy": "Region of Waterloo",
+          "target": "Create or preserve up to 3,500 affordable homes by the end of 2029.",
+          "status": "unclear",
+          "progress": [
+            {
+              "id": "s14",
+              "text": "The Region set a target to create or preserve up to 3,500 affordable homes by the end of 2029.",
+              "kind": "fact",
+              "citations": [
+                {
+                  "sourceId": "row-affordable-housing-plan-page",
+                  "page": 23,
+                  "quote": "Our new target is to create or preserve up to 3,500 affordable homes by the end of 2029"
+                }
+              ],
+              "verified": true
+            },
+            {
+              "id": "s15",
+              "text": "The Region reported increasing housing generation from 50 units per year to 500 units per year after exceeding its first phase target.",
+              "kind": "fact",
+              "citations": [
+                {
+                  "sourceId": "row-affordable-housing-plan-page",
+                  "page": 23,
+                  "quote": "increasing affordable housing we generated from an average of 50 units per year to 500 units per year."
+                }
+              ],
+              "verified": true
+            }
+          ],
+          "unclear": [
+            "The documents do not state total affordable homes created or preserved toward the 3,500 target as of 2026."
+          ],
+          "relation": "The Region's budget funds affordable housing plans and community housing investments."
+        },
+        {
+          "id": "c44",
+          "title": "Cut community emissions 50% by 2030",
+          "madeBy": "ClimateActionWR and regional partner municipalities",
+          "target": "Cut community greenhouse gas emissions by 50% below 2010 levels by 2030.",
+          "status": "behind",
+          "progress": [
+            {
+              "id": "s42",
+              "text": "The community target requires cutting emissions 50% below 2010 levels by 2030.",
+              "kind": "fact",
+              "citations": [
+                {
+                  "sourceId": "wr-ghg-inventory-2022",
+                  "page": 2,
+                  "quote": "Our community GHG targets: 80% emissions reduction (below 2010 baseline levels) by the year 2050, With an interim target of a 50% reduction by 2030."
+                }
+              ],
+              "verified": true
+            },
+            {
+              "id": "s43",
+              "text": "In 2022, emissions were 12% below 2010 levels, leaving the region behind its 2030 goal.",
+              "kind": "fact",
+              "citations": [
+                {
+                  "sourceId": "wr-ghg-inventory-2022",
+                  "page": 3,
+                  "quote": "In 2022 we saw a 12% emissions reduction (below 2010 levels). Although we are seeing some progress and sustained emissions reductions, we are not on track for our 50% emissions reduction target by 2030"
+                }
+              ],
+              "verified": true
+            }
+          ],
+          "unclear": [
+            "Emissions figures after 2022 are not provided in the source documents."
+          ],
+          "relation": "The budget sets transit and service spending that affects community carbon emissions."
+        },
+        {
+          "id": "c51",
+          "title": "Close the municipal infrastructure funding gap",
+          "madeBy": "Region of Waterloo",
+          "target": "Fully fund annual infrastructure renewal needs of $321.5 million.",
+          "status": "behind",
+          "progress": [
+            {
+              "id": "s49",
+              "text": "Optimal yearly upkeep needs were set at $321.5 million.",
+              "kind": "fact",
+              "citations": [
+                {
+                  "sourceId": "row-asset-management-review-2026",
+                  "page": 3,
+                  "quote": "The annual average level of investment in asset renewal over the ten-year capital program of $233.9 million falls short of the optimal level of investment needs identified in the 2026 progress report of $321.5 million."
+                }
+              ],
+              "verified": true
+            },
+            {
+              "id": "s50",
+              "text": "Ten-year spending averages $233.9 million, leaving an $87.6 million yearly gap.",
+              "kind": "fact",
+              "citations": [
+                {
+                  "sourceId": "row-asset-management-review-2026",
+                  "page": 1,
+                  "quote": "In 2026, the Region’s infrastructure funding gap has grown from $82.8M per year to $87.6M per year."
+                },
+                {
+                  "sourceId": "row-asset-management-review-2026",
+                  "page": 3,
+                  "quote": "The annual average level of investment in asset renewal over the ten-year capital program of $233.9 million falls short of the optimal level of investment needs identified in the 2026 progress report of $321.5 million. This represents a renewal funding shortfall or infrastructure funding gap of $87.6 million per year."
+                }
+              ],
+              "verified": true
+            }
+          ],
+          "unclear": [
+            "The documents do not show how fast Council plans to close the shortfall."
+          ],
+          "relation": "The capital budget decides how much money goes to repair regional assets."
+        }
+      ],
+      "statements": [
+        {
+          "id": "s19",
+          "text": "Waterloo Region is behind on its target to cut greenhouse gas emissions 50% by 2030.",
+          "kind": "fact",
+          "citations": [
+            {
+              "sourceId": "wr-ghg-inventory-2022",
+              "page": 2,
+              "quote": "we are not on track for our 50% emissions reduction target by 2030"
+            }
+          ],
+          "verified": true
+        },
+        {
+          "id": "s20",
+          "text": "The Region plans to create or preserve up to 3,500 affordable homes by late 2029.",
+          "kind": "fact",
+          "citations": [
+            {
+              "sourceId": "row-affordable-housing-plan-page",
+              "page": 23,
+              "quote": "Our new target is to create or preserve up to 3,500 affordable homes by the end of 2029"
+            }
+          ],
+          "verified": true
+        },
+        {
+          "id": "s21",
+          "text": "The Region faces an $87.6 million annual infrastructure funding gap to keep assets in repair.",
+          "kind": "fact",
+          "citations": [
+            {
+              "sourceId": "row-asset-management-review-2026",
+              "page": 1,
+              "quote": "In 2026, the Region’s infrastructure funding gap has grown from $82.8M per year to $87.6M per year."
+            }
+          ],
+          "verified": true
+        }
+      ]
+    },
+    "housing": {
+      "statements": [
+        {
+          "id": "s1",
+          "text": "The Region plans to create or preserve up to 3,500 affordable homes by the end of 2029.",
+          "kind": "fact",
+          "citations": [
+            {
+              "sourceId": "row-affordable-housing-plan-page",
+              "page": 23,
+              "quote": "Our new target is to create or preserve up to 3,500 affordable homes by the end of 2029"
+            }
+          ],
+          "verified": true
+        }
+      ]
+    }
+  },
+  "review": {
+    "status": "draft"
+  }
+}

@@ -1,0 +1,218 @@
+plan overview=explainer: What's proposed, why now, how to have a say | impacts=explainer: How it may affect people, trade-offs, unknowns | cost=lifecycle-cost: Lifecycle cost | housing=housing-pipeline: Housing pipeline | commitments=commitments: Commitments
+▶ overview (explainer) What's proposed, why now, how to have a say
+▶ impacts (explainer) How it may affect people, trade-offs, unknowns
+▶ cost (lifecycle-cost) Lifecycle cost
+▶ housing (housing-pipeline) Housing pipeline
+▶ commitments (commitments) Commitments
+  usage: 5 calls, $0.0037
+  commitments · Looked for tracked commitments: none yet
+  usage: 6 calls, $0.0077
+  cost · Looked for a computed lifecycle cost: none yet
+  cost · Searched the documents for "Water Supply 10-year capital program": row-water-supply-slides-2024 p.12, row-2026-budget-book p.5, row-water-supply-charter p.6
+  cost · Searched the documents for "funding gap": row-infrastructure-gap-2026 p.2, row-infrastructure-gap-2026 p.3, row-asset-management-review-2026 p.4
+  usage: 7 calls, $0.0116
+  housing · Looked up housing units by stage for region
+  housing · Searched the documents for "growth": row-water-supply-charter p.9, row-2026-budget-book p.59, row-2026-budget-book p.99
+  housing · Searched the documents for "capacity constraint": row-asset-management-review-2026 p.4, row-water-supply-charter p.10, row-2026-budget-book p.20
+  usage: 8 calls, $0.0161
+  overview · Searched the documents for "Water Supply Strategy Update Notice of Public Mee…": row-water-supply-notice-2 p.1
+  overview · Searched the documents for "Integrated Urban System Master Plan water supply": row-water-supply-slides-2024 p.14, row-water-supply-slides-2024 p.17, row-water-supply-slides-2024 p.15
+  overview · Searched the documents for "Water Capital Reserve water rates user rates": row-2026-budget-book p.9, row-2026-budget-book p.8, row-2026-budget-book p.97
+  usage: 9 calls, $0.0208
+  impacts · Searched the documents for "water rate average household": row-2026-budget-book p.12, row-2026-budget-book p.11, row-2026-budget-book p.5
+  impacts · Searched the documents for "development applications": row-2026-budget-book p.100, row-2026-budget-book p.59, row-2026-budget-book p.190
+  impacts · Searched the documents for "water capacity constraint": row-asset-management-review-2026 p.4, row-asset-management-review-2026 p.1
+  impacts · Searched the documents for "infrastructure funding gap": row-infrastructure-gap-2026 p.2, row-infrastructure-gap-2026 p.3, row-infrastructure-gap-2026 p.1
+  usage: 10 calls, $0.0246
+  commitments · Searched the documents for "Strategic Plan target climate 2030 2051 growth": row-2026-budget-book p.100, row-water-supply-charter p.8, row-water-supply-slides-2024 p.9
+  usage: 11 calls, $0.0301
+  cost · Searched the documents for "847,572": row-2026-budget-book p.63, row-2026-budget-book p.67, row-2026-budget-book p.17
+  cost · Searched the documents for "243.63": row-2026-budget-book p.11
+  usage: 12 calls, $0.0364
+  overview · Searched the documents for "847,572 487,917 Upgrades, Expansion": row-2026-budget-book p.63, row-2026-budget-book p.66, row-2026-budget-book p.128
+  overview · Searched the documents for "243.63 301.61 average household": row-2026-budget-book p.11, row-2026-budget-book p.12, row-2026-budget-book p.5
+  usage: 13 calls, $0.0423
+  housing · Read page 59 of 2026 Final Budget Book
+  housing · Read page 4 of Annual Review of Asset Management Planning Progress (Report…
+  usage: 14 calls, $0.0466
+  commitments · Searched the documents for "greenhouse gas emissions reduction target 80 perc…": row-water-supply-charter p.10, row-2026-budget-book p.180, row-2026-budget-book p.18
+  usage: 15 calls, $0.0542
+    ✗ rejected Hard to read (grade 14.3). Use a shorter sentence (8 to 15 words) and everyday words ("the Region", "upkeep", "money set aside").
+  housing · Rejected a statement: Hard to read (grade 14.3). Use a shorter sentence (8 to 15 words) and everyday words ("the Region",…
+    ✗ rejected Impacts are not certain: say what "may" happen next (use "may", "might" or "could"), with any past fact as context: "Your tax may rise again; in 2026 it rose $142."
+  housing · Rejected a statement: Impacts are not certain: say what "may" happen next (use "may", "might" or "could"), with any past …
+  housing · Checked and recorded a figure: Annual development reviews for water services, 400 development applications (row-2026-budget-book p.59)
+  housing · Noted an unknown: How many new housing units are currently delayed or restricted by municipal wat…
+  usage: 16 calls, $0.0653
+    ✓ reached The Region is planning where to get tap water through to 2051.
+  overview · Checked and recorded: "reached The Region is planning where to get tap water through to 2051." (row-water-supply-notice-2 p.1)
+    ✓ The Region has not yet chosen its long-term water sources.
+  overview · Checked and recorded: "The Region has not yet chosen its long-term water sources." (row-water-supply-notice-2 p.1)
+    ✗ rejected Every number you state must be in one of your quotes; 847, 2026, 2035 are not. Quote the words with that number (a table row is fine), add a citation, or drop the number.
+  overview · Rejected a statement: Every number you state must be in one of your quotes; 847, 2026, 2035 are not. Quote the words with…
+    ✓ Funding comes from water rates and charges paid on new development.
+  overview · Checked and recorded: "Funding comes from water rates and charges paid on new development." (row-2026-budget-book p.63, row-2026-budget-book p.63)
+  usage: 17 calls, $0.0758
+    ✗ rejected Every number you state must be in one of your quotes; 2026 is not. Quote the words with that number (a table row is fine), add a citation, or drop the number.
+  impacts · Rejected a statement: Every number you state must be in one of your quotes; 2026 is not. Quote the words with that number…
+    ✗ rejected Every number you state must be in one of your quotes; 2035 is not. Quote the words with that number (a table row is fine), add a citation, or drop the number.
+  impacts · Rejected a statement: Every number you state must be in one of your quotes; 2035 is not. Quote the words with that number…
+    ✓ New water sources could help solve local water capacity constraints over time.
+  impacts · Checked and recorded: "New water sources could help solve local water capacity constraints o…" (row-asset-management-review-2026 p.4)
+    ✓ Renters may see utility costs or rents rise if regional water rates increase.
+  impacts · Checked and recorded: "Renters may see utility costs or rents rise if regional water rates i…" (row-2026-budget-book p.11)
+    ✗ rejected Your sentence shares no words with its quotes, so the quotes don't show what it says. Quote the words that say it, or change the sentence to match them.
+  impacts · Rejected a statement: Your sentence shares no words with its quotes, so the quotes don't show what it says. Quote the wor…
+    ✗ rejected Every number you state must be in one of your quotes; 311, 2035 are not. Quote the words with that number (a table row is fine), add a citation, or drop the number.
+  impacts · Rejected a statement: Every number you state must be in one of your quotes; 311, 2035 are not. Quote the words with that …
+    ✓ Local businesses could gain more reliable water supply as the population grows.
+  impacts · Checked and recorded: "Local businesses could gain more reliable water supply as the populat…" (row-2026-budget-book p.59)
+    ✓ New residents may rely on this strategy to secure safe drinking water.
+  impacts · Checked and recorded: "New residents may rely on this strategy to secure safe drinking water." (row-2026-budget-book p.59)
+  usage: 18 calls, $0.0840
+  impacts · Searched the documents for "2026-2035 Capital Program": row-2026-budget-book p.30, row-2026-budget-book p.88, row-2026-budget-book p.2
+  usage: 19 calls, $0.0961
+  cost · Checked and recorded a figure: Water Supply 10-year capital program (2026-2035), $847.6 million (row-2026-budget-book p.63)
+  cost · Checked and recorded a figure: Annual regional infrastructure funding gap, $87.6 million (row-infrastructure-gap-2026 p.1)
+  cost · Checked and recorded a figure: Average annual regional water bill per household (2026), $243.63 (row-2026-budget-book p.11)
+  cost · Checked and recorded a figure: Average annual regional wastewater bill per household (2026), $301.61 (row-2026-budget-book p.11)
+    ✗ rejected Every number you state must be in one of your quotes; 2026, 2035 are not. Quote the words with that number (a table row is fine), add a citation, or drop the number.
+  cost · Rejected a statement: Every number you state must be in one of your quotes; 2026, 2035 are not. Quote the words with that…
+    ✓ Water reserve funds pay $525.4 million of the ten-year capital program from user rates.
+  cost · Checked and recorded: "Water reserve funds pay $525.4 million of the ten-year capital progra…" (row-2026-budget-book p.63)
+    ✗ rejected Impacts are not certain: say what "may" happen next (use "may", "might" or "could"), with any past fact as context: "Your tax may rise again; in 2026 it rose $142."
+  cost · Rejected a statement: Impacts are not certain: say what "may" happen next (use "may", "might" or "could"), with any past …
+    ✗ rejected Impacts are not certain: say what "may" happen next (use "may", "might" or "could"), with any past fact as context: "Your tax may rise again; in 2026 it rose $142."
+  cost · Rejected a statement: Impacts are not certain: say what "may" happen next (use "may", "might" or "could"), with any past …
+    ✗ rejected A trade-off shows both sides in one sentence: what is gained "but" what it costs or who may lose.
+  cost · Rejected a statement: A trade-off shows both sides in one sentence: what is gained "but" what it costs or who may lose.
+  cost · Noted an unknown: Full lifecycle costs for shortlisted water options
+  usage: 20 calls, $0.1051
+    ✓ The Region is planning tap water supplies to the year 2051.
+  overview · Checked and recorded: "The Region is planning tap water supplies to the year 2051." (row-water-supply-notice-2 p.1)
+    ✗ rejected Quote not found on row-2026-budget-book page 63. Copy the words exactly as they appear (no paraphrase, no added words, no '|'), or call read_page first.
+  overview · Rejected a statement: Quote not found on row-2026-budget-book page 63. Copy the words exactly as they appear (no paraphra…
+    ✗ rejected Quote not found on row-water-supply-slides-2024 page 8. Closest text on that page: "• Existing and future growth needs". Copy the words exactly as they appear (no paraphrase, no added words, no '|'), or call read_page first.
+  overview · Rejected a statement: Quote not found on row-water-supply-slides-2024 page 8. Closest text on that page: "• Existing and …
+    ✗ rejected Quote not found on row-water-supply-slides-2024 page 10. Closest text on that page: "as a Master Plan study under the Municipal Class". Copy the words exactly as they appear (no paraphrase, no added words, no '|'), or call read_page first.
+  overview · Rejected a statement: Quote not found on row-water-supply-slides-2024 page 10. Closest text on that page: "as a Master Pl…
+  usage: 21 calls, $0.1127
+  cost · Searched the documents for "2026 | 2026 | $ Change": row-2026-budget-book p.11, row-2026-budget-book p.135, row-2026-budget-book p.35
+  cost · Searched the documents for "Provides low lifecycle costs": row-water-supply-slides-2024 p.18, row-asset-management-review-2026 p.3, row-2026-budget-book p.99
+  usage: 22 calls, $0.1186
+  overview · Read page 63 of 2026 Final Budget Book
+  overview · Read page 8 of Water Supply Strategy Update: Public Meeting No. 1 slides (…
+  overview · Read page 10 of Water Supply Strategy Update: Public Meeting No. 1 slides (…
+  usage: 23 calls, $0.1265
+    ✗ rejected Quote not found on row-2026-budget-book page 63. Copy the words exactly as they appear (no paraphrase, no added words, no '|'), or call read_page first.
+  cost · Rejected a statement: Quote not found on row-2026-budget-book page 63. Copy the words exactly as they appear (no paraphra…
+    ✗ rejected Every number you state must be in one of your quotes; 2026 is not. Quote the words with that number (a table row is fine), add a citation, or drop the number.
+  cost · Rejected a statement: Every number you state must be in one of your quotes; 2026 is not. Quote the words with that number…
+    ✗ rejected Your sentence shares no words with its quotes, so the quotes don't show what it says. Quote the words that say it, or change the sentence to match them.
+  cost · Rejected a statement: Your sentence shares no words with its quotes, so the quotes don't show what it says. Quote the wor…
+  usage: 24 calls, $0.1344
+    ✗ rejected Every number you state must be in one of your quotes; 10 is not. Quote the words with that number (a table row is fine), add a citation, or drop the number.
+  overview · Rejected a statement: Every number you state must be in one of your quotes; 10 is not. Quote the words with that number (…
+    ✓ The Region is updating its water plan for current and future growth needs.
+  overview · Checked and recorded: "The Region is updating its water plan for current and future growth n…" (row-water-supply-slides-2024 p.8)
+    ✓ The study fulfills initial phases of environmental planning rules for master plans.
+  overview · Checked and recorded: "The study fulfills initial phases of environmental planning rules for…" (row-water-supply-slides-2024 p.10)
+  overview · Read page 1 of Water Supply Strategy Update: Notice of Public Meeting No. 2
+  usage: 25 calls, $0.1409
+    ✓ The Region checks about 400 building applications every year for water needs.
+  housing · Checked and recorded: "The Region checks about 400 building applications every year for wate…" (row-2026-budget-book p.59)
+    ✓ Water capacity limits could slow down new home construction.
+  housing · Checked and recorded: "Water capacity limits could slow down new home construction." (row-asset-management-review-2026 p.4)
+  usage: 26 calls, $0.1493
+    ✓ The Region planned an $847.6 million ten-year water supply capital program.
+  cost · Checked and recorded: "The Region planned an $847.6 million ten-year water supply capital pr…" (row-2026-budget-book p.63)
+    ✓ Your regional water bill may rise; in 2026 the average household paid $243.63.
+  cost · Checked and recorded: "Your regional water bill may rise; in 2026 the average household paid…" (row-2026-budget-book p.11)
+  usage: 27 calls, $0.1597
+    ✗ rejected Citation 1: Quote not found on row-2026-budget-book page 11. Closest text on that page: "Property Tax". Copy the words exactly as they appear (no paraphrase, no added words, no '|'), or call read_page first.
+  impacts · Rejected a statement: Citation 1: Quote not found on row-2026-budget-book page 11. Closest text on that page: "Property T…
+    ✗ rejected Citation 1: That quote is on page 28, 30, 40, 41, 42, 43, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 77, 81, 86, 87, 88, 90, 92, 93, 95, 97, 104, 105, 106, 108, 110, 116, 117, 119, 121, 128, 129, 148, 153, 156, 167, 170, 173, 174 of row-2026-budget-book, not page 63. Cite page 28.
+  impacts · Rejected a statement: Citation 1: That quote is on page 28, 30, 40, 41, 42, 43, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 5…
+    ✗ rejected Your sentence shares no words with its quotes, so the quotes don't show what it says. Quote the words that say it, or change the sentence to match them.
+  impacts · Rejected a statement: Your sentence shares no words with its quotes, so the quotes don't show what it says. Quote the wor…
+    ✗ rejected Citation 1: That quote is on page 28, 30, 40, 41, 42, 43, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 77, 81, 86, 87, 88, 90, 92, 93, 95, 97, 104, 105, 106, 108, 110, 116, 117, 119, 121, 128, 129, 148, 153, 156, 167, 170, 173, 174 of row-2026-budget-book, not page 63. Cite page 28.
+  impacts · Rejected a statement: Citation 1: That quote is on page 28, 30, 40, 41, 42, 43, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 5…
+    ✗ rejected Hard to read (grade 14.3). Use a shorter sentence (8 to 15 words) and everyday words ("the Region", "upkeep", "money set aside").
+  impacts · Rejected a statement: Hard to read (grade 14.3). Use a shorter sentence (8 to 15 words) and everyday words ("the Region",…
+    ✗ rejected Citation 1: Quote not found on row-water-supply-slides-2024 page 18. Closest text on that page: "Protects wildlife and species at risk". Copy the words exactly as they appear (no paraphrase, no added words, no '|'), or call read_page first.
+  impacts · Rejected a statement: Citation 1: Quote not found on row-water-supply-slides-2024 page 18. Closest text on that page: "Pr…
+  impacts · Noted an unknown: Which water supply options made the short list?
+  impacts · Noted an unknown: How much will each short-listed water option cost?
+  usage: 28 calls, $0.1652
+■ housing done I have recorded the housing pipeline details, figures, impacts, and unknowns for this decision.
+  usage: 28 calls, $0.1716
+■ cost done I recorded the cost lens items, including the $847.6 million 10-year capital program figure, user reserve funding statement, average household bill impacts, and lifecycle cost unknowns for the shortlisted water supply options.
+  usage: 28 calls, $0.1797
+  impacts · Read page 18 of Water Supply Strategy Update: Public Meeting No. 1 slides (…
+  impacts · Read page 11 of 2026 Final Budget Book
+  usage: 29 calls, $0.1894
+    ✗ rejected Hard to read (grade 12.3). Use a shorter sentence (8 to 15 words) and everyday words ("the Region", "upkeep", "money set aside").
+  overview · Rejected a statement: Hard to read (grade 12.3). Use a shorter sentence (8 to 15 words) and everyday words ("the Region",…
+    ✓ Join an online public meeting on Tuesday, November 17, 2026, from 7 to 8 pm.
+  overview · Checked and recorded: "Join an online public meeting on Tuesday, November 17, 2026, from 7 t…" (row-water-supply-notice-2 p.1)
+    ✓ Attend an in-person public meeting on Tuesday, November 24, 2026, from 6:30 to 8:30 pm.
+  overview · Checked and recorded: "Attend an in-person public meeting on Tuesday, November 24, 2026, fro…" (row-water-supply-notice-2 p.1)
+    ✓ Subscribe online at engagewr.ca/watersupply to get project updates and next steps.
+  overview · Checked and recorded: "Subscribe online at engagewr.ca/watersupply to get project updates an…" (row-water-supply-notice-2 p.1)
+  usage: 30 calls, $0.1986
+    ✓ The ten year plan from 2026 to 2035 costs $847,572 thousand.
+  overview · Checked and recorded: "The ten year plan from 2026 to 2035 costs $847,572 thousand." (row-2026-budget-book p.63, row-2026-budget-book p.63)
+    ✗ rejected Hard to read (grade 17.8). Use a shorter sentence (8 to 15 words) and everyday words ("the Region", "upkeep", "money set aside").
+  overview · Rejected a statement: Hard to read (grade 17.8). Use a shorter sentence (8 to 15 words) and everyday words ("the Region",…
+  overview · Already had figure "10-year capital program (2026-2035)"
+    ✗ rejected Quote not found on row-2026-budget-book page 11. Copy the words exactly as they appear (no paraphrase, no added words, no '|'), or call read_page first.
+  overview · Rejected a figure: Quote not found on row-2026-budget-book page 11. Copy the words exactly as they appear (no paraphra…
+  usage: 31 calls, $0.2096
+    ✗ rejected Every number you state must be in one of your quotes; 2026 is not. Quote the words with that number (a table row is fine), add a citation, or drop the number.
+  impacts · Rejected a statement: Every number you state must be in one of your quotes; 2026 is not. Quote the words with that number…
+    ✓ User rates could pay over $525 million for water capital plans from 2026 to 2035.
+  impacts · Checked and recorded: "User rates could pay over $525 million for water capital plans from 2…" (row-2026-budget-book p.28, row-2026-budget-book p.63)
+    ✗ rejected Hard to read (grade 17.6). Use a shorter sentence (8 to 15 words) and everyday words ("the Region", "upkeep", "money set aside").
+  impacts · Rejected a statement: Hard to read (grade 17.6). Use a shorter sentence (8 to 15 words) and everyday words ("the Region",…
+    ✗ rejected Every number you state must be in one of your quotes; 311 is not. Quote the words with that number (a table row is fine), add a citation, or drop the number.
+  impacts · Rejected a statement: Every number you state must be in one of your quotes; 311 is not. Quote the words with that number …
+    ✓ New water options can ensure reliable service, but higher costs may raise rates.
+  impacts · Checked and recorded: "New water options can ensure reliable service, but higher costs may r…" (row-water-supply-slides-2024 p.18, row-water-supply-slides-2024 p.18)
+    ✓ Protecting wildlife habitats might limit construction, but it can safeguard natural areas.
+  impacts · Checked and recorded: "Protecting wildlife habitats might limit construction, but it can saf…" (row-water-supply-slides-2024 p.18, row-water-supply-slides-2024 p.18)
+  usage: 32 calls, $0.2174
+  overview · Explained a term: Integrated Urban System
+  overview · Explained a term: Master Plan
+  overview · Explained a term: Municipal Class Environmental Assessment
+  overview · Explained a term: Development Charges
+  usage: 33 calls, $0.2276
+    ✓ Your water bill may keep rising; in 2026 it rose by 5.90 percent.
+  impacts · Checked and recorded: "Your water bill may keep rising; in 2026 it rose by 5.90 percent." (row-2026-budget-book p.11, row-2026-budget-book p.11)
+    ✓ Water limits might slow down new local housing developments.
+  impacts · Checked and recorded: "Water limits might slow down new local housing developments." (row-2026-budget-book p.59)
+    ✗ rejected Hard to read (grade 13.4). Use a shorter sentence (8 to 15 words) and everyday words ("the Region", "upkeep", "money set aside").
+  impacts · Rejected a statement: Hard to read (grade 13.4). Use a shorter sentence (8 to 15 words) and everyday words ("the Region",…
+  usage: 34 calls, $0.2351
+■ overview done I have recorded the summary statements, why now context, ways to have your say, key figures, and glossary terms for this decision.
+  usage: 34 calls, $0.2444
+    ✓ New developments may face high water charges from 2026 to 2035.
+  impacts · Checked and recorded: "New developments may face high water charges from 2026 to 2035." (row-2026-budget-book p.28, row-2026-budget-book p.63)
+  usage: 35 calls, $0.2499
+  commitments · Read page 5 of Water Supply Strategy Update: Project Charter
+  usage: 36 calls, $0.2586
+■ impacts done I have recorded the impacts, trade-offs, and open questions for this decision.
+  usage: 36 calls, $0.2639
+  commitments · Read page 9 of Water Supply Strategy Update: Public Meeting No. 1 slides (…
+  usage: 37 calls, $0.2692
+    ✗ rejected Progress 1: Hard to read (grade 15). Use a shorter sentence (8 to 15 words) and everyday words ("the Region", "upkeep", "money set aside").
+  commitments · Rejected a commitment: Progress 1: Hard to read (grade 15). Use a shorter sentence (8 to 15 words) and everyday words ("th…
+  commitments · Noted an unknown: What specific Strategic Plan targets and progress figures apply to the Water Su…
+■ commitments done Recorded 1 item. (Stopped: the run's budget was used up.)
+▶ plain (lead) Make every sentence grade 8 or lower, and explain the jargon
+  usage: 38 calls, $0.2719
+  usage: 39 calls, $0.2733
+  usage: 40 calls, $0.2736
+  plain · Rewrote 12 of 25 sentences in plainer words; reading grade 6.9 → 6. Explained 3 more terms.
+■ plain done Rewrote 12 of 25 sentences in plainer words; reading grade 6.9 → 6. Explained 3 more terms.
+
+wrote data/briefs/row-water-supply-2051.json: 22 statements, 5 figures, 5 unknowns, grade 6, $0.2736

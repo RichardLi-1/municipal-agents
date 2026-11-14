@@ -19,9 +19,13 @@ one forward, and whether the city is on track.
 3. For each commitment the documents name (usually 1 to 4), call `record_commitment`:
    - `progress`: cited statements. The first states the commitment and its target;
      add the latest progress figure if the documents give one.
-   - `status`: "on-track", "behind" or "done" only when you have cited both the target
-     and a progress figure, and the arithmetic supports it (e.g. 11.4 of 25 km built
-     with 4 years left is behind a straight-line pace). Otherwise "unclear".
+   - `numbers`: when your quotes give the baseline, the target and the latest figure,
+     pass them (e.g. a 50% cut by 2030 from 2010, 12% cut by 2022: baselineYear 2010,
+     baselineValue 0, targetYear 2030, targetValue 50, latestYear 2022, latestValue 12).
+     Code then works out the status on a straight line and explains it; your `status` is
+     replaced by the computed one.
+   - `status`: without numbers, "on-track", "behind" or "done" only when you have cited
+     both the target and a progress figure. Otherwise "unclear".
    - `unclear`: what the documents don't say (no recent figure, no interim target).
    - `relation`: how this decision touches it, in one plain sentence.
 4. Record unknowns for commitments named without any progress figure.

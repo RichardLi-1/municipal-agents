@@ -82,11 +82,18 @@ export function costOf(model: string, u: Usage): number {
   return (u.promptTokens * p.input + (u.candidatesTokens + u.thoughtsTokens) * p.output) / 1e6;
 }
 
+/**
+ * A failed call. `message` is short ("Gemini 402") so it can't carry the provider's
+ * response anywhere by accident; the response body (which can include billing links) is
+ * kept in `detail`, for the server's own logs only. Neither ever contains the API key.
+ */
 export class GeminiError extends Error {
   status: number;
-  constructor(message: string, status: number) {
+  detail: string;
+  constructor(message: string, status: number, detail = "") {
     super(message);
     this.status = status;
+    this.detail = detail;
   }
 }
 
@@ -155,6 +162,7 @@ export async function callGemini(req: GeminiRequest, opts: CallOptions = {}): Pr
     const signal = req.signal ? AbortSignal.any([req.signal, timeout]) : timeout;
     let status = 0;
     let message = "";
+    let detail = "";
     let retryAfterMs = 0;
     try {
       const res = await doFetch(url, {
@@ -167,16 +175,18 @@ export async function callGemini(req: GeminiRequest, opts: CallOptions = {}): Pr
       status = res.status;
       const text = await res.text();
       // Never echo request headers; the error body from Google does not contain the key.
-      message = `Gemini ${status}: ${text.slice(0, 300)}`;
+      message = `Gemini ${status}`;
+      detail = text.slice(0, 500);
       const ra = Number(res.headers.get("retry-after"));
       if (ra > 0) retryAfterMs = ra * 1000;
     } catch (err) {
       if (req.signal?.aborted) throw err; // the caller cancelled: don't retry
       status = 0; // network error or our timeout
-      message = `Gemini request failed: ${(err as Error).message}`;
+      message = "Gemini request failed";
+      detail = (err as Error).message;
     }
     const retryable = status === 0 || RETRYABLE.has(status);
-    if (!retryable || attempt >= retries) throw new GeminiError(message, status);
+    if (!retryable || attempt >= retries) throw new GeminiError(message, status, detail);
     const backoff = Math.min(20_000, 1000 * 2 ** attempt) * (0.75 + Math.random() * 0.5);
     await sleep(Math.max(backoff, retryAfterMs));
   }

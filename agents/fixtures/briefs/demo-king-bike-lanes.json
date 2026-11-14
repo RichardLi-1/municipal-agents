@@ -1,0 +1,118 @@
+{
+  "decisionId": "demo-king-bike-lanes",
+  "lang": "en",
+  "generatedAt": "2026-11-14T06:00:00Z",
+  "models": [
+    "fake"
+  ],
+  "costUsd": 0,
+  "readingGrade": 6,
+  "summary": [
+    {
+      "id": "s1",
+      "text": "The plan adds protected bike lanes on King Street.",
+      "kind": "fact",
+      "citations": [
+        {
+          "sourceId": "demo-report",
+          "page": 1,
+          "quote": "approve the design of protected bike lanes on King Street"
+        }
+      ],
+      "verified": true
+    }
+  ],
+  "whyNow": [],
+  "impacts": [
+    {
+      "audience": "driver",
+      "label": "If you drive",
+      "statements": [
+        {
+          "id": "s2",
+          "text": "If you drive, you may find less parking: 64 spaces would go.",
+          "kind": "fact",
+          "citations": [
+            {
+              "sourceId": "demo-report",
+              "page": 2,
+              "quote": "The design removes 64 on-street parking spaces"
+            }
+          ],
+          "verified": true
+        }
+      ]
+    }
+  ],
+  "haveYourSay": [
+    {
+      "id": "s3",
+      "text": "To speak at the meeting, register with the Clerk by noon on November 20.",
+      "kind": "fact",
+      "citations": [
+        {
+          "sourceId": "demo-notice",
+          "page": 1,
+          "quote": "register with the Clerk by noon on Friday, November 20"
+        }
+      ],
+      "verified": true
+    }
+  ],
+  "figures": [
+    {
+      "id": "f1",
+      "label": "People within 800 m of a bike lane (test)",
+      "value": 1200,
+      "unit": "people",
+      "display": "1,200 people",
+      "kind": "computed",
+      "formula": "test fixture"
+    }
+  ],
+  "unknowns": [],
+  "glossary": [],
+  "tradeoffs": [
+    {
+      "id": "s4",
+      "text": "Parking spaces may be removed, but cycling may get safer.",
+      "kind": "fact",
+      "citations": [
+        {
+          "sourceId": "demo-report",
+          "page": 2,
+          "quote": "The design removes 64 on-street parking spaces"
+        }
+      ],
+      "verified": true,
+      "review": {
+        "action": "rejected",
+        "by": "staff:test",
+        "at": "2026-11-14T07:00:00Z"
+      }
+    }
+  ],
+  "lenses": {
+    "cost": {
+      "statements": [
+        {
+          "id": "s5",
+          "text": "Upkeep may cost $85,000 a year.",
+          "kind": "fact",
+          "citations": [
+            {
+              "sourceId": "demo-report",
+              "page": 3,
+              "quote": "is estimated at $85,000 a year from 2028"
+            }
+          ],
+          "verified": true
+        }
+      ],
+      "partial": true
+    }
+  },
+  "review": {
+    "status": "draft"
+  }
+}

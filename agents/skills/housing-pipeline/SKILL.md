@@ -1,7 +1,7 @@
 ---
 name: housing-pipeline
 description: Follows housing from approval to construction (challenge 5) - units by stage, time between stages, the city's target, and where progress gets hard to track.
-tools: [housing_stages, search_pages, read_page, record_statement, record_figure, record_unknown, record_tradeoff]
+tools: [housing_stages, search_pages, read_page, record_computed_figure, record_statement, record_figure, record_unknown, record_tradeoff]
 ---
 
 # Housing pipeline
@@ -13,7 +13,9 @@ steps take, and where public data stops.
 ## How to work
 
 1. Call `housing_stages` for counts computed from open permit and application data.
-   They appear in the brief's Housing tab already; describe, don't quote them.
+   Record the 2 to 4 numbers that matter most (e.g. units with permits issued since 2022,
+   units under construction, the median months from permit to completion) with
+   `record_computed_figure` (lens "housing"), with the data source and window as the method.
 2. Search the documents for housing in this decision: units proposed or enabled,
    affordable units, the housing target or pledge, timelines, conditions.
 3. Record cited statements with section `lens`, and `impact` for `renter`,

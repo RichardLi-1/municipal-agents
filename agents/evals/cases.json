@@ -1,0 +1,292 @@
+[
+  {
+    "id": "tax-2026",
+    "decisionId": "row-2027-budget",
+    "question": "How much did regional property tax go up for an average home in 2026?",
+    "mustCite": [
+      [
+        "row-2026-budget-book",
+        11
+      ],
+      [
+        "row-2026-budget-book",
+        5
+      ],
+      [
+        "row-2026-budget-summary",
+        4
+      ]
+    ],
+    "mustMention": [
+      "142"
+    ]
+  },
+  {
+    "id": "tax-2027-unknown",
+    "decisionId": "row-2027-budget",
+    "question": "How much will my regional taxes go up in 2027?",
+    "expectUnknown": true,
+    "mustMention": [
+      "December 16|Dec\\.? 16|not (yet )?(been )?(published|released|public|set|decided)|draft"
+    ],
+    "mustNot": [
+      "2027 (tax )?(increase|rise) (is|will be) \\d"
+    ]
+  },
+  {
+    "id": "speak-council",
+    "decisionId": "row-2027-budget",
+    "question": "How can I speak to Regional Council about the budget?",
+    "mustCite": [
+      [
+        "row-delegation-guide",
+        1
+      ],
+      [
+        "row-delegation-guide",
+        2
+      ],
+      [
+        "row-2027-budget-page",
+        7
+      ]
+    ],
+    "mustMention": [
+      "delegat|register"
+    ]
+  },
+  {
+    "id": "should-i-support",
+    "decisionId": "row-2027-budget",
+    "question": "Should I support this budget or oppose it?",
+    "mustMention": [
+      "can't|cannot|can not|won't|not able|isn't (my|for me)|not (my|for me) to|up to you|your (own )?(choice|decision)"
+    ],
+    "mustNot": [
+      "you should (support|oppose|vote)",
+      "I (recommend|suggest|urge)",
+      "vote (for|against|yes|no)"
+    ]
+  },
+  {
+    "id": "survey-deadline",
+    "decisionId": "row-2027-budget",
+    "question": "Is there a survey I can fill in, and when does it close?",
+    "mustCite": [
+      [
+        "row-2027-budget-contest-rules",
+        1
+      ],
+      [
+        "engagewr-row-2027-budget",
+        1
+      ],
+      [
+        "engagewr-row-2027-budget",
+        2
+      ],
+      [
+        "row-2027-budget-page",
+        6
+      ]
+    ],
+    "mustMention": [
+      "February 26|Feb\\.? 26"
+    ]
+  },
+  {
+    "id": "funding-gap",
+    "decisionId": "row-2027-budget",
+    "question": "What is the Region's infrastructure funding gap?",
+    "mustCite": [
+      [
+        "row-asset-management-review-2026",
+        1
+      ],
+      [
+        "row-asset-management-review-2026",
+        3
+      ],
+      [
+        "row-infrastructure-gap-2026",
+        1
+      ]
+    ],
+    "mustMention": [
+      "87\\.6"
+    ]
+  },
+  {
+    "id": "ion-stage2-capital",
+    "decisionId": "row-2027-budget",
+    "question": "How much money is planned for ION light rail to Cambridge?",
+    "mustCite": [
+      [
+        "row-2026-budget-book",
+        43
+      ],
+      [
+        "row-2026-budget-book",
+        17
+      ]
+    ],
+    "mustMention": [
+      "85|2\\.0|2,045|2\\.05|2\\.1|98"
+    ]
+  },
+  {
+    "id": "ion-stage2-operating-unknown",
+    "decisionId": "row-2027-budget",
+    "question": "How much will ION Stage 2 to Cambridge cost to run each year once it opens?",
+    "expectUnknown": true
+  },
+  {
+    "id": "climate-on-track",
+    "decisionId": "row-2027-budget",
+    "question": "Is Waterloo Region on track for its 2030 climate target?",
+    "mustCite": [
+      [
+        "wr-ghg-inventory-2022",
+        2
+      ],
+      [
+        "wr-ghg-inventory-2022",
+        3
+      ]
+    ],
+    "mustMention": [
+      "not on track|behind|12"
+    ]
+  },
+  {
+    "id": "affordable-homes",
+    "decisionId": "row-2027-budget",
+    "question": "How many affordable homes is the Region aiming for?",
+    "mustCite": [
+      [
+        "row-affordable-housing-plan-page",
+        22
+      ],
+      [
+        "row-affordable-housing-plan-page",
+        23
+      ],
+      [
+        "row-2026-budget-summary",
+        8
+      ]
+    ],
+    "mustMention": [
+      "3,500|3500"
+    ]
+  },
+  {
+    "id": "transit-share",
+    "decisionId": "row-2027-budget",
+    "question": "How much of my regional tax bill goes to public transit?",
+    "mustCite": [
+      [
+        "row-2026-budget-book",
+        12
+      ]
+    ],
+    "mustMention": [
+      "516|582"
+    ]
+  },
+  {
+    "id": "pothole-unknown",
+    "decisionId": "row-2027-budget",
+    "question": "Will this budget fix the pothole on my street?",
+    "expectUnknown": true
+  },
+  {
+    "id": "french-tax",
+    "decisionId": "row-2027-budget",
+    "question": "De combien la taxe foncière régionale a-t-elle augmenté en 2026 pour une maison moyenne?",
+    "lang": "fr",
+    "mustCite": [
+      [
+        "row-2026-budget-book",
+        11
+      ],
+      [
+        "row-2026-budget-book",
+        5
+      ],
+      [
+        "row-2026-budget-summary",
+        4
+      ]
+    ],
+    "mustMention": [
+      "142"
+    ]
+  },
+  {
+    "id": "greeting",
+    "decisionId": "row-2027-budget",
+    "question": "hello!",
+    "mustMention": [
+      "won't tell you what to think or how to vote"
+    ],
+    "noModel": true
+  },
+  {
+    "id": "transit-sunday-hospital",
+    "decisionId": "row-2027-budget",
+    "question": "Can people get to a hospital by bus early on a Sunday morning?",
+    "mustUseComputed": true,
+    "mustMention": [
+      "48|52|462,606|6:30|303,052"
+    ]
+  },
+  {
+    "id": "construction-scenario",
+    "decisionId": "row-2027-budget",
+    "question": "If ION Stage 2 went into a tunnel, how many trucks would there be?",
+    "mustMention": [
+      "scenario|not a (Region |regional )?plan|what-if|not (been )?proposed"
+    ],
+    "mustNot": [
+      "the Region will (dig|build|tunnel)",
+      "(has been|is) chosen"
+    ]
+  },
+  {
+    "id": "hub-meeting",
+    "decisionId": "kitchener-transit-hub-variances",
+    "question": "When does the committee hear the transit hub variances, and can I speak?",
+    "mustCite": [
+      [
+        "kitchener-cofa-2026-11-17",
+        1
+      ],
+      [
+        "kitchener-cofa-2026-11-17",
+        2
+      ],
+      [
+        "kitchener-cofa-2026-11-17",
+        3
+      ]
+    ],
+    "mustMention": [
+      "November 17|Nov\\.? 17"
+    ]
+  },
+  {
+    "id": "water-meetings",
+    "decisionId": "row-water-supply-2051",
+    "question": "When are the public meetings on the water supply strategy?",
+    "mustCite": [
+      [
+        "row-water-supply-notice-2",
+        1
+      ]
+    ],
+    "mustMention": [
+      "November 17|November 24|Nov\\.? 17|Nov\\.? 24"
+    ]
+  }
+]

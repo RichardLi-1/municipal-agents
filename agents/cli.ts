@@ -80,9 +80,22 @@ async function main(): Promise<void> {
   ctx.signal = controller.signal;
 
   if (cmd === "brief" && decisionId) {
+    const force = args.includes("--force");
     const brief = await generateBrief(ctx, { decisionId }, printEvent);
     const file = path.join(dataDir, "briefs", `${decisionId}.json`);
     fs.mkdirSync(path.dirname(file), { recursive: true });
+    // Keep the previous brief, and don't replace one that has a summary with one that doesn't.
+    if (fs.existsSync(file)) {
+      const prev = JSON.parse(fs.readFileSync(file, "utf8")) as Brief;
+      if (prev.summary?.length && !brief.summary.length && !force) {
+        console.log(`\nnot writing ${file}: the new brief has no summary and the old one does (use --force to replace it)`);
+        process.exitCode = 1;
+        return;
+      }
+      const hist = path.join(dataDir, "cache", "brief-history");
+      fs.mkdirSync(hist, { recursive: true });
+      fs.copyFileSync(file, path.join(hist, `${decisionId}.${new Date().toISOString().replace(/[:.]/g, "-")}.json`));
+    }
     fs.writeFileSync(file, JSON.stringify(brief, null, 2) + "\n");
     const n = brief.summary.length + brief.whyNow.length + brief.haveYourSay.length + brief.tradeoffs.length + brief.impacts.reduce((k, g) => k + g.statements.length, 0);
     console.log(`\nwrote ${path.relative(process.cwd(), file)}: ${n} statements, ${brief.figures.length} figures, ${brief.unknowns.length} unknowns, grade ${brief.readingGrade}, $${brief.costUsd.toFixed(4)}`);

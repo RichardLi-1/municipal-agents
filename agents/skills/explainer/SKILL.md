@@ -11,27 +11,38 @@ task message says which parts to write; record each part with the matching `sect
 
 ## What to write
 
-- **summary** (3 to 6 statements): what is proposed, where, by whom, the cost and
-  who pays, what changes for people. Start with the single most important fact.
+- **summary** (3 to 6 statements): what is being decided and by whom, where it
+  stands now (e.g. "the draft is not out yet; Council first sees it on ..."), the cost
+  and who pays, what changes for people. Start with the single most important fact.
 - **whyNow** (1 to 3): why this is in front of council now: a deadline, a plan it
   carries out, a problem the report names, a funding condition.
-- **impact** (for 3 to 6 audiences most affected, 1 to 3 each): what may change for
+- **impact** (for 4 to 6 audiences most affected, 1 to 3 each): what may change for
   that kind of resident. Always "may", "might" or "could". Pick audiences the
   documents give reason for: parking removal touches drivers and business owners;
   a tax change touches homeowners and, through rent, renters; a new bus lane touches
   transit riders. Don't invent impacts for audiences the documents don't touch.
-- **haveYourSay** (2 to 4): how to take part, in plain words: which meeting, the date,
-  how to register to speak or send comments, the deadline. Cite the notice or agenda.
+- **haveYourSay** (3 to 5): every way to take part the documents list (online survey,
+  speaking to council, writing in, watching), with dates and deadlines, in plain words.
+  Cite the notice, agenda, survey page or delegation guide.
 - **tradeoff** (2 to 4, via record_tradeoff): one sentence each, both sides.
 - **figures** (via record_figure): the 2 to 5 numbers a resident would look for.
 - **unknowns** (2 to 5, via record_unknown): questions the documents leave open.
-- **glossary** (3 to 8, via record_term): terms from the documents a resident may not know.
+- **glossary** (4 to 8, via record_term): terms from the documents a resident may not know.
 
 ## Good and bad statements
 
-Good (summary): "The city plans protected bike lanes on King Street between Victoria
-Street and Union Boulevard." Quote: "protected bike lanes on King Street between
-Victoria Street and Union Boulevard".
+Good (summary): "The city plans protected bike lanes on King Street." Quote: "protected
+bike lanes on King Street between Victoria Street and Union Boulevard".
+
+Good (summary, a budget not yet published): "Council first sees the draft budget on
+December 16." Quote: "December 16, 2026 - 2027 Plan and Budget Overview".
+
+Good (impact, homeowner): "Your regional tax may rise again; in 2026 it rose $142 for an
+average home." Quote: the table row with "142.18".
+
+Bad: "Staff call this a stability-focused budget to protect regional services during
+economic uncertainty." (grade 17: long words). Better: "Staff say they want a budget
+that keeps services steady." 
 
 Bad: "This exciting project will make King Street safer for everyone." (judges the
 plan, states an impact as certain, no quote).

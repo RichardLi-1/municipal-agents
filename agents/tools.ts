@@ -5,10 +5,11 @@
 // ever accepted as a fact.
 
 import type {
-  AgentEvent, AudienceId, Citation, CommitmentsLens, CostLens, Figure, GlossaryTerm, HousingLens, LensId, LogEntry,
+  AgentEvent, AudienceId, Citation, CommitmentsLens, ConstructionLens, CostLens, Decision, Figure, GlossaryTerm, HousingLens, LensId, LogEntry,
   Statement, StatementKind, TransitLens, Unknown,
 } from "../shared/types.ts";
 import { findQuotePages, normalise, verifyCitation, MIN_QUOTE_CHARS } from "../shared/verify.ts";
+import { fleschKincaidGrade } from "../shared/readability.ts";
 import { displayText, search, type Corpus } from "./corpus.ts";
 import type { FunctionDeclaration } from "./gemini.ts";
 
@@ -54,10 +55,18 @@ export interface Findings {
   commitments: CommitmentDraft[];
   rejected: number;
   nextId: number;
+  /** Text of every lens result a specialist saw; computed figures must come from here. */
+  lensOutputs: Partial<Record<LensId, string>>;
+  /** A cost lens built during this run from cited figures and stated assumptions. */
+  costLens?: CostLens;
 }
 
 export function newFindings(): Findings {
-  return { statements: [], figures: [], unknowns: [], terms: [], commitments: [], rejected: 0, nextId: 1 };
+  return { statements: [], figures: [], unknowns: [], terms: [], commitments: [], rejected: 0, nextId: 1, lensOutputs: {} };
+}
+
+function rememberLens(env: ToolEnv, lens: LensId, text: string): void {
+  env.findings.lensOutputs[lens] = `${env.findings.lensOutputs[lens] ?? ""}\n${text}`;
 }
 
 export interface ToolEnv {
@@ -94,6 +103,9 @@ const ADVOCACY = [
 const HEDGE = /\b(may|might|could)\b/i;
 const CONTRAST = /\b(but|while|however|though|although|whereas|yet|on the other hand|in exchange|at the cost of|trade-?off)\b/i;
 const MAX_WORDS = 40;
+/** A single sentence above this grade is rejected; above HINT_GRADE it is accepted with a nudge. */
+export const MAX_GRADE = 14;
+const HINT_GRADE = 10;
 
 export function ruleProblems(text: string, section: Section, kind: StatementKind): string[] {
   const out: string[] = [];
@@ -103,10 +115,107 @@ export function ruleProblems(text: string, section: Section, kind: StatementKind
   if (ADVOCACY.some((r) => r.test(text)))
     out.push("Never tell residents what to think or how to vote, and never judge the plan. Describe what the documents say.");
   if (section === "impact" && !HEDGE.test(text))
-    out.push('Impacts are not certain: say what "may" happen (use "may", "might" or "could").');
+    out.push('Impacts are not certain: say what "may" happen next (use "may", "might" or "could"), with any past fact as context: "Your tax may rise again; in 2026 it rose $142."');
   if ((section === "tradeoff" || kind === "tradeoff") && !CONTRAST.test(text))
     out.push('A trade-off shows both sides in one sentence: what is gained "but" what it costs or who may lose.');
+  // The summary and impacts are what the brief's reading grade is measured on, so they
+  // are held to a stricter limit.
+  const grade = fleschKincaidGrade(text);
+  const limit = section === "summary" || section === "impact" ? MAX_GRADE - 2 : MAX_GRADE;
+  if (words >= 8 && grade > limit)
+    out.push(`Hard to read (grade ${grade}). Use a shorter sentence (8 to 15 words) and everyday words ("the Region", "upkeep", "money set aside").`);
   return out;
+}
+
+// ---------------------------------------------------------------------------
+// Numbers: every number a sentence states must be in one of its quotes. Budget tables
+// are often "in $ thousands", so "$80.5 million" is accepted for a quoted "80,483":
+// the quoted number, scaled by a power of 1,000 and rounded to the sentence's
+// precision, must equal the stated one.
+
+export function numbersIn(text: string): string[] {
+  return text.replace(/(\d),(?=\d{3}\b)/g, "$1").match(/\d+(?:\.\d+)?/g) ?? [];
+}
+
+export function numberBacked(n: string, quoteNumbers: string[]): boolean {
+  if (quoteNumbers.includes(n)) return true;
+  const x = Number(n);
+  const decimals = (n.split(".")[1] ?? "").length;
+  for (const qs of quoteNumbers) {
+    const q = Number(qs);
+    for (const k of [-9, -6, -3, 0, 3, 6, 9]) {
+      if (Math.abs(Number((q / 10 ** k).toFixed(decimals)) - x) < 1e-9) return true;
+    }
+  }
+  return false;
+}
+
+// Dates in the decision's hand-checked timeline (meeting days, registration and survey
+// deadlines) may be stated as dates without being in a quote: the team checked them, and
+// some (like "register by noon one week before") are worked out from a cited rule.
+const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+export function stripTimelineDates(text: string, decision: Decision): string {
+  const isoDates = decision.timeline.flatMap((t) => [t.date, t.end, ...(t.participation ?? []).map((p) => p.deadline)]).filter((d): d is string => !!d);
+  let out = text;
+  for (const iso of isoDates) {
+    const m = iso.match(/^(\d{4})-(\d{2})-(\d{2})/);
+    if (!m) continue;
+    const [year, month, day] = [m[1], MONTHS[Number(m[2]) - 1], String(Number(m[3]))];
+    const mon = month.slice(0, 3);
+    const yr = `(?:,?\\s*${year})?`;
+    for (const re of [
+      new RegExp(`\\b(?:${month}|${mon}\\.?)\\s+${day}(?:st|nd|rd|th)?\\b${yr}`, "gi"),
+      new RegExp(`\\b${day}(?:st|nd|rd|th)?\\s+(?:${month}|${mon}\\.?)\\b${yr}`, "gi"),
+    ]) out = out.replace(re, " ");
+  }
+  return out;
+}
+
+function unbackedNumbers(text: string, citations: Citation[], exempt: string): string[] {
+  const quoted = citations.flatMap((c) => numbersIn(c.quote));
+  const free = new Set(numbersIn(exempt));
+  return [...new Set(numbersIn(text))].filter((n) => !free.has(n) && !numberBacked(n, quoted));
+}
+
+/** The value a display string shows: "$87.6 million" → 87600000. Undefined if none. */
+export function displayValue(display: string): number | undefined {
+  const m = display.replace(/(\d),(?=\d{3}\b)/g, "$1").match(/(\d+(?:\.\d+)?)\s*(thousand|million|billion|bn|k|m|b)?\b/i);
+  if (!m) return undefined;
+  const mult: Record<string, number> = { thousand: 1e3, k: 1e3, million: 1e6, m: 1e6, billion: 1e9, b: 1e9, bn: 1e9 };
+  return Number(m[1]) * (mult[(m[2] ?? "").toLowerCase()] ?? 1);
+}
+
+// A sentence must share at least one word (or a number) with its quotes; otherwise the
+// quotes can't be showing what it says. Catches a model citing a real passage for an
+// unrelated or placeholder sentence. Words are compared by their first five letters so
+// "spaces" matches "space" and "removes" matches "removed".
+const SHARE_STOP = new Set("this that with from have will what when where which their there they them were been than then into also more most some such only over your about would could might".split(" "));
+function contentWords(s: string): Set<string> {
+  return new Set(
+    normalise(s)
+      .split(/[^\p{L}\p{N}]+/u)
+      .filter((w) => w.length >= 4 && !SHARE_STOP.has(w) && !/\d/.test(w))
+      .map((w) => w.slice(0, 5)),
+  );
+}
+export function sharesWords(text: string, quotes: string[]): boolean {
+  const q = contentWords(quotes.join(" "));
+  if ([...contentWords(text)].some((w) => q.has(w))) return true;
+  const quoteNums = quotes.flatMap(numbersIn);
+  return numbersIn(text).some((n) => numberBacked(n, quoteNums));
+}
+
+const PLACEHOLDER = /\b(placeholder|lorem ipsum|todo|tbd|sentence \d+|statement \d+)\b/i;
+
+// Two texts saying nearly the same thing (most of their longer words shared).
+function similar(a: string, b: string): boolean {
+  const words = (s: string) => new Set(normalise(s).split(/[^\p{L}\p{N}]+/u).filter((w) => w.length > 3));
+  const A = words(a);
+  const B = words(b);
+  if (!A.size || !B.size) return false;
+  let shared = 0;
+  for (const w of A) if (B.has(w)) shared++;
+  return shared / Math.min(A.size, B.size) >= 0.7;
 }
 
 // ---------------------------------------------------------------------------
@@ -156,7 +265,12 @@ function checkCitations(corpus: Corpus, citations: unknown): { citations: Citati
   const list = Array.isArray(citations) ? (citations as Citation[]) : [];
   if (list.length === 0) return { citations: [], problems: ["At least one citation is required: a short exact quote from a page."] };
   const problems: string[] = [];
-  const clean = list.map((c) => ({ sourceId: String(c?.sourceId ?? ""), page: Number(c?.page), quote: String(c?.quote ?? "").trim() }));
+  // " | " is how we show column gaps to the model, not page text: drop it from quotes.
+  const clean = list.map((c) => ({
+    sourceId: String(c?.sourceId ?? ""),
+    page: Number(c?.page),
+    quote: String(c?.quote ?? "").replace(/\s*\|\s*/g, " ").replace(/^\s*(\.\.\.|…)|(\.\.\.|…)\s*$/g, "").replace(/\s+/g, " ").trim(),
+  }));
   clean.forEach((c, i) => {
     const p = checkCitation(corpus, c);
     if (p) problems.push(list.length > 1 ? `Citation ${i + 1}: ${p}` : p);
@@ -178,7 +292,8 @@ function recordStatement(
   env: ToolEnv,
   a: { text?: string; kind?: StatementKind; section?: Section; audience?: AudienceId; citations?: Citation[] },
 ): ToolOutcome {
-  const text = String(a.text ?? "").trim();
+  const raw = String(a.text ?? "").trim();
+  const text = raw.charAt(0).toUpperCase() + raw.slice(1);
   const kind: StatementKind = (["fact", "estimate", "harm", "tradeoff"] as StatementKind[]).includes(a.kind as StatementKind) ? a.kind! : "fact";
   const section: Section = SECTIONS.includes(a.section as Section) ? a.section! : "answer";
   const problems = ruleProblems(text, section, kind);
@@ -186,6 +301,15 @@ function recordStatement(
     problems.push(`An impact needs an audience, one of: ${AUDIENCES.join(", ")}.`);
   const { citations, problems: citeProblems } = checkCitations(env.corpus, a.citations);
   problems.push(...citeProblems);
+  if (PLACEHOLDER.test(text)) problems.push("That is placeholder text. Write the real sentence for residents.");
+  if (!citeProblems.length) {
+    const d = env.corpus.decision;
+    const missing = unbackedNumbers(stripTimelineDates(text, d), citations, `${d.title} ${d.plainTitle}`);
+    if (missing.length)
+      problems.push(`Every number you state must be in one of your quotes; ${missing.join(", ")} ${missing.length > 1 ? "are" : "is"} not. Quote the words with that number (a table row is fine), add a citation, or drop the number.`);
+    else if (!sharesWords(text, citations.map((c) => c.quote)))
+      problems.push("Your sentence shares no words with its quotes, so the quotes don't show what it says. Quote the words that say it, or change the sentence to match them.");
+  }
 
   if (problems.length) {
     env.findings.rejected++;
@@ -215,8 +339,13 @@ function recordStatement(
   const { section: _s, audience: _a, specialist: _sp, stepId: _st, lens: _l, ...publicStatement } = statement;
   env.emit({ type: "statement", id: env.stepId, statement: publicStatement });
   env.log("statement.recorded", { specialist: env.specialist, id: statement.id, section, audience: statement.audience, text, citations });
+  const grade = fleschKincaidGrade(text);
   return {
-    response: { accepted: true, id: statement.id },
+    response: {
+      accepted: true,
+      id: statement.id,
+      ...(grade > HINT_GRADE ? { hint: `Accepted, but it reads at grade ${grade}. Make the next ones shorter (8 to 15 words) with shorter words.` } : {}),
+    },
     summary: `Checked and recorded: "${short(text, 70)}" (${cites(citations)})`,
   };
 }
@@ -235,6 +364,9 @@ async function tryImport(paths: string[]): Promise<Record<string, unknown> | und
   }
   return undefined;
 }
+
+const COMPUTED_HOW =
+  "These numbers are computed by code from open data, not quoted from a document. Record the key ones with record_computed_figure (lens, label, display, method). Never put them in record_statement, whose numbers must be in page quotes.";
 
 const NO_LENS = (lens: string) => ({
   available: false,
@@ -271,6 +403,26 @@ function costSummary(c: CostLens): Record<string, unknown> {
 
 function housingSummary(h: HousingLens): Record<string, unknown> {
   return { available: true, city: h.city, stages: h.stages, timeBetween: h.timeBetween, target: h.target, hardToTrack: h.hardToTrack };
+}
+
+function constructionJson(c: ConstructionLens): Record<string, unknown> {
+  return {
+    available: true,
+    scenario: c.scenario,
+    method: c.method,
+    alignmentSource: c.alignmentSource,
+    proposed: c.proposed,
+    weights: c.weights,
+    sites: c.sites?.slice(0, 6).map(({ id, name, role, areaM2, landUse, distanceToAlignmentM, nearestSensitive, truckAccess, score, reasons, concerns }) => ({
+      id, name, role, areaM2, landUse, distanceToAlignmentM, nearestSensitive, truckAccess, score, reasons, concerns,
+    })),
+    bores: c.bores?.map(({ id, label, lengthM, diameterM, depthM }) => ({ id, label, lengthM, diameterM, depthM })),
+    boreholes: c.boreholes?.length,
+    crossPassages: c.crossPassages?.length,
+    steps: c.steps?.map(({ n, title, plain, duration, whatResidentsNotice }) => ({ n, title, plain, duration, whatResidentsNotice })),
+    limits: c.limits,
+    references: c.references,
+  };
 }
 
 function commitmentsSummary(c: CommitmentsLens): Record<string, unknown> {
@@ -394,18 +546,25 @@ export const TOOLS: Record<string, Tool> = {
       const label = String(a.label ?? "").trim();
       const display = String(a.display ?? "").trim();
       const { citations, problems } = checkCitations(env.corpus, a.citation ? [a.citation] : []);
-      // The number shown must be the number quoted: "$3.1 million" needs "3.1" in the quote.
-      const nums = (s: string) => (s.replace(/(\d),(?=\d{3})/g, "$1").match(/\d+(?:\.\d+)?/g) ?? []);
-      const quoteNums = new Set(nums(citations[0]?.quote ?? ""));
-      if (!problems.length && nums(display).length && !nums(display).some((n) => quoteNums.has(n)))
-        problems.push(`The quote must contain the number in display ("${display}"). Quote the words around that number.`);
+      // The number shown must be the number quoted ("$80.5 million" may come from a
+      // "$ thousands" table's "80,483"), and the stored value must match what is shown.
+      if (!problems.length) {
+        const missing = unbackedNumbers(display, citations, "");
+        if (missing.length) problems.push(`The quote must contain the number in display ("${display}"). Quote the words (or table row) with that number.`);
+      }
       if (!label || !display || typeof a.value !== "number") problems.push("label, value (a number) and display are all required.");
+      const shown = displayValue(display);
+      if (typeof a.value === "number" && shown !== undefined && Math.abs(shown - a.value) > Math.max(Math.abs(shown), 1) * 0.01)
+        problems.push(`value ${a.value} doesn't match display "${display}" (${shown}). Give value as the full number, e.g. 87600000 for "$87.6 million".`);
       if (problems.length) {
         env.findings.rejected++;
         env.log("statement.rejected", { specialist: env.specialist, figure: { label, display }, citations, reasons: problems });
         return { response: { accepted: false, reasons: problems }, summary: `Rejected a figure: ${short(problems[0], 100)}` };
       }
-      const dup = env.findings.figures.find((f) => normalise(f.label) === normalise(label));
+      // Same label, or the same amount in the same unit, is the same figure.
+      const dup = env.findings.figures.find(
+        (f) => normalise(f.label) === normalise(label) || (f.unit === String(a.unit ?? "") && Math.abs(f.value - a.value!) <= Math.abs(f.value) * 0.005),
+      );
       if (dup) return { response: { accepted: true, id: dup.id, note: "A figure with this label was already recorded." }, summary: `Already had figure "${label}"` };
       const fig: Figure = { id: `f${env.findings.nextId++}`, label, value: a.value!, unit: String(a.unit ?? ""), display, citation: citations[0], kind: "cited" };
       env.findings.figures.push(fig);
@@ -433,7 +592,7 @@ export const TOOLS: Record<string, Tool> = {
       const u: Unknown = { question: String(a.question ?? "").trim(), why: String(a.why ?? "").trim(), whoCanAnswer: String(a.whoCanAnswer ?? "").trim() };
       if (a.contact) u.contact = String(a.contact);
       if (!u.question) return { response: { accepted: false, reasons: ["question is required"] }, summary: "Rejected an empty unknown" };
-      if (env.findings.unknowns.some((x) => normalise(x.question) === normalise(u.question)))
+      if (env.findings.unknowns.some((x) => normalise(x.question) === normalise(u.question) || similar(x.question, u.question)))
         return { response: { accepted: true, note: "Already recorded." }, summary: `Already had unknown "${short(u.question, 60)}"` };
       env.findings.unknowns.push(u);
       env.log("statement.recorded", { specialist: env.specialist, unknown: u });
@@ -450,7 +609,10 @@ export const TOOLS: Record<string, Tool> = {
     run(a: GlossaryTerm, env) {
       const t = { term: String(a.term ?? "").trim(), plain: String(a.plain ?? "").trim() };
       if (!t.term || !t.plain) return { response: { accepted: false, reasons: ["term and plain are required"] }, summary: "Rejected an empty glossary term" };
-      if (!env.findings.terms.some((x) => normalise(x.term) === normalise(t.term))) env.findings.terms.push(t);
+      if (!env.findings.terms.some((x) => normalise(x.term) === normalise(t.term))) {
+        env.findings.terms.push(t);
+        env.log("statement.recorded", { specialist: env.specialist, glossary: t });
+      }
       return { response: { accepted: true }, summary: `Explained a term: ${t.term}` };
     },
   },
@@ -474,11 +636,20 @@ export const TOOLS: Record<string, Tool> = {
             description: "Cited statements: the commitment itself and the latest progress figure.",
             items: { type: "object", properties: { text: { type: "string" }, citations: { type: "array", items: citationSchema } }, required: ["text", "citations"] },
           },
+          numbers: {
+            type: "object",
+            description: "Optional, when the quotes give them: code then works out the status on a straight line from baseline to target. Every number must be in your progress quotes (0 and 100 excepted). For a % cut: baselineValue 0, targetValue 50, latestValue 12.",
+            properties: {
+              baselineYear: { type: "number" }, baselineValue: { type: "number" }, targetYear: { type: "number" }, targetValue: { type: "number" },
+              latestYear: { type: "number" }, latestValue: { type: "number" }, unit: { type: "string" },
+            },
+            required: ["baselineYear", "baselineValue", "targetYear", "targetValue", "latestYear", "latestValue"],
+          },
         },
         required: ["title", "madeBy", "target", "status", "relation", "progress"],
       },
     },
-    run(a: any, env) {
+    async run(a: any, env) {
       const problems: string[] = [];
       const progress: Statement[] = [];
       const items: { text?: string; citations?: Citation[] }[] = Array.isArray(a.progress) ? a.progress : [];
@@ -487,11 +658,30 @@ export const TOOLS: Record<string, Tool> = {
         const text = String(p?.text ?? "").trim();
         const rp = ruleProblems(text, "lens", "fact");
         const { citations, problems: cp } = checkCitations(env.corpus, p?.citations);
+        if (!cp.length) {
+          const missing = unbackedNumbers(text, citations, "");
+          if (missing.length) cp.push(`the number(s) ${missing.join(", ")} must be in a quote.`);
+        }
         for (const x of [...rp, ...cp]) problems.push(`Progress ${i + 1}: ${x}`);
         progress.push({ id: `s${env.findings.nextId++}`, text, kind: "fact", citations, verified: cp.length === 0 });
       });
-      const status = ["on-track", "behind", "done", "unclear"].includes(a.status) ? a.status : "unclear";
-      if (status !== "unclear" && progress.length < 2)
+      let status = ["on-track", "behind", "done", "unclear"].includes(a.status) ? a.status : "unclear";
+      // With numbers, the status is computed (lenses/commitments), not judged by the model.
+      let computed: { status: string; explanation: string; method: string } | undefined;
+      if (a.numbers && typeof a.numbers === "object" && !problems.length) {
+        const n = a.numbers as Record<string, number>;
+        const keys = ["baselineYear", "baselineValue", "targetYear", "targetValue", "latestYear", "latestValue"];
+        const quoted = progress.flatMap((st) => st.citations.flatMap((c) => numbersIn(c.quote)));
+        const unbacked = keys.filter((k) => typeof n[k] !== "number" || (n[k] !== 0 && n[k] !== 100 && !numberBacked(String(n[k]), quoted)));
+        const mod = unbacked.length ? undefined : await tryImport(["../lenses/commitments/index.ts"]);
+        if (unbacked.length) problems.push(`numbers: ${unbacked.join(", ")} must be numbers found in your progress quotes.`);
+        else if (typeof mod?.commitmentStatus === "function") {
+          const r = (mod.commitmentStatus as (i: unknown) => { status: string; explanation: string })({ ...n, unit: a.numbers.unit });
+          computed = { status: r.status, explanation: r.explanation, method: "Straight line from the baseline to the target, compared with the latest figure (lenses/commitments)." };
+          status = r.status;
+        }
+      }
+      if (!computed && status !== "unclear" && progress.length < 2)
         problems.push(`Status "${status}" needs both the target and a progress figure cited; otherwise use "unclear".`);
       for (const f of ["title", "madeBy", "target", "relation"]) if (!String(a[f] ?? "").trim()) problems.push(`${f} is required.`);
       if (problems.length) {
@@ -509,24 +699,41 @@ export const TOOLS: Record<string, Tool> = {
         progress,
         unclear: Array.isArray(a.unclear) ? a.unclear.map(String) : [],
         relation: String(a.relation).trim(),
-      };
+        ...(computed ? { computed } : {}),
+      } as CommitmentDraft;
       env.findings.commitments.push(k);
       for (const s of progress) env.emit({ type: "statement", id: env.stepId, statement: s });
       env.log("statement.recorded", { specialist: env.specialist, commitment: k });
-      return { response: { accepted: true, id: k.id }, summary: `Checked and recorded a commitment: ${short(k.title, 60)} (${status})` };
+      return {
+        response: { accepted: true, id: k.id, status, ...(computed ? { computedStatus: computed.explanation } : {}) },
+        summary: `Checked and recorded a commitment: ${short(k.title, 60)} (${status}${computed ? ", computed" : ""})`,
+      };
     },
   },
 
   transit_gaps: {
     decl: {
       name: "transit_gaps",
-      description: "Computed transit access for this decision's area (from GTFS schedules and essential destinations): access by time of day, service gaps, ranked fixes with trade-offs, method and limits.",
-      parameters: { type: "object", properties: {} },
+      description: "Computed transit access for this decision's area (from GTFS schedules and essential destinations): access by time of day, service gaps, ranked fixes with trade-offs, method and limits. Numbers from here are 'computed': record them with record_computed_figure.",
+      parameters: {
+        type: "object",
+        properties: { scenario: { type: "string", description: "Optional: weekday-0800, weekday-2200 or sunday-0800 only." } },
+      },
     },
-    async run(_a, env) {
+    async run(a: { scenario?: string }, env) {
       const data = env.corpus.lensData.transit as TransitLens | undefined;
-      if (data) return { response: transitSummary(data), summary: `Looked up computed transit access: ${data.gaps?.length ?? 0} gaps, ${data.fixes?.length ?? 0} possible fixes` };
-      return { response: NO_LENS("transit"), summary: "Looked for computed transit access: none yet" };
+      if (!data) return { response: NO_LENS("transit"), summary: "Looked for computed transit access: none yet" };
+      const mod = await tryImport(["../lenses/transit/summary.ts"]);
+      const fn = mod?.transitSummary as ((l: TransitLens, o: Record<string, unknown>) => string) | undefined;
+      let text: string | undefined;
+      try {
+        text = typeof fn === "function" ? fn(data, { scenario: a.scenario || undefined, maxGaps: 6, maxFixes: 5 }) : undefined;
+      } catch {
+        text = undefined;
+      }
+      const response = text ? { available: true, summary: text, howToCite: COMPUTED_HOW } : { ...transitSummary(data), howToCite: COMPUTED_HOW };
+      rememberLens(env, "transit", text ?? JSON.stringify(response));
+      return { response, summary: `Looked up computed transit access: ${data.gaps?.length ?? 0} gaps, ${data.fixes?.length ?? 0} possible fixes` };
     },
   },
 
@@ -543,22 +750,33 @@ export const TOOLS: Record<string, Tool> = {
       },
     },
     async run(a: { horizonYears?: number; discountRate?: number }, env) {
-      let data = env.corpus.lensData.cost as CostLens | undefined;
-      const wantsChange = data && ((a.horizonYears && a.horizonYears !== data.horizonYears) || (a.discountRate !== undefined && a.discountRate !== data.discountRate));
-      if (data && wantsChange) {
-        const mod = await tryImport(["../lenses/cost.ts", "../lenses/cost/index.ts"]);
-        const fn = mod?.lifecycleCost as ((...args: unknown[]) => unknown) | undefined;
-        if (typeof fn === "function") {
-          try {
-            const out = (await fn(data, { horizonYears: a.horizonYears ?? data.horizonYears, discountRate: a.discountRate ?? data.discountRate })) as CostLens;
-            if (out && typeof out === "object" && out.totals) data = { ...data, ...out };
-          } catch {
-            // the lens function's inputs may differ from what we pass; keep the precomputed result
-          }
+      let data = (env.findings.costLens ?? env.corpus.lensData.cost) as (CostLens & { inputs?: Record<string, unknown> }) | undefined;
+      if (!data)
+        return {
+          response: { available: false, note: "No lifecycle cost computed yet. Record the cost inputs you find with record_figure, then call build_lifecycle_cost with those figure ids and any stated assumptions." },
+          summary: "Looked for a computed lifecycle cost: none yet",
+        };
+      const mod = await tryImport(["../lenses/cost/index.ts"]);
+      const wantsChange = (a.horizonYears && a.horizonYears !== data.horizonYears) || (a.discountRate !== undefined && a.discountRate !== data.discountRate);
+      if (wantsChange && data.inputs && typeof mod?.lifecycleCost === "function") {
+        try {
+          const overrides: Record<string, number> = {};
+          if (a.horizonYears) overrides.horizonYears = a.horizonYears;
+          if (a.discountRate !== undefined) overrides.discountRate = a.discountRate;
+          data = (mod.lifecycleCost as (l: unknown, o: unknown) => CostLens & { inputs?: Record<string, unknown> })(data, overrides);
+        } catch {
+          // keep the lens as it was
         }
       }
-      if (data) return { response: costSummary(data), summary: `Looked up the lifecycle cost over ${data.horizonYears} years` };
-      return { response: NO_LENS("lifecycle cost"), summary: "Looked for a computed lifecycle cost: none yet" };
+      let text: string | undefined;
+      try {
+        text = data.inputs && typeof mod?.costSummary === "function" ? (mod.costSummary as (i: unknown) => string)(data.inputs) : undefined;
+      } catch {
+        text = undefined;
+      }
+      const response = text ? { available: true, summary: text, howToCite: COMPUTED_HOW } : { ...costSummary(data), howToCite: COMPUTED_HOW };
+      rememberLens(env, "cost", text ?? JSON.stringify(response));
+      return { response, summary: `Looked up the lifecycle cost over ${data.horizonYears} years` };
     },
   },
 
@@ -570,7 +788,20 @@ export const TOOLS: Record<string, Tool> = {
     },
     async run(_a, env) {
       const data = env.corpus.lensData.housing as HousingLens | undefined;
-      if (data) return { response: housingSummary(data), summary: `Looked up housing units by stage for ${data.city}` };
+      if (data) {
+        // The lens builder's own plain-text summary when it exists (it knows its data best).
+        const mod = await tryImport(["../lenses/housing/summary.ts"]);
+        const fn = mod?.housingSummary as ((l: HousingLens) => string) | undefined;
+        let text: string | undefined;
+        try {
+          text = typeof fn === "function" ? fn(data) : undefined;
+        } catch {
+          text = undefined;
+        }
+        const response = text ? { available: true, summary: text, howToCite: COMPUTED_HOW } : { ...housingSummary(data), howToCite: COMPUTED_HOW };
+        rememberLens(env, "housing", text ?? JSON.stringify(response));
+        return { response, summary: `Looked up housing units by stage for ${data.city}` };
+      }
       return { response: NO_LENS("housing pipeline"), summary: "Looked for computed housing stages: none yet" };
     },
   },
@@ -586,6 +817,182 @@ export const TOOLS: Record<string, Tool> = {
       if (data) return { response: commitmentsSummary(data), summary: `Looked up ${data.commitments?.length ?? 0} tracked commitments` };
       return { response: NO_LENS("commitments"), summary: "Looked for tracked commitments: none yet" };
     },
+  },
+};
+
+// Construction scout: an illustrative scenario computed from open data. The lens
+// builder's constructionSummary() is used when it exists; until then, the JSON fields.
+TOOLS.construction_sites = {
+  decl: {
+    name: "construction_sites",
+    description: "The construction scout's illustrative scenario for this decision: candidate sites for excavation and a tunnel launch portal or shaft, scored with stated weights, bores, boreholes, the construction steps with what residents may notice, and the limits. A scenario for engineers and staff to evaluate, never the Region's plan.",
+    parameters: { type: "object", properties: {} },
+  },
+  async run(_a, env) {
+    const data = env.corpus.lensData.construction as ConstructionLens | undefined;
+    if (!data) return { response: NO_LENS("construction scout"), summary: "Looked for a construction scenario: none yet" };
+    const mod = await tryImport(["../lenses/construction/index.ts"]);
+    const fn = mod?.constructionSummary as ((l: ConstructionLens) => string) | undefined;
+    let text: string | undefined;
+    try {
+      text = typeof fn === "function" ? fn(data) : undefined;
+    } catch {
+      text = undefined;
+    }
+    const howToCite = `${COMPUTED_HOW} This is an illustrative scenario for engineers and staff to evaluate, never the Region's plan: say so whenever you use it.`;
+    const response = text ? { available: true, summary: text, howToCite } : { ...constructionJson(data), howToCite };
+    rememberLens(env, "construction", text ?? JSON.stringify(response));
+    return {
+      response,
+      summary: `Looked up the construction scenario: ${data.sites?.length ?? 0} candidate sites, ${data.steps?.length ?? 0} steps`,
+    };
+  },
+};
+
+// A number from a lens result (transit access, lifecycle totals, housing stages,
+// construction scenario). It is not a quote, so instead of a page it carries the method;
+// code checks the number really is in a lens result this run has seen.
+TOOLS.record_computed_figure = {
+  decl: {
+    name: "record_computed_figure",
+    description: "Record a key number computed by a lens tool (not quoted from a document), with the method in plain words. The number in 'display' must appear in a lens result you looked up in this run.",
+    parameters: {
+      type: "object",
+      properties: {
+        lens: { type: "string", enum: ["transit", "cost", "housing", "construction", "commitments"] },
+        label: { type: "string", description: "Plain label with its scenario, e.g. 'People who can reach a hospital within 45 min by transit, Sunday 8 am'." },
+        value: { type: "number", description: "The number as shown: 48 for '48%', 462606 for '462,606 people'." },
+        unit: { type: "string", description: "%, people, CAD, units, minutes..." },
+        display: { type: "string", description: "e.g. '48%', '462,606 people', '$1.2 billion'." },
+        method: { type: "string", description: "How it was computed, in one plain sentence (from the lens result's method)." },
+      },
+      required: ["lens", "label", "value", "unit", "display", "method"],
+    },
+  },
+  run(a: { lens?: LensId; label?: string; value?: number; unit?: string; display?: string; method?: string }, env) {
+    const lens = a.lens as LensId;
+    const label = String(a.label ?? "").trim();
+    const display = String(a.display ?? "").trim();
+    const method = String(a.method ?? "").trim();
+    const problems: string[] = [];
+    const seen = env.findings.lensOutputs[lens];
+    if (!seen) problems.push(`Look up the ${lens} lens first (its tool), then record numbers from its result.`);
+    else {
+      const missing = numbersIn(display).filter((n) => !numberBacked(n, numbersIn(seen)));
+      if (missing.length) problems.push(`${missing.join(", ")} is not in the ${lens} result you looked up. Copy the number as it appears there.`);
+    }
+    if (!label || !display || !method || typeof a.value !== "number") problems.push("label, value (a number), display and method are all required.");
+    const shown = displayValue(display);
+    if (typeof a.value === "number" && shown !== undefined && Math.abs(shown - a.value) > Math.max(Math.abs(shown), 1) * 0.01)
+      problems.push(`value ${a.value} doesn't match display "${display}" (${shown}). Give value as shown, e.g. 48 for "48%".`);
+    if (problems.length) {
+      env.findings.rejected++;
+      env.log("statement.rejected", { specialist: env.specialist, figure: { label, display, lens }, reasons: problems });
+      return { response: { accepted: false, reasons: problems }, summary: `Rejected a computed figure: ${short(problems[0], 100)}` };
+    }
+    const dup = env.findings.figures.find((f) => normalise(f.label) === normalise(label));
+    if (dup) return { response: { accepted: true, id: dup.id, note: "A figure with this label was already recorded." }, summary: `Already had figure "${label}"` };
+    const fig: Figure = {
+      id: `f${env.findings.nextId++}`, label, value: a.value!, unit: String(a.unit ?? ""), display, kind: "computed",
+      formula: `${method} (computed by Municipal Agents' ${lens} lens from open data)`, inputs: [],
+    };
+    env.findings.figures.push(fig);
+    env.log("statement.recorded", { specialist: env.specialist, figure: fig });
+    return { response: { accepted: true, id: fig.id }, summary: `Recorded a computed figure: ${short(label, 60)}, ${display}` };
+  },
+};
+
+// The lifecycle cost lens, built by code (lenses/cost) from inputs the specialist found.
+// Each input is either a recorded cited figure (by id, values must match) or a stated
+// assumption with its reason, which residents can change with a slider.
+const COST_INPUTS = ["capital", "operatingPerYear", "maintenancePerYear", "renewalAmount", "households"] as const;
+TOOLS.build_lifecycle_cost = {
+  decl: {
+    name: "build_lifecycle_cost",
+    description: "Compute the lifecycle cost (capital vs operating, maintenance, renewal over 25 or 40 years, per household) for one asset in this decision. Every input must come from a figure you recorded with record_figure (give its id) or be a stated assumption with its reason.",
+    parameters: {
+      type: "object",
+      properties: {
+        asset: { type: "string", description: "Plain name, e.g. 'ION light rail to Cambridge (Stage 2)'." },
+        startYear: { type: "integer" },
+        horizonYears: { type: "integer", description: "25 or 40." },
+        buildYears: { type: "integer" },
+        capital: { type: "number" },
+        operatingPerYear: { type: "number" },
+        maintenancePerYear: { type: "number" },
+        renewalEveryYears: { type: "integer", description: "Optional: a renewal every N years of service." },
+        renewalAmount: { type: "number", description: "Optional: cost of each renewal." },
+        households: { type: "number", description: "Optional: households sharing the cost." },
+        discountRate: { type: "number", description: "0 (default) or 0.03." },
+        sources: {
+          type: "array",
+          description: "One per input used: capital, operatingPerYear, maintenancePerYear, renewalAmount, households.",
+          items: {
+            type: "object",
+            properties: {
+              input: { type: "string", enum: [...COST_INPUTS] },
+              figureId: { type: "string", description: "Id of a recorded cited figure with this value." },
+              assumption: { type: "string", description: "If not cited: why this value is assumed, in plain words." },
+            },
+            required: ["input"],
+          },
+        },
+      },
+      required: ["asset", "startYear", "horizonYears", "capital", "operatingPerYear", "maintenancePerYear", "sources"],
+    },
+  },
+  async run(a: any, env) {
+    const problems: string[] = [];
+    const sources: { input: string; figureId?: string; assumption?: string }[] = Array.isArray(a.sources) ? a.sources : [];
+    const values: Record<string, number | undefined> = {
+      capital: a.capital, operatingPerYear: a.operatingPerYear, maintenancePerYear: a.maintenancePerYear,
+      renewalAmount: a.renewalEveryYears ? a.renewalAmount : undefined, households: a.households,
+    };
+    const used: Figure[] = [];
+    const assumptions: CostLens["assumptions"] = [];
+    for (const input of COST_INPUTS) {
+      const v = values[input];
+      if (v === undefined || v === null) continue;
+      if (typeof v !== "number" || !Number.isFinite(v) || v < 0) {
+        problems.push(`${input} must be a number of 0 or more.`);
+        continue;
+      }
+      const src = sources.find((s) => s.input === input);
+      const fig = src?.figureId ? env.findings.figures.find((f) => f.id === src.figureId && f.kind === "cited") : undefined;
+      if (fig && Math.abs(fig.value - v) <= Math.max(Math.abs(fig.value), 1) * 0.01) used.push(fig);
+      else if (src?.assumption?.trim()) {
+        const step = v > 0 ? Number((10 ** Math.floor(Math.log10(v))).toPrecision(1)) / 10 : 1000;
+        assumptions.push({ id: input, label: `Assumed ${input.replace(/PerYear$/, " per year")}`, value: v, unit: input === "households" ? "households" : "CAD", min: 0, max: v > 0 ? v * 3 : 1_000_000, step, why: src.assumption.trim() });
+      } else if (fig) problems.push(`${input} is ${v} but figure ${fig.id} says ${fig.value}. Use the figure's value or state an assumption.`);
+      else problems.push(`${input} needs a source: the id of a cited figure you recorded with that value, or an assumption with its reason.`);
+    }
+    if (!(a.horizonYears > 0 && a.horizonYears <= 100)) problems.push("horizonYears must be between 1 and 100 (25 or 40 is usual).");
+    const mod = problems.length ? undefined : await tryImport(["../lenses/cost/index.ts"]);
+    if (!problems.length && typeof mod?.buildCostLens !== "function") problems.push("The cost lens code isn't available.");
+    if (problems.length) {
+      env.findings.rejected++;
+      env.log("statement.rejected", { specialist: env.specialist, costLens: a.asset, reasons: problems });
+      return { response: { accepted: false, reasons: problems }, summary: `Couldn't build the lifecycle cost: ${short(problems[0], 90)}` };
+    }
+    const inputs: Record<string, unknown> = {
+      startYear: a.startYear, horizonYears: a.horizonYears, capital: a.capital, buildYears: a.buildYears ?? 1,
+      operatingPerYear: a.operatingPerYear, maintenancePerYear: a.maintenancePerYear, discountRate: a.discountRate ?? 0,
+      ...(a.renewalEveryYears && a.renewalAmount ? { renewalEvery: { years: a.renewalEveryYears, amount: a.renewalAmount } } : {}),
+      ...(a.households ? { households: a.households } : {}),
+    };
+    try {
+      const lens = (mod!.buildCostLens as (x: unknown) => CostLens)({ asset: String(a.asset), inputs, figures: used, assumptions });
+      env.findings.costLens = lens;
+      const text = typeof mod!.costSummary === "function" ? (mod!.costSummary as (i: unknown) => string)(inputs) : JSON.stringify(lens.totals);
+      rememberLens(env, "cost", text);
+      env.log("statement.recorded", { specialist: env.specialist, costLens: { asset: lens.asset, inputs, assumptions: assumptions.map((x) => x.id), cited: used.map((f) => f.id) } });
+      return {
+        response: { accepted: true, summary: text, assumptions: assumptions.map((x) => `${x.id}: ${x.why}`), howToCite: COMPUTED_HOW },
+        summary: `Computed the lifecycle cost of ${short(String(a.asset), 50)} over ${a.horizonYears} years (${used.length} cited inputs, ${assumptions.length} assumed)`,
+      };
+    } catch (err) {
+      return { response: { accepted: false, reasons: [(err as Error).message] }, summary: `Couldn't build the lifecycle cost: ${(err as Error).message}` };
+    }
   },
 };
 

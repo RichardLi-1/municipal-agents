@@ -1,0 +1,200 @@
+plan overview=explainer: What's proposed, how to have a say, why now | impacts=explainer: How it may affect people, trade-offs, unknowns | transit=transit-access: Transit access | cost=lifecycle-cost: Lifecycle cost | commitments=commitments: Commitments | housing=housing-pipeline: Housing pipeline | construction=construction-scout: Construction scout
+▶ overview (explainer) What's proposed, how to have a say, why now
+▶ impacts (explainer) How it may affect people, trade-offs, unknowns
+▶ transit (transit-access) Transit access
+▶ cost (lifecycle-cost) Lifecycle cost
+▶ commitments (commitments) Commitments
+▶ housing (housing-pipeline) Housing pipeline
+▶ construction (construction-scout) Construction scout
+  usage: 7 calls, $0.0065
+  impacts · Searched the documents for "average household property tax 2026": row-2026-budget-book p.11, row-2026-budget-book p.12, row-2026-budget-book p.5
+  impacts · Searched the documents for "conventional bus replacements 2027": row-2026-budget-book p.40, row-2026-budget-book p.190, row-asset-management-review-2026 p.4
+  impacts · Searched the documents for "infrastructure funding gap": row-infrastructure-gap-2026 p.2, row-asset-management-review-2026 p.4, row-infrastructure-gap-2026 p.3
+  usage: 8 calls, $0.0126
+  commitments · Looked for tracked commitments: none yet
+  commitments · Searched the documents for "50% cut by 2030": wr-ghg-inventory-2022 p.2, wr-ghg-inventory-2022 p.3, wr-ghg-inventory-2022 p.10
+  usage: 9 calls, $0.0191
+  transit · Looked up computed transit access: 28 gaps, 12 possible fixes
+  transit · Searched the documents for "Transit Services tax levy GRT bus ION": grt-business-plan-2025-appendix-a p.9, grt-business-plan-2025 p.6, grt-business-plan-2025 p.7
+  usage: 10 calls, $0.0260
+  overview · Searched the documents for "December 16 2027 Plan and Budget Overview": row-2027-budget-page p.7, row-2027-budget-page p.1, row-2027-budget-page p.6
+  overview · Searched the documents for "stability-focused budget": engagewr-row-2027-budget p.2, engagewr-row-2027-budget p.5, engagewr-row-2027-budget p.1
+  overview · Searched the documents for "average residential property": row-2026-budget-book p.11, row-2026-budget-book p.12, row-2026-budget-book p.5
+  overview · Searched the documents for "register as a delegation": row-delegation-guide p.1, row-delegation-guide p.2, row-delegation-guide p.3
+  usage: 11 calls, $0.0325
+  housing · Looked up housing units by stage for region
+  housing · Searched the documents for "affordable units 3,500 homes": row-affordable-housing-plan-page p.23, row-2026-budget-summary p.8, row-affordable-housing-plan-page p.22
+  usage: 12 calls, $0.0397
+  commitments · Searched the documents for "3,500 affordable homes": row-affordable-housing-plan-page p.23, row-affordable-housing-plan-page p.22, row-affordable-housing-plan-page p.24
+  commitments · Searched the documents for "1,625,000": grt-business-plan-2025 p.6, grt-business-plan-2025 p.2
+  usage: 13 calls, $0.0464
+  construction · Looked up the construction scenario: 12 candidate sites, 7 steps
+  construction · Searched the documents for "68030 RT to Cambridge": row-2026-budget-book p.191, row-2026-budget-book p.43, row-2026-budget-book p.184
+  usage: 14 calls, $0.0544
+  housing · Read page 17 of 2026 Final Budget Book
+  usage: 15 calls, $0.0626
+  commitments · Read page 22 of Affordable Housing Plan: Building Better Futures (web page)
+  commitments · Read page 23 of Affordable Housing Plan: Building Better Futures (web page)
+  usage: 16 calls, $0.0701
+  cost · Looked for a computed lifecycle cost: none yet
+  cost · Searched the documents for "RT to Cambridge ION Stage 2 capital cost": grt-business-plan-2025 p.7, grt-business-plan-2025 p.6, row-2026-budget-book p.43
+  usage: 17 calls, $0.0819
+    ✓ Regional Council will set the budget for services and property taxes.
+  overview · Checked and recorded: "Regional Council will set the budget for services and property taxes." (row-2027-budget-page p.6)
+    ✓ The Region has not yet published its draft budget.
+  overview · Checked and recorded: "The Region has not yet published its draft budget." (row-2027-budget-page p.7)
+    ✓ Council will see the draft budget for the first time.
+  overview · Checked and recorded: "Council will see the draft budget for the first time." (row-2027-budget-page p.7)
+    ✓ Property tax bills pay for services like transit and police.
+  overview · Checked and recorded: "Property tax bills pay for services like transit and police." (row-2026-budget-book p.11)
+    ✗ rejected Your sentence shares no words with its quotes, so the quotes don't show what it says. Quote the words that say it, or change the sentence to match them.
+  overview · Rejected a statement: Your sentence shares no words with its quotes, so the quotes don't show what it says. Quote the wor…
+    ✓ You can speak directly to councillors at a meeting.
+  overview · Checked and recorded: "You can speak directly to councillors at a meeting." (row-delegation-guide p.1)
+    ✗ rejected Quote not found on row-delegation-guide page 1. Closest text on that page: "• You can also register in person by visiting the Clerk’s Office at Region of". Copy the words exactly as they appear (no paraphrase, no added words, no '|'), or call read_page first.
+  overview · Rejected a statement: Quote not found on row-delegation-guide page 1. Closest text on that page: "• You can also register…
+    ✗ rejected Your sentence shares no words with its quotes, so the quotes don't show what it says. Quote the words that say it, or change the sentence to match them.
+  overview · Rejected a statement: Your sentence shares no words with its quotes, so the quotes don't show what it says. Quote the wor…
+  usage: 18 calls, $0.0937
+  transit · Recorded a computed figure: People who can reach a hospital within 45 min by transit an…, 48%
+  transit · Recorded a computed figure: People who can reach a hospital within 45 min by transit an…, 64%
+  transit · Recorded a computed figure: People with no bus or train within 800 m before 6:30 am on …, 462,606 people
+  transit · Recorded a computed figure: People living more than 800 m from frequent service at week…, 221,601 people
+  transit · Searched the documents for "Annual Plan and Budget process GRT Business Plan": grt-business-plan-2025 p.5, grt-business-plan-2025 p.7, grt-business-plan-2025 p.1
+  usage: 19 calls, $0.1027
+  cost · Searched the documents for "households": row-affordable-housing-plan-page p.7, row-2026-budget-book p.12, row-affordable-housing-plan-page p.23
+  cost · Read page 43 of 2026 Final Budget Book
+  usage: 20 calls, $0.1184
+    ✗ rejected Every number you state must be in one of your quotes; 2026 is not. Quote the words with that number (a table row is fine), add a citation, or drop the number.
+  construction · Rejected a statement: Every number you state must be in one of your quotes; 2026 is not. Quote the words with that number…
+    ✗ rejected Your sentence shares no words with its quotes, so the quotes don't show what it says. Quote the words that say it, or change the sentence to match them.
+  construction · Rejected a statement: Your sentence shares no words with its quotes, so the quotes don't show what it says. Quote the wor…
+  construction · Noted an unknown: What soil, rock, and groundwater conditions exist along the 2.9 kilometre route?
+  construction · Noted an unknown: Where are buried utilities and Highway 401 bridge foundations located?
+  construction · Noted an unknown: Who owns the top candidate sites and could the Region lease or purchase them?
+  usage: 21 calls, $0.1287
+  overview · Searched the documents for "online budget feedback": engagewr-row-2027-budget p.1, engagewr-row-2027-budget p.5, engagewr-row-2027-budget p.2
+  overview · Searched the documents for "written submission": row-delegation-guide p.2, row-delegation-guide p.1
+  overview · Searched the documents for "Plan and Budget Approach and Timeline": engagewr-row-2027-budget p.5, engagewr-row-2027-budget p.2, engagewr-row-2027-budget p.1
+  usage: 22 calls, $0.1422
+    ✓ Your regional property tax bill may increase again in 2027.
+  impacts · Checked and recorded: "Your regional property tax bill may increase again in 2027." (row-2026-budget-book p.11)
+    ✓ Your regional water and wastewater rates may also rise next year.
+  impacts · Checked and recorded: "Your regional water and wastewater rates may also rise next year." (row-2026-budget-book p.11, row-2026-budget-book p.11)
+    ✓ Bus riders may see newer buses as older vehicles are replaced.
+  impacts · Checked and recorded: "Bus riders may see newer buses as older vehicles are replaced." (row-2026-budget-book p.40)
+    ✓ Transit service expansion could depend on how much funding Council approves.
+  impacts · Checked and recorded: "Transit service expansion could depend on how much funding Council ap…" (grt-business-plan-2025-appendix-a p.1)
+    ✓ Renters could gain more affordable housing options in coming years.
+  impacts · Checked and recorded: "Renters could gain more affordable housing options in coming years." (row-affordable-housing-plan-page p.23)
+    ✗ rejected Hard to read (grade 12.8). Use a shorter sentence (8 to 15 words) and everyday words ("the Region", "upkeep", "money set aside").
+  impacts · Rejected a statement: Hard to read (grade 12.8). Use a shorter sentence (8 to 15 words) and everyday words ("the Region",…
+    ✓ Expanding transit service improves options for riders, but it can increase regional property taxes.
+  impacts · Checked and recorded: "Expanding transit service improves options for riders, but it can inc…" (grt-business-plan-2025-appendix-a p.1, row-2026-budget-book p.11)
+    ✓ Spending more money reduces the infrastructure gap, but taxpayers pay higher rates.
+  impacts · Checked and recorded: "Spending more money reduces the infrastructure gap, but taxpayers pay…" (row-infrastructure-gap-2026 p.1, row-2026-budget-book p.11)
+  impacts · Noted an unknown: What property tax percentage increase staff will propose for 2027
+  impacts · Noted an unknown: When Council will hold its final vote to approve the 2027 budget
+  usage: 23 calls, $0.1557
+  construction · Read page 43 of 2026 Final Budget Book
+■ construction done Recorded 3 items. (Stopped: the run's budget was used up.)
+  usage: 23 calls, $0.1670
+    ✓ The Region set a goal to create or preserve up to 3,500 affordable homes by the end of 2029, after beating its first goal of 2,500 new homes by the end of 2025.
+  commitments · Checked and recorded a commitment: Create or preserve 3,500 affordable homes by 2029 (unclear)
+    ✗ rejected Progress 1: Citation 1: Quote not found on grt-business-plan-2025 page 6. Closest text on that page: "Transit Services Operating". Copy the words exactly as they appear (no paraphrase, no added words, no '|'), or call read_page first.
+  commitments · Rejected a commitment: Progress 1: Citation 1: Quote not found on grt-business-plan-2025 page 6. Closest text on that page…
+    ✓ The Region plans to build or save 3,500 affordable homes by 2029.
+  commitments · Checked and recorded: "The Region plans to build or save 3,500 affordable homes by 2029." (row-affordable-housing-plan-page p.23)
+    ✗ rejected Quote not found on grt-business-plan-2025 page 6. Closest text on that page: "Table 2. Estimated additional capital costs required over ten years to achieve GRT". Copy the words exactly as they appear (no paraphrase, no added words, no '|'), or call read_page first.
+  commitments · Rejected a statement: Quote not found on grt-business-plan-2025 page 6. Closest text on that page: "Table 2. Estimated ad…
+  commitments · Noted an unknown: How many affordable homes have been built so far toward the 2029 target of 3,50…
+■ commitments done Recorded 3 items. (Stopped: the run's budget was used up.)
+  usage: 23 calls, $0.1774
+  impacts · Searched the documents for "Transportation 130,372": row-2026-budget-book p.54, row-2026-budget-book p.55, row-2026-budget-book p.17
+  usage: 24 calls, $0.1860
+  overview · Searched the documents for "live webcasts": row-2027-budget-page p.3, row-2027-budget-page p.2
+  overview · Searched the documents for "5.1%": row-2026-budget-summary p.4
+  usage: 25 calls, $0.1972
+  cost · Read page 17 of 2026 Final Budget Book
+■ cost failed Recorded 0 items. (Stopped: the run's budget was used up.)
+  usage: 25 calls, $0.2104
+    ✗ rejected Impacts are not certain: say what "may" happen next (use "may", "might" or "could"), with any past fact as context: "Your tax may rise again; in 2026 it rose $142."
+  transit · Rejected a statement: Impacts are not certain: say what "may" happen next (use "may", "might" or "could"), with any past …
+    ✗ rejected Quote not found on row-2026-budget-book page 39. Copy the words exactly as they appear (no paraphrase, no added words, no '|'), or call read_page first.
+  transit · Rejected a statement: Quote not found on row-2026-budget-book page 39. Copy the words exactly as they appear (no paraphra…
+    ✓ The Region forecasted spending $85 million in 2027 toward stage two light rail to Cambridge.
+  transit · Checked and recorded: "The Region forecasted spending $85 million in 2027 toward stage two l…" (row-2026-budget-book p.43)
+    ✓ Expanding bus service hours helps riders reach jobs and care, but it requires higher municipal operating funds or tax increases.
+  transit · Checked and recorded: "Expanding bus service hours helps riders reach jobs and care, but it …" (grt-business-plan-2025 p.5)
+  transit · Noted an unknown: How much additional operating budget will be approved for Grand River Transit s…
+■ transit done Recorded 7 items. (Stopped: the run's budget was used up.)
+  usage: 25 calls, $0.2193
+  overview · Searched the documents for "$142 a year for an average property": row-2026-budget-summary p.4, row-2026-budget-summary p.6, row-2026-budget-summary p.5
+  usage: 26 calls, $0.2290
+    ✗ rejected Your sentence shares no words with its quotes, so the quotes don't show what it says. Quote the words that say it, or change the sentence to match them.
+  impacts · Rejected a statement: Your sentence shares no words with its quotes, so the quotes don't show what it says. Quote the wor…
+  usage: 27 calls, $0.2440
+  housing · Recorded a computed figure: Units with building permits issued in Kitchener, Waterloo, …, 22,486 units
+  housing · Recorded a computed figure: Housing units under construction in Waterloo Region, 6,820 units
+  housing · Recorded a computed figure: Housing units completed in Waterloo Region since 2022, 20,646 units
+  housing · Recorded a computed figure: Provincial target for new homes in Kitchener, Waterloo, and…, 70,000 units
+    ✗ rejected Every number you state must be in one of your quotes; 2029 is not. Quote the words with that number (a table row is fine), add a citation, or drop the number.
+  housing · Rejected a statement: Every number you state must be in one of your quotes; 2029 is not. Quote the words with that number…
+    ✗ rejected Impacts are not certain: say what "may" happen next (use "may", "might" or "could"), with any past fact as context: "Your tax may rise again; in 2026 it rose $142."
+  housing · Rejected a statement: Impacts are not certain: say what "may" happen next (use "may", "might" or "could"), with any past …
+  housing · Checked and recorded a figure: Target to create or preserve affordable homes by 2029, 3,500 homes (row-affordable-housing-plan-page p.23)
+  housing · Noted an unknown: How many approved housing units are waiting between council planning approval a…
+■ housing done Recorded 6 items. (Stopped: the run's budget was used up.)
+  usage: 27 calls, $0.2525
+  overview · Searched the documents for "Delegate online": nothing found
+  usage: 28 calls, $0.2619
+  impacts · Searched the documents for "Roads 240": row-2026-budget-book p.12, row-2026-budget-book p.30, row-2026-budget-book p.40
+  usage: 29 calls, $0.2701
+  overview · Searched the documents for "Delegation": row-delegation-guide p.2, row-delegation-guide p.1, row-delegation-guide p.3
+  usage: 30 calls, $0.2782
+  overview · Searched the documents for "Written Submissions": row-delegation-guide p.2, row-delegation-guide p.1
+  usage: 31 calls, $0.2892
+    ✗ rejected Your sentence shares no words with its quotes, so the quotes don't show what it says. Quote the words that say it, or change the sentence to match them.
+  impacts · Rejected a statement: Your sentence shares no words with its quotes, so the quotes don't show what it says. Quote the wor…
+    ✗ rejected Citation 2: Quote not found on row-2026-budget-book page 17. Closest text on that page: "24 Waterloo Region Housing". Copy the words exactly as they appear (no paraphrase, no added words, no '|'), or call read_page first.
+  impacts · Rejected a statement: Citation 2: Quote not found on row-2026-budget-book page 17. Closest text on that page: "24 Waterlo…
+  impacts · Noted an unknown: How much funding the Region will receive from federal public transit grants in …
+  usage: 32 calls, $0.2976
+  overview · Searched the documents for "June 2, 2026": engagewr-row-2027-budget p.5, engagewr-row-2027-budget p.4, engagewr-row-2027-budget p.6
+  usage: 33 calls, $0.3077
+  impacts · Searched the documents for "Waterloo Region Housing 80,483": row-2026-budget-book p.24, row-2026-budget-book p.17, row-2026-budget-book p.9
+  usage: 34 calls, $0.3179
+    ✓ Building affordable homes helps renters, but capital spending requires regional funding.
+  impacts · Checked and recorded: "Building affordable homes helps renters, but capital spending require…" (row-affordable-housing-plan-page p.23, row-2026-budget-book p.17)
+  usage: 35 calls, $0.3289
+    ✗ rejected Quote not found on row-delegation-guide page 1. Closest text on that page: "issues may not need a decision by Regional Council and if staff can resolve your issue". Copy the words exactly as they appear (no paraphrase, no added words, no '|'), or call read_page first.
+  overview · Rejected a statement: Quote not found on row-delegation-guide page 1. Closest text on that page: "issues may not need a d…
+    ✓ Written submissions can be sent to be attached to meeting minutes.
+  overview · Checked and recorded: "Written submissions can be sent to be attached to meeting minutes." (row-delegation-guide p.2)
+    ✓ Staff presented the timeline and approach to Regional Council in June 2026.
+  overview · Checked and recorded: "Staff presented the timeline and approach to Regional Council in June…" (engagewr-row-2027-budget p.5)
+    ✗ rejected Quote not found on row-2026-budget-summary page 4. Closest text on that page: "for an average". Copy the words exactly as they appear (no paraphrase, no added words, no '|'), or call read_page first.
+  overview · Rejected a figure: Quote not found on row-2026-budget-summary page 4. Closest text on that page: "for an average". Cop…
+    ✗ rejected Quote not found on row-2026-budget-summary page 4. Closest text on that page: "for an average". Copy the words exactly as they appear (no paraphrase, no added words, no '|'), or call read_page first.
+  overview · Rejected a figure: Quote not found on row-2026-budget-summary page 4. Closest text on that page: "for an average". Cop…
+    ✗ rejected Quote not found on row-2026-budget-summary page 4. Closest text on that page: "The Region’s 2026 Operating and Capital Budgets". Copy the words exactly as they appear (no paraphrase, no added words, no '|'), or call read_page first.
+  overview · Rejected a figure: Quote not found on row-2026-budget-summary page 4. Closest text on that page: "The Region’s 2026 Op…
+  overview · Explained a term: operating budget
+  overview · Explained a term: capital budget
+  overview · Explained a term: property tax levy
+  overview · Explained a term: delegation
+  usage: 36 calls, $0.3387
+■ impacts done I have recorded statements for residents covering potential budget impacts, key trade-offs, and open questions.
+  usage: 36 calls, $0.3479
+  overview · Searched the documents for "1.8 billion": row-2026-budget-book p.12, row-2026-budget-book p.5, row-2026-budget-book p.9
+  usage: 37 calls, $0.3579
+  overview · Checked and recorded a figure: 2026 approved capital budget, $772 million (row-2026-budget-book p.5)
+■ overview done Recorded 12 items. (Stopped: reached its call limit.)
+▶ plain (lead) Make every sentence grade 8 or lower, and explain the jargon
+  usage: 38 calls, $0.3599
+  usage: 39 calls, $0.3615
+  usage: 40 calls, $0.3618
+  plain · Rewrote 9 of 19 sentences in plainer words; reading grade 6.8 → 6.5. Explained 3 more terms.
+■ plain done Rewrote 9 of 19 sentences in plainer words; reading grade 6.8 → 6.5. Explained 3 more terms.
+
+wrote data/briefs/row-2027-budget.json: 16 statements, 10 figures, 9 unknowns, grade 6.5, $0.3618

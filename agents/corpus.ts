@@ -70,11 +70,21 @@ export function loadCorpus(dataDir: string, decisionId: string): Corpus {
 }
 
 // ---------------------------------------------------------------------------
-// Precomputed lens results in data/lenses. The lens builder's file layout may vary, so
-// any JSON file whose path names a lens id is used, preferring one that also names this
-// decision; a file naming another decision is skipped.
+// Precomputed lens results in data/lenses. The lens builder's file layout may vary
+// ("housing-region.json", "<decision>/transit.json", "<decision>.cost.json"), so any
+// JSON file whose path names a lens id is used. One that names this decision wins; one
+// naming another decision is skipped; among general files (a city-wide housing
+// pipeline per city) the one naming the body that decides wins ("Region" → region).
 
-const LENS_IDS: LensId[] = ["transit", "cost", "commitments", "housing"];
+const LENS_IDS: LensId[] = ["transit", "cost", "commitments", "housing", "construction"];
+
+function listDecisionIds(dataDir: string): string[] {
+  try {
+    return fs.readdirSync(path.join(dataDir, "decisions")).filter((f) => f.endsWith(".json")).map((f) => f.slice(0, -5));
+  } catch {
+    return [];
+  }
+}
 
 export function loadLensFiles(dataDir: string, decision: Decision): Partial<Record<LensId, unknown>> {
   const root = path.join(dataDir, "lenses");
@@ -94,29 +104,27 @@ export function loadLensFiles(dataDir: string, decision: Decision): Partial<Reco
     }
   };
   walk(root, 0);
+  const others = listDecisionIds(dataDir).filter((id) => id !== decision.id);
+  const decider = `${decision.decidedBy} ${decision.title}`.toLowerCase();
   const forThis: Partial<Record<LensId, unknown>> = {};
-  const general: Partial<Record<LensId, unknown>> = {};
-  const otherIds = new Set(
-    (() => {
-      try {
-        return fs.readdirSync(path.join(dataDir, "decisions")).filter((f) => f.endsWith(".json")).map((f) => f.slice(0, -5));
-      } catch {
-        return [];
-      }
-    })().filter((id) => id !== decision.id),
-  );
+  const general: Partial<Record<LensId, { value: unknown; score: number }>> = {};
   for (const file of files) {
-    const tokens = path.relative(root, file).replace(/\.json$/, "").split(/[/.]/);
-    if (tokens.some((t) => otherIds.has(t))) continue;
+    const rel = path.relative(root, file).replace(/\.json$/, "").toLowerCase();
+    const words = rel.split(/[/._-]+/);
+    const names = (id: string) => rel.split(/[/.]+/).includes(id) || new RegExp(`(^|[/._-])${id}([/._-]|$)`).test(rel);
+    if (others.some(names)) continue;
     const value = readJson<Record<string, unknown>>(file);
     if (!value || typeof value !== "object") continue;
     if (typeof value.decisionId === "string" && value.decisionId !== decision.id) continue;
-    const mine = tokens.includes(decision.id);
-    const lens = LENS_IDS.find((l) => tokens.includes(l));
-    if (lens) (mine ? forThis : general)[lens] = value;
-    else if (mine) for (const l of LENS_IDS) if (value[l]) forThis[l] = value[l];
+    const mine = names(decision.id);
+    const lens = LENS_IDS.find((l) => words.includes(l));
+    if (lens && mine) forThis[lens] = value;
+    else if (lens) {
+      const score = words.filter((w) => w !== lens && w.length > 2 && decider.includes(w)).length;
+      if (!general[lens] || score > general[lens]!.score) general[lens] = { value, score };
+    } else if (mine) for (const l of LENS_IDS) if (value[l]) forThis[l] = value[l];
   }
-  for (const l of decision.lenses ?? []) if (!forThis[l] && general[l]) forThis[l] = general[l];
+  for (const l of decision.lenses ?? []) if (!forThis[l] && general[l]) forThis[l] = general[l]!.value;
   return forThis;
 }
 

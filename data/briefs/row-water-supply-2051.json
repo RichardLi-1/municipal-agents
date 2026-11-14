@@ -1,0 +1,547 @@
+{
+  "decisionId": "row-water-supply-2051",
+  "lang": "en",
+  "generatedAt": "2026-11-14T06:59:07.869Z",
+  "models": [
+    "gemini-3.6-flash"
+  ],
+  "costUsd": 0.273632,
+  "readingGrade": 6,
+  "summary": [
+    {
+      "id": "s2",
+      "text": "reached The Region is planning where to get tap water through to 2051.",
+      "kind": "fact",
+      "citations": [
+        {
+          "sourceId": "row-water-supply-notice-2",
+          "page": 1,
+          "quote": "In this study, we will look at future water supply needs for the community through to 2051."
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "s3",
+      "text": "The Region has not yet chosen its long-term water sources.",
+      "kind": "fact",
+      "citations": [
+        {
+          "sourceId": "row-water-supply-notice-2",
+          "page": 1,
+          "quote": "The second public meeting is being held to share a study update since the last meeting in December 2024 and present the shortlisted alternatives for water supply."
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "s4",
+      "text": "Funding comes from water rates and charges paid on new development.",
+      "kind": "fact",
+      "citations": [
+        {
+          "sourceId": "row-2026-budget-book",
+          "page": 63,
+          "quote": "Water Capital Reserve 18,887 18,517 37,404 39,996 48,764 60,296 67,739 254,200 271,207 525,407"
+        },
+        {
+          "sourceId": "row-2026-budget-book",
+          "page": 63,
+          "quote": "Development Charge - Water 13,664 14,342 28,006 32,666 29,530 40,427 41,895 172,524 139,379 311,904"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "s14",
+      "text": "The Region is planning tap water supplies to the year 2051.",
+      "kind": "fact",
+      "citations": [
+        {
+          "sourceId": "row-water-supply-notice-2",
+          "page": 1,
+          "quote": "In this study, we will look at future water supply needs for the community through to 2051."
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "s24",
+      "text": "The ten year plan from 2026 to 2035 costs $847,572 thousand.",
+      "kind": "fact",
+      "citations": [
+        {
+          "sourceId": "row-2026-budget-book",
+          "page": 63,
+          "quote": "Ten Year Capital Budget & Forecast ($ thousands) 2026 - 2035"
+        },
+        {
+          "sourceId": "row-2026-budget-book",
+          "page": 63,
+          "quote": "Total Expenditure 32,829 34,443 67,272 73,470 78,996 101,738 111,037 432,513 415,059 847,572"
+        }
+      ],
+      "verified": true
+    }
+  ],
+  "whyNow": [
+    {
+      "id": "s15",
+      "text": "The Region is updating its water plan for current and future growth needs.",
+      "kind": "fact",
+      "citations": [
+        {
+          "sourceId": "row-water-supply-slides-2024",
+          "page": 8,
+          "quote": "Existing and future growth needs"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "s16",
+      "text": "The study meets the first steps of environmental rules for main plans.",
+      "kind": "fact",
+      "citations": [
+        {
+          "sourceId": "row-water-supply-slides-2024",
+          "page": 10,
+          "quote": "Master Plan study under the Municipal Class Environmental Assessment process, Phases 1 and 2"
+        }
+      ],
+      "verified": true
+    }
+  ],
+  "impacts": [
+    {
+      "audience": "renter",
+      "label": "If you rent",
+      "statements": [
+        {
+          "id": "s6",
+          "text": "Renters may see rents or utility bills go up if regional water rates increase.",
+          "kind": "harm",
+          "citations": [
+            {
+              "sourceId": "row-2026-budget-book",
+              "page": 11,
+              "quote": "Water $230.05 $243.63 $13.58 5.90%"
+            }
+          ],
+          "verified": true
+        },
+        {
+          "id": "s29",
+          "text": "Water limits might slow down new local housing developments.",
+          "kind": "fact",
+          "citations": [
+            {
+              "sourceId": "row-2026-budget-book",
+              "page": 59,
+              "quote": "Reviewing approximately 400 development applications annually."
+            }
+          ],
+          "verified": true
+        }
+      ]
+    },
+    {
+      "audience": "homeowner",
+      "label": "If you own a home",
+      "statements": [
+        {
+          "id": "s5",
+          "text": "New water sources could help fix local water limits over time.",
+          "kind": "fact",
+          "citations": [
+            {
+              "sourceId": "row-asset-management-review-2026",
+              "page": 4,
+              "quote": "workload capacity and staffing resources (particularly the water capacity constraint work where council has subsequently addressed staffing pressures."
+            }
+          ],
+          "verified": true
+        },
+        {
+          "id": "s18",
+          "text": "Water limits could slow down the building of new homes.",
+          "kind": "harm",
+          "citations": [
+            {
+              "sourceId": "row-asset-management-review-2026",
+              "page": 4,
+              "quote": "workload capacity and staffing resources (particularly the water capacity constraint work where council has subsequently addressed staffing pressures."
+            }
+          ],
+          "verified": true
+        },
+        {
+          "id": "s20",
+          "text": "Your regional water bill may rise; in 2026 the average household paid $243.63.",
+          "kind": "fact",
+          "citations": [
+            {
+              "sourceId": "row-2026-budget-book",
+              "page": 11,
+              "quote": "2025 2026 $ Change % Change Water $230.05 $243.63 $13.58 5.90%"
+            }
+          ],
+          "verified": true
+        },
+        {
+          "id": "s25",
+          "text": "User rates could pay over $525 million for water build plans from 2026 to 2035.",
+          "kind": "fact",
+          "citations": [
+            {
+              "sourceId": "row-2026-budget-book",
+              "page": 28,
+              "quote": "Ten Year Capital Budget and Forecast ($ thousands) 2026 - 2035"
+            },
+            {
+              "sourceId": "row-2026-budget-book",
+              "page": 63,
+              "quote": "Water Capital Reserve 18,887 18,517 37,404 39,996 48,764 60,296 67,739 254,200 271,207 525,407"
+            }
+          ],
+          "verified": true
+        },
+        {
+          "id": "s28",
+          "text": "Your water bill may keep rising; in 2026 it rose by 5.90 percent.",
+          "kind": "harm",
+          "citations": [
+            {
+              "sourceId": "row-2026-budget-book",
+              "page": 11,
+              "quote": "2025 2026 $ Change % Change"
+            },
+            {
+              "sourceId": "row-2026-budget-book",
+              "page": 11,
+              "quote": "Water $230.05 $243.63 $13.58 5.90%"
+            }
+          ],
+          "verified": true
+        }
+      ]
+    },
+    {
+      "audience": "business-owner",
+      "label": "If you run a business",
+      "statements": [
+        {
+          "id": "s7",
+          "text": "Local businesses could get more reliable water as the population grows.",
+          "kind": "fact",
+          "citations": [
+            {
+              "sourceId": "row-2026-budget-book",
+              "page": 59,
+              "quote": "Supplying 125 million litres of drinking water per day for residents and businesses."
+            }
+          ],
+          "verified": true
+        },
+        {
+          "id": "s30",
+          "text": "New developments may face high water charges from 2026 to 2035.",
+          "kind": "fact",
+          "citations": [
+            {
+              "sourceId": "row-2026-budget-book",
+              "page": 28,
+              "quote": "Ten Year Capital Budget and Forecast ($ thousands) 2026 - 2035"
+            },
+            {
+              "sourceId": "row-2026-budget-book",
+              "page": 63,
+              "quote": "Development Charge - Water 13,664 14,342 28,006 32,666 29,530 40,427 41,895 172,524 139,379 311,904"
+            }
+          ],
+          "verified": true
+        }
+      ]
+    },
+    {
+      "audience": "newcomer",
+      "label": "If you are new to Canada",
+      "statements": [
+        {
+          "id": "s8",
+          "text": "New residents may rely on this plan to get safe drinking water.",
+          "kind": "fact",
+          "citations": [
+            {
+              "sourceId": "row-2026-budget-book",
+              "page": 59,
+              "quote": "Supplying 125 million litres of drinking water per day for residents and businesses."
+            }
+          ],
+          "verified": true
+        }
+      ]
+    }
+  ],
+  "haveYourSay": [
+    {
+      "id": "s21",
+      "text": "Join an online public meeting on Tuesday, November 17, 2026, from 7 to 8 pm.",
+      "kind": "fact",
+      "citations": [
+        {
+          "sourceId": "row-water-supply-notice-2",
+          "page": 1,
+          "quote": "Date: Tuesday, November 17, 2026 Date: Tuesday, November 24, 2026 Time: 7:00 pm – 8:00 pm Time: 6:30 pm – 8:30 pm Location: Virtually; register for the meeting at Location: Main Lobby, 150 Frederick St, Kitchener, engagewr.ca/watersupply Ontario"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "s22",
+      "text": "Attend an in-person meeting on Tuesday, November 24, 2026, from 6:30 to 8:30 pm.",
+      "kind": "fact",
+      "citations": [
+        {
+          "sourceId": "row-water-supply-notice-2",
+          "page": 1,
+          "quote": "Date: Tuesday, November 24, 2026 Time: 6:30 pm – 8:30 pm Location: Main Lobby, 150 Frederick St, Kitchener,"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "s23",
+      "text": "Sign up online at engagewr.ca/watersupply to get project news and next steps.",
+      "kind": "fact",
+      "citations": [
+        {
+          "sourceId": "row-water-supply-notice-2",
+          "page": 1,
+          "quote": "subscribe to the EngageWR project page at engagewr.ca/watersupply"
+        }
+      ],
+      "verified": true
+    }
+  ],
+  "figures": [
+    {
+      "id": "f1",
+      "label": "Annual development reviews for water services",
+      "value": 400,
+      "unit": "applications",
+      "display": "400 development applications",
+      "citation": {
+        "sourceId": "row-2026-budget-book",
+        "page": 59,
+        "quote": "Reviewing approximately 400 development applications annually."
+      },
+      "kind": "cited"
+    },
+    {
+      "id": "f9",
+      "label": "Water Supply 10-year capital program (2026-2035)",
+      "value": 847572000,
+      "unit": "CAD",
+      "display": "$847.6 million",
+      "citation": {
+        "sourceId": "row-2026-budget-book",
+        "page": 63,
+        "quote": "Total Funding & Financing 32,829 34,443 67,272 73,470 78,996 101,738 111,037 432,513 415,059 847,572"
+      },
+      "kind": "cited"
+    },
+    {
+      "id": "f10",
+      "label": "Annual regional infrastructure funding gap",
+      "value": 87600000,
+      "unit": "CAD",
+      "display": "$87.6 million",
+      "citation": {
+        "sourceId": "row-infrastructure-gap-2026",
+        "page": 1,
+        "quote": "***Infrastructure Funding Gap $87.6M"
+      },
+      "kind": "cited"
+    },
+    {
+      "id": "f11",
+      "label": "Average annual regional water bill per household (2026)",
+      "value": 243.63,
+      "unit": "CAD",
+      "display": "$243.63",
+      "citation": {
+        "sourceId": "row-2026-budget-book",
+        "page": 11,
+        "quote": "Water $230.05 $243.63 $13.58 5.90%"
+      },
+      "kind": "cited"
+    },
+    {
+      "id": "f12",
+      "label": "Average annual regional wastewater bill per household (2026)",
+      "value": 301.61,
+      "unit": "CAD",
+      "display": "$301.61",
+      "citation": {
+        "sourceId": "row-2026-budget-book",
+        "page": 11,
+        "quote": "Wastewater $284.81 $301.61 $16.80 5.90%"
+      },
+      "kind": "cited"
+    }
+  ],
+  "unknowns": [
+    {
+      "question": "How many new housing units are currently delayed or restricted by municipal water capacity limits?",
+      "why": "Residents and homebuilders need to know if water shortages are slowing housing construction.",
+      "whoCanAnswer": "Region of Waterloo Planning, Development and Legislative Services",
+      "contact": "Region of Waterloo Planning, Development and Legislative Services"
+    },
+    {
+      "question": "Full lifecycle costs for shortlisted water options",
+      "why": "Residents need full lifecycle cost comparisons to judge long-term financial impacts.",
+      "whoCanAnswer": "Region of Waterloo Water Services and Finance departments",
+      "contact": "Water Supply Strategy project team (226-750-4521, nsapeta@regionofwaterloo.ca)"
+    },
+    {
+      "question": "Which water supply options made the short list?",
+      "why": "Residents need to know which specific projects are being considered for their communities.",
+      "whoCanAnswer": "Region of Waterloo Water and Wastewater Services",
+      "contact": "nsapeta@regionofwaterloo.ca"
+    },
+    {
+      "question": "How much will each short-listed water option cost?",
+      "why": "Residents will pay for water infrastructure through future rates and development charges.",
+      "whoCanAnswer": "Region of Waterloo Water and Wastewater Services",
+      "contact": "nsapeta@regionofwaterloo.ca"
+    },
+    {
+      "question": "What specific Strategic Plan targets and progress figures apply to the Water Supply Strategy Update?",
+      "why": "Residents need to know if long-term water infrastructure decisions are meeting regional sustainability and growth targets.",
+      "whoCanAnswer": "Region of Waterloo Water Services",
+      "contact": "Water Supply Strategy project team (Senior Engineer, Water and Wastewater Services): 226-750-4521, nsapeta@regionofwaterloo.ca"
+    }
+  ],
+  "tradeoffs": [
+    {
+      "id": "s26",
+      "text": "New water options can ensure reliable service, but higher costs may raise rates.",
+      "kind": "tradeoff",
+      "citations": [
+        {
+          "sourceId": "row-water-supply-slides-2024",
+          "page": 18,
+          "quote": "Provides reliable service"
+        },
+        {
+          "sourceId": "row-water-supply-slides-2024",
+          "page": 18,
+          "quote": "Provides low lifecycle costs"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "s27",
+      "text": "Protecting wildlife homes might limit building, but it can save natural areas.",
+      "kind": "tradeoff",
+      "citations": [
+        {
+          "sourceId": "row-water-supply-slides-2024",
+          "page": 18,
+          "quote": "Protects wildlife and species at risk"
+        },
+        {
+          "sourceId": "row-water-supply-slides-2024",
+          "page": 18,
+          "quote": "Minimizes impacts to residents and businesses"
+        }
+      ],
+      "verified": true
+    }
+  ],
+  "glossary": [
+    {
+      "term": "Integrated Urban System",
+      "plain": "A water grid serving Kitchener, Waterloo, Cambridge, and nearby urban areas."
+    },
+    {
+      "term": "Master Plan",
+      "plain": "A long-term study that outlines major infrastructure needs over several decades."
+    },
+    {
+      "term": "Municipal Class Environmental Assessment",
+      "plain": "Rules that cities must follow to assess environmental impacts of major projects."
+    },
+    {
+      "term": "Development Charges",
+      "plain": "Fees collected from builders to help pay for infrastructure needed by growth."
+    },
+    {
+      "term": "strategic plan",
+      "plain": "A long-term guide that sets goals and priorities for local government decisions and spending."
+    },
+    {
+      "term": "user rates",
+      "plain": "Fees paid by property owners based on how much water and wastewater services they use."
+    },
+    {
+      "term": "lifecycle",
+      "plain": "The total cost to build, maintain, repair, and eventually replace city equipment and buildings."
+    }
+  ],
+  "lenses": {
+    "cost": {
+      "statements": [
+        {
+          "id": "s13",
+          "text": "Money set aside from user rates pays $525.4 million for the ten-year plan.",
+          "kind": "fact",
+          "citations": [
+            {
+              "sourceId": "row-2026-budget-book",
+              "page": 63,
+              "quote": "Water Capital Reserve 18,887 18,517 37,404 39,996 48,764 60,296 67,739 254,200 271,207 525,407"
+            }
+          ],
+          "verified": true
+        },
+        {
+          "id": "s19",
+          "text": "The Region planned an $847.6 million ten-year price to build water supplies.",
+          "kind": "fact",
+          "citations": [
+            {
+              "sourceId": "row-2026-budget-book",
+              "page": 63,
+              "quote": "Total Funding & Financing 32,829 34,443 67,272 73,470 78,996 101,738 111,037 432,513 415,059 847,572"
+            }
+          ],
+          "verified": true
+        }
+      ],
+      "partial": true
+    },
+    "housing": {
+      "statements": [
+        {
+          "id": "s17",
+          "text": "The Region checks about 400 building applications every year for water needs.",
+          "kind": "fact",
+          "citations": [
+            {
+              "sourceId": "row-2026-budget-book",
+              "page": 59,
+              "quote": "Reviewing approximately 400 development applications annually."
+            }
+          ],
+          "verified": true
+        }
+      ]
+    }
+  },
+  "review": {
+    "status": "draft"
+  }
+}
