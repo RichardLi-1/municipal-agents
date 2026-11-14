@@ -51,3 +51,15 @@ test("city-wide lens files go to the decision whose decider they name", () => {
   assert.equal(lenses("kit-hub").cost.asset, "hub");
   assert.equal(lenses("row-budget").cost, undefined);
 });
+
+test("a render on the volume overrides the committed one with the same name", () => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), "ma-renders-"));
+  write(path.join(root, "app/data/renders/a.png"), "committed");
+  write(path.join(root, "app/data/renders/b.webp"), "committed");
+  write(path.join(root, "vol/renders/a.png"), "runtime");
+  const store = new Store({ appRoot: path.join(root, "app"), dataDir: path.join(root, "vol") });
+  assert.equal(fs.readFileSync(store.renderPath("a.png")!, "utf8"), "runtime");
+  assert.equal(fs.readFileSync(store.renderPath("b.webp")!, "utf8"), "committed");
+  assert.equal(store.renderPath("a.gif"), undefined);
+  assert.equal(store.renderPath("../a.png"), undefined);
+});

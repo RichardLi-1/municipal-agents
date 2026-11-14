@@ -7,7 +7,9 @@ import { SAFE_LANG } from "../data.ts";
 import { HttpError, type Router, sendBody, sendJson } from "../http.ts";
 import { decisionCalendar } from "../ics.ts";
 import { nextParticipation, openParticipation, startMs } from "../time.ts";
+import { publicBrief } from "../statements.ts";
 import { summarise } from "../usage.ts";
+import { isStaff } from "./staff.ts";
 
 /** A DecisionCard, plus `open`: ways to take part that are open right now (extra field). */
 export function card(app: App, d: Decision, now = Date.now()): DecisionCard & { open: TimelineEvent[] } {
@@ -68,9 +70,13 @@ export function publicRoutes(app: App, r: Router): void {
     const decision = requireDecision(app, params.id);
     const lang = url.searchParams.get("lang") ?? undefined;
     const lenses = app.store.lenses(decision);
-    let brief = app.store.brief(decision.id);
+    const original = app.store.brief(decision.id);
+    let brief = original;
     // ?lang=fr serves a cached translation if one exists; it never starts a model run.
     if (lang && SAFE_LANG.test(lang) && brief && brief.lang !== lang) brief = app.store.brief(decision.id, lang) ?? brief;
+    // Residents get a published brief without the statements staff rejected; staff
+    // (with the passcode) get everything so they can change their minds.
+    if (brief && original && !isStaff(app, req)) brief = publicBrief(brief, original);
     const sources = decision.sources.map((id) => app.store.source(id)).filter((s) => !!s);
     const detail: DecisionDetail & { lenses: Lenses } = { decision, brief: withLenses(brief, lenses), sources, lenses };
     // no-cache + ETag: staff see their review at once, unchanged briefs cost a 304.
@@ -110,6 +116,16 @@ export function publicRoutes(app: App, r: Router): void {
     const n = Number(params.n);
     if (!Number.isInteger(n) || n < 1 || n > pages.length) throw new HttpError(404, `Page ${params.n} is outside 1-${pages.length}`);
     sendJson(req, res, 200, { sourceId: params.id, page: n, pages: pages.length, text: pages[n - 1] }, { "Cache-Control": "public, max-age=3600" });
+  });
+
+  // Construction-lens renders. Names change when an image is regenerated, so a week's
+  // cache is safe; the ETag covers a same-name rewrite.
+  r.get("/api/renders/:file", ({ req, res, params }) => {
+    const file = app.store.renderPath(params.file);
+    if (!file) throw new HttpError(404, `No render "${params.file}"`);
+    const ext = file.slice(file.lastIndexOf(".") + 1).toLowerCase();
+    const type = ext === "png" ? "image/png" : ext === "webp" ? "image/webp" : "image/jpeg";
+    sendFileWithRanges(req, res, file, { "Content-Type": type, "Cache-Control": "public, max-age=604800" });
   });
 
   r.get("/api/log", ({ req, res, url }) => {

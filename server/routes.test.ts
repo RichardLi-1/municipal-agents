@@ -6,7 +6,7 @@ import type { AddressInfo } from "node:net";
 import os from "node:os";
 import path from "node:path";
 import { after, before, test } from "node:test";
-import type { AgentEvent, Brief, DecisionCard, LogEntry } from "../shared/types.ts";
+import type { AgentEvent, Brief, DecisionCard, DecisionDetail, LogEntry, Statement } from "../shared/types.ts";
 import type { AgentsModule } from "./agents-loader.ts";
 import { type App, createApp } from "./app.ts";
 import { loadConfig } from "./config.ts";
@@ -103,11 +103,21 @@ test("decision detail merges lens files into the brief", async () => {
   assert.equal(d.sources[0].id, "fixture-report");
   assert.equal(d.brief.lenses.cost.asset, "Testville services");
   assert.deepEqual(d.brief.lenses.housing.hardToTrack, ["Completions"]);
+  assert.deepEqual(d.lenses.construction.sites, []);
   const again = await get("/api/decisions/fixture-budget", { headers: { "If-None-Match": res.headers.get("etag")! } });
   assert.equal(again.status, 304);
   const missing = await get("/api/decisions/nope");
   assert.equal(missing.status, 404);
   assert.match((await missing.json()).error, /No decision/);
+});
+
+test("renders come from the runtime folder first, then the committed one", async () => {
+  const committed = await get("/api/renders/fixture-site-1.png");
+  assert.equal(committed.status, 200);
+  assert.equal(committed.headers.get("content-type"), "image/png");
+  assert.match(committed.headers.get("cache-control") ?? "", /max-age=604800/);
+  assert.equal((await get("/api/renders/..%2Fdecisions%2Ffixture-budget.json")).status, 404);
+  assert.equal((await get("/api/renders/nope.png")).status, 404);
 });
 
 test("calendar is served as text/calendar", async () => {
@@ -173,30 +183,53 @@ test("translate makes a translation once and reuses it until the brief changes",
   assert.equal((await post("/api/decisions/fixture-budget/translate", { lang: "../x" })).status, 400);
 });
 
-test("review approves, edits and rejects statements; publish names the reviewer", async () => {
-  let r = await post("/api/staff/review", { decisionId: "fixture-budget", statementId: "s1", action: "approve", reviewer: "Ana Silva" }, staff);
-  assert.equal(r.status, 200);
-  r = await post("/api/staff/review", { decisionId: "fixture-budget", statementId: "i1", action: "edit", text: "Rent may go up.", note: "simpler", reviewer: "Ana Silva" }, staff);
-  const edited = (await r.json()) as { brief: Brief };
+test("review approves, edits and rejects statements; publish needs every one reviewed", async () => {
+  const review = (body: Record<string, string>) => post("/api/staff/review", { decisionId: "fixture-budget", reviewer: "Ana Silva", ...body }, staff);
+  assert.equal((await review({ statementId: "s1", action: "approve" })).status, 200);
+  // An edit keeps the citations and is re-checked: i1 cites nothing, so it stays unverified.
+  const edited = (await (await review({ statementId: "i1", action: "edit", text: "Rent may go up.", note: "simpler" })).json()) as { brief: Brief };
   const i1 = edited.brief.impacts[0].statements[0];
   assert.equal(i1.text, "Rent may go up.");
+  assert.equal(i1.review?.action, "edited");
   assert.equal(i1.review?.originalText, "Rent may rise if landlords pass on the tax.");
+  assert.equal(i1.verified, false);
   assert.equal(edited.brief.review.status, "in-review");
-  assert.equal((await post("/api/staff/review", { decisionId: "fixture-budget", statementId: "zz", action: "approve" }, staff)).status, 404);
-  assert.equal((await post("/api/staff/review", { decisionId: "fixture-budget", statementId: "s2", action: "edit" }, staff)).status, 400);
+  // Approving an edited statement keeps it marked as edited for residents.
+  const again = (await (await review({ statementId: "i1", action: "approve" })).json()) as { statement: Statement };
+  assert.equal(again.statement.review?.action, "edited");
+  assert.equal(again.statement.review?.originalText, "Rent may rise if landlords pass on the tax.");
+  // w1 claimed to be verified, but its quote isn't on the page: the re-check says so.
+  const w1 = (await (await review({ statementId: "w1", action: "approve" })).json()) as { statement: Statement };
+  assert.equal(w1.statement.verified, false);
+  assert.equal((await review({ statementId: "zz", action: "approve" })).status, 404);
+  assert.equal((await review({ statementId: "s2", action: "edit" })).status, 400);
+
+  // s2 has no decision yet, so publishing is refused with a count.
   assert.equal((await post("/api/staff/publish", { decisionId: "fixture-budget" }, staff)).status, 400);
+  const early = await post("/api/staff/publish", { decisionId: "fixture-budget", reviewer: "Ana Silva" }, staff);
+  assert.equal(early.status, 409);
+  assert.match((await early.json()).error, /^1 of 4 statements hasn't been reviewed yet/);
+
+  assert.equal((await review({ statementId: "s2", action: "reject", note: "date not final" })).status, 200);
   const pub = (await (await post("/api/staff/publish", { decisionId: "fixture-budget", reviewer: "Ana Silva" }, staff)).json()) as { brief: Brief };
   assert.equal(pub.brief.review.status, "published");
   assert.equal(pub.brief.review.by, "Ana Silva");
-  const stored = app.store.brief("fixture-budget")!;
-  assert.equal(stored.review.status, "published");
   const last = app.log.list({ order: "desc", limit: 1 })[0];
   assert.equal(last.kind, "brief.published");
   assert.equal(last.actor, "staff:ana-silva");
-  // The brief changed, so the French copy is made again.
+  assert.equal((last.payload as { unreviewed: number }).unreviewed, 0);
+
+  // Residents don't see the rejected statement; staff still do.
+  const pubView = (await (await get("/api/decisions/fixture-budget")).json()) as DecisionDetail;
+  assert.deepEqual(pubView.brief!.summary.map((s) => s.id), ["s1"]);
+  const staffView = (await (await get("/api/decisions/fixture-budget", { headers: staff })).json()) as DecisionDetail;
+  assert.deepEqual(staffView.brief!.summary.map((s) => s.id), ["s1", "s2"]);
+
+  // The brief changed, so the French copy is made again, and it leaves out s2 too.
   const before = translations;
-  await (await post("/api/decisions/fixture-budget/translate", { lang: "fr" }, { "Fly-Client-IP": "10.0.0.4" })).text();
+  const fr = (await (await post("/api/decisions/fixture-budget/translate", { lang: "fr" }, { "Fly-Client-IP": "10.0.0.4" })).json()) as Brief;
   assert.equal(translations, before + 1);
+  assert.deepEqual(fr.summary.map((s) => s.id), ["s1"]);
 });
 
 test("staff brief run streams, saves a draft and logs it", async () => {

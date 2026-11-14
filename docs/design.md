@@ -54,15 +54,18 @@ REST client for Gemini with no SDK in between. `shared/` holds the checks that m
 never depend on a model: the citation checker (`shared/verify.ts`) and the
 Flesch-Kincaid reading grade (`shared/readability.ts`). Because `shared/` has no Node
 dependencies, the browser can run the same code. The canonical JSON used for the log's
-hashes (`server/canonical.ts`) is written the same way, so the Record page can
-recompute the chain in the browser (`TODO(verify)` once `web/` imports it).
+hashes (`server/canonical.ts`) has a twin in the web app (`web/src/lib/hash.ts`), so
+the Record page recomputes the whole chain in the browser with the Web Crypto API and
+does not have to take the server's word for it. The two copies must stay identical.
 `lenses/` computes the transit, cost, commitments and housing results from open data.
 All content lives in plain files under `data/` and `cities/`, so a city can read,
 review and version everything the agents read. The design choice: few moving parts
 that a municipal IT team can run and audit, and a hard line between what a model
-drafts and what code verifies. `TODO(verify)`: final file names inside `agents/`
-(lead loop, tools) and `lenses/`, and whether lenses are precomputed at build time or
-on request for each lens.
+drafts and what code verifies. In `agents/`, `lead.ts` plans and merges, `loop.ts` is
+the specialist loop, `tools.ts` holds the tools and their checks, `corpus.ts` the page
+search and `gemini.ts` the client. Lenses are precomputed by scripts before deployment
+and stored in `data/lenses/`; the agents' lens tools only read them
+(`TODO(verify)`: transit and cost lens file names).
 
 ## 3. Domain classes: the data every part shares
 
@@ -106,9 +109,12 @@ extraction produces; words must still appear in full and in order. A statement w
 quote is missing is rejected, logged and sent back to the specialist with the reason.
 Each run stops at 40 model calls or US$0.50. The resident watches each step arrive
 over server-sent events, like a progress panel, and the final answer may only cite
-statements that passed the check. `TODO(verify)`: whether the lead or the server
-writes `answer.given` and `usage`, and the exact rejection message returned to the
-model.
+statements that passed the check. Every model call writes its own `usage` entry as
+it returns (`budgetedCall` in `agents/loop.ts`); the server writes `answer.given` (and
+a fallback `usage` entry) only if the agents have not, so each fact is recorded once.
+A rejection returns the reasons in words the model can act on, for example "That quote
+is on page 14 of row-2026-budget-book, not page 12. Cite page 14." (`checkCitation` in
+`agents/tools.ts`).
 
 ## 5. Sequence: staff draft, review and publish a brief
 
@@ -127,8 +133,9 @@ approve it, edit the wording (the original text is kept with the statement), or 
 it with a note. Publishing needs a reviewer's name, and every review and the publish
 itself are new log entries. Residents then see "Approved by (name), (date)", and
 rejected statements are not shown. This keeps accountability with a named person at
-the city, which is where it belongs. `TODO(verify)`: whether staff can also upload a
-new PDF in the same call, and how a staff edit is shown on the public brief.
+the city, which is where it belongs. Staff can start a brief either from a decision's
+existing sources or by uploading a PDF in the same call (`server/upload.ts`).
+`TODO(verify)`: how a staff edit, and a rejected statement, appear on the public page.
 
 ## 6. State: the life of a brief
 
@@ -142,9 +149,11 @@ and becomes **published** only when a named reviewer publishes it. Until then th
 public page labels it "Draft: not yet reviewed by staff". If the staff report changes,
 staff can regenerate the brief, which sends it back to draft. Nothing is overwritten
 in the record: each step is a new log entry, so the history of who approved what, and
-when, survives every regeneration. `TODO(verify)`: the exact event that moves a brief
-from draft to in review (first statement reviewed, or an explicit "start review"
-action).
+when, survives every regeneration. A brief moves from draft to in review when staff
+review its first statement (`POST /api/staff/review`); there is no separate "start
+review" action. Publishing does not require every statement to be reviewed: the
+`brief.published` entry records how many were approved, edited, rejected and left
+unreviewed, so the record shows it.
 
 ## 7. State: the life of one statement
 
@@ -159,8 +168,10 @@ reviewer **approves**, **edits** (the original wording is kept) or **rejects** e
 verified statement. Splitting the gates this way means a model can never vouch for
 itself, and a reviewer spends their time on judgement (is this fair, is it clear, is
 anything missing) rather than on hunting for page numbers. If an unverified statement
-is shown at all, it carries an "unverified" label. `TODO(verify)`: whether unverified
-statements ever reach the public page, or are only visible to staff.
+is shown at all, it carries an "unverified" label. In practice the agents' tools
+store only statements that passed the check, so every statement in a brief is verified;
+the failed attempts live only in the record as `statement.rejected` entries with their
+reasons.
 
 ## 8. Deployment: where it runs
 
@@ -181,5 +192,8 @@ secret. That is the main data-residency limit of the prototype: a production
 deployment for a city should use a Canadian-hosted or on-premises model, which the
 design allows because the model is called through one small client file
 (`agents/gemini.ts`). See [architecture.md](architecture.md) for the reasoning and
-scaling path. `TODO(verify)`: final `fly.toml` (machine size, volume name) and
-whether the image also bakes the briefs or reads them from the volume.
+scaling path. Per `fly.toml`: one `shared-cpu-1x` machine with 1 GB of memory,
+always on, health-checked on `/api/health`, and a 1 GB volume `municipal_data` at
+`/data`. The image carries the committed data (sources, decisions, lenses, committed
+briefs); at start-up `server/data.ts` mirrors it into the volume, where the record,
+staff-edited briefs and uploads are written.

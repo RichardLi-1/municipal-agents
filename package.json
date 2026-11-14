@@ -7,7 +7,7 @@
     "dev": "node --env-file-if-exists=.env --disable-warning=ExperimentalWarning --watch server/main.ts",
     "start": "node --env-file-if-exists=.env --disable-warning=ExperimentalWarning server/main.ts",
     "build": "npm --prefix web ci && npm --prefix web run build",
-    "test": "node --disable-warning=ExperimentalWarning --test \"server/**/*.test.ts\" \"agents/**/*.test.ts\" \"lenses/**/*.test.ts\"",
+    "test": "node --disable-warning=ExperimentalWarning --test \"server/**/*.test.ts\" \"shared/**/*.test.ts\" \"agents/**/*.test.ts\" \"lenses/**/*.test.ts\"",
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "sources": "node scripts/sources.ts",
     "smoke": "node scripts/smoke.ts",

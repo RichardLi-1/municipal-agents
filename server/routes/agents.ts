@@ -6,6 +6,7 @@ import { SAFE_LANG } from "../data.ts";
 import { clientIp, HttpError, openSse, readJsonBody, type Router, sendJson } from "../http.ts";
 import { checkDailyCap } from "../limits.ts";
 import { failureMessage, logUsageFallback, startRun } from "../runs.ts";
+import { publicBrief } from "../statements.ts";
 
 export const AUDIENCES: AudienceId[] = [
   "renter",
@@ -87,10 +88,10 @@ export function agentRoutes(app: App, r: Router): void {
     if (!SAFE_LANG.test(lang)) throw new HttpError(400, 'Send {"lang": "fr"} with a language code.');
     const source = app.store.brief(decision.id);
     if (!source) throw new HttpError(404, "There's no brief for this decision yet.");
-    if ((source.lang ?? "en") === lang) return sendJson(req, res, 200, source);
+    if ((source.lang ?? "en") === lang) return sendJson(req, res, 200, publicBrief(source));
 
     const cached = cachedTranslation(app, decision.id, lang, source);
-    if (cached) return sendJson(req, res, 200, cached);
+    if (cached) return sendJson(req, res, 200, publicBrief(cached, source));
 
     const key = `${decision.id}:${lang}`;
     let pending = app.translating.get(key);
@@ -99,10 +100,12 @@ export function agentRoutes(app: App, r: Router): void {
       checkDailyCap(app.log, app.cfg.dailyLimitUsd);
       app.visitorLimiter.take(clientIp(req), "requests");
       const release = app.slots.acquire();
-      pending = translate(app, agents, source, lang).finally(() => {
-        release();
-        app.translating.delete(key);
-      });
+      pending = translate(app, agents, source, lang)
+        .then((t) => publicBrief(t, source))
+        .finally(() => {
+          release();
+          app.translating.delete(key);
+        });
       app.translating.set(key, pending);
     }
     await respondSlowJson(req, res, pending);

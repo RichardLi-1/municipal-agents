@@ -3,12 +3,23 @@
 // agent output is only a draft until a named person approves it (principle 4).
 import { createHash, timingSafeEqual } from "node:crypto";
 import type { IncomingMessage } from "node:http";
-import type { AgentEvent, Brief, Statement } from "../../shared/types.ts";
+import type { AgentEvent, Brief } from "../../shared/types.ts";
 import { type App, briefHash } from "../app.ts";
 import { HttpError, openSse, readJsonBody, type Router, sendJson } from "../http.ts";
 import { checkDailyCap } from "../limits.ts";
 import { failureMessage, logUsageFallback, startRun } from "../runs.ts";
+import { allStatements, briefGrade, publicBrief, recheck, unreviewed } from "../statements.ts";
 import { handleUpload } from "../upload.ts";
+
+/** True when the request carries the staff passcode (used to show staff the full brief). */
+export function isStaff(app: App, req: IncomingMessage): boolean {
+  try {
+    requireStaff(app, req);
+    return true;
+  } catch {
+    return false;
+  }
+}
 
 export function requireStaff(app: App, req: IncomingMessage): void {
   if (!app.cfg.staffToken) throw new HttpError(503, "Staff sign-in isn't set up on this server (STAFF_TOKEN is missing).");
@@ -28,16 +39,6 @@ export function staffActor(name: string): string {
 function reviewerName(body: Record<string, unknown>): string {
   const v = body.reviewer ?? body.by;
   return typeof v === "string" ? v.trim().slice(0, 80) : "";
-}
-
-/** Every statement in a brief, wherever it sits, so review can find one by id. */
-export function allStatements(brief: Brief): Statement[] {
-  const out: Statement[] = [...(brief.summary ?? []), ...(brief.whyNow ?? []), ...(brief.haveYourSay ?? []), ...(brief.tradeoffs ?? [])];
-  for (const i of brief.impacts ?? []) out.push(...(i.statements ?? []));
-  const l = brief.lenses ?? {};
-  out.push(...(l.cost?.statements ?? []), ...(l.housing?.statements ?? []));
-  for (const c of l.commitments?.commitments ?? []) out.push(...(c.progress ?? []));
-  return out;
 }
 
 const ACTIONS: Record<string, "approved" | "edited" | "rejected"> = {
@@ -154,14 +155,30 @@ export function staffRoutes(app: App, r: Router): void {
       originalText ??= st.text;
       st.text = text;
     }
-    st.review = { action, by: reviewer, at: new Date().toISOString(), ...(note ? { note } : {}), ...(originalText ? { originalText } : {}) };
+    // Approving text staff already rewrote keeps it marked "edited", so residents still
+    // see "Edited by staff" next to it; the log records the approval itself.
+    const stored = action === "approved" && originalText ? "edited" : action;
+    st.review = { action: stored, by: reviewer, at: new Date().toISOString(), ...(note ? { note } : {}), ...(originalText ? { originalText } : {}) };
+    // The citations stay with the edited words, so check them again: `verified` must
+    // say what the checker says, not what it said before the edit.
+    const problems = recheck(st, (id) => app.store.sourcePages(id));
+    if (action === "edited") brief.readingGrade = briefGrade(brief);
     if (brief.review?.status !== "published") brief.review = { ...brief.review, status: "in-review" };
     app.store.writeBrief(brief);
     app.log.append({
       actor: staffActor(reviewer),
       kind: "statement.reviewed",
       decisionId,
-      payload: { statementId, action, by: reviewer, note, ...(action === "edited" ? { from: before, to: st.text } : {}), briefHash: briefHash(brief) },
+      payload: {
+        statementId,
+        action,
+        by: reviewer,
+        note,
+        ...(action === "edited" ? { from: before, to: st.text } : {}),
+        verified: st.verified,
+        ...(problems.length ? { problems } : {}),
+        briefHash: briefHash(brief),
+      },
     });
     sendJson(req, res, 200, { statement: st, brief });
   });
@@ -174,8 +191,19 @@ export function staffRoutes(app: App, r: Router): void {
     if (!reviewer) throw new HttpError(400, "Publishing needs the reviewer's name.");
     const current = app.store.brief(decisionId);
     if (!current) throw new HttpError(404, `No brief for decision "${decisionId}"`);
+    // Staff publish (principle 4): every statement needs a decision first.
+    const pending = unreviewed(current);
+    if (pending.length) {
+      const total = allStatements(current).length;
+      throw new HttpError(
+        409,
+        `${pending.length} of ${total} statement${total === 1 ? "" : "s"} ${pending.length === 1 ? "hasn't" : "haven't"} been reviewed yet. Approve, edit or reject each one before publishing.`,
+      );
+    }
     const brief = structuredClone(current);
     brief.review = { status: "published", by: reviewer, at: new Date().toISOString() };
+    // The grade residents see is of what they read: without the rejected statements.
+    brief.readingGrade = briefGrade(publicBrief(brief));
     app.store.writeBrief(brief);
     const stmts = allStatements(brief);
     const count = (a?: string) => stmts.filter((s) => s.review?.action === a).length;

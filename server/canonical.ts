@@ -1,25 +1,21 @@
-// Canonical JSON for the log's hash chain. No Node imports, so the web app can import
-// this same function to check the chain in the browser.
+// Canonical JSON for the log's hash chain. No Node imports, so the browser can run the
+// same rules; web/src/lib/hash.ts implements them too and canonical.test.ts checks the
+// two agree on tricky payloads.
 //
 // Rules: object keys sorted by UTF-16 code unit order (Array.prototype.sort default),
-// no whitespace, keys whose value is undefined are dropped (as JSON.stringify does),
-// arrays keep their order, numbers and strings as JSON.stringify writes them.
+// no whitespace, keys whose value is undefined are dropped, undefined in an array is
+// null, strings and numbers exactly as JSON.stringify writes them. The string is built
+// by hand rather than by JSON.stringify on a sorted object, because JS objects list
+// integer-like keys ("9", "10") first whatever order they were inserted in.
 
-export function canonicalJson(value: unknown): string {
-  return JSON.stringify(sortKeys(value)) ?? "null";
-}
-
-function sortKeys(value: unknown): unknown {
-  if (Array.isArray(value)) return value.map((v) => (v === undefined ? null : sortKeys(v)));
-  if (value && typeof value === "object" && !(value instanceof Date)) {
-    const out: Record<string, unknown> = {};
-    for (const k of Object.keys(value).sort()) {
-      const v = (value as Record<string, unknown>)[k];
-      if (v !== undefined) out[k] = sortKeys(v);
-    }
-    return out;
-  }
-  return value;
+export function canonicalJson(v: unknown): string {
+  if (v === null || typeof v !== "object") return JSON.stringify(v) ?? "null";
+  if (Array.isArray(v)) return "[" + v.map((x) => (x === undefined ? "null" : canonicalJson(x))).join(",") + "]";
+  const o = v as Record<string, unknown>;
+  const keys = Object.keys(o)
+    .filter((k) => o[k] !== undefined)
+    .sort();
+  return "{" + keys.map((k) => JSON.stringify(k) + ":" + canonicalJson(o[k])).join(",") + "}";
 }
 
 /** The first entry's prevHash. */

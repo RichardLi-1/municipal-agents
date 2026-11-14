@@ -11,3 +11,6 @@ video/public/music/
 video/public/footage/*.mp4
 video/public/footage/*.webm
 .worktrees/
+data/uploads/
+data/decisions/upload-*
+data/sources/upload-*

@@ -9,7 +9,9 @@
     { "id": "s1", "text": "The levy would rise 4.9%.", "kind": "fact", "citations": [{ "sourceId": "fixture-report", "page": 1, "quote": "The levy rises 4.9 per cent." }], "verified": true },
     { "id": "s2", "text": "Council votes on 25 November.", "kind": "fact", "citations": [{ "sourceId": "fixture-report", "page": 2, "quote": "Council votes on 25 November." }], "verified": true }
   ],
-  "whyNow": [],
+  "whyNow": [
+    { "id": "w1", "text": "The draft says the levy doubles.", "kind": "fact", "citations": [{ "sourceId": "fixture-report", "page": 1, "quote": "The levy doubles next year." }], "verified": true }
+  ],
   "impacts": [{ "audience": "renter", "label": "If you rent", "statements": [{ "id": "i1", "text": "Rent may rise if landlords pass on the tax.", "kind": "estimate", "citations": [], "verified": false }] }],
   "haveYourSay": [],
   "figures": [],

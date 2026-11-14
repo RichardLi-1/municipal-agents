@@ -3,21 +3,11 @@
 // a restart. Nothing here calls a model.
 import fs from "node:fs";
 import path from "node:path";
-import type {
-  Brief,
-  CityConfig,
-  CommitmentsLens,
-  CostLens,
-  Decision,
-  HousingLens,
-  LensId,
-  SourceDoc,
-  TransitLens,
-} from "../shared/types.ts";
+import type { Brief, CityConfig, Decision, LensId, SourceDoc } from "../shared/types.ts";
 
-export type Lenses = { transit?: TransitLens; cost?: CostLens; commitments?: CommitmentsLens; housing?: HousingLens };
+export type Lenses = Brief["lenses"];
 
-const LENS_IDS: LensId[] = ["transit", "cost", "commitments", "housing"];
+const LENS_IDS: LensId[] = ["transit", "cost", "commitments", "housing", "construction"];
 
 /** Ids become file names, so they are restricted to a safe slug. */
 export const SAFE_ID = /^[a-z0-9][a-z0-9_-]{0,127}$/i;
@@ -178,6 +168,20 @@ export class Store {
     return file;
   }
 
+  // ---- renders --------------------------------------------------------------
+
+  /** A construction-lens image: $DATA_DIR/renders first, then the committed data/renders. */
+  renderPath(file: string): string | undefined {
+    if (!/^[a-z0-9][a-z0-9._-]{0,200}\.(png|jpe?g|webp)$/i.test(file) || file.includes("..")) return undefined;
+    for (const dir of [path.join(this.dataDir, "renders"), path.join(this.appRoot, "data", "renders")]) {
+      const f = path.join(dir, file);
+      try {
+        if (fs.statSync(f).isFile()) return f;
+      } catch {}
+    }
+    return undefined;
+  }
+
   // ---- lenses ---------------------------------------------------------------
 
   /**
@@ -245,7 +249,9 @@ export function syncCommittedData(appData: string, dataDir: string): { copied: n
   const stats = { copied: 0, removed: 0 };
   if (path.resolve(appData) === path.resolve(dataDir) || !fs.existsSync(appData)) return stats;
   fs.mkdirSync(dataDir, { recursive: true });
-  const runtimeOnly = new Set(["briefs", "uploads", "cache"]);
+  // Not mirrored: written at runtime (briefs merge below; renders are served from both
+  // folders, runtime first, so nothing generated on the volume is deleted).
+  const runtimeOnly = new Set(["briefs", "uploads", "cache", "renders"]);
   for (const name of fs.readdirSync(appData)) {
     if (name.startsWith("log.db") || name.startsWith(".") || runtimeOnly.has(name)) continue;
     mirror(path.join(appData, name), path.join(dataDir, name), stats);

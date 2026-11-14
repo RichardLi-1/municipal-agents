@@ -124,6 +124,16 @@ on screen is a link to its source page.
   stages where the data allow, and where progress gets hard to track (stages with no
   public data).
 
+- **Construction scout**: for a project with a line (the LRT to Cambridge in the
+  Region's capital program, as an illustrative what-if), agents scout candidate sites
+  for excavation and a tunnel boring machine launch portal or shaft from OpenStreetMap,
+  score them by stated weights (room, distance to the line, distance from schools,
+  homes and hospitals, truck access), lay out the twin bores, cross-passages (NFPA 130
+  spacing) and geotechnical boreholes (FHWA spacing and depth), draw the long-section,
+  and stage the work step by step with what residents would notice and an
+  illustrative render for each step. Always labelled "Illustrative scenario: not a
+  Region plan"; agents rank candidates, engineers and staff decide.
+
 ## Agents (agents/)
 
 TypeScript, in the same Node process as the service, calling the Gemini API over
