@@ -104,7 +104,7 @@ export interface Decision {
   tags?: string[];
 }
 
-export type LensId = "transit" | "cost" | "commitments" | "housing";
+export type LensId = "transit" | "cost" | "commitments" | "housing" | "construction";
 
 export interface AudienceImpact {
   audience: AudienceId;
@@ -152,6 +152,10 @@ export interface TransitLens {
   layers: Record<string, GeoJSON.FeatureCollection>;
   method: string; // the algorithm in plain words, with its reference
   limits: string[];
+  /** Cited statements the transit-access specialist added in a brief. */
+  statements?: Statement[];
+  /** True when the brief has statements but no computed lens data. */
+  partial?: boolean;
 }
 
 /** Cost lens (challenge 3). */
@@ -181,6 +185,8 @@ export interface CommitmentsLens {
     unclear: string[];
     relation: string; // how this decision touches it
   }[];
+  statements?: Statement[];
+  partial?: boolean;
 }
 
 /** Housing lens (challenge 5). */
@@ -201,6 +207,61 @@ export interface HousingLens {
   layers?: Record<string, GeoJSON.FeatureCollection>;
 }
 
+/**
+ * Construction scout. Agents scout candidate sites for excavation and a tunnel boring
+ * machine (TBM) launch portal or shaft along a line, lay out the bores and the
+ * geotechnical boreholes, and stage the work step by step with illustrative renders.
+ * Always a scenario for engineers and staff to evaluate: agents never pick the site.
+ */
+export interface ConstructionSite {
+  id: string;
+  name: string; // "Parking lot east of Fairway Rd and Hwy 8"
+  role: "launch-portal" | "launch-shaft" | "extraction-shaft" | "laydown" | "cross-passage";
+  location: [number, number];
+  footprint?: GeoJSON.Feature<GeoJSON.Polygon>;
+  areaM2: number;
+  landUse: string; // from OpenStreetMap tags, "parking", "industrial", "brownfield", ...
+  distanceToAlignmentM: number;
+  nearestSensitive?: { kind: string; name?: string; distanceM: number }; // school, hospital, homes, park, water
+  truckAccess?: { road: string; distanceM: number }; // nearest arterial or highway
+  score: number; // 0..100, higher is better, from the stated weights
+  reasons: string[]; // why it scores well
+  concerns: string[]; // what an engineer must check
+}
+
+export interface ConstructionStep {
+  id: string;
+  n: number;
+  title: string; // "Launch the boring machine"
+  plain: string; // what happens, in plain words
+  duration: string; // "about 3 months" (assumption, stated)
+  whatResidentsNotice: string; // noise, trucks, closures, hours
+  render?: { url: string; prompt: string; model: string; illustrative: true };
+  mapFocus: { center: [number, number]; zoom: number; bearing?: number; pitch?: number; layers: string[] };
+}
+
+export interface ConstructionLens {
+  decisionId: string;
+  scenario: { title: string; label: string; basis: string }; // label: "Illustrative scenario: not a Region plan"
+  method: "tbm-twin-bore" | "tbm-single-bore" | "microtunnel" | "cut-and-cover";
+  alignment: GeoJSON.Feature<GeoJSON.LineString>;
+  alignmentSource: string; // where the line came from, with licence
+  sites: ConstructionSite[]; // ranked candidates
+  proposed: { launch: string; extraction: string }; // site ids the scout ranks first, for staff to evaluate
+  weights: { label: string; weight: number }[]; // the scoring rule, shown
+  bores: { id: string; label: string; line: GeoJSON.Feature<GeoJSON.LineString>; lengthM: number; diameterM: number; depthM: { min: number; max: number } }[];
+  crossPassages: { id: string; location: [number, number]; chainageM: number }[];
+  boreholes: { id: string; location: [number, number]; chainageM: number; depthM: number; purpose: string }[];
+  /** Long-section along the alignment, for the profile drawing. Metres. */
+  profile: { chainageM: number; groundM: number; crownM: number; invertM: number; feature?: string }[];
+  steps: ConstructionStep[];
+  layers: Record<string, GeoJSON.FeatureCollection>;
+  limits: string[];
+  references: string[];
+  statements?: Statement[];
+  partial?: boolean;
+}
+
 export interface Brief {
   decisionId: string;
   lang: string; // "en", "fr", ...
@@ -216,7 +277,7 @@ export interface Brief {
   unknowns: Unknown[];
   tradeoffs: Statement[];
   glossary: GlossaryTerm[];
-  lenses: { transit?: TransitLens; cost?: CostLens; commitments?: CommitmentsLens; housing?: HousingLens };
+  lenses: { transit?: TransitLens; cost?: CostLens; commitments?: CommitmentsLens; housing?: HousingLens; construction?: ConstructionLens };
   review: { status: "draft" | "in-review" | "published"; by?: string; at?: IsoDate };
 }
 
