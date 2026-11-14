@@ -83,6 +83,8 @@ export interface TimelineEvent {
   location?: string;
   participation?: Participation[];
   citation?: Citation;
+  /** Worked out from a rule (e.g. "30 days after the proposal"), not published: show as "at the latest". */
+  estimated?: boolean;
 }
 
 /** A proposed municipal decision. Hand-checked metadata; the brief is the agents'. */
@@ -341,7 +343,16 @@ export type AgentEvent =
   | { type: "tool"; id: string; specialist: string; tool: string; summary: string }
   | { type: "statement"; id: string; statement: Statement }
   | { type: "step.end"; id: string; specialist: string; status: "done" | "failed"; summary: string }
-  | { type: "answer"; text: string; statements: Statement[]; figures?: Figure[] }
+  | {
+      type: "answer";
+      text: string;
+      statements: Statement[];
+      figures?: Figure[];
+      /** Answered without a model (the model was unreachable): from the brief's checked statements. */
+      offline?: boolean;
+      /** Replayed from a saved real run (the answer cache): when it was answered, and the label shown. */
+      replay?: { runId: string; at: IsoDate; label: string; costUsd?: number };
+    }
   | { type: "brief"; brief: Brief }
   | { type: "usage"; calls: number; inputTokens: number; outputTokens: number; costUsd: number }
   | { type: "error"; message: string }

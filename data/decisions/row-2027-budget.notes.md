@@ -15,7 +15,54 @@ budget book are in **$ thousands** unless marked.
 - Staff framing for 2027: "affordability for residents; maintaining critical services;
   and protecting essential infrastructure" and "a stability-focused budget"
   (`row-2027-budget-page` p6, `engagewr-row-2027-budget` p2).
-- The new Council (elected 26 Oct 2026) makes this decision.
+- The new Council (elected 26 Oct 2026) makes this decision, **but from 15 Nov 2026 the
+  Regional Chair proposes it** (strong-chair powers, next section).
+
+## Strong-chair budget powers from 15 Nov 2026 (checked on e-Laws, 14 Nov 2026)
+
+- `oreg-530-22` p17-18: "On November 15, 2026, Schedule 1 to the Regulation is amended by
+  adding" items incl. **203.1 Regional Municipality of Waterloo** (p18), added by O. Reg.
+  189/26, s. 3 (1). Schedule 1 = municipalities designated for Part VI.1 of the Municipal
+  Act (strong-mayor powers) (s. 1, p2). The same note adds Durham, Halton, Muskoka,
+  Niagara, Peel, Simcoe, York.
+- Who holds the power: the head of council. For the Region that is the Regional Chair,
+  now appointed by the province under the Better Regional Governance Act, 2026
+  (`ontario-regional-head-of-council` p1; `row-2026-election-page` p5: "on May 7, 2026 the
+  Regional Chair is now" a provincially appointed position; that line is cut off by the
+  page's chat button in the printed copy). News reports (not in sources) name Scott Davey
+  as the appointee, announced 10 Nov 2026; not confirmed on a Region page, do not state.
+- Budget steps, `oreg-530-22` s. 7 (p3-4) and Municipal Act s. 284.16 (`municipal-act-part-vi1` p8):
+  - s. 7(1): the Chair prepares the proposed budget, gives it to each councillor and the
+    clerk, and makes it public, on or before 1 Feb.
+  - s. 7(1.1) (added by O. Reg. 189/26): after an election year the Chair may propose
+    "only in the year to which the budget applies", so **between 1 Jan and 1 Feb 2027**.
+  - s. 7(2): if the Chair does not propose by 1 Feb, Council prepares and adopts the budget.
+  - s. 7(3)-(5): Council has **30 days** after receiving it to pass amendments (Council can
+    shorten this); no amendments = budget deemed adopted.
+  - s. 7(6)-(9): Chair has **10 days** after that to veto amendments, in writing with
+    reasons (Chair can shorten); no veto = adopted.
+  - s. 7(10)-(14): Council has **15 days** to override a veto with **two-thirds** of members
+    (Chair may vote); then the budget is deemed adopted. Act s. 284.16(3)-(5) sets the same
+    amend / veto / two-thirds override structure.
+  - The JSON's 3 Mar, 13 Mar and 28 Mar 2027 dates are **computed latest dates** assuming
+    the Chair proposes on 1 Feb and nobody shortens a period. Earlier proposal = earlier dates.
+  - Council has 16 members including the Chair (`engagewr-row-2027-budget` p3, "There are 16
+    members of Regional Council"). Do not compute the exact two-thirds vote count; the
+    rounding rule is not in our sources.
+
+### What this means for residents' say
+- The person who writes the budget is now the **Regional Chair**: residents should write to
+  the Chair (through the Regional Clerk, regionalclerk@regionofwaterloo.ca, 519-575-4400)
+  before the budget is proposed (by 1 Feb 2027), as well as to their regional councillors.
+- After the proposal, change happens only through Council amendments in the 30-day window,
+  so speaking to Council (delegation) and contacting councillors matter most then. A Chair
+  veto can be overturned only with two-thirds of Council.
+- **Uncertain:** the Region's published schedule (16 Dec overview, 19/27 Jan review days,
+  15 Feb councillor-motion deadline, final budget day "to be confirmed") was set before the
+  designation and reads like the old staff-led process. The Chair cannot propose before
+  1 Jan 2027, so the 16 Dec meeting cannot be the formal proposal, and the 15 Feb motion
+  deadline may become the 30-day amendment window. No Region page explains how they fit
+  as of 14 Nov 2026. Tell residents to check the Region's budget page and Council calendar.
 
 ## Timeline and ways to take part (all checked; see the decision JSON)
 

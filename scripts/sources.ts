@@ -137,6 +137,49 @@ export const MANIFEST: Entry[] = [
     licence: PUBLIC,
     kind: "other",
   },
+  // Strong-chair budget powers for the Region from 15 Nov 2026 (primary decision). e-Laws pages
+  // are saved from a copy of the live page with scripts and the floating table of contents
+  // removed (it overlapped the text in print); the law text itself is unchanged.
+  {
+    id: "oreg-530-22",
+    title: "O. Reg. 530/22: Part VI.1 of the Act, under the Municipal Act, 2001 (e-Laws web page, consolidation June 22, 2026 to e-Laws currency date November 11, 2026)",
+    publisher: "Government of Ontario (e-Laws)",
+    url: "https://www.ontario.ca/laws/regulation/220530",
+    published: "2026-06-22",
+    licence: PUBLIC,
+    kind: "other",
+    printed: true,
+  },
+  {
+    id: "municipal-act-part-vi1",
+    title: "Municipal Act, 2001, Part VI.1: Special Powers and Duties of the Head of Council, ss. 284.2 to 284.17 (e-Laws web page excerpt, consolidation June 2, 2026 to November 11, 2026)",
+    publisher: "Government of Ontario (e-Laws)",
+    url: "https://www.ontario.ca/laws/statute/01m25",
+    published: "2026-06-02",
+    licence: PUBLIC,
+    kind: "other",
+    printed: true,
+  },
+  {
+    id: "ontario-regional-head-of-council",
+    title: "Regional Head of Council (web page)",
+    publisher: "Government of Ontario, Ministry of Municipal Affairs and Housing",
+    url: "https://www.ontario.ca/page/regional-head-council",
+    published: "2026-07-14",
+    licence: PUBLIC,
+    kind: "notice",
+    printed: true,
+  },
+  {
+    id: "row-2026-election-page",
+    title: "2026 Municipal Election (web page)",
+    publisher: ROW,
+    url: "https://www.regionofwaterloo.ca/government-and-council/elections/2026-municipal-election/",
+    published: "2026-11-14",
+    licence: PUBLIC,
+    kind: "notice",
+    printed: true,
+  },
   // Region of Waterloo Water Supply Strategy Update (secondary decision)
   {
     id: "row-water-supply-notice-2",

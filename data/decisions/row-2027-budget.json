@@ -18,7 +18,11 @@
     "grt-business-plan-2025",
     "grt-business-plan-2025-appendix-a",
     "wr-ghg-inventory-2022",
-    "row-affordable-housing-plan-page"
+    "row-affordable-housing-plan-page",
+    "oreg-530-22",
+    "municipal-act-part-vi1",
+    "ontario-regional-head-of-council",
+    "row-2026-election-page"
   ],
   "timeline": [
     {
@@ -56,11 +60,23 @@
       }
     },
     {
+      "id": "strong-chair",
+      "date": "2026-11-15",
+      "kind": "other",
+      "title": "The Regional Chair gets strong-mayor budget powers",
+      "plain": "From today the Region of Waterloo is on Ontario's list of strong-mayor municipalities. Its head of council, the Regional Chair (now appointed by the province), gets the job of proposing the Region's budget. Council can still change it.",
+      "citation": {
+        "sourceId": "oreg-530-22",
+        "page": 17,
+        "quote": "Note: On November 15, 2026, Schedule 1 to the Regulation is amended by adding the"
+      }
+    },
+    {
       "id": "overview",
       "date": "2026-12-16",
       "kind": "council",
       "title": "Regional Council: 2027 Plan and Budget Overview",
-      "plain": "Staff show the new Council the draft 2027 budget for the first time. You can ask to speak to Council or write to them.",
+      "plain": "The Region's budget page lists this as the first look at the 2027 budget for the new Council. You can ask to speak to Council or write to them. Under the new strong-chair rules the Regional Chair proposes the budget, and only in 2027, so how this meeting fits that process has not been published yet.",
       "location": "Council Chambers, 150 Frederick Street, Kitchener",
       "participation": [
         {
@@ -86,6 +102,18 @@
         "sourceId": "row-2027-budget-page",
         "page": 7,
         "quote": "December 16, 2026 - 2027 Plan and Budget Overview"
+      }
+    },
+    {
+      "id": "chair-can-propose",
+      "date": "2027-01-01",
+      "kind": "other",
+      "title": "Earliest day the Chair can propose the 2027 budget",
+      "plain": "Because 2026 was an election year, the Chair can propose the 2027 budget only in 2027, not before.",
+      "citation": {
+        "sourceId": "oreg-530-22",
+        "page": 3,
+        "quote": "a regular election is held only in the year to which the budget applies"
       }
     },
     {
@@ -153,6 +181,32 @@
       }
     },
     {
+      "id": "chair-proposes",
+      "date": "2027-02-01",
+      "kind": "deadline",
+      "title": "Deadline for the Regional Chair to propose the 2027 budget",
+      "plain": "The Chair must give the proposed budget to Council and make it public by February 1. If the Chair does not, Council prepares and adopts the budget itself. Before then, tell the Chair and your councillors what you want in it.",
+      "participation": [
+        {
+          "method": "write",
+          "instructions": "Write to the Regional Chair and to Regional Council through the Regional Clerk's Office. Under the strong-chair rules the Chair writes the proposed budget, so the Chair is the person to tell what you want in it. Written submissions to Council are public.",
+          "contact": "regionalclerk@regionofwaterloo.ca, 519-575-4400",
+          "url": "https://www.regionofwaterloo.ca/government-and-council/council/communicate-with-council/"
+        },
+        {
+          "method": "contact-councillor",
+          "instructions": "Contact your regional councillors. Council can change the Chair's budget only by voting within its time limit, and can overturn a veto only with a two-thirds vote.",
+          "url": "https://www.regionofwaterloo.ca/government-and-council/council/",
+          "contact": "regionalclerk@regionofwaterloo.ca, 519-575-4400"
+        }
+      ],
+      "citation": {
+        "sourceId": "oreg-530-22",
+        "page": 3,
+        "quote": "The head of council shall, on or before February 1 of each year,"
+      }
+    },
+    {
       "id": "police",
       "date": "2027-02-02",
       "kind": "council",
@@ -210,6 +264,91 @@
         "page": 8,
         "quote": "February 15, 2027 - Deadline for submission of Councillor motions"
       }
+    },
+    {
+      "id": "council-amendments",
+      "date": "2027-03-03",
+      "kind": "budget-vote",
+      "title": "Council's 30 days to change the budget (ends 3 March 2027 at the latest)",
+      "plain": "Council has 30 days from getting the Chair's budget to vote on changes. If the Chair proposes on February 1, the last day is March 3, 2027; it is earlier if the budget comes sooner or Council shortens the time. If Council makes no changes, the budget is adopted. This is when speaking to Council matters most.",
+      "participation": [
+        {
+          "method": "speak",
+          "instructions": "Register as a delegation with the Regional Clerk. Register by noon one week before the meeting to be listed on the agenda and get 5 minutes. Register at least 24 hours before to still get 5 minutes; later than that you get 3 minutes. Send any slides or handouts at least 24 hours before.",
+          "url": "https://forms.regionofwaterloo.ca/Council-and-Administrative-Services/CAS/Delegation-Registration",
+          "contact": "regionalclerk@regionofwaterloo.ca, 519-575-4400"
+        },
+        {
+          "method": "write",
+          "instructions": "Write to the Regional Chair and to Regional Council through the Regional Clerk's Office. Under the strong-chair rules the Chair writes the proposed budget, so the Chair is the person to tell what you want in it. Written submissions to Council are public.",
+          "contact": "regionalclerk@regionofwaterloo.ca, 519-575-4400",
+          "url": "https://www.regionofwaterloo.ca/government-and-council/council/communicate-with-council/"
+        },
+        {
+          "method": "contact-councillor",
+          "instructions": "Contact your regional councillors. Council can change the Chair's budget only by voting within its time limit, and can overturn a veto only with a two-thirds vote.",
+          "url": "https://www.regionofwaterloo.ca/government-and-council/council/",
+          "contact": "regionalclerk@regionofwaterloo.ca, 519-575-4400"
+        },
+        {
+          "method": "watch",
+          "instructions": "Council meetings are streamed live and recorded on the Region's website.",
+          "url": "https://www.regionofwaterloo.ca/government-and-council/council/agendas-minutes-and-webcasts/live-webcast/"
+        }
+      ],
+      "citation": {
+        "sourceId": "oreg-530-22",
+        "page": 3,
+        "quote": "within 30 days after receiving the proposed budget from the head of council"
+      },
+      "estimated": true
+    },
+    {
+      "id": "chair-veto",
+      "date": "2027-03-13",
+      "kind": "other",
+      "title": "Chair's 10 days to veto Council's changes (ends 13 March 2027 at the latest)",
+      "plain": "After Council's 30 days, the Chair has up to 10 days to veto changes Council made, in writing with reasons. If the Chair does not veto, the budget with Council's changes is adopted.",
+      "participation": [
+        {
+          "method": "write",
+          "instructions": "Write to the Regional Chair and to Regional Council through the Regional Clerk's Office. Under the strong-chair rules the Chair writes the proposed budget, so the Chair is the person to tell what you want in it. Written submissions to Council are public.",
+          "contact": "regionalclerk@regionofwaterloo.ca, 519-575-4400",
+          "url": "https://www.regionofwaterloo.ca/government-and-council/council/communicate-with-council/"
+        }
+      ],
+      "citation": {
+        "sourceId": "oreg-530-22",
+        "page": 3,
+        "quote": "within 10 days after the expiry of the time period for council to"
+      },
+      "estimated": true
+    },
+    {
+      "id": "veto-override",
+      "date": "2027-03-28",
+      "kind": "budget-vote",
+      "title": "Council's 15 days to overturn a veto with a two-thirds vote (ends 28 March 2027 at the latest)",
+      "plain": "Council can overturn the Chair's veto only if two-thirds of its members vote to. When this time is up, the budget is adopted.",
+      "participation": [
+        {
+          "method": "contact-councillor",
+          "instructions": "Contact your regional councillors. Council can change the Chair's budget only by voting within its time limit, and can overturn a veto only with a two-thirds vote.",
+          "url": "https://www.regionofwaterloo.ca/government-and-council/council/",
+          "contact": "regionalclerk@regionofwaterloo.ca, 519-575-4400"
+        },
+        {
+          "method": "watch",
+          "instructions": "Council meetings are streamed live and recorded on the Region's website.",
+          "url": "https://www.regionofwaterloo.ca/government-and-council/council/agendas-minutes-and-webcasts/live-webcast/"
+        }
+      ],
+      "citation": {
+        "sourceId": "municipal-act-part-vi1",
+        "page": 8,
+        "quote": "Council may, in accordance with the regulations, override the head of council’s veto"
+      },
+      "estimated": true
     }
   ],
   "area": {
@@ -364,8 +503,7 @@
     "transit",
     "cost",
     "commitments",
-    "housing",
-    "construction"
+    "housing"
   ],
   "tags": [
     "budget",
