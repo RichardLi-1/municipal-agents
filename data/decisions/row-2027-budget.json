@@ -1,0 +1,378 @@
+{
+  "id": "row-2027-budget",
+  "city": "waterloo-region",
+  "title": "Region of Waterloo 2027 Plan and Budget",
+  "plainTitle": "The Region's 2027 budget: what your regional taxes and water bills will pay for next year",
+  "decidedBy": "Regional Council, Region of Waterloo",
+  "status": "in-consultation",
+  "officialUrl": "https://www.regionofwaterloo.ca/planandbudget",
+  "sources": [
+    "row-2027-budget-page",
+    "engagewr-row-2027-budget",
+    "row-2027-budget-contest-rules",
+    "row-delegation-guide",
+    "row-2026-budget-book",
+    "row-2026-budget-summary",
+    "row-asset-management-review-2026",
+    "row-infrastructure-gap-2026",
+    "grt-business-plan-2025",
+    "grt-business-plan-2025-appendix-a",
+    "wr-ghg-inventory-2022",
+    "row-affordable-housing-plan-page"
+  ],
+  "timeline": [
+    {
+      "id": "approach",
+      "date": "2026-06-02",
+      "kind": "report",
+      "title": "Council: 2027 Plan and Budget Approach and Timeline",
+      "plain": "Staff told Council how they would build the 2027 budget and when Council would see it.",
+      "citation": {
+        "sourceId": "engagewr-row-2027-budget",
+        "page": 5,
+        "quote": "Council: Plan and Budget Approach and Timeline"
+      }
+    },
+    {
+      "id": "survey",
+      "date": "2026-09-14",
+      "end": "2027-02-26T23:59:00-05:00",
+      "kind": "public-input",
+      "title": "Online budget survey and quiz on EngageWR",
+      "plain": "Anyone can tell the Region what matters most to them in the 2027 budget by filling in the online survey or quiz. The prize draw for taking part runs until February 26, 2027.",
+      "participation": [
+        {
+          "method": "survey",
+          "instructions": "Fill in the 2027 Plan and Budget survey or quiz on EngageWR. You can also post ideas and questions there. The prize draw linked to the survey closes at 11:59 pm on Friday, February 26, 2027.",
+          "deadline": "2027-02-26T23:59:00-05:00",
+          "url": "https://www.engagewr.ca/ROW-2027-budget",
+          "contact": "2027PlanAndBudget@regionofwaterloo.ca"
+        }
+      ],
+      "citation": {
+        "sourceId": "row-2027-budget-contest-rules",
+        "page": 1,
+        "quote": "The Contest commences on September 14, 2026 and closes at 11:59 pm. (E.T.) on Friday,"
+      }
+    },
+    {
+      "id": "overview",
+      "date": "2026-12-16",
+      "kind": "council",
+      "title": "Regional Council: 2027 Plan and Budget Overview",
+      "plain": "Staff show the new Council the draft 2027 budget for the first time. You can ask to speak to Council or write to them.",
+      "location": "Council Chambers, 150 Frederick Street, Kitchener",
+      "participation": [
+        {
+          "method": "speak",
+          "instructions": "Register as a delegation with the Regional Clerk. Register by noon one week before the meeting to be listed on the agenda and get 5 minutes. Register at least 24 hours before to still get 5 minutes; later than that you get 3 minutes. Send any slides or handouts at least 24 hours before.",
+          "deadline": "2026-12-09T12:00:00-05:00",
+          "url": "https://forms.regionofwaterloo.ca/Council-and-Administrative-Services/CAS/Delegation-Registration",
+          "contact": "regionalclerk@regionofwaterloo.ca, 519-575-4400"
+        },
+        {
+          "method": "write",
+          "instructions": "Send a written submission to Council through the Regional Clerk's Office. Written submissions are public: they are attached to the meeting agenda or minutes. Questions about the online budget feedback go to 2027PlanAndBudget@regionofwaterloo.ca.",
+          "contact": "regionalclerk@regionofwaterloo.ca, 519-575-4400",
+          "url": "https://www.regionofwaterloo.ca/government-and-council/council/communicate-with-council/"
+        },
+        {
+          "method": "watch",
+          "instructions": "Council meetings are streamed live and recorded on the Region's website.",
+          "url": "https://www.regionofwaterloo.ca/government-and-council/council/agendas-minutes-and-webcasts/live-webcast/"
+        }
+      ],
+      "citation": {
+        "sourceId": "row-2027-budget-page",
+        "page": 7,
+        "quote": "December 16, 2026 - 2027 Plan and Budget Overview"
+      }
+    },
+    {
+      "id": "review-1",
+      "date": "2027-01-19",
+      "kind": "council",
+      "title": "Detailed Budget Review Day #1: draft operating budget and capital program",
+      "plain": "Council goes through the draft budget line by line, including spending on buildings, roads, transit and water.",
+      "participation": [
+        {
+          "method": "speak",
+          "instructions": "Register as a delegation with the Regional Clerk. Register by noon one week before the meeting to be listed on the agenda and get 5 minutes. Register at least 24 hours before to still get 5 minutes; later than that you get 3 minutes. Send any slides or handouts at least 24 hours before.",
+          "deadline": "2027-01-12T12:00:00-05:00",
+          "url": "https://forms.regionofwaterloo.ca/Council-and-Administrative-Services/CAS/Delegation-Registration",
+          "contact": "regionalclerk@regionofwaterloo.ca, 519-575-4400"
+        },
+        {
+          "method": "write",
+          "instructions": "Send a written submission to Council through the Regional Clerk's Office. Written submissions are public: they are attached to the meeting agenda or minutes. Questions about the online budget feedback go to 2027PlanAndBudget@regionofwaterloo.ca.",
+          "contact": "regionalclerk@regionofwaterloo.ca, 519-575-4400",
+          "url": "https://www.regionofwaterloo.ca/government-and-council/council/communicate-with-council/"
+        },
+        {
+          "method": "watch",
+          "instructions": "Council meetings are streamed live and recorded on the Region's website.",
+          "url": "https://www.regionofwaterloo.ca/government-and-council/council/agendas-minutes-and-webcasts/live-webcast/"
+        }
+      ],
+      "citation": {
+        "sourceId": "row-2027-budget-page",
+        "page": 7,
+        "quote": "January 19, 2027 – 2027 Plan and Budget Detailed Budget Review Day #1"
+      }
+    },
+    {
+      "id": "review-2",
+      "date": "2027-01-27",
+      "kind": "council",
+      "title": "Detailed Budget Review Day #2",
+      "plain": "Council keeps reviewing the draft budget. The Region's budget page lists January 27; check the meeting calendar before you go.",
+      "participation": [
+        {
+          "method": "speak",
+          "instructions": "Register as a delegation with the Regional Clerk. Register by noon one week before the meeting to be listed on the agenda and get 5 minutes. Register at least 24 hours before to still get 5 minutes; later than that you get 3 minutes. Send any slides or handouts at least 24 hours before.",
+          "deadline": "2027-01-20T12:00:00-05:00",
+          "url": "https://forms.regionofwaterloo.ca/Council-and-Administrative-Services/CAS/Delegation-Registration",
+          "contact": "regionalclerk@regionofwaterloo.ca, 519-575-4400"
+        },
+        {
+          "method": "write",
+          "instructions": "Send a written submission to Council through the Regional Clerk's Office. Written submissions are public: they are attached to the meeting agenda or minutes. Questions about the online budget feedback go to 2027PlanAndBudget@regionofwaterloo.ca.",
+          "contact": "regionalclerk@regionofwaterloo.ca, 519-575-4400",
+          "url": "https://www.regionofwaterloo.ca/government-and-council/council/communicate-with-council/"
+        },
+        {
+          "method": "watch",
+          "instructions": "Council meetings are streamed live and recorded on the Region's website.",
+          "url": "https://www.regionofwaterloo.ca/government-and-council/council/agendas-minutes-and-webcasts/live-webcast/"
+        }
+      ],
+      "citation": {
+        "sourceId": "row-2027-budget-page",
+        "page": 7,
+        "quote": "January 27, 2027 – 2027 Plan and Budget Detailed Budget Review Day #2"
+      }
+    },
+    {
+      "id": "police",
+      "date": "2027-02-02",
+      "kind": "council",
+      "title": "Police Service Budget Presentation",
+      "plain": "The police service presents its budget to Regional Council. Police is the largest part of the regional tax bill.",
+      "participation": [
+        {
+          "method": "watch",
+          "instructions": "Council meetings are streamed live and recorded on the Region's website.",
+          "url": "https://www.regionofwaterloo.ca/government-and-council/council/agendas-minutes-and-webcasts/live-webcast/"
+        }
+      ],
+      "citation": {
+        "sourceId": "row-2027-budget-page",
+        "page": 7,
+        "quote": "February 2, 2027 - Police Service Budget Presentation"
+      }
+    },
+    {
+      "id": "responses",
+      "date": "2027-02-10",
+      "kind": "council",
+      "title": "Responses to Councillor requests and follow-ups",
+      "plain": "Staff answer the questions councillors asked during the review days.",
+      "participation": [
+        {
+          "method": "watch",
+          "instructions": "Council meetings are streamed live and recorded on the Region's website.",
+          "url": "https://www.regionofwaterloo.ca/government-and-council/council/agendas-minutes-and-webcasts/live-webcast/"
+        }
+      ],
+      "citation": {
+        "sourceId": "row-2027-budget-page",
+        "page": 7,
+        "quote": "February 10, 2027 - 2027 Plan and Budget: Responses to Councillor Requests"
+      }
+    },
+    {
+      "id": "motions",
+      "date": "2027-02-15",
+      "kind": "deadline",
+      "title": "Deadline for councillors' budget motions",
+      "plain": "Last day for councillors to put forward changes to the budget. To ask your councillor to propose a change, contact them before this date.",
+      "participation": [
+        {
+          "method": "contact-councillor",
+          "instructions": "Contact your regional councillor before February 15, 2027 if you want them to propose a change to the budget.",
+          "deadline": "2027-02-15",
+          "url": "https://www.regionofwaterloo.ca/government-and-council/council/",
+          "contact": "regionalclerk@regionofwaterloo.ca, 519-575-4400"
+        }
+      ],
+      "citation": {
+        "sourceId": "row-2027-budget-page",
+        "page": 8,
+        "quote": "February 15, 2027 - Deadline for submission of Councillor motions"
+      }
+    }
+  ],
+  "area": {
+    "type": "Feature",
+    "properties": {
+      "name": "Regional Municipality of Waterloo",
+      "source": "Region of Waterloo Open Data, Regional Boundary (OpenData MapServer layer 16), simplified to about 30 m",
+      "licence": "Region of Waterloo Open Data Licence"
+    },
+    "geometry": {
+      "type": "Polygon",
+      "coordinates": [
+        [
+          [
+            -80.54323,
+            43.67921
+          ],
+          [
+            -80.55744,
+            43.68955
+          ],
+          [
+            -80.59542,
+            43.66162
+          ],
+          [
+            -80.608,
+            43.58894
+          ],
+          [
+            -80.70176,
+            43.62656
+          ],
+          [
+            -80.75458,
+            43.64843
+          ],
+          [
+            -80.80522,
+            43.5847
+          ],
+          [
+            -80.83813,
+            43.54174
+          ],
+          [
+            -80.86903,
+            43.49806
+          ],
+          [
+            -80.79553,
+            43.46806
+          ],
+          [
+            -80.73725,
+            43.40756
+          ],
+          [
+            -80.73495,
+            43.31098
+          ],
+          [
+            -80.64297,
+            43.3252
+          ],
+          [
+            -80.5036,
+            43.34811
+          ],
+          [
+            -80.47157,
+            43.26682
+          ],
+          [
+            -80.23828,
+            43.30649
+          ],
+          [
+            -80.24858,
+            43.3335
+          ],
+          [
+            -80.18929,
+            43.34352
+          ],
+          [
+            -80.19811,
+            43.37019
+          ],
+          [
+            -80.19747,
+            43.3703
+          ],
+          [
+            -80.20147,
+            43.38405
+          ],
+          [
+            -80.20278,
+            43.38807
+          ],
+          [
+            -80.20338,
+            43.38797
+          ],
+          [
+            -80.20644,
+            43.39721
+          ],
+          [
+            -80.26951,
+            43.38695
+          ],
+          [
+            -80.30273,
+            43.46853
+          ],
+          [
+            -80.30804,
+            43.47417
+          ],
+          [
+            -80.35597,
+            43.51591
+          ],
+          [
+            -80.37387,
+            43.53258
+          ],
+          [
+            -80.3673,
+            43.56906
+          ],
+          [
+            -80.38298,
+            43.56358
+          ],
+          [
+            -80.54323,
+            43.67921
+          ]
+        ]
+      ]
+    }
+  },
+  "center": [
+    -80.5292,
+    43.4782
+  ],
+  "zoom": 9.3,
+  "lenses": [
+    "transit",
+    "cost",
+    "commitments",
+    "housing"
+  ],
+  "tags": [
+    "budget",
+    "property tax",
+    "transit",
+    "water",
+    "housing",
+    "climate",
+    "infrastructure"
+  ]
+}

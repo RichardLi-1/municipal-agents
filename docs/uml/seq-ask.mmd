@@ -1,0 +1,59 @@
+%% Sequence: a resident asks a question about a decision.
+sequenceDiagram
+  autonumber
+  actor R as Resident (browser)
+  participant S as Server (node:http)
+  participant U as Limits + usage
+  participant L as Lead agent
+  participant G as Gemini API
+  participant P as Specialist
+  participant T as Tools
+  participant C as Citation checker
+  participant Log as Log (SQLite)
+
+  R->>S: POST /api/decisions/:id/ask {question, audiences, lang}
+  S->>U: Rate limit ok, a run slot free,<br/>today's spend under the cap?
+  alt over a limit
+    U-->>S: no
+    S-->>R: 429 or 503 with a plain message<br/>("the briefs are still here to read")
+  else within limits
+    U-->>S: yes
+    S->>Log: append question.asked (no identity)
+    S-->>R: SSE open
+    S->>L: run(question, decision)
+    L->>G: plan (function calling)
+    G-->>L: hand sub-questions to specialists
+    L-->>R: SSE plan (steps panel)
+    loop each step (at most 40 model calls or US$0.50 per run)
+      L->>P: sub-question
+      P-->>R: SSE step.start
+      P->>G: next action
+      G-->>P: call search_pages("bus route 7")
+      P->>T: search_pages (BM25 over page text)
+      T-->>P: top pages
+      P->>T: read_page(source, page)
+      T-->>P: page text
+      P->>G: page text
+      G-->>P: call record_statement(text, citations)
+      P->>T: record_statement
+      T->>C: is each quote on its page? (normalised match)
+      alt every quote found
+        C-->>T: verified
+        T->>Log: append statement.recorded
+        T-->>R: SSE statement (verified)
+      else a quote is missing
+        C-->>T: rejected, with the reason
+        T->>Log: append statement.rejected
+        T-->>P: rejected: quote not on page
+      end
+      P-->>L: verified statements
+      P-->>R: SSE step.end
+    end
+    L->>G: merge into one plain answer
+    G-->>L: answer text citing verified statements only
+    L->>U: record tokens and cost
+    U->>Log: append usage
+    L->>Log: append answer.given
+    L-->>R: SSE answer + usage, then done
+  end
+  Note over R,U: Each figure is a link that opens the source page with the quote highlighted

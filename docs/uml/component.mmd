@@ -1,0 +1,64 @@
+%% Component diagram: the parts of Municipal Agents and what each depends on.
+%% server/, agents/, lenses/ and shared/ run in one Node 24 process on one machine.
+flowchart TB
+  web["<b>Web app</b> (web/)<br/>Preact · Vite · MapLibre · pdf.js<br/>Home · Brief · Lenses · Source viewer<br/>Ask · Staff · Record · Spend"]
+  tiles["OpenFreeMap<br/>map tiles"]
+
+  subgraph server["server/"]
+    s1["HTTP router + SSE<br/>(http.ts, node:http)"]
+    s4["Staff auth<br/>(bearer token)"]
+    s2["API routes"]
+    s6["Limits + usage<br/>rate limit, spend caps"]
+    s5["Log store (log.ts)<br/>node:sqlite, SHA-256 chain"]
+  end
+
+  subgraph agents["agents/"]
+    a1["Lead loop"]
+    a2["Specialists<br/>skills/*/SKILL.md"]
+    a3["Tools: search_pages (BM25),<br/>read_page, record_statement,<br/>lens tools"]
+    a6["Gemini client<br/>(gemini.ts, REST)"]
+  end
+
+  subgraph shared["shared/ (also runs in the browser)"]
+    v1["Citation checker<br/>(verify.ts)"]
+    v2["Reading grade<br/>(readability.ts)"]
+  end
+
+  subgraph lenses["lenses/"]
+    direction LR
+    l1["Transit access<br/>(Connection Scan)"]
+    l2["Lifecycle cost"]
+    l3["Commitments"]
+    l4["Housing pipeline"]
+  end
+
+  subgraph data["Files: data/ and cities/"]
+    direction LR
+    d1[("Source PDFs<br/>+ page text")]
+    d2[("Decisions<br/>+ briefs")]
+    d5[("City config")]
+    d4[("Open data: GTFS,<br/>destinations, permits")]
+  end
+
+  gem["Gemini API"]
+
+  web -- "HTTPS: JSON + SSE" --> s1
+  web -. "tiles" .-> tiles
+  s1 --> s4 --> s2
+  s2 --> s6 --> s5
+  s2 --> a1
+  a1 --> a2 --> a3
+  a1 & a2 --> a6
+  a6 -- "function calling" --> gem
+  a3 -- "every quote" --> v1
+  a1 -- "grade" --> v2
+  a3 -- "statements" --> s5
+  a3 -- "lens tools" --> lenses
+  a3 --> d1
+  s2 --> d2 & d5
+  lenses --> d4
+
+  classDef ext fill:#f2f2f2,stroke:#777,color:#111
+  classDef file fill:#fffaf0,stroke:#b8860b,color:#111
+  class gem,tiles ext
+  class d1,d2,d4,d5 file

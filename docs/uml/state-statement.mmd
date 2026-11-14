@@ -1,0 +1,27 @@
+%% State machine of one statement: checked by code first, then by staff.
+stateDiagram-v2
+  direction LR
+  [*] --> Recorded : agent calls record_statement
+  Recorded --> Verified : every quote found<br/>on its page
+  Recorded --> RejectedByChecker : a quote is missing<br/>(statement.rejected)
+  RejectedByChecker --> [*] : agent may retry<br/>with a new statement
+  Verified --> Approved : staff approve
+  Verified --> Edited : staff edit the wording
+  Verified --> RejectedByStaff : staff reject, with a note
+  Approved --> [*]
+  Edited --> [*]
+  RejectedByStaff --> [*]
+
+  Recorded : Recorded
+  Verified : Verified (by code)
+  RejectedByChecker : Rejected by checker
+  RejectedByChecker : never shown as a fact
+  Approved : Approved
+  Edited : Edited
+  Edited : original text kept
+  RejectedByStaff : Rejected by staff
+  RejectedByStaff : hidden from residents
+  note left of Recorded
+    An unverified statement is never shown silently:
+    if one is shown at all, it carries an "unverified" label.
+  end note

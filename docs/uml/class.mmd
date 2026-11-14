@@ -1,0 +1,234 @@
+%% Class diagram of the domain, from shared/types.ts.
+%% Interfaces are drawn as classes; string unions as enumerations.
+classDiagram
+  direction TB
+
+  class CityConfig {
+    id: string
+    name: string
+    municipalities: string[]
+    languages: string[]
+    officialNoticeUrl: string
+    clerkContact: string
+    gtfsUrl?: string
+    openData: name, url, licence [ ]
+  }
+
+  class Decision {
+    id: string
+    city: string
+    title: string
+    plainTitle: string
+    decidedBy: string
+    status: proposed | in-consultation | decided
+    officialUrl: string
+    sources: string[]
+    center: [lng, lat]
+    lenses: LensId[]
+    area?: GeoJSON
+  }
+
+  class TimelineEvent {
+    id: string
+    date: IsoDate
+    kind: report | committee | public-input | council | ...
+    title: string
+    plain: string
+    location?: string
+  }
+
+  class Participation {
+    method: speak | write | survey | attend | watch | contact-councillor
+    instructions: string
+    deadline?: IsoDate
+    url?: string
+    contact?: string
+  }
+
+  class SourceDoc {
+    id: string
+    title: string
+    publisher: string
+    url: string
+    published: IsoDate
+    retrieved: IsoDate
+    pages: number
+    licence: string
+    kind: string
+  }
+
+  class Citation {
+    sourceId: string
+    page: number
+    quote: string
+  }
+
+  class Statement {
+    id: string
+    text: string
+    kind: StatementKind
+    verified: boolean
+    review?: action, by, at, note
+  }
+
+  class Figure {
+    id: string
+    label: string
+    value: number
+    unit: string
+    display: string
+    kind: cited | computed | assumption
+    formula?: string
+    inputs?: string[]
+  }
+
+  class Brief {
+    decisionId: string
+    lang: string
+    generatedAt: IsoDate
+    models: string[]
+    costUsd: number
+    readingGrade: number
+    review: status, by, at
+  }
+
+  class AudienceImpact {
+    audience: AudienceId
+    label: string
+  }
+
+  class Unknown {
+    question: string
+    why: string
+    whoCanAnswer: string
+    contact?: string
+  }
+
+  class GlossaryTerm {
+    term: string
+    plain: string
+  }
+
+  class TransitLens {
+    feed: name, url, serviceDate, licence
+    scenarios[]
+    access[]
+    gaps[]
+    fixes[]
+    layers: GeoJSON
+    method: string
+    limits: string[]
+  }
+
+  class CostLens {
+    asset: string
+    horizonYears: number
+    discountRate: number
+    households?: number
+    series[]
+    totals
+    assumptions[]
+  }
+
+  class CommitmentsLens {
+    commitments[]: title, madeBy, target, status, unclear[]
+  }
+
+  class HousingLens {
+    city: string
+    stages[]: approved to completed, units, tracked
+    timeBetween[]: medianDays
+    hardToTrack: string[]
+  }
+
+  class LogEntry {
+    seq: number
+    at: IsoDate
+    actor: string
+    kind: string
+    decisionId?: string
+    payload: unknown
+    prevHash: string
+    hash: string
+  }
+
+  class DecisionCard {
+    <<view of Decision>>
+    id: string
+    plainTitle: string
+    decidedBy: string
+    status
+    reviewStatus
+    lenses: LensId[]
+  }
+
+  class UsageSummary {
+    calls: number
+    inputTokens: number
+    outputTokens: number
+    costUsd: number
+    energyWh: number
+    co2eGrams: number
+    today: costUsd, limitUsd
+  }
+
+  class StatementKind {
+    <<enumeration>>
+    fact
+    estimate
+    assumption
+    unknown
+    tradeoff
+    harm
+  }
+
+  class AudienceId {
+    <<enumeration>>
+    renter
+    homeowner
+    transit-rider
+    driver
+    walk-cycle
+    business-owner
+    senior
+    student
+    parent
+    disability
+    newcomer
+  }
+
+  class LensId {
+    <<enumeration>>
+    transit
+    cost
+    commitments
+    housing
+  }
+
+  CityConfig "1" --> "*" Decision : has
+  Decision "1" *-- "*" TimelineEvent : timeline
+  TimelineEvent "1" *-- "0..*" Participation : how to take part
+  TimelineEvent "1" --> "0..1" Citation
+  Decision "*" --> "1..*" SourceDoc : sources
+  Decision "1" --> "0..*" Brief : one per language
+  Brief "1" *-- "*" Statement : summary, whyNow, haveYourSay, tradeoffs
+  Brief "1" *-- "*" AudienceImpact : impacts
+  Brief "1" *-- "*" Figure
+  Brief "1" *-- "*" Unknown
+  Brief "1" *-- "*" GlossaryTerm
+  Brief "1" *-- "0..1" TransitLens
+  Brief "1" *-- "0..1" CostLens
+  Brief "1" *-- "0..1" CommitmentsLens
+  Brief "1" *-- "0..1" HousingLens
+  AudienceImpact "1" *-- "*" Statement
+  CostLens "1" *-- "*" Figure
+  CostLens "1" *-- "*" Statement
+  CommitmentsLens "1" *-- "*" Statement : progress
+  HousingLens "1" *-- "*" Statement
+  Statement "1" *-- "*" Citation
+  Figure "1" --> "0..1" Citation
+  Citation "*" --> "1" SourceDoc : page of
+  Statement ..> StatementKind
+  AudienceImpact ..> AudienceId
+  Decision ..> LensId
+  LogEntry "1" --> "0..1" LogEntry : prevHash

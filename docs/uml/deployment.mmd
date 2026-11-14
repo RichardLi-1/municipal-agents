@@ -1,0 +1,37 @@
+%% Deployment: where each part runs.
+flowchart TB
+  rb["Resident's browser<br/>(phone or computer)"]
+  sb["Staff browser<br/>(passcode)"]
+  tiles["OpenFreeMap<br/>vector tiles"]
+
+  subgraph fly["Fly.io, region yyz (Toronto): one machine"]
+    direction LR
+    node["Node 24 process<br/>node:http · agents · lenses<br/>serves the built web app"]
+    baked[("Files in the image:<br/>sources + page text,<br/>decisions, briefs,<br/>open data, city config")]
+    vol[("Volume /data, 1 GB<br/>log.db (SQLite)<br/>hash-chained log")]
+  end
+
+  gem["Gemini API<br/>(Google, US)"]
+
+  subgraph build["Build time, on a developer's machine"]
+    direction TB
+    p1["npm run sources<br/>PDF → page text"]
+    p2["GTFS: GRT + ION"]
+    p3["OpenStreetMap<br/>destinations"]
+    p4["Permits and<br/>applications"]
+    repo[("Git repo: data/")]
+  end
+
+  rb -- "HTTPS" --> node
+  sb -- "HTTPS + bearer token" --> node
+  rb -. "tiles" .-> tiles
+  baked --- node
+  node -- "append, read" --> vol
+  node -- "HTTPS + API key (Fly secret)" --> gem
+  p1 & p2 & p3 & p4 --> repo
+  repo -- "fly deploy builds the image" --> baked
+
+  classDef ext fill:#f2f2f2,stroke:#777,color:#111
+  classDef file fill:#fffaf0,stroke:#b8860b,color:#111
+  class gem,tiles ext
+  class baked,vol,repo file

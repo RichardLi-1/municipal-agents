@@ -1,0 +1,55 @@
+%% Use case diagram. Mermaid has no native use case diagram, so actors are drawn as
+%% rounded boxes outside the system boundary and use cases as stadium shapes inside it.
+%% Councillors' offices and community groups do everything a resident does (generalisation).
+flowchart LR
+  councillor["👤 Councillor's office"]
+  group["👤 Community group"]
+  resident["👤 Resident"]
+
+  subgraph sys["Municipal Agents (system boundary)"]
+    direction LR
+    subgraph pub["Understand a decision and take part"]
+      direction TB
+      uc1(["Browse decisions near me"])
+      uc2(["Read a decision brief"])
+      uc3(["See how it affects me"])
+      uc4(["Find when and how to have a say"])
+      uc5(["Add the dates to my calendar"])
+      uc7(["Open the cited source page"])
+      uc9(["Explore the transit, cost,<br/>commitments and housing lenses"])
+      uc6(["Ask a question"])
+      uc8(["Read it in another language"])
+      uc10(["Check the public record"])
+    end
+    subgraph back["Prepare and publish"]
+      direction TB
+      uc11(["Draft a brief from a report"])
+      uc12(["Review each statement:<br/>approve, edit or reject"])
+      uc13(["Publish a brief"])
+      uc14(["Watch spend and limits"])
+    end
+  end
+
+  staff["👤 Staff reviewer"]
+  agents["⚙ Agents<br/>(lead + specialists)"]
+  gemini["⚙ Gemini API"]
+  portals["⚙ Open data portals"]
+
+  councillor -. "is a" .-> resident
+  group -. "is a" .-> resident
+  resident --- uc1 & uc2 & uc3 & uc4 & uc5 & uc7 & uc9 & uc6 & uc8 & uc10
+
+  uc11 & uc12 & uc13 & uc14 --- staff
+  uc6 & uc8 & uc11 --- agents
+  agents --- gemini
+  uc9 --- portals
+
+  classDef actor fill:#ffffff,stroke:#1f5fd6,stroke-width:2px,color:#111
+  classDef ext fill:#f2f2f2,stroke:#777,stroke-width:1.5px,color:#111
+  classDef uc fill:#eef3fc,stroke:#1f5fd6,color:#111
+  class resident,councillor,group,staff actor
+  class agents,gemini,portals ext
+  class uc1,uc2,uc3,uc4,uc5,uc6,uc7,uc8,uc9,uc10,uc11,uc12,uc13,uc14 uc
+  style sys fill:#fbfbfd,stroke:#333,stroke-width:1.5px
+  style pub fill:#ffffff,stroke:#bbb
+  style back fill:#ffffff,stroke:#bbb

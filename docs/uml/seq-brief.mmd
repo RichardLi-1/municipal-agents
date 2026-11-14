@@ -1,0 +1,48 @@
+%% Sequence: staff draft a brief, review each statement and publish.
+sequenceDiagram
+  autonumber
+  actor St as Staff reviewer
+  participant S as Server
+  participant A as Agents
+  participant G as Gemini API
+  participant C as Citation checker
+  participant F as Briefs (files)
+  participant Log as Log (SQLite)
+  actor R as Resident
+
+  St->>S: POST /api/staff/briefs {decisionId}<br/>Authorization: Bearer token
+  S->>S: check token
+  S->>Log: append brief.started
+  S->>A: draft brief
+  A->>G: plan sections (summary, impacts, have your say, lenses)
+  loop each section
+    A->>G: work on section
+    G-->>A: record_statement("Fares rise 5%", quote on p. 12)
+    A->>C: check quote on page 12
+    Note over C,F: The quote is not on page 12
+    C-->>A: rejected: quote not found on that page
+    A->>Log: append statement.rejected
+    A->>G: rejected, with the reason
+    G-->>A: read_page, then record_statement(fixed quote, p. 14)
+    A->>C: check quote on page 14
+    C-->>A: verified
+    A->>Log: append statement.recorded
+    A-->>St: SSE progress (steps, statements)
+  end
+  A->>A: reading grade (Flesch-Kincaid), lens computations
+  A->>F: write draft brief (status: draft)
+  A->>Log: append brief.generated + usage
+  A-->>St: SSE brief, done
+
+  loop each statement
+    St->>S: POST /api/staff/review {statementId, action, text?, note?}
+    Note right of St: approve, edit (original kept) or reject
+    S->>F: update statement review (by, at)
+    S->>Log: append statement.reviewed
+  end
+  St->>S: POST /api/staff/publish {decisionId, reviewer}
+  S->>F: status: published (by, at)
+  S->>Log: append brief.published
+  R->>S: GET /api/decisions/:id
+  S-->>R: published brief
+  Note over S,R: Shows "Approved by (name), (date)". Rejected statements are not shown.
