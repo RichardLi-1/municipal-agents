@@ -193,6 +193,26 @@ When every statement has an action, check **Publishing as (your name)** and sele
 Translations are made from the current English brief. When the English brief changes,
 saved translations are made again the next time someone asks for them.
 
+## Corrections by the team that runs the site
+
+Before a city takes over review, the operator (in the demo, the Municipal Agents team)
+can fix an agent-written statement without touching the brief by hand. Corrections live
+in a committed file, `data/corrections/<decisionId>.json`, one entry per statement:
+`"edited"` (new text, citations or kind) or `"rejected"` (withdrawn). They are applied
+every time the server loads a brief, or written into the brief with
+`node agents/cli.ts correct <decisionId>`.
+
+- Every corrected citation must pass the same check as the agents' (the quote found on
+  that page), or the correction is refused.
+- Residents see **Corrected by the Municipal Agents team (not Region staff)**; withdrawn
+  statements are hidden.
+- Each correction adds one `statement.reviewed` entry to the record, with the actor
+  `operator:municipal-agents-team`.
+- A correction is not a staff review: the brief stays a draft until a named staff member
+  reviews every statement and publishes it.
+
+The three demo briefs carry 27 corrections (24 edits, 3 withdrawals).
+
 ## Draft again
 
 You can draft a decision again at any time, for example when a new staff report comes

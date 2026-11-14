@@ -25,7 +25,7 @@ Two more decisions show the range: the Region's Water Supply Strategy Update
 and Kitchener's Committee of Adjustment hearing on six zoning variances for the
 Kitchener Central Transit Hub (`kitchener-transit-hub-variances.json`; 17 November 2026,
 10 am; appeals to the Ontario Land Tribunal by 7 December 2026 under s. 45 of the
-Planning Act). The agents read 25 public documents (399 pages) from the Region, Grand
+Planning Act). The agents read 27 public documents (412 pages) from the Region, Grand
 River Transit, the City of Kitchener and the Province of Ontario.
 
 Related documents: [design and UML](design.md), [architecture](architecture.md),
@@ -115,7 +115,7 @@ decisions open now on a map and a list.
 **US-2. Understand the decision in five minutes.**
 - The overview has 3 to 6 statements, each with at least one citation link.
 - The reading grade is shown and is 8 or lower for the summary and impacts, or the page
-  says it is higher. (Measured: budget 7.3, water supply 6.0, transit hub 6.7.)
+  says it is higher. (Measured: budget 7.4, water supply 6.7, transit hub 6.9.)
 - Review status is visible: "Approved by <name> on <date>", "In review by city staff" or
   "Draft: not yet reviewed by city staff". (FR-3, FR-4, FR-8, FR-12)
 
@@ -242,14 +242,16 @@ questions and the unanswered ones, without seeing anyone's private details. (FR-
 | FR-40 | Decision data records rule changes that move participation dates, each cited to the law (O. Reg. 530/22 for the Chair's budget powers; Planning Act s. 45 and O. Reg. 200/96 for minor variances and appeals). |
 | FR-41 | A landing site at `/` and a docs site at `/docs` are served by the same process. |
 | FR-42 | After drafting, statements above grade 8 are rewritten by the model; code keeps a rewrite only if it reads easier, keeps every number and keeps hedges and both sides. |
-| FR-43 | Each statement carries a support strength measured in code from the words and numbers it shares with its quotes; `weak` statements are flagged for the reviewer. |
+| FR-43 | Each statement carries a support strength computed in code when it is recorded: `weak` if it shares fewer than 2 meaningful word stems and no non-date number with its quotes. Weak statements are labelled for residents and reviewers (0 weak among the statements shown in the three briefs). |
+| FR-44 | The operator can correct or withdraw an agent-written statement through a committed file (`data/corrections/<decisionId>.json`), applied whenever a brief is loaded. Every corrected quote is re-verified on its page or the correction is refused; corrected statements are labelled "Corrected by the Municipal Agents team (not Region staff)"; withdrawn ones are hidden; each correction is a `statement.reviewed` record entry by `operator:municipal-agents-team`; the brief stays a draft until staff publish. |
+| FR-45 | "Add to calendar" gives the next three dates to take part; the feed carries every date; deadlines get their own reminders. |
 
 ## 6. Non-functional requirements
 
 | ID | Quality | Target and how it is checked |
 |---|---|---|
-| NFR-1 | Accessibility | WCAG 2.2 Level AA as the design target: skip link, visible focus (`:focus-visible`), labelled controls and screen-reader text, reduced motion respected, information not by colour alone. Not yet audited with automated tools or by assistive-technology users; that audit is required before real use. |
-| NFR-2 | Plain language | Summary and impacts at Flesch-Kincaid grade 8 or lower, measured in code (`shared/readability.ts`) and shown. Briefs: 6.0 to 7.3. Answers are checked against grade 9 in the evals; 6 of 12 were above it in the latest run. |
+| NFR-1 | Accessibility | WCAG 2.2 Level AA as the design target: skip link, visible focus (`:focus-visible`), labelled controls and screen-reader text, reduced motion respected, information not by colour alone. axe-core (`@axe-core/playwright`) reports 0 violations on the live site: main pages and every decision tab, at 1280 and 390 px, light and dark. The map works on phones (cooperative gestures). Not yet tested with residents who use assistive technology; that is required before real use. |
+| NFR-2 | Plain language | Summary and impacts at Flesch-Kincaid grade 8 or lower, measured in code (`shared/readability.ts`) and shown. Briefs: 6.7 to 7.4. Answers are checked against grade 9 in the evals; 6 of 12 were above it in the latest run. |
 | NFR-3 | Citation integrity | 100% of statements shown as verified have every quote found on its page (checked at record time, on staff edit, and at cost-lens build). No ellipses; quotes under 8 characters refused. Evals: 0 citation failures. |
 | NFR-4 | Neutrality | Rule checks refuse advocacy wording; answers drop advice sentences; trade-offs must show both sides. Evals: 0 voting-advice failures, including "Should I support this budget?". |
 | NFR-5 | Privacy | No resident accounts, no tracking; browser storage only for preferences. Questions logged without any identifier; IP addresses held in memory only for rate limiting (`server/limits.ts`). Staff insights apply k = 3. |
@@ -261,14 +263,14 @@ questions and the unanswered ones, without seeing anyone's private details. (FR-
 | NFR-11 | Multilingual | English and French offered first, then 9 more languages from census data. Translations labelled machine-made; not staff-reviewed. |
 | NFR-12 | Portability | Runs anywhere Node 24 runs; one container; data in files plus one SQLite file. |
 | NFR-13 | Security | Secrets only in environment variables; staff passcode compared in constant time; request bodies size-capped; per-IP rate limit and a cap on concurrent runs; CSP with per-page script hashes, HSTS, `nosniff`. |
-| NFR-14 | Maintainability | No framework on the server; no runtime dependencies at the root; 189 tests with `node --test`; OpenAPI coverage test. |
+| NFR-14 | Maintainability | No framework on the server; no runtime dependencies at the root; 205 tests with `node --test`; OpenAPI coverage test. |
 | NFR-15 | Transparency | Methods for each lens, the energy estimate and the reading grade are stated with references; construction scores show their weights. |
 
 ## 7. Potential harms and mitigations
 
 | Harm | How it could happen | Mitigation in the product | Remaining risk |
 |---|---|---|---|
-| **Misinformation** | The model misstates a figure or quotes the wrong page | Quotes checked on the page in code (78 rejected attempts in four brief runs); numbers in answers must appear in a cited statement; staff review every statement; every figure links to its page | A sentence can be accurate to its quote but miss context. Staff review is the control. |
+| **Misinformation** | The model misstates a figure or quotes the wrong page | Quotes checked on the page in code (78 rejected attempts in four brief runs); weak support flagged; numbers in answers must appear in a cited statement; operator corrections, re-verified and labelled (27 across the three demo briefs); staff review every statement; every figure links to its page | A sentence can be accurate to its quote but miss context. Staff review is the control. |
 | **Over-trust in AI** | Residents treat the brief as the official position | "Not the official notice" with a link; review status shown; translations and replays labelled; uncertainty and unknowns shown | People may still skim. A plain "drafted by AI agents" label beside the review status would help. |
 | **Over-trust in a scenario** | A construction what-if is read as the Region's plan | Labelled "Illustrative scenario: not a Region plan"; weights and assumptions shown; the scout ranks, never picks; required approvals (O. Reg. 231/08) stated | Renders look real. They are labelled as illustrations. |
 | **Digital divide** | Those without devices or data miss out | Light pages, works on phones, no account, calendar files; agents never replace in-person and phone channels | The product does not reach people offline by itself; community partners do. |
@@ -327,7 +329,9 @@ questions and the unanswered ones, without seeing anyone's private details. (FR-
 | FR-40 | `data/decisions/row-2027-budget.json`, `data/decisions/kitchener-transit-hub-variances.json` | `data/sources/` (`oreg-530-22`, `municipal-act-part-vi1`, `planning-act-s45`, `oreg-200-96`) | `web/src/screens/tabs-brief.tsx` | |
 | FR-41 | `server/site.ts` | | `landing/`, `docs-site/` | `server/platform.test.ts` |
 | FR-42 | `agents/plain.ts` | `shared/readability.ts` | | `agents/plain.test.ts` |
-| FR-43 | computed where statements are recorded | `shared/types.ts` (`Statement.support`) | `web/src/components/Citations.tsx` ("Check: the quote may not fully support this") | |
+| FR-43 | `agents/tidy.ts` (`supportOf`) | `shared/types.ts` (`Statement.support`) | `web/src/components/Citations.tsx` ("Check: the quote may not fully support this") | `agents/tidy.test.ts` |
+| FR-44 | `server/corrections.ts`, `agents/cli.ts` (`correct`) | `shared/corrections.ts`, `shared/verify.ts`, `data/corrections/*.json` | `web/src/components/Citations.tsx` | `agents/corrections.test.ts`, `server/routes.test.ts` |
+| FR-45 | `server/ics.ts`, `server/routes/platform.ts` | | `web/src/lib/ics.ts` | `server/ics.test.ts` |
 
 Test file names are those in the repository on 14 November 2026; a test listed for a
 requirement exercises that module, not necessarily every clause of the requirement.

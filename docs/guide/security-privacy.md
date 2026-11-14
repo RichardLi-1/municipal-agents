@@ -93,6 +93,11 @@ On the public site, the data volume is on Fly.io in Toronto (`yyz`).
 
 ## Limits that stop abuse and runaway spending
 
+Operator corrections (`data/corrections/`) are public files in the repository, and each
+one is a `statement.reviewed` entry in the record with the actor
+`operator:municipal-agents-team`, so changes made by the team running the site are as
+visible as changes made by city staff.
+
 | Guard | Default | Setting |
 |---|---|---|
 | JSON request body | 64 KB | fixed |

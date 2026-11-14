@@ -124,7 +124,7 @@ npm test             # server, shared, agents and lenses
 npm run typecheck
 ```
 
-`npm test` runs **189 tests**, all passing on 14 November 2026 at 03:00 ET. They
+`npm test` runs **205 tests**, all passing on 14 November 2026 at 04:15 ET. They
 use no network and no key: the agents are tested with a fake model with the same shape
 as the real client ([`agents/testing.ts`](../../agents/testing.ts)).
 

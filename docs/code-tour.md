@@ -26,7 +26,7 @@ https://municipal-agents.fly.dev. Code: https://github.com/RichardLi-1/municipal
 | `scripts/` | `sources.ts` (PDF to page text), `smoke.ts` (checks a deployment), OpenAPI schema generation | |
 | `docs/`, `report/` | These documents and the one-page readiness report | |
 
-Size, for a sense of scale (14 November 2026, 03:00 ET): 189 tests across `server/`,
+Size, for a sense of scale (14 November 2026, 04:15 ET): 205 tests across `server/`,
 `shared/`, `agents/` and `lenses/`, all passing (`npm test`).
 
 ## 2. The key files in one line each
@@ -99,8 +99,9 @@ about the budget?".
    matches, its events are replayed (labelled with when it was first answered), at
    US$0. Replays skip the daily spend cap but not the per-visitor limit.
 4. **Cheap checks.** Otherwise, in order, so a refused request costs nothing: today's
-   spend is under the cap (`checkDailyCap`, `server/limits.ts`); this IP has not asked 10
-   questions in 10 minutes (`RateLimiter.take`; the IP is held in memory only); one of 4
+   spend is under the cap (`checkDailyCap`, `server/limits.ts`); this IP has not started 30
+   model-backed runs in 10 minutes (`RateLimiter.take`; the IP is held in memory only;
+   replays and offline answers don't count); one of 4
    run slots is free.
 5. **Record the question.** `question.asked` with the question text, audiences and
    language. No identity.
@@ -159,10 +160,20 @@ names. The code is `shared/verify.ts`; the tool that applies it is `record_state
    both sides for trade-offs.
 4. Only then is the statement stored with `verified: true`. Rejections are logged as
    `statement.rejected` with their reasons.
-5. A statement also carries a support strength (`support` in `shared/types.ts`),
-   measured in code from the words and numbers the sentence shares with its quotes:
-   `weak` means the quote is on the page but a reviewer should check that it really
-   backs the sentence.
+5. A statement also carries a support strength (`supportOf()` in `agents/tidy.ts`, set
+   at record time): `weak` if the sentence shares fewer than 2 meaningful word stems and
+   no non-date number with its quotes. Residents and reviewers see "Check: the quote may
+   not fully support this". The three briefs show 0 weak statements.
+
+**Operator corrections.** The team running the site can fix or withdraw an agent-written
+statement in a committed file, `data/corrections/<decisionId>.json`.
+`shared/corrections.ts` applies it whenever the server loads a brief
+(`server/corrections.ts`) or when `node agents/cli.ts correct <id>` writes it in. Each
+corrected citation goes through `verifyCitation()` again, or the correction is refused.
+Residents see "Corrected by the Municipal Agents team (not Region staff)"; withdrawn
+statements are hidden; each correction appends one `statement.reviewed` entry by
+`operator:municipal-agents-team`; the brief stays a draft. The three demo briefs carry
+27 corrections (24 edits, 3 withdrawals). Tests: `agents/corrections.test.ts`.
 
 How often it bites: in the four recorded brief runs (`data/runs/*-brief-*.jsonl`) the
 checker rejected 78 statement attempts and accepted 116. The agents fixed most by
@@ -283,7 +294,7 @@ Real numbers: a full brief with all lenses is about 40 model calls (the cap) and
 US$0.24 to US$0.37 in our runs (`data/briefs/*.json`, `costUsd`; the live budget brief
 logged US$0.368). A translation of a brief costs about US$0.009 per language (2 calls;
 French and Spanish in the live record). Reading grades after
-the plain-language pass: budget 7.3, water supply 6.0, transit hub 6.7.
+the plain-language pass: budget 7.4, water supply 6.7, transit hub 6.9.
 
 ## 8. The platform around the app
 
@@ -305,7 +316,7 @@ the plain-language pass: budget 7.3, water supply 6.0, transit hub 6.7.
 ## 9. Tests, evals and how to run them
 
 ```
-npm test                       # 189 tests: server, shared, agents, lenses (14 Nov 2026, all passing)
+npm test                       # 205 tests: server, shared, agents, lenses (14 Nov 2026, all passing)
 npm run typecheck
 npm run smoke                  # checks a running deployment end to end
 node agents/evals/run.ts       # scores the agents on question cases (spends model credit)
@@ -345,7 +356,7 @@ made once with `gemini-3.1-flash-image`.
 - **Tests on the parts that carry trust**: citation checker, reading grade, canonical
   JSON (browser and server agree), hash chain (tamper and purge), review rules, answer
   cache, offline answers, calendar, limits, spend, routes, OpenAPI coverage, the agent
-  loop and tools with a fake model, and each lens's maths. 189 tests, all passing.
+  loop and tools with a fake model, and each lens's maths. 205 tests, all passing.
 - **Type checking** with `tsc --strict` over the shared shapes.
 - **Evals on real documents** with real model calls, scored in code (section 9).
 - **Recorded runs**: every agent run's events are kept in `data/runs/`, so what the
@@ -366,7 +377,7 @@ the public record with its cost.
 2. **An edit is re-checked, but only its quotes.** Re-checking confirms the quotes are
    still on their pages; it doesn't compare the new wording with them. The original
    text is kept and residents see "Edited by staff".
-3. **Answers are not always plain enough.** Briefs read at grade 6.0 to 7.3 after the
+3. **Answers are not always plain enough.** Briefs read at grade 6.7 to 7.4 after the
    plain-language pass, but 6 of 12 eval answers were above grade 9. The syllable counter
    is a heuristic (about ±0.5 grade).
 4. **The answer's number check is loose.** It looks for each number as text in the cited

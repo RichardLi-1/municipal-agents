@@ -56,6 +56,7 @@ The server has no runtime dependencies. It uses Node's built-in modules: `node:h
 | PDF.js (`pdfjs-dist`) | 5.7.284 | Apache-2.0 | Renders the cited PDF page and highlights the quote | https://mozilla.github.io/pdf.js/ |
 | @fontsource-variable/inter | 5.3.0 | OFL-1.1 (font), MIT (package) | Inter typeface, self-hosted | https://fontsource.org/fonts/inter |
 | playwright-core | 1.65.1 | Apache-2.0 | Screenshots (dev only) | https://playwright.dev |
+| @axe-core/playwright (with axe-core 4.11.4) | 4.11.0 | MPL-2.0 | Automated accessibility checks of the live site (dev only) | https://github.com/dequelabs/axe-core-npm |
 | TypeScript, @types/geojson | 5.9.3, 7946.0.16 | Apache-2.0, MIT | Types (dev only) | as above |
 
 ### Landing site (`landing/package.json`, 67 packages resolved)
@@ -112,7 +113,7 @@ The server has no runtime dependencies. It uses Node's built-in modules: `node:h
 
 Every document the agents read is a public record published by the government named.
 The full list with titles, dates, page counts and download URLs is
-`data/sources/index.json` (25 documents, 399 pages); how each lens dataset was obtained
+`data/sources/index.json` (27 documents, 412 pages); how each lens dataset was obtained
 is `data/open/README.md` and `lenses/construction/README.md`.
 
 ### Documents (`data/sources/`)
@@ -125,6 +126,7 @@ is `data/open/README.md` and `lenses/construction/README.md`.
 | City of Kitchener | Committee of Adjustment meeting notice, 17 November 2026 | Public record |
 | Government of Ontario (e-Laws) | O. Reg. 530/22 (Part VI.1 of the Municipal Act); Municipal Act, 2001, Part VI.1 (ss. 284.2 to 284.17); Planning Act s. 1 (1) and s. 45; O. Reg. 200/96 (Minor Variance Applications) | Public record (e-Laws consolidations, dates in `index.json`) |
 | Government of Ontario, Ministry of Municipal Affairs and Housing | Regional Head of Council (web page) | Public record |
+| Government of Ontario | Residential rent increases (web page: the 2027 rent increase guideline, 1.9%); Residential Tenancies Act, 2006, s. 126 (above-guideline increases) | Public record |
 
 "Public record" means a document a government published for the public; we keep each
 one as published, link to the original, and claim no licence over it.
@@ -187,7 +189,8 @@ Licence texts:
 ## 5. Standards and engineering guidance
 
 - W3C (2023). *Web Content Accessibility Guidelines (WCAG) 2.2*. W3C Recommendation.
-  https://www.w3.org/TR/WCAG22/
+  https://www.w3.org/TR/WCAG22/ ; checked with Deque's axe-core rules (0 violations on the
+  live site).
 - Desruisseaux, B., ed. (2009). *Internet Calendaring and Scheduling Core Object
   Specification (iCalendar)*. RFC 5545. https://www.rfc-editor.org/rfc/rfc5545
 - Butler, H., et al. (2016). *The GeoJSON Format*. RFC 7946. https://www.rfc-editor.org/rfc/rfc7946
@@ -234,6 +237,10 @@ Licence texts:
   seven days a week). https://www.kitchener.ca/bylaws-and-enforcement/noise-complaints-and-exemptions/
 - City of Cambridge, *By-law 32-04* (Noise By-law), s. 2 (b).
   https://www.cambridge.ca/media/1gvdnrdg/noise-by-law-032-04.pdf
+- *Residential Tenancies Act, 2006*, S.O. 2006, c. 17, s. 126 (application for a rent
+  increase above the guideline). https://www.ontario.ca/laws/statute/06r17
+- Government of Ontario, *Residential rent increases* (the rent increase guideline: 1.9%
+  for 2027). https://www.ontario.ca/page/residential-rent-increases
 - *Municipal Freedom of Information and Protection of Privacy Act*, R.S.O. 1990, c. M.56
   (MFIPPA). https://www.ontario.ca/laws/statute/90m56
 - *Strengthening Cyber Security and Building Trust in the Public Sector Act, 2024*, S.O.

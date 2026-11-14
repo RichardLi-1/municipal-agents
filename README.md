@@ -73,21 +73,28 @@ These are product rules, enforced in code, not left to the model:
    the cited page ([`shared/verify.ts`](shared/verify.ts)). In four brief runs the
    checker rejected 78 attempts and accepted 116, telling the agent each time where the
    quote really was.
-2. **Plain words.** Reading grade measured and shown: 7.3, 6.0 and 6.7 for our three
+2. **Plain words.** Reading grade measured and shown: 7.4, 6.7 and 6.9 for our three
    briefs (target 8).
 3. **Agents never decide, and never say what residents should think.** Advocacy wording
    is refused; answer sentences with voting advice or unsupported numbers are dropped.
 4. **Staff publish.** Publishing is refused until a named person has reviewed every
-   statement; edits are re-checked; rejected statements never reach residents.
-5. **The record can't be edited quietly.** Every brief, check, question, answer,
+   statement; edits are re-checked; rejected statements never reach residents. Before a
+   city takes over, the team's own fixes go in a public corrections file, are re-checked
+   on their pages and are labelled "Corrected by the Municipal Agents team (not Region
+   staff)" (27 across the three demo briefs); the briefs stay drafts.
+5. **Weak support is flagged.** Code also checks that each sentence shares words or
+   numbers with its quotes; a weak match is labelled for the reader (0 in the three briefs).
+6. **The record can't be edited quietly.** Every brief, check, question, answer,
    approval and dollar spent is in a hash-chained log your browser verifies. Content can
    still be purged under a records-retention by-law without breaking the chain.
-6. **It keeps working when the AI doesn't.** Repeated questions are replayed from the
+7. **It keeps working when the AI doesn't.** Repeated questions are replayed from the
    record at no cost; when the model can't be reached, answers come from statements
    already checked. (Our model credit ran out at 2:20 am during the hackathon; the site
    kept answering.)
-7. **Not the official notice**, and every page links to the official notice.
-8. **Public data only.** No accounts, no tracking; questions are stored without identity.
+8. **Not the official notice**, and every page links to the official notice.
+9. **Accessible.** axe-core finds 0 violations on the main pages and every decision tab,
+   on desktop and phone, light and dark.
+10. **Public data only.** No accounts, no tracking; questions are stored without identity.
 
 ## How it's built
 
@@ -114,7 +121,8 @@ ahead of time: PDFs to page text; GTFS, OpenStreetMap, census, permits -> lens f
 | One translation of a brief | about US$0.009 per language |
 | Hosting | about US$7–10 a month |
 | A year for one city (50 briefs, 5,000 questions) | about US$360–500 at 2026 model prices; about US$630–870 from 2027 |
-| Tests | 189, all passing (`npm test`) |
+| Tests | all passing (`npm test`) |
+| Accessibility | 0 axe-core violations (main pages and every decision tab, 1280 and 390 px, light and dark) |
 | Evals | 6 of 12 questions passed in the latest run; all 6 failures read above grade 9 (one also found nothing to cite); 0 citation failures; 0 voting advice |
 
 Why it's built this way, and how it scales to more decisions and cities:
@@ -131,7 +139,7 @@ npm install                        # development tools only
 printf 'GEMINI_API_KEY=your-key\nSTAFF_TOKEN=a-long-random-passcode\n' > .env
 npm run build                      # builds the web app into web/dist
 npm start                          # http://localhost:4100
-npm test                           # 189 tests, no model calls
+npm test                           # all tests, no model calls
 ```
 
 Without a `GEMINI_API_KEY` everything still works except fresh agent runs: briefs,
@@ -175,7 +183,7 @@ transit and housing as your open data allows. Step by step:
 | Document | What's in it |
 |---|---|
 | [Municipal Readiness Report](report/municipal-readiness-report.pdf) | One page: who uses it, data and resources, cost, privacy, what residents should know, how other cities adapt it, the case study |
-| [Requirements](docs/requirements.md) | Stakeholders, scope, user stories, 43 functional and 15 non-functional requirements, harms and mitigations, traceability to code |
+| [Requirements](docs/requirements.md) | Stakeholders, scope, user stories, 45 functional and 15 non-functional requirements, harms and mitigations, traceability to code |
 | [Design and UML](docs/design.md) | Eleven diagrams: use cases, components, platform, classes, four sequences, two state machines, deployment ([sources](docs/uml/)) |
 | [Architecture](docs/architecture.md) | Decisions and why, alternatives rejected, scalability, failure modes, security and privacy, cost model |
 | [Code tour](docs/code-tour.md) | Each folder, the path of a question from browser to Gemini and back, where citations and hashes are checked, how lenses are computed, how AI was used and checked, known weak spots |

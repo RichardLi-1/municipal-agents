@@ -14,7 +14,7 @@ you can have a say. City staff approve every statement before it goes out.
 ## The problem
 
 - Decisions are explained in documents written for council. To cover three Waterloo
-  Region decisions, the prototype's agents read 25 public documents (399 pages) ([readiness report](../../report/readiness-report.html);
+  Region decisions, the prototype's agents read 27 public documents (412 pages) ([readiness report](../../report/readiness-report.html);
   [requirements](../requirements.md)). The Region's budget book alone is 191 pages.
 - Residents find out late, can't tell how a decision touches them, and miss the window
   to take part. In the demo, the window is a delegation registration that closes at

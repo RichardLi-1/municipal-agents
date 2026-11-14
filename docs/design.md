@@ -277,7 +277,10 @@ the number still to review. A published
 brief shows "Approved by (name), (date)" and leaves out rejected statements. A review
 after publishing is logged and the status stays published. Drafting a new brief, for
 example after the staff report changes, starts again at draft, and the old file is
-kept in a history folder. Nothing is overwritten in the record: each step is a new log
+kept in a history folder. Operator corrections (`data/corrections/<id>.json`, applied
+on load and labelled "Corrected by the Municipal Agents team (not Region staff)") never
+change the state: a corrected brief is still a draft until staff publish it. Nothing is
+overwritten in the record: each step is a new log
 entry, so the history of who approved what, and when, survives every regeneration.
 
 ## 10. State: the life of one statement

@@ -28,6 +28,7 @@ the AI's work: [docs/code-tour.md](docs/code-tour.md#how-ai-was-used-and-how-we-
 | highlight.js | 11.12.0 | BSD-3-Clause | docs site |
 | Inter (@fontsource-variable/inter; @fontsource/inter in the report) | 5.3.0; 5.1.0 | SIL OFL 1.1 | app, landing, docs, report |
 | playwright-core | 1.65.1 | Apache-2.0 | screenshots, video footage (dev) |
+| @axe-core/playwright, axe-core | 4.11.0, 4.11.4 | MPL-2.0 | accessibility checks (dev) |
 | Remotion (demo video) | 4.0.541 | Remotion License (free for individuals and companies of up to three people) | video |
 | React, React DOM (demo video) | 19.2.0 | MIT | video |
 | Mermaid CLI | 11 | MIT | UML diagrams |
@@ -55,7 +56,8 @@ the AI's work: [docs/code-tour.md](docs/code-tour.md#how-ai-was-used-and-how-we-
 - **City of Cambridge**: building permits and site plans (City of Cambridge Open Data
   Licence v2.1); Noise By-law 32-04.
 - **Government of Ontario**: O. Reg. 530/22, Municipal Act Part VI.1, Planning Act s. 45,
-  O. Reg. 200/96, O. Reg. 231/08 (e-Laws, public record); housing supply progress (Open
+  O. Reg. 200/96, O. Reg. 231/08, Residential Tenancies Act s. 126 (e-Laws, public
+  record); the residential rent increase guideline page; housing supply progress (Open
   Government Licence – Ontario).
 - **Statistics Canada**: 2021 Census population, households, dissemination areas and
   languages; CMHC housing data (Statistics Canada Open Licence). Adapted from Statistics

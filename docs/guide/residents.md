@@ -84,12 +84,14 @@ Each statement can carry a small label:
 | A tick (screen readers hear "Checked") | Code found the quoted words on the cited page. |
 | **Not verified** | The quote was not found on the cited page. Treat the statement with care. |
 | **Edited by staff** | A staff member reworded what the agents wrote. The original wording is kept in the record. |
+| **Corrected by the Municipal Agents team (not Region staff)** | The team that runs this site fixed what the agents wrote (wording, a citation or the kind of statement). Every corrected quote was checked on its page again. It is not a staff review: the brief stays a draft until city staff approve it. |
+| **Check: the quote may not fully support this** | The quote is on the page, but it shares few words or numbers with the sentence. Read the source before relying on it. |
 | **Estimate**, **Assumption** | A number that is an estimate, or an assumption the documents make. |
 | **Unknown** | Something the documents don't say. |
 | **Trade-off**, **Possible harm** | What one side gains and the other may lose, or who could be harmed. |
 | **Computed** | A number worked out by code from open data (for example travel times), not quoted from a document. Open it to see **How this is worked out**. |
 
-Statements that staff rejected are not shown.
+Statements that staff rejected, or that the Municipal Agents team withdrew, are not shown.
 
 ## Check any figure
 
@@ -198,7 +200,7 @@ To keep the service fair and affordable:
 | Limit | What you'll see |
 |---|---|
 | Questions up to 1,000 characters | "Please keep questions under 1000 characters." |
-| 10 questions or translations per 10 minutes from one internet address | "You've sent 10 questions in 10 minutes. Please wait ... and try again." |
+| 30 new agent runs (questions or translations) per 10 minutes from one internet address; saved and offline answers don't count | "You've sent 30 questions in 10 minutes. Please wait ... and try again." |
 | 4 agent runs at once across the site | "The agents are busy with other questions. Please try again in a minute." |
 | A daily budget for the AI agents (US$5 on the public site) | "Today's budget for the AI agents (US$5.00) has been used. The briefs are still here to read; questions open again after midnight Toronto time." |
 
@@ -272,7 +274,9 @@ More detail: [security and privacy](security-privacy.md).
 
 ## Accessibility
 
-The site aims to meet WCAG 2.2 AA. It works with a keyboard and a screen reader
+The site aims to meet WCAG 2.2 AA. An automated check (axe-core) found no violations on
+the main pages and every decision tab, at desktop and phone widths, in light and dark
+themes. It works with a keyboard and a screen reader
 (there's a **Skip to content** link, the tabs follow the arrow keys, and answers are
 announced when ready). It follows your system's light or dark theme, reduced motion and
 higher contrast settings. You can switch the theme under **Settings**, **Appearance** (System, Light or Dark).

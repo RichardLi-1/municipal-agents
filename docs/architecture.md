@@ -83,7 +83,7 @@ the budget enforceable: every model call passes through one function
 | Check | Where | What it does |
 |---|---|---|
 | Citation | `shared/verify.ts`, used by `agents/tools.ts`, `server/statements.ts`, `lenses/cost/build.ts`, `agents/evals/run.ts` | A quote must appear on the cited page after normalising case, spacing, quotes, dashes, ligatures and line-break hyphens. Tolerates two-column PDF layouts by matching words in order across column segments. Nothing fuzzy. |
-| Support strength | `shared/types.ts` (`support`) | Measured in code from the words and numbers a sentence shares with its quotes; `weak` asks the reviewer to check the quote really backs it. |
+| Support strength | `agents/tidy.ts` (`supportOf`), at record time | `weak` if the sentence shares fewer than 2 meaningful word stems and no non-date number with its quotes; labelled for residents and reviewers. |
 | Statement rules | `agents/tools.ts` (`ruleProblems`) | Under 40 words; no advice on what to think or how to vote; impacts say "may", "might" or "could"; trade-offs show both sides. |
 | Lens numbers | `agents/tools.ts` (`record_computed_figure`) | A computed figure must match a number in the lens result; the model cannot invent one. |
 | Reading grade | `shared/readability.ts`, `agents/plain.ts` | Flesch-Kincaid grade, shown; rewrites kept only if they read easier and keep every number. |
@@ -194,12 +194,28 @@ Why: cities already have websites, calendars and analytics habits. Meeting them 
 costs less than asking residents to find a new site, and keeping it in one process keeps
 the operating burden the same.
 
-### D10. The web app: Preact, Vite, MapLibre, pdf.js
+### D10. Operator corrections as a public file, not hand edits
+
+Before a city takes over review, the team running the site may need to fix what the
+agents wrote. Instead of editing brief files by hand, corrections live in a committed
+file per decision (`data/corrections/<decisionId>.json`), applied whenever a brief is
+loaded (`shared/corrections.ts`, `server/corrections.ts`) or written in with
+`node agents/cli.ts correct <id>`. Each corrected quote must pass the same citation
+check or the correction is refused; residents see "Corrected by the Municipal Agents
+team (not Region staff)"; withdrawn statements are hidden; each correction is a
+`statement.reviewed` entry in the record by `operator:municipal-agents-team`; and the
+brief stays a draft. Why: the operator's changes are as reviewable and as visible as
+staff's, and they survive a redraft. The three demo briefs carry 27 corrections (24
+edits, 3 withdrawals).
+
+### D11. The web app: Preact, Vite, MapLibre, pdf.js
 
 Preact gives the React programming model in a small bundle, which matters on older
 phones. MapLibre draws vector maps with OpenFreeMap tiles (no API key, no tracking).
 pdf.js renders the exact cited page with the quote highlighted, so a resident sees the
-evidence, not a paraphrase.
+evidence, not a paraphrase. axe-core reports 0 violations on the main pages and every
+decision tab at desktop and phone widths, light and dark; on phones the map uses
+cooperative gestures so the page still scrolls.
 
 ## 3. Alternatives we considered and rejected
 
@@ -311,5 +327,5 @@ CO2e per kWh. These are estimates, not measurements.
 4. Publish the record's head hash on a schedule outside the city's sole control.
 5. Agent runs as queued jobs; briefs served from a CDN; a load test.
 6. Automatic redaction of personal details in the public log.
-7. Accessibility audit with residents who use assistive technology, and community review
-   of translations for the top languages.
+7. Testing with residents who use assistive technology (automated axe checks already
+   pass), and community review of translations for the top languages.

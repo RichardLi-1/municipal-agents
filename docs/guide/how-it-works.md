@@ -268,7 +268,7 @@ markers and numbers must survive, and the rewrite must read easier and give no a
 | Per step in a question | 5 calls (6 when the plan has 1 or 2 steps) | `askWith` |
 | Per step in a brief | overview 11, impacts 9 (19 kept for the explainer), lenses share the rest, 3 to 7 calls each | `generateBriefWith` |
 | Daily cap on model spend | US$5 by default, reset at midnight Toronto time | `DAILY_LIMIT_USD` |
-| Per visitor | 10 questions or translations per 10 minutes, by IP held in memory only | `ASK_PER_WINDOW`, `ASK_WINDOW_MIN` |
+| Per visitor | 30 model-backed questions or translations per 10 minutes (replays and offline answers don't count), by IP held in memory only | `ASK_PER_WINDOW`, `ASK_WINDOW_MIN` |
 | Runs at once | 4 | `MAX_CONCURRENT_RUNS` |
 | Question time limit | 240 seconds | `RUN_TIMEOUT_SEC` |
 | Brief or translation time limit | 900 seconds | `BRIEF_TIMEOUT_SEC` |

@@ -6,6 +6,17 @@
 five minutes: what's proposed, how it may affect you, and when you can have a say.
 Every figure links to its page; staff review every statement.
 
+**Short description (for the Devpost form):** Residents rarely find out what a
+proposed municipal decision means for them, or when they can have a say, until it's too
+late. Municipal Agents reads a city's own documents and turns a proposed decision into a
+five-minute, plain-language brief: what's proposed, how it may affect you (by who you
+are), and every date and way to take part, with a calendar file. Every figure links to the
+highlighted page it came from, quotes are checked in code, and nothing is official until
+a named staff member approves each statement. Five lenses cover the other challenges:
+transit gaps, lifecycle costs, commitments, housing from approval to construction, and a
+construction scout. It is for residents first, and for the clerks and planners who explain
+decisions. Live on the Region of Waterloo's 2027 budget. Next: a pilot with one municipality.
+
 **Links**
 - Live site: https://municipal-agents.fly.dev (the app: https://municipal-agents.fly.dev/decisions;
   the 2027 budget brief: https://municipal-agents.fly.dev/d/row-2027-budget)
@@ -48,7 +59,7 @@ Municipal Agents turns a proposed decision into a brief a resident can read in f
 minutes:
 
 - **What's proposed and why now**, in plain words, with the reading grade measured and
-  shown (6.0 to 7.3 for our three briefs; target 8).
+  shown (6.7 to 7.4 for our three briefs; target 8).
 - **How it may affect you**: pick who you are, see cited impacts with "may" language
   and what is uncertain.
 - **Have your say**: the timeline, the next chance to take part with a countdown, how
@@ -76,7 +87,10 @@ What makes it trustworthy enough for a city to use:
   attempts and accepted 116, telling the agent each time where the quote really was.
 - **Staff publish.** Agent output is a draft until a named staff member has approved,
   edited or rejected every statement. Edits are re-checked; rejected statements never
-  reach residents.
+  reach residents. The team's own fixes before then go in a public corrections file,
+  re-checked on their pages and labelled as ours, not the Region's (27 so far).
+- **Weak support is flagged.** Code checks each sentence shares words or numbers with
+  its quotes, and labels a weak match.
 - **The record can't be edited quietly.** Every brief, check, question, answer,
   approval and dollar spent is in a hash-chained public log your browser verifies, and
   staff can still purge content under a records-retention by-law without breaking it.
@@ -106,7 +120,7 @@ What makes it trustworthy enough for a city to use:
 - **Web app**: Preact, MapLibre with OpenFreeMap tiles, pdf.js for the source viewer,
   Inter, light and dark, keyboard and screen-reader support.
 - **Hosting**: one Fly.io machine in Toronto with a volume for the record.
-- **189 tests** with Node's built-in test runner.
+- **205 tests** with Node's built-in test runner.
 - **Docs**: requirements, eleven UML diagrams, architecture rationale, code tour, planner
   workflows for eight municipal scenarios, and a one-page Municipal Readiness Report.
 
@@ -123,8 +137,14 @@ What makes it trustworthy enough for a city to use:
 - **Official dates disagree, and the rules changed mid-hackathon.** Two official pages
   gave different dates for a budget review day, and strong-mayor powers for the Regional
   Chair took effect on 15 November. We checked every date by hand and cited the regulation.
-- **Plain language is hard to hit.** Briefs now read at grade 6.0 to 7.3, but half the
+- **Plain language is hard to hit.** Briefs now read at grade 6.7 to 7.4, but half the
   eval answers were still above grade 9. We show the grade rather than hide it.
+- **Found on the page isn't the same as supporting the sentence.** Our reviewers caught
+  statements whose quote was on the page but didn't back the claim. Code now flags weak
+  support (too few shared words, or only a shared date), and we fixed each one with a
+  committed corrections file: every new quote re-checked, every correction labelled
+  "Municipal Agents team (not Region staff)" and logged on the public record. The briefs
+  stay drafts until real staff review them.
 - **We ran out of model credit at 2:20 am.** Instead of going dark, the site now replays
   real answers and answers from the checked brief. It became a feature.
 
@@ -136,6 +156,8 @@ What makes it trustworthy enough for a city to use:
   US$0.05–0.07; a translation about US$0.009 per language; a repeated question nothing.
   A year for one city (50 briefs, 5,000 questions, hosting) comes to about US$360–500.
 - All five challenges answered in one product, on the same decision.
+- 0 axe-core accessibility violations on the main pages and every decision tab, on
+  desktop and phone, light and dark.
 - A city IT team could run it: one process, one container, one settings file per city,
   and a card they can drop on their own website.
 
@@ -155,7 +177,7 @@ What makes it trustworthy enough for a city to use:
 - **Data residency**: run the model in a Canadian region or on the city's own hardware.
 - **Billing alerts** and monitoring of offline answers.
 - **Community review of translations** for the region's most common languages.
-- **Accessibility audit** with residents who use assistive technology.
+- **Testing with residents** who use assistive technology (automated checks already pass).
 - **Meeting video and agendas as they are published**, so briefs update as a decision
   moves through committee and council.
 - **More cities**: a settings file, their documents and their GTFS.
