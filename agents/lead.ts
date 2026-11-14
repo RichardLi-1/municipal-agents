@@ -13,6 +13,7 @@ import { callGemini, type CallModel } from "./gemini.ts";
 import { loadCorpus, type Corpus } from "./corpus.ts";
 import { Budget, budgetedCall, decisionBrief, isUnreachable, logFailure, publicError, runStep, unreachableReason, type Run, type StepSpec } from "./loop.ts";
 import { offlineAnswer } from "./offline.ts";
+import { tidyBrief } from "./tidy.ts";
 import { listSkills, loadSkill } from "./skills.ts";
 import { AUDIENCES, AUDIENCE_LABELS, newFindings, type Findings, type RecordedStatement } from "./tools.ts";
 import { glossaryPass, plainAnswer, plainPass, TARGET_GRADE, type LeadCall, type PlainItem } from "./plain.ts";
@@ -579,11 +580,13 @@ export async function generateBriefWith(
 
     const plain = await plainLanguageStep(run, deps);
 
-    const brief = assembleBrief(corpus, run.findings, {
+    const assembled = assembleBrief(corpus, run.findings, {
       generatedAt: deps.now().toISOString(),
       models: [...budget.models],
       costUsd: budget.usd,
     });
+    // Code's last pass: near-duplicates out, hedged facts become estimates, glitches fixed.
+    const { brief, report: tidy } = tidyBrief(assembled);
     ctx.log({
       actor: "agent:lead",
       kind: "brief.generated",
@@ -595,6 +598,7 @@ export async function generateBriefWith(
         unknowns: brief.unknowns.length,
         readingGrade: brief.readingGrade,
         readingGradeBefore: plain.gradeBefore,
+        tidied: { dropped: tidy.dropped.length, repaired: tidy.repaired.length, estimates: tidy.estimates.length },
         rewritten: plain.rewritten,
         glossaryAdded: plain.termsAdded,
         steps: results.map((r) => ({ id: r.id, status: r.status, calls: r.calls })),

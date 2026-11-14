@@ -10,6 +10,7 @@ import type {
 } from "../shared/types.ts";
 import { findQuotePages, normalise, verifyCitation, MIN_QUOTE_CHARS } from "../shared/verify.ts";
 import { fleschKincaidGrade } from "../shared/readability.ts";
+import { textArtifacts } from "./tidy.ts";
 import { displayText, search, type Corpus } from "./corpus.ts";
 import type { FunctionDeclaration } from "./gemini.ts";
 
@@ -294,9 +295,11 @@ function recordStatement(
 ): ToolOutcome {
   const raw = String(a.text ?? "").trim();
   const text = raw.charAt(0).toUpperCase() + raw.slice(1);
-  const kind: StatementKind = (["fact", "estimate", "harm", "tradeoff"] as StatementKind[]).includes(a.kind as StatementKind) ? a.kind! : "fact";
+  let kind: StatementKind = (["fact", "estimate", "harm", "tradeoff"] as StatementKind[]).includes(a.kind as StatementKind) ? a.kind! : "fact";
+  // Hedged ("may", "could", "might") is an estimate, never a fact.
+  if (kind === "fact" && HEDGE.test(text)) kind = "estimate";
   const section: Section = SECTIONS.includes(a.section as Section) ? a.section! : "answer";
-  const problems = ruleProblems(text, section, kind);
+  const problems = [...textArtifacts(raw), ...ruleProblems(text, section, kind)];
   if (section === "impact" && !AUDIENCES.includes(a.audience as AudienceId))
     problems.push(`An impact needs an audience, one of: ${AUDIENCES.join(", ")}.`);
   const { citations, problems: citeProblems } = checkCitations(env.corpus, a.citations);

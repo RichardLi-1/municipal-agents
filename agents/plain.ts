@@ -9,6 +9,7 @@ import type { GlossaryTerm, StatementKind } from "../shared/types.ts";
 import { fleschKincaidGrade } from "../shared/readability.ts";
 import type { GeminiRequest, GeminiResult } from "./gemini.ts";
 import { numbersIn, ruleProblems, sharesWords, type Section } from "./tools.ts";
+import { textArtifacts } from "./tidy.ts";
 
 export const TARGET_GRADE = 8;
 
@@ -37,6 +38,10 @@ const sameNumbers = (a: string, b: string) => numbersIn(a).sort().join(" ") === 
 export function rewriteProblem(item: PlainItem, to: string): string | null {
   const t = to.trim();
   if (!t) return "empty";
+  // A rewrite must be a whole sentence: no stray word carried over, no lower-case start.
+  const glitch = textArtifacts(t)[0];
+  if (glitch) return glitch;
+  if (/^\p{Ll}/u.test(t)) return "it starts in the middle of a sentence";
   if (!sameNumbers(item.text, t)) return `numbers changed (keep exactly: ${numbersIn(item.text).join(", ") || "none"})`;
   const rules = ruleProblems(t, item.section, item.kind);
   if (rules.length) return rules[0];

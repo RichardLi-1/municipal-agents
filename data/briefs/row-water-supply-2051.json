@@ -10,7 +10,7 @@
   "summary": [
     {
       "id": "s2",
-      "text": "reached The Region is planning where to get tap water through to 2051.",
+      "text": "The Region is planning where to get tap water through to 2051.",
       "kind": "fact",
       "citations": [
         {
@@ -133,7 +133,7 @@
         {
           "id": "s29",
           "text": "Water limits might slow down new local housing developments.",
-          "kind": "fact",
+          "kind": "estimate",
           "citations": [
             {
               "sourceId": "row-2026-budget-book",
@@ -152,7 +152,7 @@
         {
           "id": "s5",
           "text": "New water sources could help fix local water limits over time.",
-          "kind": "fact",
+          "kind": "estimate",
           "citations": [
             {
               "sourceId": "row-asset-management-review-2026",
@@ -178,7 +178,7 @@
         {
           "id": "s20",
           "text": "Your regional water bill may rise; in 2026 the average household paid $243.63.",
-          "kind": "fact",
+          "kind": "estimate",
           "citations": [
             {
               "sourceId": "row-2026-budget-book",
@@ -191,7 +191,7 @@
         {
           "id": "s25",
           "text": "User rates could pay over $525 million for water build plans from 2026 to 2035.",
-          "kind": "fact",
+          "kind": "estimate",
           "citations": [
             {
               "sourceId": "row-2026-budget-book",
@@ -233,7 +233,7 @@
         {
           "id": "s7",
           "text": "Local businesses could get more reliable water as the population grows.",
-          "kind": "fact",
+          "kind": "estimate",
           "citations": [
             {
               "sourceId": "row-2026-budget-book",
@@ -246,7 +246,7 @@
         {
           "id": "s30",
           "text": "New developments may face high water charges from 2026 to 2035.",
-          "kind": "fact",
+          "kind": "estimate",
           "citations": [
             {
               "sourceId": "row-2026-budget-book",
@@ -270,7 +270,7 @@
         {
           "id": "s8",
           "text": "New residents may rely on this plan to get safe drinking water.",
-          "kind": "fact",
+          "kind": "estimate",
           "citations": [
             {
               "sourceId": "row-2026-budget-book",
@@ -407,12 +407,6 @@
     {
       "question": "Which water supply options made the short list?",
       "why": "Residents need to know which specific projects are being considered for their communities.",
-      "whoCanAnswer": "Region of Waterloo Water and Wastewater Services",
-      "contact": "nsapeta@regionofwaterloo.ca"
-    },
-    {
-      "question": "How much will each short-listed water option cost?",
-      "why": "Residents will pay for water infrastructure through future rates and development charges.",
       "whoCanAnswer": "Region of Waterloo Water and Wastewater Services",
       "contact": "nsapeta@regionofwaterloo.ca"
     },

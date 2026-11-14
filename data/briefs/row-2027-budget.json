@@ -97,7 +97,7 @@
         {
           "id": "s2",
           "text": "Low income renters may get access to 2,100 of the planned affordable homes.",
-          "kind": "fact",
+          "kind": "estimate",
           "citations": [
             {
               "sourceId": "row-affordable-housing-plan-page",
@@ -166,7 +166,7 @@
         {
           "id": "s6",
           "text": "Bus service expansion plans may change depending on how much funding Council approves for 2027.",
-          "kind": "fact",
+          "kind": "estimate",
           "citations": [
             {
               "sourceId": "grt-business-plan-2025",
@@ -179,7 +179,7 @@
         {
           "id": "s7",
           "text": "Future LRT extension work to Cambridge could move forward; 2027 forecasts included $85 million.",
-          "kind": "fact",
+          "kind": "estimate",
           "citations": [
             {
               "sourceId": "row-2026-budget-book",
@@ -192,7 +192,7 @@
         {
           "id": "s39",
           "text": "Under the transit plan, riders may reach 15,000 more jobs within a one-hour bus trip.",
-          "kind": "fact",
+          "kind": "estimate",
           "citations": [
             {
               "sourceId": "grt-business-plan-2025",
@@ -435,12 +435,6 @@
       "question": "What is the Region's total community greenhouse gas emissions total for 2023 or later?",
       "why": "Residents need recent data to see whether current budget investments are accelerating climate action.",
       "whoCanAnswer": "ClimateActionWR and Region of Waterloo Sustainability Office"
-    },
-    {
-      "question": "When Stage 2 ION light rail to Cambridge will open and what its yearly operating cost will be",
-      "why": "Residents need to know when light rail service reaches Cambridge and how it will affect annual operating taxes.",
-      "whoCanAnswer": "Region of Waterloo",
-      "contact": "regionalclerk@regionofwaterloo.ca"
     }
   ],
   "tradeoffs": [
@@ -476,24 +470,6 @@
           "sourceId": "row-2026-budget-book",
           "page": 12,
           "quote": "Public Transit(2) 231,203 156,402 17.6 $516"
-        }
-      ],
-      "verified": true
-    },
-    {
-      "id": "s41",
-      "text": "Expanding bus service brings more frequent trips, but higher costs increase regional property taxes.",
-      "kind": "tradeoff",
-      "citations": [
-        {
-          "sourceId": "grt-business-plan-2025",
-          "page": 5,
-          "quote": "The total estimated operating costs to achieve all priorities of the GRT Business Plan by 2035, in today’s values, are shown in Table 1"
-        },
-        {
-          "sourceId": "grt-business-plan-2025",
-          "page": 5,
-          "quote": "Transit operating costs will be refined on an ongoing basis as staff prepares annual service expansion plans, which will be subject to Regional Council’s review and approval"
         }
       ],
       "verified": true

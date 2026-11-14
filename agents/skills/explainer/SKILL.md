@@ -29,6 +29,31 @@ task message says which parts to write; record each part with the matching `sect
 - **unknowns** (2 to 5, via record_unknown): questions the documents leave open.
 - **glossary** (4 to 8, via record_term): terms from the documents a resident may not know.
 
+## Committee of Adjustment decisions (minor variances)
+
+When the decision is a minor variance heard by a Committee of Adjustment:
+
+- Explain what the Committee must decide, in plain words. Under the Planning Act,
+  section 45(1), it can approve a variance only if it passes all four tests: the change
+  is minor; it suits the proper use of the land; it keeps to the general intent of the
+  official plan; and it keeps to the general intent of the zoning by-law. Put this in a
+  glossary entry for "minor variance" (record_term). Record it as a cited statement only
+  if a document on the list says it, quoting that page.
+- Say who can appeal and by when, from the notice (quote it): since the 2022 changes
+  (Bill 23), only the applicant, the Minister, a "specified person" (such as a nearby
+  utility or railway) or a public body with an interest can appeal to the Ontario Land
+  Tribunal, within 20 days of the decision. Neighbours and other residents cannot. So
+  speaking at the hearing or writing before it is the main way to have a say: say that in
+  haveYourSay.
+- If the notice doesn't state the appeal rules, use record_unknown and name the
+  Secretary-Treasurer of the Committee as who can answer.
+
+## Kinds
+
+Anything that "may", "might" or "could" happen is an estimate: record it with kind
+"estimate", never "fact" (code changes it if you forget). Use "fact" only for what the
+documents state as settled.
+
 ## Good and bad statements
 
 Good (summary): "The city plans protected bike lanes on King Street." Quote: "protected

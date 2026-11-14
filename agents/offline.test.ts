@@ -46,3 +46,47 @@ test("generateBrief says plainly that the model can't be reached", async () => {
   const r = recorder();
   await assert.rejects(generateBriefWith(r.ctx, { decisionId: DEMO }, r.emit, fakeDeps(noCredit())), /can't be reached right now: the model service's prepaid credit is used up/);
 });
+
+// The questions that showed the old ranking's faults, against the real committed data.
+const DATA = path.join(import.meta.dirname, "..", "data");
+const lines = (t: string) => t.split("\n").filter((l) => l.startsWith("•"));
+
+test("offline: generic verbs don't match ('Will my garbage pickup change?' gets no bus statement)", () => {
+  const a = offlineAnswer(DATA, "row-2027-budget", "Will my garbage pickup change?");
+  assert.doesNotMatch(a.text, /\bbus\b/i);
+  for (const l of lines(a.text)) assert.match(l, /garbage|waste|collection/i);
+});
+
+test("offline: 'Who proposes the budget?' finds the Chair's deadline in the hand-checked timeline, with its citation", () => {
+  const a = offlineAnswer(DATA, "row-2027-budget", "Who proposes the budget?");
+  const chair = a.statements.find((s) => s.id === "timeline-chair-proposes");
+  assert.ok(chair, a.text);
+  assert.equal(chair.verified, true);
+  assert.equal(chair.citations[0].sourceId, "oreg-530-22");
+});
+
+test("offline: appeal rights come from the timeline (who can appeal, 20 days)", () => {
+  const a = offlineAnswer(DATA, "kitchener-transit-hub-variances", "Can I appeal the decision?");
+  assert.match(a.text, /appeal/i);
+  assert.match(a.text, /20 days/);
+  assert.ok(a.statements.every((s) => s.verified));
+});
+
+test("offline: Sunday transit gaps come from the computed transit lens, marked as computed", () => {
+  const a = offlineAnswer(DATA, "row-2027-budget", "Can I get a bus early on Sunday morning?");
+  assert.ok(a.figures?.some((f) => f.kind === "computed" && /Sunday/i.test(f.label)), a.text);
+  assert.match(a.text, /\(computed from open data\) \[C1\]/);
+});
+
+test("offline: the construction scenario only answers construction questions, and is always labelled", () => {
+  const police = offlineAnswer(DATA, "row-2027-budget", "How much does the Region spend on police?");
+  assert.doesNotMatch(police.text, /scenario/i);
+  const tunnel = offlineAnswer(DATA, "row-2027-budget", "What would trucks be like if ION went in a tunnel?");
+  for (const l of lines(tunnel.text)) assert.match(l, /Illustrative scenario, not a Region plan/);
+});
+
+test("offline: nothing relevant means saying so and naming the Clerk", () => {
+  const a = offlineAnswer(DATA, "row-2027-budget", "What is the weather tomorrow?");
+  assert.equal(a.statements.length, 0);
+  assert.match(a.text, /doesn't cover that question\. You can ask the Clerk: Regional Clerk/);
+});

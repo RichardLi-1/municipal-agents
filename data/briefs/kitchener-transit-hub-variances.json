@@ -89,7 +89,7 @@
         {
           "id": "s22",
           "text": "Riders might transfer easily between light rail, buses, and trains by 2030.",
-          "kind": "fact",
+          "kind": "estimate",
           "citations": [
             {
               "sourceId": "row-kcth-update-2024",
@@ -113,7 +113,7 @@
         {
           "id": "s6",
           "text": "Drivers could lose two travel lanes on Victoria Street North to make room for bus priority lanes.",
-          "kind": "fact",
+          "kind": "estimate",
           "citations": [
             {
               "sourceId": "row-kcth-update-2026",
@@ -132,7 +132,7 @@
         {
           "id": "s7",
           "text": "People walking or cycling could use new separate paths to reach the hub.",
-          "kind": "fact",
+          "kind": "estimate",
           "citations": [
             {
               "sourceId": "row-kcth-update-2026",
@@ -151,7 +151,7 @@
         {
           "id": "s23",
           "text": "Local business owners could see brief lane closures nearby through late March 2027.",
-          "kind": "fact",
+          "kind": "estimate",
           "citations": [
             {
               "sourceId": "row-kcth-rumpel-notice",
@@ -529,7 +529,7 @@
         {
           "id": "s17",
           "text": "Future plans for leftover land may include businesses and low cost homes.",
-          "kind": "fact",
+          "kind": "estimate",
           "citations": [
             {
               "sourceId": "row-kcth-update-2024",
