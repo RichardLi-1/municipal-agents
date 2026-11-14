@@ -1,0 +1,18 @@
+{
+  "name": "municipal-agents",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=24" },
+  "scripts": {
+    "dev": "node server/main.ts",
+    "start": "node server/main.ts",
+    "build": "npm --prefix web run build",
+    "test": "node --test \"server/**/*.test.ts\" \"agents/**/*.test.ts\" \"lenses/**/*.test.ts\"",
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  },
+  "devDependencies": {
+    "@types/geojson": "^7946.0.16",
+    "@types/node": "^24",
+    "typescript": "^5.9"
+  }
+}

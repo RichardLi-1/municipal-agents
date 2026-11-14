@@ -1,0 +1,13 @@
+node_modules/
+dist/
+.env
+.env.*
+*.log
+.DS_Store
+data/log.db*
+data/cache/
+video/out/
+video/public/music/
+video/public/footage/*.mp4
+video/public/footage/*.webm
+.worktrees/
