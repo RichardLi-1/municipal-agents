@@ -1,9 +1,10 @@
-# Municipal Agents: one image with the API, the agents and the built web app.
+# Municipal Agents: one image with the API, the agents, the resident web app, the
+# marketing site (landing/), the docs (docs-site/) and the embeddable widget (embed/).
 
-# Stage 1: build the web app. The whole context is copied because web/ may not exist
+# Stage 1: build the sites. The whole context is copied because a site may not exist
 # yet in early deploys and may import ../shared. Vite runs without the type check (the
-# web builder runs that) and a failed web build doesn't block the API: the server then
-# shows a "not built yet" page, which the smoke test reports.
+# web builder runs that) and a failed build doesn't block the API: the server falls back
+# to the resident app for / and /docs, or shows a "not built yet" page.
 FROM node:24-slim AS build
 WORKDIR /src
 COPY . .
@@ -13,7 +14,15 @@ RUN if [ -f web/package.json ]; then \
     else \
       echo "web/ not present yet: skipping the web build"; \
     fi \
- && mkdir -p web/dist agents lenses data cities shared
+ && for site in landing docs-site; do \
+      if [ -f "$site/package.json" ]; then \
+        (cd "$site" && (npm ci --no-audit --no-fund || npm install --no-audit --no-fund) && npm run build) \
+          || echo "WARNING: $site build failed; / and /docs fall back to the resident app"; \
+      else \
+        echo "$site/ not present: skipping"; \
+      fi; \
+    done \
+ && mkdir -p web/dist landing/dist docs-site/dist embed agents lenses data cities shared
 
 # Stage 2: the runtime. poppler-utils gives pdftotext for staff uploads.
 FROM node:24-slim
@@ -33,5 +42,8 @@ COPY --from=build /src/lenses ./lenses
 COPY --from=build /src/cities ./cities
 COPY --from=build /src/data ./data
 COPY --from=build /src/web/dist ./web/dist
+COPY --from=build /src/landing/dist ./landing/dist
+COPY --from=build /src/docs-site/dist ./docs-site/dist
+COPY --from=build /src/embed ./embed
 EXPOSE 8080
 CMD ["node", "--disable-warning=ExperimentalWarning", "server/main.ts"]

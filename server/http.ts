@@ -156,6 +156,7 @@ export type Handler = (ctx: RouteCtx) => unknown | Promise<unknown>;
 
 interface Route {
   method: string;
+  pattern: string;
   re: RegExp;
   keys: string[];
   handler: Handler;
@@ -176,7 +177,7 @@ export class Router {
         return `([^/]+?)${m[2].replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}`;
       })
       .join("/");
-    this.routes.push({ method, re: new RegExp(`^${src}$`), keys, handler });
+    this.routes.push({ method, pattern, re: new RegExp(`^${src}$`), keys, handler });
     return this;
   }
 
@@ -185,6 +186,11 @@ export class Router {
   }
   post(p: string, h: Handler) {
     return this.add("POST", p, h);
+  }
+
+  /** Every registered route, in order (the OpenAPI test checks each one is documented). */
+  list(): { method: string; pattern: string }[] {
+    return this.routes.map((r) => ({ method: r.method, pattern: r.pattern }));
   }
 
   /** The handler for a request, or a 404/405 marker. */

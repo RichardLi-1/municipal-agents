@@ -45,7 +45,10 @@ await check("one decision", async () => {
   if (!decisionId) throw new Error("no decision id");
   const d = await (await getOk(`/api/decisions/${decisionId}`)).json();
   sourceId = d.sources?.[0]?.id ?? d.decision?.sources?.[0];
-  return `brief: ${d.brief ? d.brief.review?.status : "none"}, ${d.sources?.length ?? 0} sources`;
+  // With a brief, the lenses travel once, merged into brief.lenses.
+  if (d.brief && d.lenses) throw new Error("lenses sent twice (top level and in the brief)");
+  const lenses = Object.keys((d.brief ?? d).lenses ?? {});
+  return `brief: ${d.brief ? d.brief.review?.status : "none"}, ${d.sources?.length ?? 0} sources, lenses: ${lenses.join(", ") || "none"}`;
 });
 
 await check("source PDF", async () => {
@@ -72,6 +75,42 @@ await check("web app", async () => {
   const html = await (await getOk("/")).text();
   if (!/<html|<!doctype/i.test(html)) throw new Error("no HTML at /");
   if (html.includes("hasn't been built yet")) throw new Error("the web app isn't in this deploy (web build failed or skipped)");
+});
+
+await check("resident app at /decisions", async () => {
+  const res = await getOk("/decisions");
+  const html = await res.text();
+  if (!/<html|<!doctype/i.test(html) || html.includes("hasn't been built yet")) throw new Error("no resident app at /decisions");
+  for (const h of ["content-security-policy", "strict-transport-security", "x-content-type-options", "referrer-policy", "permissions-policy"]) {
+    if (!res.headers.get(h)) throw new Error(`missing ${h} header`);
+  }
+});
+
+await check("security.txt", async () => {
+  const txt = await (await getOk("/.well-known/security.txt")).text();
+  if (!/^Contact: /m.test(txt) || !/^Expires: /m.test(txt)) throw new Error("no Contact or Expires");
+});
+
+await check("embed", async () => {
+  const js = await getOk("/embed.js");
+  if (js.headers.get("access-control-allow-origin") !== "*") throw new Error("embed.js isn't cross-origin");
+  if (!(await js.text()).includes("attachShadow")) throw new Error("not the widget");
+  if (!decisionId) throw new Error("no decision id");
+  const card = await (await getOk(`/api/embed/${decisionId}`)).json();
+  await getOk("/embed/demo");
+  return `${card.summary?.length ?? 0} statements, next: ${card.next?.title ?? "none"}`;
+});
+
+await check("calendar feed", async () => {
+  const ics = await (await getOk("/api/calendar.ics")).text();
+  if (!ics.includes("REFRESH-INTERVAL")) throw new Error("not a subscription feed");
+  return `${(ics.match(/BEGIN:VEVENT/g) ?? []).length} events`;
+});
+
+await check("openapi", async () => {
+  const doc = await (await getOk("/api/openapi.json")).json();
+  if (doc.openapi !== "3.1.0") throw new Error(`openapi ${doc.openapi}`);
+  return `${Object.keys(doc.paths).length} paths, ${Object.keys(doc.components?.schemas ?? {}).length} schemas`;
 });
 
 if (withAsk) {
@@ -103,6 +142,7 @@ if (withAsk) {
         if (e.type === "error") error = e.message;
       }
     }
+    if (/ai\.studio|generativelanguage|\{"error"|prepayment|RESOURCE_EXHAUSTED/i.test(answer + error)) throw new Error("the model provider's error text reached the client");
     if (!answer) throw new Error(`no answer (events: ${types.join(", ")}${error ? `; error: ${error}` : ""})`);
     return `${types.length} events; "${answer.slice(0, 120)}${answer.length > 120 ? "…" : ""}"`;
   });

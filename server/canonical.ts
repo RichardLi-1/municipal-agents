@@ -21,15 +21,21 @@ export function canonicalJson(v: unknown): string {
 /** The first entry's prevHash. */
 export const GENESIS_HASH = "0".repeat(64);
 
-/** The text that gets hashed: prevHash followed by the canonical entry body. */
-export function hashInput(e: {
-  seq: number;
-  at: string;
-  actor: string;
-  kind: string;
-  decisionId?: string;
-  payload: unknown;
-  prevHash: string;
-}): string {
+/**
+ * The text that gets hashed: prevHash followed by the canonical entry header, which
+ * carries the payload's own hash rather than the payload. So a payload can be purged
+ * under a records retention by-law and the entry (and every later one) still verifies.
+ */
+export function hashInput(e: { seq: number; at: string; actor: string; kind: string; decisionId?: string; payloadHash: string; prevHash: string }): string {
+  return e.prevHash + canonicalJson({ seq: e.seq, at: e.at, actor: e.actor, kind: e.kind, decisionId: e.decisionId, payloadHash: e.payloadHash });
+}
+
+/** What a payload hash covers: the canonical JSON of the payload (sha256 of this). */
+export function payloadInput(payload: unknown): string {
+  return canonicalJson(payload);
+}
+
+/** The hashing before payloads were hashed separately (log format 1), kept to migrate and to check legacy hashes. */
+export function hashInputV1(e: { seq: number; at: string; actor: string; kind: string; decisionId?: string; payload: unknown; prevHash: string }): string {
   return e.prevHash + canonicalJson({ seq: e.seq, at: e.at, actor: e.actor, kind: e.kind, decisionId: e.decisionId, payload: e.payload });
 }

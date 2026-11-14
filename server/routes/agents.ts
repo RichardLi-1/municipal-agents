@@ -3,9 +3,10 @@
 import type { AgentEvent, AudienceId, Brief } from "../../shared/types.ts";
 import { type App, briefHash } from "../app.ts";
 import { SAFE_LANG } from "../data.ts";
-import { clientIp, HttpError, openSse, readJsonBody, type Router, sendJson } from "../http.ts";
+import { clientIp, HttpError, openSse, readJsonBody, type Router, sendJson, type Sse } from "../http.ts";
 import { checkDailyCap } from "../limits.ts";
-import { failureMessage, logUsageFallback, startRun } from "../runs.ts";
+import { failureMessage, logUsageFallback, safeEvent, startRun } from "../runs.ts";
+import { findCachedAnswer, replayRun, RunWriter } from "../runfiles.ts";
 import { publicBrief } from "../statements.ts";
 
 export const AUDIENCES: AudienceId[] = [
@@ -24,6 +25,17 @@ export const AUDIENCES: AudienceId[] = [
 
 const MAX_QUESTION = 1000;
 
+/** An SSE stream that also saves every event it sends to the run's file. */
+export function recorded(sse: Sse, record: RunWriter): Sse {
+  return {
+    ...sse,
+    send(e) {
+      record.write(e as unknown as AgentEvent);
+      sse.send(e);
+    },
+  };
+}
+
 export function agentRoutes(app: App, r: Router): void {
   r.post("/api/decisions/:id/ask", async ({ req, res, params }) => {
     const decision = app.store.decision(params.id);
@@ -37,6 +49,33 @@ export function agentRoutes(app: App, r: Router): void {
       : undefined;
     const lang = typeof body.lang === "string" && SAFE_LANG.test(body.lang) ? body.lang : undefined;
 
+    // The answer cache: a question a real run already answered is replayed from the
+    // record (labelled with when it was answered). It costs nothing, so it skips the
+    // daily cap and the model, but not the per-visitor limit.
+    const cached = findCachedAnswer(app.cfg.dataDir, { decisionId: decision.id, question, lang, audiences });
+    if (cached) {
+      app.visitorLimiter.take(clientIp(req), "questions");
+      const replayOf = cached.header.runId;
+      app.log.append({ actor: "visitor", kind: "question.asked", decisionId: decision.id, payload: { question, audiences, lang, replayOf } });
+      const sse = openSse(req, res);
+      try {
+        const answer = await replayRun(cached, (e) => sse.send(e as AgentEvent & Record<string, unknown>), { signal: sse.signal });
+        app.log.append({
+          actor: "agent:lead",
+          kind: "answer.given",
+          decisionId: decision.id,
+          payload: { question, text: answer.text, statements: answer.statements, replayOf, replay: answer.replay, costUsd: 0 },
+        });
+      } catch (err) {
+        sse.send({ type: "error", message: "That saved answer couldn't be replayed. Please ask again." });
+        console.error("replay failed:", (err as Error).message);
+      } finally {
+        sse.send({ type: "done" });
+        sse.end();
+      }
+      return;
+    }
+
     // Cheap checks first, so a refused request costs nothing.
     const agents = await app.agents.require();
     checkDailyCap(app.log, app.cfg.dailyLimitUsd);
@@ -44,9 +83,11 @@ export function agentRoutes(app: App, r: Router): void {
     const release = app.slots.acquire();
 
     try {
-      app.log.append({ actor: "visitor", kind: "question.asked", decisionId: decision.id, payload: { question, audiences, lang } });
-      const sse = openSse(req, res);
-      const run = startRun(app, { signal: sse.signal, serverKinds: ["question.asked"] });
+      // Every live run's events are saved, so what the agents said can be checked later.
+      const record = new RunWriter(app.cfg.dataDir, { kind: "ask", decisionId: decision.id, question, lang, audiences, model: process.env.LEAD_MODEL || "gemini-3.6-flash" });
+      app.log.append({ actor: "visitor", kind: "question.asked", decisionId: decision.id, payload: { question, audiences, lang, runId: record.runId } });
+      const sse = recorded(openSse(req, res), record);
+      const run = startRun(app, { signal: sse.signal, serverKinds: ["question.asked"], runId: record.runId });
       let answer: Extract<AgentEvent, { type: "answer" }> | undefined;
       let reportedError = false;
       const emit = (e: AgentEvent) => {
@@ -54,7 +95,7 @@ export function agentRoutes(app: App, r: Router): void {
         if (e.type === "error") reportedError = true;
         if (e.type === "usage") run.lastUsage = e;
         if (e.type === "done") return; // the server sends the one "done", last
-        sse.send(e as AgentEvent & Record<string, unknown>);
+        sse.send(safeEvent(e) as AgentEvent & Record<string, unknown>);
       };
       try {
         await agents.ask(run.ctx, { decisionId: decision.id, question, audiences, lang }, emit);
@@ -68,7 +109,7 @@ export function agentRoutes(app: App, r: Router): void {
             actor: "agent:lead",
             kind: "answer.given",
             decisionId: decision.id,
-            payload: { question, text: answer.text, statements: answer.statements },
+            payload: { question, text: answer.text, statements: answer.statements, runId: record.runId },
           });
         }
         logUsageFallback(app, run, decision.id, "agent:lead");

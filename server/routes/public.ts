@@ -26,10 +26,40 @@ export function card(app: App, d: Decision, now = Date.now()): DecisionCard & { 
   };
 }
 
-/** Lenses from data/lenses fill in whatever the brief doesn't carry itself. */
-function withLenses(brief: Brief | undefined, lenses: Lenses): Brief | undefined {
+/**
+ * One lens as residents see it: the computed lens file (data/lenses) is the base, and
+ * the brief lays its own additions on top: its statements, the commitments the agents
+ * drafted, and anything the computed lens lacks (e.g. a cost lens the agents built, with
+ * its inputs and assumptions). `partial` only applies when there is no computed lens.
+ */
+export function mergeLens(computed: unknown, own: unknown): unknown {
+  if (!own) return computed;
+  if (!computed) return own;
+  const base = computed as Record<string, unknown>;
+  const out: Record<string, unknown> = { ...base };
+  for (const [k, v] of Object.entries(own as Record<string, unknown>)) {
+    if (k === "statements") {
+      const all = [...((base.statements as { id: string }[]) ?? []), ...((v as { id: string }[]) ?? [])];
+      out.statements = all.filter((st, i) => all.findIndex((x) => x.id === st.id) === i);
+    } else if (k === "commitments") {
+      const have = ((base.commitments as { title: string }[]) ?? []);
+      const titles = new Set(have.map((c) => c.title.toLowerCase()));
+      out.commitments = [...have, ...((v as { title: string }[]) ?? []).filter((c) => !titles.has(c.title.toLowerCase()))];
+    } else if (k !== "partial" && !(k in base)) out[k] = v;
+  }
+  return out;
+}
+
+/** Lenses from data/lenses, with what the brief adds to each one merged in. */
+export function withLenses(brief: Brief | undefined, lenses: Lenses): Brief | undefined {
   if (!brief) return undefined;
-  return { ...brief, lenses: { ...lenses, ...(brief.lenses ?? {}) } };
+  const own = (brief.lenses ?? {}) as Record<string, unknown>;
+  const merged: Record<string, unknown> = {};
+  for (const id of new Set([...Object.keys(lenses), ...Object.keys(own)])) {
+    const m = mergeLens((lenses as Record<string, unknown>)[id], own[id]);
+    if (m) merged[id] = m;
+  }
+  return { ...brief, lenses: merged as Brief["lenses"] };
 }
 
 function requireDecision(app: App, id: string): Decision {
@@ -78,7 +108,9 @@ export function publicRoutes(app: App, r: Router): void {
     // (with the passcode) get everything so they can change their minds.
     if (brief && original && !isStaff(app, req)) brief = publicBrief(brief, original);
     const sources = decision.sources.map((id) => app.store.source(id)).filter((s) => !!s);
-    const detail: DecisionDetail & { lenses: Lenses } = { decision, brief: withLenses(brief, lenses), sources, lenses };
+    // The lenses travel inside brief.lenses (merged per lens); a top-level copy only when
+    // there is no brief yet, so the large map layers are sent once.
+    const detail: DecisionDetail & { lenses?: Lenses } = { decision, brief: withLenses(brief, lenses), sources, ...(brief ? {} : { lenses }) };
     // no-cache + ETag: staff see their review at once, unchanged briefs cost a 304.
     sendJson(req, res, 200, detail, { "Cache-Control": "no-cache" });
   });

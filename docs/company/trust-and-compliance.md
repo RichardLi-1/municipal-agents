@@ -26,7 +26,7 @@ counsel and privacy office review it. Web sources were read on 14 November 2026.
 |---|---|---|---|
 | Source documents (staff reports, budgets, agendas, notices) | No; public records | Built into the container; copies under `data/sources/` | For the life of the deployment |
 | Decision metadata (timeline, area), briefs, lens results | No | `data/` files; edited briefs on the Toronto volume | Same |
-| Resident questions (text, chosen audiences, language) | Not intended to be, but a resident may type personal details. The page asks them not to (`TODO(verify)` on screen); automatic redaction is planned | The public record (SQLite on the Toronto volume) | Kept in the append-only record; see [section 8](#8-records-retention) |
+| Resident questions (text, chosen audiences, language) | Not intended to be, but a resident may type personal details. The page asks them not to (`TODO(verify)` on screen); automatic redaction is planned | The public record (SQLite on the Toronto volume) | Kept in the record; the text can be purged when the by-law's retention period ends, see [section 8](#8-records-retention) |
 | IP addresses | Yes | In memory only, for rate limiting | Discarded when the window ends; never written |
 | Staff reviewer names and actions | Staff names in their official capacity | The public record | Kept in the append-only record |
 | Model-call metadata (tokens, cost, model) | No | The public record and the spend page | Kept |
@@ -177,12 +177,18 @@ grounding) are code, not a model. So they work the same on every option
 - **What counts as a record here:** published briefs and each version, staff reviews
   and approvals, resident questions and answers, and the source list. The city's
   retention by-law sets how long each is kept.
-- **The tension, stated plainly:** the record is append-only, so today an entry cannot
-  be deleted without breaking the chain. **Planned design before production:** each
-  entry keeps its hash, and the payload (for example a question's text) is stored
-  separately. A payload can then be purged when its retention period ends under the
-  by-law, leaving a "purged under by-law X" tombstone. The chain still verifies, and the
-  deletion is itself on the record.
+- **The tension, and how it is resolved (done, 14 November 2026):** the record is
+  append-only, so an entry's content could not be deleted without breaking the chain.
+  Now each entry's hash covers its payload's own SHA-256 rather than the payload, and the
+  payload (for example a question's text) is stored separately. Staff purge a payload
+  when its retention period ends under the by-law (`POST /api/staff/purge` with the entry
+  and the reason): the content is removed, a `record.purged` entry naming the entry, its
+  payload hash, the reason and the staff member is added to the chain, and the entry shows
+  as "content purged under retention by-law" with the date. The chain still verifies;
+  content removed without a purge entry fails verification. Existing entries were
+  migrated: the old chain was verified end to end, each entry re-hashed with its payload
+  hash and its old hash kept, and the migration recorded on the chain with the old and
+  new head hashes.
 - **Exports** for the city's records system (EDRMS): all entries as JSON or CSV, and
   briefs as PDF and HTML, on demand and on contract end.
 

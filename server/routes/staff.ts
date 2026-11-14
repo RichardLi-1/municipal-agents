@@ -2,12 +2,15 @@
 // written to the brief file and to the public log with the reviewer's name, because
 // agent output is only a draft until a named person approves it (principle 4).
 import { createHash, timingSafeEqual } from "node:crypto";
+import { findBriefRun, replayBriefRun, RunWriter } from "../runfiles.ts";
+import { withLenses } from "./public.ts";
+import { recorded } from "./agents.ts";
 import type { IncomingMessage } from "node:http";
 import type { AgentEvent, Brief } from "../../shared/types.ts";
 import { type App, briefHash } from "../app.ts";
 import { HttpError, openSse, readJsonBody, type Router, sendJson } from "../http.ts";
 import { checkDailyCap } from "../limits.ts";
-import { failureMessage, logUsageFallback, startRun } from "../runs.ts";
+import { failureMessage, logUsageFallback, startRun, safeEvent } from "../runs.ts";
 import { allStatements, briefGrade, publicBrief, recheck, unreviewed } from "../statements.ts";
 import { handleUpload } from "../upload.ts";
 
@@ -61,6 +64,7 @@ export function staffRoutes(app: App, r: Router): void {
     requireStaff(app, req);
     let decisionId: string;
     let reviewer = "";
+    let replay = false;
     if (/^multipart\/form-data/i.test(String(req.headers["content-type"] ?? ""))) {
       const up = await handleUpload(app, req);
       decisionId = up.decisionId;
@@ -69,24 +73,44 @@ export function staffRoutes(app: App, r: Router): void {
       const body = await readJsonBody(req);
       decisionId = typeof body.decisionId === "string" ? body.decisionId : "";
       reviewer = reviewerName(body);
+      replay = body.replay === true;
     }
     const decision = app.store.decision(decisionId);
     if (!decision) throw new HttpError(404, `No decision with id "${decisionId}"`);
+
+    // {decisionId, replay: true}: show a saved real run of the agents drafting this brief,
+    // ending with the current brief. No model, no spend, nothing written.
+    if (replay) {
+      const current = app.store.brief(decisionId);
+      const saved = findBriefRun(app.cfg.dataDir, decisionId, current?.generatedAt);
+      if (!saved || !current) throw new HttpError(404, "There's no saved run of the agents drafting this brief.");
+      const sse = openSse(req, res);
+      try {
+        await replayBriefRun(saved, withLenses(current, app.store.lenses(decision)), (e) => sse.send(e as AgentEvent & Record<string, unknown>), { signal: sse.signal });
+      } finally {
+        sse.send({ type: "done" });
+        sse.end();
+      }
+      return;
+    }
 
     const agents = await app.agents.require();
     checkDailyCap(app.log, app.cfg.dailyLimitUsd);
     const release = app.slots.acquire();
     const actor = reviewer ? staffActor(reviewer) : "staff";
     try {
-      app.log.append({ actor, kind: "brief.started", decisionId, payload: { sources: decision.sources } });
-      const sse = openSse(req, res);
-      const run = startRun(app, { signal: sse.signal, serverKinds: ["brief.started"], timeoutMs: app.cfg.briefTimeoutMs });
+      const record = new RunWriter(app.cfg.dataDir, { kind: "brief", decisionId, model: process.env.SPECIALIST_MODEL || "gemini-3.6-flash" });
+      app.log.append({ actor, kind: "brief.started", decisionId, payload: { sources: decision.sources, runId: record.runId } });
+      const sse = recorded(openSse(req, res), record);
+      const run = startRun(app, { signal: sse.signal, serverKinds: ["brief.started"], timeoutMs: app.cfg.briefTimeoutMs, runId: record.runId });
       let emitted: Brief | undefined;
+      let reportedError = false;
       const emit = (e: AgentEvent) => {
         if (e.type === "brief") emitted = e.brief;
+        if (e.type === "error") reportedError = true;
         if (e.type === "usage") run.lastUsage = e;
         if (e.type === "done") return;
-        sse.send(e as AgentEvent & Record<string, unknown>);
+        sse.send(safeEvent(e) as AgentEvent & Record<string, unknown>);
       };
       try {
         const result = (await agents.generateBrief(run.ctx, { decisionId }, emit)) ?? emitted;
@@ -114,12 +138,14 @@ export function staffRoutes(app: App, r: Router): void {
               costUsd: brief.costUsd,
               models: brief.models,
               file: file.slice(app.cfg.dataDir.length + 1),
+              runId: record.runId,
             },
           });
         }
         if (!emitted) sse.send({ type: "brief", brief } as AgentEvent & Record<string, unknown>);
       } catch (err) {
-        sse.send({ type: "error", message: failureMessage(err, run) });
+        // The agents may already have said what went wrong; say it once.
+        if (!reportedError) sse.send({ type: "error", message: failureMessage(err, run) });
       } finally {
         logUsageFallback(app, run, decisionId, "agent:lead");
         sse.send({ type: "done" });

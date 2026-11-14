@@ -53,3 +53,29 @@ test("no future events gives an empty but valid calendar", () => {
   assert.ok(!ics.includes("BEGIN:VEVENT"));
   assert.ok(ics.includes("PRODID:"));
 });
+
+test("an estimated date is tentative and says \"At the latest\"", () => {
+  const est = structuredClone(decision);
+  est.timeline = [
+    {
+      id: "amend",
+      date: "2099-12-03",
+      kind: "deadline",
+      title: "Council amendments due",
+      plain: "Council has 30 days to amend the proposed budget.",
+      estimated: true,
+      participation: [{ method: "contact-councillor", instructions: "Ask your councillor to move an amendment.", deadline: "2099-12-01" }],
+    },
+    { id: "vote", date: "2099-12-10", kind: "council", title: "Council vote", plain: "Council votes.", participation: [{ method: "watch", instructions: "Watch." }] },
+  ];
+  const ics = decisionCalendar(est, { now: NOW }).replace(/\r\n /g, "");
+  const events = ics.split("BEGIN:VEVENT").slice(1);
+  assert.equal(events.length, 3);
+  assert.match(events[0], /SUMMARY:At the latest: Council amendments due/);
+  assert.match(events[0], /STATUS:TENTATIVE/);
+  assert.match(events[0], /Estimated date: worked out from a rule/);
+  assert.match(events[1], /SUMMARY:At the latest: Deadline to contact your councillor/);
+  assert.match(events[1], /STATUS:TENTATIVE/);
+  assert.match(events[2], /SUMMARY:Council vote/);
+  assert.match(events[2], /STATUS:CONFIRMED/);
+});

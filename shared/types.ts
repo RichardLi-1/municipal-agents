@@ -334,11 +334,20 @@ export interface LogEntry {
     | "question.asked"
     | "answer.given"
     | "translation.made"
-    | "usage";
+    | "usage"
+    | "record.purged"
+    | "record.migrated";
   decisionId?: string;
+  /** The content. null once purged under the city's records retention by-law. */
   payload: unknown;
+  /** sha256 of the canonical JSON of the payload. The chain hashes this, not the payload, so content can be purged and the chain still verifies. */
+  payloadHash?: string;
   prevHash: string;
-  hash: string; // sha256(prevHash + canonical JSON of {seq, at, actor, kind, decisionId, payload})
+  hash: string; // sha256(prevHash + canonical JSON of {seq, at, actor, kind, decisionId, payloadHash})
+  /** Set when the payload was purged: when, why, and the record.purged entry that did it. */
+  purged?: { at: IsoDate; reason: string; bySeq: number };
+  /** Entries written before payload hashing: their original hash (sha256(prevHash + canonical JSON of {seq, at, actor, kind, decisionId, payload})). */
+  legacyHash?: string;
 }
 
 /** Server-sent events from /ask and /staff/briefs. */

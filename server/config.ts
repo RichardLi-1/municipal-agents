@@ -9,8 +9,16 @@ export interface Config {
   appData: string;
   /** Where the log, generated briefs and uploads are written. On Fly, the /data volume. */
   dataDir: string;
-  /** Built web app (Vite output). */
+  /** Built web app (Vite output): the resident app, served at /decisions, /d/:id, ... */
   webDist: string;
+  /** Built marketing site: /, /pricing, /security, /company, /contact, /changelog. */
+  landingDist: string;
+  /** Built docs site: /docs/**. */
+  docsDist: string;
+  /** The embeddable widget (embed.js and its demo page). */
+  embedDir: string;
+  /** Public origin used in links handed to other sites (embed, calendar feeds). */
+  publicUrl: string | undefined;
   port: number;
   host: string;
   staffToken: string | undefined;
@@ -36,6 +44,10 @@ export function loadConfig(env: NodeJS.ProcessEnv = process.env): Config {
     appData,
     dataDir: path.resolve(env.DATA_DIR ?? appData),
     webDist: path.resolve(env.WEB_DIST ?? path.join(appRoot, "web", "dist")),
+    landingDist: path.resolve(env.LANDING_DIST ?? path.join(appRoot, "landing", "dist")),
+    docsDist: path.resolve(env.DOCS_DIST ?? path.join(appRoot, "docs-site", "dist")),
+    embedDir: path.resolve(env.EMBED_DIR ?? path.join(appRoot, "embed")),
+    publicUrl: env.PUBLIC_URL?.replace(/\/$/, "") || undefined,
     // 4100 matches the Vite dev proxy in web/vite.config.ts.
     port: Number(env.PORT ?? 4100),
     host: env.HOST ?? "0.0.0.0",

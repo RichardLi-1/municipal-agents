@@ -251,10 +251,23 @@ export function syncCommittedData(appData: string, dataDir: string): { copied: n
   fs.mkdirSync(dataDir, { recursive: true });
   // Not mirrored: written at runtime (briefs merge below; renders are served from both
   // folders, runtime first, so nothing generated on the volume is deleted).
-  const runtimeOnly = new Set(["briefs", "uploads", "cache", "renders"]);
+  const runtimeOnly = new Set(["briefs", "uploads", "cache", "renders", "runs"]);
   for (const name of fs.readdirSync(appData)) {
     if (name.startsWith("log.db") || name.startsWith(".") || runtimeOnly.has(name)) continue;
     mirror(path.join(appData, name), path.join(dataDir, name), stats);
+  }
+  // Saved runs: live ones are written on the volume, so committed ones are only added.
+  const fromRuns = path.join(appData, "runs");
+  const toRuns = path.join(dataDir, "runs");
+  if (fs.existsSync(fromRuns)) {
+    fs.mkdirSync(toRuns, { recursive: true });
+    for (const f of fs.readdirSync(fromRuns)) {
+      const src = path.join(fromRuns, f);
+      if (f.endsWith(".jsonl") && fs.statSync(src).isFile() && !fs.existsSync(path.join(toRuns, f))) {
+        fs.copyFileSync(src, path.join(toRuns, f));
+        stats.copied++;
+      }
+    }
   }
   const fromBriefs = path.join(appData, "briefs");
   const toBriefs = path.join(dataDir, "briefs");

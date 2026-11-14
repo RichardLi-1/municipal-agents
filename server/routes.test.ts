@@ -18,8 +18,10 @@ let close: () => void;
 let translations = 0;
 const TOKEN = "test-token";
 
+let askCalls = 0;
 const fakeAgents: AgentsModule = {
   async ask(ctx, req, emit) {
+    askCalls++;
     emit({ type: "plan", agent: "lead", steps: [{ id: "1", specialist: "explainer", question: req.question }] });
     emit({ type: "step.start", id: "1", specialist: "explainer", question: req.question });
     emit({ type: "tool", id: "1", specialist: "explainer", tool: "search_pages", summary: "levy" });
@@ -103,7 +105,8 @@ test("decision detail merges lens files into the brief", async () => {
   assert.equal(d.sources[0].id, "fixture-report");
   assert.equal(d.brief.lenses.cost.asset, "Testville services");
   assert.deepEqual(d.brief.lenses.housing.hardToTrack, ["Completions"]);
-  assert.deepEqual(d.lenses.construction.sites, []);
+  assert.deepEqual(d.brief.lenses.construction.sites, []);
+  assert.equal(d.lenses, undefined, "with a brief, the lenses are sent once, inside it");
   const again = await get("/api/decisions/fixture-budget", { headers: { "If-None-Match": res.headers.get("etag")! } });
   assert.equal(again.status, 304);
   const missing = await get("/api/decisions/nope");
@@ -153,6 +156,86 @@ test("ask streams steps then an answer, and logs question, answer and usage", as
   assert.deepEqual(kinds.slice(-3), ["question.asked", "usage", "answer.given"]);
   const q = app.log.list({ kind: "question.asked" }).at(-1) as LogEntry;
   assert.deepEqual((q.payload as { audiences: string[] }).audiences, ["renter"]);
+});
+
+test("a live ask is saved to runs/, and the same question later is replayed from it without the agents", async () => {
+  // The fake agents' answer cites nothing, so it isn't served from the cache; seed a real-shaped one.
+  const res = await post("/api/decisions/fixture-budget/ask", { question: "Where does the levy go?" }, { "Fly-Client-IP": "10.0.0.20" });
+  await res.text();
+  const asked = app.log.list({ kind: "question.asked" }).at(-1) as LogEntry;
+  const runId = (asked.payload as { runId: string }).runId;
+  const given = app.log.list({ kind: "answer.given" }).at(-1) as LogEntry;
+  assert.equal((given.payload as { runId: string }).runId, runId);
+  const file = path.join(app.cfg.dataDir, "runs", `${runId}.jsonl`);
+  const lines = fs.readFileSync(file, "utf8").trim().split("\n").map((l) => JSON.parse(l));
+  assert.equal(lines[0].type, "run");
+  assert.equal(lines[0].question, "Where does the levy go?");
+  assert.deepEqual(lines.slice(1).map((l: { event: AgentEvent }) => l.event.type), ["plan", "step.start", "tool", "step.end", "usage", "answer", "done"]);
+
+  const st: Statement = { id: "s1", text: "The levy pays for roads.", kind: "fact", verified: true, citations: [{ sourceId: "fixture-report", page: 1, quote: "the levy pays for roads" }] };
+  const seeded = [
+    { type: "run", runId: "seed-1", kind: "ask", decisionId: "fixture-budget", question: "What does the levy pay for?", startedAt: "2026-11-14T06:55:01Z", model: "gemini-3.6-flash", source: "test" },
+    { t: 0, event: { type: "plan", agent: "lead", steps: [{ id: "1", specialist: "explainer", question: "levy" }] } },
+    { t: 4000, event: { type: "statement", id: "1", statement: st } },
+    { t: 8000, event: { type: "answer", text: "The levy pays for roads [1].", statements: [st] } },
+  ];
+  fs.writeFileSync(path.join(app.cfg.dataDir, "runs", "seed-1.jsonl"), seeded.map((x) => JSON.stringify(x)).join("\n") + "\n");
+  const calls = askCalls;
+  const t0 = Date.now();
+  const again = await post("/api/decisions/fixture-budget/ask", { question: "what does the levy pay for" }, { "Fly-Client-IP": "10.0.0.21" });
+  const events = await sseEvents(again);
+  assert.ok(Date.now() - t0 >= 2900, "a replay takes at least about 3 seconds");
+  assert.equal(askCalls, calls, "the agents were not called");
+  assert.deepEqual(events.map((e) => e.type), ["plan", "statement", "answer", "done"]);
+  const a = events.find((e) => e.type === "answer") as Extract<AgentEvent, { type: "answer" }>;
+  assert.equal(a.replay?.runId, "seed-1");
+  assert.match(a.text, /Answered by the agents on Sat, Nov 14, 1:55 AM ET · replayed from the record$/);
+  const log = app.log.list({ kind: "answer.given" }).at(-1) as LogEntry;
+  assert.equal((log.payload as { replayOf: string }).replayOf, "seed-1");
+});
+
+test("raw provider errors from the agents are replaced before they reach the visitor", async () => {
+  const raw = 'Gemini 402: {"error":{"code":402,"message":"Your prepayment credits are depleted. Please go to AI Studio at https://ai.studio/projects"}}';
+  const saved = fakeAgents.ask;
+  fakeAgents.ask = async (_ctx, req, emit) => {
+    emit({ type: "step.end", id: "1", specialist: "explainer", status: "failed", summary: `Stopped: ${raw}` });
+    emit({ type: "error", message: raw });
+    throw Object.assign(new Error("Gemini 402"), { status: 402, detail: raw });
+  };
+  try {
+    const res = await post("/api/decisions/fixture-budget/ask", { question: "Will this leak?" }, { "Fly-Client-IP": "10.0.0.30" });
+    const text = await res.text();
+    assert.doesNotMatch(text, /ai\.studio|https?:|prepayment|\{\\"error/);
+    assert.match(text, /The AI model returned an error/);
+  } finally {
+    fakeAgents.ask = saved;
+  }
+});
+
+test("staff can replay a saved real brief run: every event labelled, ending with the current brief, nothing written", async () => {
+  const current = app.store.brief("fixture-budget")!;
+  const file = path.join(app.cfg.dataDir, "briefs", "fixture-budget.json");
+  const before = fs.statSync(file).mtimeMs;
+  const seeded = [
+    { type: "run", runId: "seed-brief", kind: "brief", decisionId: "fixture-budget", startedAt: "2026-11-14T06:49:13Z", model: "gemini-3.6-flash", source: "test", costUsd: 0.37 },
+    { t: 0, event: { type: "plan", agent: "lead", steps: [{ id: "overview", specialist: "explainer", question: "q" }] } },
+    { t: 4000, event: { type: "tool", id: "overview", specialist: "explainer", tool: "search_pages", summary: "Searched the documents" } },
+    { t: 6000, event: { type: "usage", calls: 3, inputTokens: 10, outputTokens: 1, costUsd: 0.01 } },
+    { t: 8000, event: { type: "brief", brief: current } },
+    { t: 8001, event: { type: "done" } },
+  ];
+  fs.mkdirSync(path.join(app.cfg.dataDir, "runs"), { recursive: true });
+  fs.writeFileSync(path.join(app.cfg.dataDir, "runs", "seed-brief.jsonl"), seeded.map((x) => JSON.stringify(x)).join("\n") + "\n");
+  assert.equal((await post("/api/staff/briefs", { decisionId: "fixture-budget", replay: true })).status, 401);
+  const res = await post("/api/staff/briefs", { decisionId: "fixture-budget", replay: true }, staff);
+  const events = (await sseEvents(res)) as (AgentEvent & { replay?: { runId: string; label: string } })[];
+  assert.deepEqual(events.map((e) => e.type), ["plan", "tool", "brief", "done"]);
+  for (const e of events.slice(0, -1)) {
+    assert.equal(e.replay?.runId, "seed-brief");
+    assert.equal(e.replay?.label, "Replay of the agents' real run on Sat, Nov 14, 1:49 AM ET");
+  }
+  assert.equal((events[2] as Extract<AgentEvent, { type: "brief" }>).brief.generatedAt, current.generatedAt);
+  assert.equal(fs.statSync(file).mtimeMs, before, "the brief file is not rewritten");
 });
 
 test("ask rejects empty questions and rate-limits per IP", async () => {

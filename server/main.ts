@@ -16,6 +16,7 @@ const app = createApp(cfg);
 await app.agents.load();
 const agents = app.agents.status();
 console.log(`agents: ${agents.available ? "loaded" : agents.error}`);
+if (app.log.migrated) console.log(`log: migrated ${app.log.migrated.entries} entries to payload hashing (old head ${app.log.migrated.legacyHeadHash.slice(0, 12)}…)`);
 console.log(`log: ${app.log.count()} entries, chain ${app.log.verifyChain().intact ? "intact" : "BROKEN"}`);
 if (!cfg.staffToken) console.warn("STAFF_TOKEN is not set: staff routes will answer 503");
 

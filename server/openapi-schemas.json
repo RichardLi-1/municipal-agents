@@ -1,0 +1,2383 @@
+{
+  "IsoDate": {
+    "type": "string",
+    "description": "ISO 8601 date (2026-11-25) or date-time with offset (2026-11-25T19:00:00-05:00)."
+  },
+  "SourceDoc": {
+    "type": "object",
+    "properties": {
+      "id": {
+        "type": "string",
+        "description": "\"kitchener-2027-budget-book\""
+      },
+      "title": {
+        "type": "string"
+      },
+      "publisher": {
+        "type": "string",
+        "description": "\"City of Kitchener\""
+      },
+      "url": {
+        "type": "string",
+        "description": "where it was downloaded from"
+      },
+      "published": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/IsoDate"
+          }
+        ],
+        "description": "the date the document carries"
+      },
+      "retrieved": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/IsoDate"
+          }
+        ],
+        "description": "when we downloaded it"
+      },
+      "pages": {
+        "type": "number"
+      },
+      "licence": {
+        "type": "string",
+        "description": "\"Open Government Licence – City of Kitchener\", \"Public record\""
+      },
+      "kind": {
+        "type": "string",
+        "enum": [
+          "staff-report",
+          "agenda",
+          "budget",
+          "plan",
+          "progress-report",
+          "dataset",
+          "notice",
+          "other"
+        ]
+      }
+    },
+    "required": [
+      "id",
+      "title",
+      "publisher",
+      "url",
+      "published",
+      "retrieved",
+      "pages",
+      "licence",
+      "kind"
+    ],
+    "description": "A document the agents read: a staff report, an agenda, a budget book, a plan."
+  },
+  "Citation": {
+    "type": "object",
+    "properties": {
+      "sourceId": {
+        "type": "string"
+      },
+      "page": {
+        "type": "number",
+        "description": "1-based"
+      },
+      "quote": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "sourceId",
+      "page",
+      "quote"
+    ],
+    "description": "A quote that must appear, word for word after normalising, on that page."
+  },
+  "StatementKind": {
+    "type": "string",
+    "enum": [
+      "fact",
+      "estimate",
+      "assumption",
+      "unknown",
+      "tradeoff",
+      "harm"
+    ]
+  },
+  "Statement": {
+    "type": "object",
+    "properties": {
+      "id": {
+        "type": "string"
+      },
+      "text": {
+        "type": "string"
+      },
+      "kind": {
+        "$ref": "#/components/schemas/StatementKind"
+      },
+      "citations": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/Citation"
+        }
+      },
+      "verified": {
+        "type": "boolean",
+        "description": "True only when every citation's quote was found on its page by the checker."
+      },
+      "review": {
+        "type": "object",
+        "properties": {
+          "action": {
+            "type": "string",
+            "enum": [
+              "approved",
+              "edited",
+              "rejected"
+            ]
+          },
+          "by": {
+            "type": "string"
+          },
+          "at": {
+            "$ref": "#/components/schemas/IsoDate"
+          },
+          "note": {
+            "type": "string"
+          },
+          "originalText": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "action",
+          "by",
+          "at"
+        ],
+        "description": "Staff review of this one statement."
+      }
+    },
+    "required": [
+      "id",
+      "text",
+      "kind",
+      "citations",
+      "verified"
+    ],
+    "description": "One sentence a resident reads, with its sources."
+  },
+  "Figure": {
+    "type": "object",
+    "properties": {
+      "id": {
+        "type": "string"
+      },
+      "label": {
+        "type": "string",
+        "description": "\"Property tax increase for an average home\""
+      },
+      "value": {
+        "type": "number"
+      },
+      "unit": {
+        "type": "string",
+        "description": "\"CAD\", \"%\", \"units\", \"minutes\", \"tCO2e/yr\""
+      },
+      "display": {
+        "type": "string",
+        "description": "\"$124 a year\""
+      },
+      "citation": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Citation"
+          }
+        ],
+        "description": "absent only when kind is \"computed\" or \"assumption\""
+      },
+      "kind": {
+        "type": "string",
+        "enum": [
+          "assumption",
+          "cited",
+          "computed"
+        ]
+      },
+      "formula": {
+        "type": "string",
+        "description": "For computed figures: the formula in words, and the figure ids it uses."
+      },
+      "inputs": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      }
+    },
+    "required": [
+      "id",
+      "label",
+      "value",
+      "unit",
+      "display",
+      "kind"
+    ],
+    "description": "A number on screen. Every figure is a link to its page."
+  },
+  "AudienceId": {
+    "type": "string",
+    "enum": [
+      "renter",
+      "homeowner",
+      "transit-rider",
+      "driver",
+      "walk-cycle",
+      "business-owner",
+      "senior",
+      "student",
+      "parent",
+      "disability",
+      "newcomer"
+    ]
+  },
+  "Participation": {
+    "type": "object",
+    "properties": {
+      "method": {
+        "type": "string",
+        "enum": [
+          "speak",
+          "write",
+          "survey",
+          "attend",
+          "watch",
+          "contact-councillor"
+        ]
+      },
+      "instructions": {
+        "type": "string",
+        "description": "plain words: \"Register to speak by noon the Friday before\""
+      },
+      "deadline": {
+        "$ref": "#/components/schemas/IsoDate"
+      },
+      "url": {
+        "type": "string"
+      },
+      "contact": {
+        "type": "string",
+        "description": "\"clerks@kitchener.ca, 519-741-2203\" (public office contacts only)"
+      }
+    },
+    "required": [
+      "method",
+      "instructions"
+    ]
+  },
+  "TimelineEvent": {
+    "type": "object",
+    "properties": {
+      "id": {
+        "type": "string"
+      },
+      "date": {
+        "$ref": "#/components/schemas/IsoDate"
+      },
+      "end": {
+        "$ref": "#/components/schemas/IsoDate"
+      },
+      "kind": {
+        "type": "string",
+        "enum": [
+          "other",
+          "report",
+          "committee",
+          "public-input",
+          "council",
+          "deadline",
+          "implementation",
+          "budget-vote"
+        ]
+      },
+      "title": {
+        "type": "string",
+        "description": "\"General Issues Committee\""
+      },
+      "plain": {
+        "type": "string",
+        "description": "\"Councillors discuss the draft budget. You can speak.\""
+      },
+      "location": {
+        "type": "string"
+      },
+      "participation": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/Participation"
+        }
+      },
+      "citation": {
+        "$ref": "#/components/schemas/Citation"
+      },
+      "estimated": {
+        "type": "boolean",
+        "description": "Worked out from a rule (e.g. \"30 days after the proposal\"), not published: show as \"at the latest\"."
+      }
+    },
+    "required": [
+      "id",
+      "date",
+      "kind",
+      "title",
+      "plain"
+    ]
+  },
+  "Decision": {
+    "type": "object",
+    "properties": {
+      "id": {
+        "type": "string"
+      },
+      "city": {
+        "type": "string",
+        "description": "city config id, \"waterloo-region\""
+      },
+      "title": {
+        "type": "string",
+        "description": "the official title"
+      },
+      "plainTitle": {
+        "type": "string",
+        "description": "\"Kitchener's 2027 budget: a 4.9% tax increase\""
+      },
+      "decidedBy": {
+        "type": "string",
+        "description": "\"Kitchener City Council\""
+      },
+      "status": {
+        "type": "string",
+        "enum": [
+          "proposed",
+          "in-consultation",
+          "decided"
+        ]
+      },
+      "officialUrl": {
+        "type": "string",
+        "description": "the official notice or agenda page"
+      },
+      "sources": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "description": "SourceDoc ids"
+      },
+      "timeline": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/TimelineEvent"
+        }
+      },
+      "area": {
+        "oneOf": [
+          {
+            "type": "object",
+            "description": "GeoJSON FeatureCollection (RFC 7946, WGS84)"
+          },
+          {
+            "type": "object",
+            "description": "GeoJSON Feature (RFC 7946, WGS84)"
+          }
+        ],
+        "description": "GeoJSON (WGS84) of the area the decision touches, for the map."
+      },
+      "center": {
+        "type": "array",
+        "prefixItems": [
+          {
+            "type": "number"
+          },
+          {
+            "type": "number"
+          }
+        ],
+        "minItems": 2,
+        "maxItems": 2,
+        "description": "[lng, lat]"
+      },
+      "zoom": {
+        "type": "number"
+      },
+      "lenses": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/LensId"
+        }
+      },
+      "tags": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "notices": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "date": {
+              "$ref": "#/components/schemas/IsoDate"
+            },
+            "title": {
+              "type": "string"
+            },
+            "text": {
+              "type": "string"
+            },
+            "citation": {
+              "$ref": "#/components/schemas/Citation"
+            }
+          },
+          "required": [
+            "id",
+            "date",
+            "title",
+            "text"
+          ]
+        },
+        "description": "Hand-checked notices that change how to read the brief (e.g. a new rule on who\nproposes the budget). Shown above the brief until staff regenerate it."
+      }
+    },
+    "required": [
+      "id",
+      "city",
+      "title",
+      "plainTitle",
+      "decidedBy",
+      "status",
+      "officialUrl",
+      "sources",
+      "timeline",
+      "center",
+      "zoom",
+      "lenses"
+    ],
+    "description": "A proposed municipal decision. Hand-checked metadata; the brief is the agents'."
+  },
+  "LensId": {
+    "type": "string",
+    "enum": [
+      "transit",
+      "cost",
+      "commitments",
+      "housing",
+      "construction"
+    ]
+  },
+  "AudienceImpact": {
+    "type": "object",
+    "properties": {
+      "audience": {
+        "$ref": "#/components/schemas/AudienceId"
+      },
+      "label": {
+        "type": "string",
+        "description": "\"If you rent\""
+      },
+      "statements": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/Statement"
+        }
+      }
+    },
+    "required": [
+      "audience",
+      "label",
+      "statements"
+    ]
+  },
+  "Unknown": {
+    "type": "object",
+    "properties": {
+      "question": {
+        "type": "string",
+        "description": "\"How many buses route 7 will run after 9 pm\""
+      },
+      "why": {
+        "type": "string",
+        "description": "why it matters"
+      },
+      "whoCanAnswer": {
+        "type": "string",
+        "description": "\"Grand River Transit planning\""
+      },
+      "contact": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "question",
+      "why",
+      "whoCanAnswer"
+    ]
+  },
+  "GlossaryTerm": {
+    "type": "object",
+    "properties": {
+      "term": {
+        "type": "string"
+      },
+      "plain": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "term",
+      "plain"
+    ]
+  },
+  "TransitLens": {
+    "type": "object",
+    "properties": {
+      "feed": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          },
+          "retrieved": {
+            "$ref": "#/components/schemas/IsoDate"
+          },
+          "serviceDate": {
+            "$ref": "#/components/schemas/IsoDate"
+          },
+          "licence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "url",
+          "retrieved",
+          "serviceDate",
+          "licence"
+        ]
+      },
+      "scenarios": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "label": {
+              "type": "string"
+            },
+            "departure": {
+              "type": "string"
+            },
+            "day": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "id",
+            "label",
+            "departure",
+            "day"
+          ]
+        },
+        "description": "Times the access was computed for, e.g. \"weekday-0800\"."
+      },
+      "access": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "scenario": {
+              "type": "string"
+            },
+            "destinationType": {
+              "type": "string"
+            },
+            "minutesLimit": {
+              "type": "number"
+            },
+            "shareReached": {
+              "type": "number"
+            },
+            "originsCounted": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "scenario",
+            "destinationType",
+            "minutesLimit",
+            "shareReached",
+            "originsCounted"
+          ]
+        },
+        "description": "For each scenario and destination type, the share of the area's people (or origins) reaching one within the limit."
+      },
+      "gaps": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "kind": {
+              "type": "string",
+              "enum": [
+                "no-service",
+                "late-start",
+                "early-end",
+                "low-frequency",
+                "first-last-mile",
+                "long-trip"
+              ]
+            },
+            "title": {
+              "type": "string",
+              "description": "\"No bus reaches Grand River Hospital by 8 am on Sundays from Mill Courtland\""
+            },
+            "detail": {
+              "type": "string"
+            },
+            "scenario": {
+              "type": "string"
+            },
+            "peopleAffected": {
+              "type": "number"
+            },
+            "location": {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "number"
+                }
+              ],
+              "minItems": 2,
+              "maxItems": 2
+            }
+          },
+          "required": [
+            "id",
+            "kind",
+            "title",
+            "detail"
+          ]
+        }
+      },
+      "fixes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "title": {
+              "type": "string",
+              "description": "\"Start route 8 at 6 am on Sundays\""
+            },
+            "benefit": {
+              "type": "string"
+            },
+            "tradeoff": {
+              "type": "string"
+            },
+            "rank": {
+              "type": "number"
+            },
+            "estimate": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "id",
+            "title",
+            "benefit",
+            "tradeoff",
+            "rank"
+          ]
+        }
+      },
+      "layers": {
+        "type": "object",
+        "additionalProperties": {
+          "type": "object",
+          "description": "GeoJSON FeatureCollection (RFC 7946, WGS84)"
+        },
+        "description": "GeoJSON layers for the map: stops, gaps, destinations, isochrones."
+      },
+      "method": {
+        "type": "string",
+        "description": "the algorithm in plain words, with its reference"
+      },
+      "limits": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "statements": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/Statement"
+        },
+        "description": "Cited statements the transit-access specialist added in a brief."
+      },
+      "partial": {
+        "type": "boolean",
+        "description": "True when the brief has statements but no computed lens data."
+      }
+    },
+    "required": [
+      "feed",
+      "scenarios",
+      "access",
+      "gaps",
+      "fixes",
+      "layers",
+      "method",
+      "limits"
+    ],
+    "description": "Transit lens (challenge 2). Computed from GTFS + destinations by lenses/transit."
+  },
+  "CostLens": {
+    "type": "object",
+    "properties": {
+      "asset": {
+        "type": "string",
+        "description": "\"Kitchener's new indoor recreation complex\""
+      },
+      "horizonYears": {
+        "type": "number"
+      },
+      "discountRate": {
+        "type": "number",
+        "description": "0 or 0.03"
+      },
+      "households": {
+        "type": "number"
+      },
+      "figures": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/Figure"
+        },
+        "description": "upfront, annual operating, annual maintenance, renewal, emissions, carbon price"
+      },
+      "series": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "year": {
+              "type": "number"
+            },
+            "capital": {
+              "type": "number"
+            },
+            "operating": {
+              "type": "number"
+            },
+            "maintenance": {
+              "type": "number"
+            },
+            "renewal": {
+              "type": "number"
+            },
+            "environmental": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "year",
+            "capital",
+            "operating",
+            "maintenance",
+            "renewal",
+            "environmental"
+          ]
+        },
+        "description": "Year-by-year, for the stacked chart."
+      },
+      "totals": {
+        "type": "object",
+        "properties": {
+          "capital": {
+            "type": "number"
+          },
+          "operating": {
+            "type": "number"
+          },
+          "maintenance": {
+            "type": "number"
+          },
+          "renewal": {
+            "type": "number"
+          },
+          "environmental": {
+            "type": "number"
+          },
+          "lifecycle": {
+            "type": "number"
+          },
+          "perHousehold": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "capital",
+          "operating",
+          "maintenance",
+          "renewal",
+          "environmental",
+          "lifecycle"
+        ]
+      },
+      "statements": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/Statement"
+        }
+      },
+      "assumptions": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "label": {
+              "type": "string"
+            },
+            "value": {
+              "type": "number"
+            },
+            "unit": {
+              "type": "string"
+            },
+            "min": {
+              "type": "number"
+            },
+            "max": {
+              "type": "number"
+            },
+            "step": {
+              "type": "number"
+            },
+            "why": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "id",
+            "label",
+            "value",
+            "unit",
+            "min",
+            "max",
+            "step",
+            "why"
+          ]
+        }
+      }
+    },
+    "required": [
+      "asset",
+      "horizonYears",
+      "discountRate",
+      "figures",
+      "series",
+      "totals",
+      "statements",
+      "assumptions"
+    ],
+    "description": "Cost lens (challenge 3)."
+  },
+  "CommitmentsLens": {
+    "type": "object",
+    "properties": {
+      "commitments": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "title": {
+              "type": "string",
+              "description": "\"Cut community greenhouse gas emissions 50% by 2030\""
+            },
+            "madeBy": {
+              "type": "string"
+            },
+            "madeOn": {
+              "$ref": "#/components/schemas/IsoDate"
+            },
+            "target": {
+              "type": "string"
+            },
+            "status": {
+              "type": "string",
+              "enum": [
+                "on-track",
+                "behind",
+                "done",
+                "unclear"
+              ]
+            },
+            "progress": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/Statement"
+              }
+            },
+            "unclear": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "relation": {
+              "type": "string",
+              "description": "how this decision touches it"
+            }
+          },
+          "required": [
+            "id",
+            "title",
+            "madeBy",
+            "target",
+            "status",
+            "progress",
+            "unclear",
+            "relation"
+          ]
+        }
+      },
+      "statements": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/Statement"
+        }
+      },
+      "partial": {
+        "type": "boolean"
+      }
+    },
+    "required": [
+      "commitments"
+    ],
+    "description": "Commitments lens (challenge 4)."
+  },
+  "HousingLens": {
+    "type": "object",
+    "properties": {
+      "city": {
+        "type": "string"
+      },
+      "stages": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "enum": [
+                "approved",
+                "site-plan",
+                "permit-issued",
+                "under-construction",
+                "completed"
+              ]
+            },
+            "label": {
+              "type": "string"
+            },
+            "units": {
+              "oneOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "projects": {
+              "oneOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "source": {
+              "type": "string",
+              "description": "dataset or document"
+            },
+            "tracked": {
+              "type": "boolean",
+              "description": "false where no public data shows this stage"
+            }
+          },
+          "required": [
+            "id",
+            "label",
+            "units",
+            "projects",
+            "tracked"
+          ]
+        }
+      },
+      "timeBetween": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "from": {
+              "type": "string"
+            },
+            "to": {
+              "type": "string"
+            },
+            "medianDays": {
+              "oneOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "note": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "from",
+            "to",
+            "medianDays",
+            "note"
+          ]
+        }
+      },
+      "target": {
+        "type": "object",
+        "properties": {
+          "label": {
+            "type": "string"
+          },
+          "units": {
+            "type": "number"
+          },
+          "by": {
+            "type": "string"
+          },
+          "citation": {
+            "$ref": "#/components/schemas/Citation"
+          }
+        },
+        "required": [
+          "label",
+          "units",
+          "by"
+        ]
+      },
+      "statements": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/Statement"
+        }
+      },
+      "hardToTrack": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "layers": {
+        "type": "object",
+        "additionalProperties": {
+          "type": "object",
+          "description": "GeoJSON FeatureCollection (RFC 7946, WGS84)"
+        }
+      }
+    },
+    "required": [
+      "city",
+      "stages",
+      "timeBetween",
+      "statements",
+      "hardToTrack"
+    ],
+    "description": "Housing lens (challenge 5)."
+  },
+  "ConstructionSite": {
+    "type": "object",
+    "properties": {
+      "id": {
+        "type": "string"
+      },
+      "name": {
+        "type": "string",
+        "description": "\"Parking lot east of Fairway Rd and Hwy 8\""
+      },
+      "role": {
+        "type": "string",
+        "enum": [
+          "launch-portal",
+          "launch-shaft",
+          "extraction-shaft",
+          "laydown",
+          "cross-passage"
+        ]
+      },
+      "location": {
+        "type": "array",
+        "prefixItems": [
+          {
+            "type": "number"
+          },
+          {
+            "type": "number"
+          }
+        ],
+        "minItems": 2,
+        "maxItems": 2
+      },
+      "footprint": {
+        "type": "object",
+        "description": "GeoJSON Feature (RFC 7946, WGS84)"
+      },
+      "areaM2": {
+        "type": "number"
+      },
+      "landUse": {
+        "type": "string",
+        "description": "from OpenStreetMap tags, \"parking\", \"industrial\", \"brownfield\", ..."
+      },
+      "distanceToAlignmentM": {
+        "type": "number"
+      },
+      "nearestSensitive": {
+        "type": "object",
+        "properties": {
+          "kind": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "distanceM": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "kind",
+          "distanceM"
+        ],
+        "description": "school, hospital, homes, park, water"
+      },
+      "truckAccess": {
+        "type": "object",
+        "properties": {
+          "road": {
+            "type": "string"
+          },
+          "distanceM": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "road",
+          "distanceM"
+        ],
+        "description": "nearest arterial or highway"
+      },
+      "score": {
+        "type": "number",
+        "description": "0..100, higher is better, from the stated weights"
+      },
+      "reasons": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "description": "why it scores well"
+      },
+      "concerns": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "description": "what an engineer must check"
+      }
+    },
+    "required": [
+      "id",
+      "name",
+      "role",
+      "location",
+      "areaM2",
+      "landUse",
+      "distanceToAlignmentM",
+      "score",
+      "reasons",
+      "concerns"
+    ],
+    "description": "Construction scout. Agents scout candidate sites for excavation and a tunnel boring\nmachine (TBM) launch portal or shaft along a line, lay out the bores and the\ngeotechnical boreholes, and stage the work step by step with illustrative renders.\nAlways a scenario for engineers and staff to evaluate: agents never pick the site."
+  },
+  "ConstructionStep": {
+    "type": "object",
+    "properties": {
+      "id": {
+        "type": "string"
+      },
+      "n": {
+        "type": "number"
+      },
+      "title": {
+        "type": "string",
+        "description": "\"Launch the boring machine\""
+      },
+      "plain": {
+        "type": "string",
+        "description": "what happens, in plain words"
+      },
+      "duration": {
+        "type": "string",
+        "description": "\"about 3 months\" (assumption, stated)"
+      },
+      "whatResidentsNotice": {
+        "type": "string",
+        "description": "noise, trucks, closures, hours"
+      },
+      "render": {
+        "type": "object",
+        "properties": {
+          "url": {
+            "type": "string"
+          },
+          "prompt": {
+            "type": "string"
+          },
+          "model": {
+            "type": "string"
+          },
+          "illustrative": {
+            "type": "boolean",
+            "const": true
+          }
+        },
+        "required": [
+          "url",
+          "prompt",
+          "model",
+          "illustrative"
+        ]
+      },
+      "mapFocus": {
+        "type": "object",
+        "properties": {
+          "center": {
+            "type": "array",
+            "prefixItems": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "number"
+              }
+            ],
+            "minItems": 2,
+            "maxItems": 2
+          },
+          "zoom": {
+            "type": "number"
+          },
+          "bearing": {
+            "type": "number"
+          },
+          "pitch": {
+            "type": "number"
+          },
+          "layers": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "center",
+          "zoom",
+          "layers"
+        ]
+      }
+    },
+    "required": [
+      "id",
+      "n",
+      "title",
+      "plain",
+      "duration",
+      "whatResidentsNotice",
+      "mapFocus"
+    ]
+  },
+  "ConstructionLens": {
+    "type": "object",
+    "properties": {
+      "decisionId": {
+        "type": "string"
+      },
+      "scenario": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          },
+          "basis": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "title",
+          "label",
+          "basis"
+        ],
+        "description": "label: \"Illustrative scenario: not a Region plan\""
+      },
+      "method": {
+        "type": "string",
+        "enum": [
+          "tbm-twin-bore",
+          "tbm-single-bore",
+          "microtunnel",
+          "cut-and-cover"
+        ]
+      },
+      "alignment": {
+        "type": "object",
+        "description": "GeoJSON Feature (RFC 7946, WGS84)"
+      },
+      "alignmentSource": {
+        "type": "string",
+        "description": "where the line came from, with licence"
+      },
+      "sites": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/ConstructionSite"
+        },
+        "description": "ranked candidates"
+      },
+      "proposed": {
+        "type": "object",
+        "properties": {
+          "launch": {
+            "type": "string"
+          },
+          "extraction": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "launch",
+          "extraction"
+        ],
+        "description": "site ids the scout ranks first, for staff to evaluate"
+      },
+      "weights": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "label": {
+              "type": "string"
+            },
+            "weight": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "label",
+            "weight"
+          ]
+        },
+        "description": "the scoring rule, shown"
+      },
+      "bores": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "label": {
+              "type": "string"
+            },
+            "line": {
+              "type": "object",
+              "description": "GeoJSON Feature (RFC 7946, WGS84)"
+            },
+            "lengthM": {
+              "type": "number"
+            },
+            "diameterM": {
+              "type": "number"
+            },
+            "depthM": {
+              "type": "object",
+              "properties": {
+                "min": {
+                  "type": "number"
+                },
+                "max": {
+                  "type": "number"
+                }
+              },
+              "required": [
+                "min",
+                "max"
+              ]
+            }
+          },
+          "required": [
+            "id",
+            "label",
+            "line",
+            "lengthM",
+            "diameterM",
+            "depthM"
+          ]
+        }
+      },
+      "crossPassages": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "location": {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "number"
+                }
+              ],
+              "minItems": 2,
+              "maxItems": 2
+            },
+            "chainageM": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "id",
+            "location",
+            "chainageM"
+          ]
+        }
+      },
+      "boreholes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "location": {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "number"
+                }
+              ],
+              "minItems": 2,
+              "maxItems": 2
+            },
+            "chainageM": {
+              "type": "number"
+            },
+            "depthM": {
+              "type": "number"
+            },
+            "purpose": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "id",
+            "location",
+            "chainageM",
+            "depthM",
+            "purpose"
+          ]
+        }
+      },
+      "profile": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "chainageM": {
+              "type": "number"
+            },
+            "groundM": {
+              "type": "number"
+            },
+            "crownM": {
+              "type": "number"
+            },
+            "invertM": {
+              "type": "number"
+            },
+            "feature": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "chainageM",
+            "groundM",
+            "crownM",
+            "invertM"
+          ]
+        },
+        "description": "Long-section along the alignment, for the profile drawing. Metres."
+      },
+      "steps": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/ConstructionStep"
+        }
+      },
+      "layers": {
+        "type": "object",
+        "additionalProperties": {
+          "type": "object",
+          "description": "GeoJSON FeatureCollection (RFC 7946, WGS84)"
+        }
+      },
+      "limits": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "references": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "statements": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/Statement"
+        }
+      },
+      "partial": {
+        "type": "boolean"
+      }
+    },
+    "required": [
+      "decisionId",
+      "scenario",
+      "method",
+      "alignment",
+      "alignmentSource",
+      "sites",
+      "proposed",
+      "weights",
+      "bores",
+      "crossPassages",
+      "boreholes",
+      "profile",
+      "steps",
+      "layers",
+      "limits",
+      "references"
+    ]
+  },
+  "Brief": {
+    "type": "object",
+    "properties": {
+      "decisionId": {
+        "type": "string"
+      },
+      "lang": {
+        "type": "string",
+        "description": "\"en\", \"fr\", ..."
+      },
+      "generatedAt": {
+        "$ref": "#/components/schemas/IsoDate"
+      },
+      "models": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "costUsd": {
+        "type": "number"
+      },
+      "readingGrade": {
+        "type": "number",
+        "description": "Flesch-Kincaid grade of the summary + impacts"
+      },
+      "summary": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/Statement"
+        }
+      },
+      "whyNow": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/Statement"
+        }
+      },
+      "impacts": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/AudienceImpact"
+        }
+      },
+      "haveYourSay": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/Statement"
+        },
+        "description": "plain-language framing of the timeline"
+      },
+      "figures": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/Figure"
+        }
+      },
+      "unknowns": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/Unknown"
+        }
+      },
+      "tradeoffs": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/Statement"
+        }
+      },
+      "glossary": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/GlossaryTerm"
+        }
+      },
+      "lenses": {
+        "type": "object",
+        "properties": {
+          "transit": {
+            "$ref": "#/components/schemas/TransitLens"
+          },
+          "cost": {
+            "$ref": "#/components/schemas/CostLens"
+          },
+          "commitments": {
+            "$ref": "#/components/schemas/CommitmentsLens"
+          },
+          "housing": {
+            "$ref": "#/components/schemas/HousingLens"
+          },
+          "construction": {
+            "$ref": "#/components/schemas/ConstructionLens"
+          }
+        }
+      },
+      "review": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "draft",
+              "in-review",
+              "published"
+            ]
+          },
+          "by": {
+            "type": "string"
+          },
+          "at": {
+            "$ref": "#/components/schemas/IsoDate"
+          }
+        },
+        "required": [
+          "status"
+        ]
+      }
+    },
+    "required": [
+      "decisionId",
+      "lang",
+      "generatedAt",
+      "models",
+      "costUsd",
+      "readingGrade",
+      "summary",
+      "whyNow",
+      "impacts",
+      "haveYourSay",
+      "figures",
+      "unknowns",
+      "tradeoffs",
+      "glossary",
+      "lenses",
+      "review"
+    ]
+  },
+  "DecisionCard": {
+    "type": "object",
+    "properties": {
+      "id": {
+        "type": "string"
+      },
+      "plainTitle": {
+        "type": "string"
+      },
+      "decidedBy": {
+        "type": "string"
+      },
+      "status": {
+        "type": "string",
+        "enum": [
+          "proposed",
+          "in-consultation",
+          "decided"
+        ]
+      },
+      "next": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/TimelineEvent"
+          }
+        ],
+        "description": "next event with participation, if any"
+      },
+      "center": {
+        "type": "array",
+        "prefixItems": [
+          {
+            "type": "number"
+          },
+          {
+            "type": "number"
+          }
+        ],
+        "minItems": 2,
+        "maxItems": 2
+      },
+      "reviewStatus": {
+        "type": "string",
+        "enum": [
+          "draft",
+          "in-review",
+          "published",
+          "none"
+        ]
+      },
+      "lenses": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/LensId"
+        }
+      }
+    },
+    "required": [
+      "id",
+      "plainTitle",
+      "decidedBy",
+      "status",
+      "center",
+      "reviewStatus",
+      "lenses"
+    ]
+  },
+  "DecisionDetail": {
+    "type": "object",
+    "properties": {
+      "decision": {
+        "$ref": "#/components/schemas/Decision"
+      },
+      "brief": {
+        "$ref": "#/components/schemas/Brief"
+      },
+      "sources": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/SourceDoc"
+        }
+      }
+    },
+    "required": [
+      "decision",
+      "sources"
+    ]
+  },
+  "CityConfig": {
+    "type": "object",
+    "properties": {
+      "id": {
+        "type": "string"
+      },
+      "name": {
+        "type": "string",
+        "description": "\"Waterloo Region\""
+      },
+      "municipalities": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "center": {
+        "type": "array",
+        "prefixItems": [
+          {
+            "type": "number"
+          },
+          {
+            "type": "number"
+          }
+        ],
+        "minItems": 2,
+        "maxItems": 2
+      },
+      "zoom": {
+        "type": "number"
+      },
+      "languages": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "description": "offered in the language menu"
+      },
+      "officialNoticeUrl": {
+        "type": "string"
+      },
+      "clerkContact": {
+        "type": "string"
+      },
+      "gtfsUrl": {
+        "type": "string"
+      },
+      "openData": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "url": {
+              "type": "string"
+            },
+            "licence": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "url",
+            "licence"
+          ]
+        }
+      }
+    },
+    "required": [
+      "id",
+      "name",
+      "municipalities",
+      "center",
+      "zoom",
+      "languages",
+      "officialNoticeUrl",
+      "clerkContact",
+      "openData"
+    ]
+  },
+  "LogEntry": {
+    "type": "object",
+    "properties": {
+      "seq": {
+        "type": "number"
+      },
+      "at": {
+        "$ref": "#/components/schemas/IsoDate"
+      },
+      "actor": {
+        "type": "string",
+        "description": "\"agent:lead\", \"agent:transit-access\", \"staff:ana\", \"visitor\", \"system\""
+      },
+      "kind": {
+        "type": "string",
+        "enum": [
+          "source.added",
+          "brief.started",
+          "brief.generated",
+          "statement.recorded",
+          "statement.rejected",
+          "statement.reviewed",
+          "brief.published",
+          "question.asked",
+          "answer.given",
+          "translation.made",
+          "usage",
+          "record.purged",
+          "record.migrated"
+        ]
+      },
+      "decisionId": {
+        "type": "string"
+      },
+      "payload": {
+        "description": "The content. null once purged under the city's records retention by-law."
+      },
+      "payloadHash": {
+        "type": "string",
+        "description": "sha256 of the canonical JSON of the payload. The chain hashes this, not the payload, so content can be purged and the chain still verifies."
+      },
+      "prevHash": {
+        "type": "string"
+      },
+      "hash": {
+        "type": "string",
+        "description": "sha256(prevHash + canonical JSON of {seq, at, actor, kind, decisionId, payloadHash})"
+      },
+      "purged": {
+        "type": "object",
+        "properties": {
+          "at": {
+            "$ref": "#/components/schemas/IsoDate"
+          },
+          "reason": {
+            "type": "string"
+          },
+          "bySeq": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "at",
+          "reason",
+          "bySeq"
+        ],
+        "description": "Set when the payload was purged: when, why, and the record.purged entry that did it."
+      },
+      "legacyHash": {
+        "type": "string",
+        "description": "Entries written before payload hashing: their original hash (sha256(prevHash + canonical JSON of {seq, at, actor, kind, decisionId, payload}))."
+      }
+    },
+    "required": [
+      "seq",
+      "at",
+      "actor",
+      "kind",
+      "payload",
+      "prevHash",
+      "hash"
+    ],
+    "description": "The log: append-only, each entry's hash covers the previous one's."
+  },
+  "AgentEvent": {
+    "oneOf": [
+      {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "const": "plan"
+          },
+          "agent": {
+            "type": "string"
+          },
+          "steps": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "specialist": {
+                  "type": "string"
+                },
+                "question": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "id",
+                "specialist",
+                "question"
+              ]
+            }
+          }
+        },
+        "required": [
+          "type",
+          "agent",
+          "steps"
+        ]
+      },
+      {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "const": "step.start"
+          },
+          "id": {
+            "type": "string"
+          },
+          "specialist": {
+            "type": "string"
+          },
+          "question": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "type",
+          "id",
+          "specialist",
+          "question"
+        ]
+      },
+      {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "const": "tool"
+          },
+          "id": {
+            "type": "string"
+          },
+          "specialist": {
+            "type": "string"
+          },
+          "tool": {
+            "type": "string"
+          },
+          "summary": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "type",
+          "id",
+          "specialist",
+          "tool",
+          "summary"
+        ]
+      },
+      {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "const": "statement"
+          },
+          "id": {
+            "type": "string"
+          },
+          "statement": {
+            "$ref": "#/components/schemas/Statement"
+          }
+        },
+        "required": [
+          "type",
+          "id",
+          "statement"
+        ]
+      },
+      {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "const": "step.end"
+          },
+          "id": {
+            "type": "string"
+          },
+          "specialist": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "done",
+              "failed"
+            ]
+          },
+          "summary": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "type",
+          "id",
+          "specialist",
+          "status",
+          "summary"
+        ]
+      },
+      {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "const": "answer"
+          },
+          "text": {
+            "type": "string"
+          },
+          "statements": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Statement"
+            }
+          },
+          "figures": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Figure"
+            }
+          },
+          "offline": {
+            "type": "boolean",
+            "description": "Answered without a model (the model was unreachable): from the brief's checked statements."
+          },
+          "replay": {
+            "type": "object",
+            "properties": {
+              "runId": {
+                "type": "string"
+              },
+              "at": {
+                "$ref": "#/components/schemas/IsoDate"
+              },
+              "label": {
+                "type": "string"
+              },
+              "costUsd": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "runId",
+              "at",
+              "label"
+            ],
+            "description": "Replayed from a saved real run (the answer cache): when it was answered, and the label shown."
+          }
+        },
+        "required": [
+          "type",
+          "text",
+          "statements"
+        ]
+      },
+      {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "const": "brief"
+          },
+          "brief": {
+            "$ref": "#/components/schemas/Brief"
+          }
+        },
+        "required": [
+          "type",
+          "brief"
+        ]
+      },
+      {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "const": "usage"
+          },
+          "calls": {
+            "type": "number"
+          },
+          "inputTokens": {
+            "type": "number"
+          },
+          "outputTokens": {
+            "type": "number"
+          },
+          "costUsd": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "type",
+          "calls",
+          "inputTokens",
+          "outputTokens",
+          "costUsd"
+        ]
+      },
+      {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "const": "error"
+          },
+          "message": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "type",
+          "message"
+        ]
+      },
+      {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "const": "done"
+          }
+        },
+        "required": [
+          "type"
+        ]
+      }
+    ],
+    "description": "Server-sent events from /ask and /staff/briefs."
+  },
+  "UsageSummary": {
+    "type": "object",
+    "properties": {
+      "calls": {
+        "type": "number"
+      },
+      "inputTokens": {
+        "type": "number"
+      },
+      "outputTokens": {
+        "type": "number"
+      },
+      "costUsd": {
+        "type": "number"
+      },
+      "energyWh": {
+        "type": "number",
+        "description": "estimate, method in docs"
+      },
+      "co2eGrams": {
+        "type": "number"
+      },
+      "byModel": {
+        "type": "object",
+        "additionalProperties": {
+          "type": "object",
+          "properties": {
+            "calls": {
+              "type": "number"
+            },
+            "inputTokens": {
+              "type": "number"
+            },
+            "outputTokens": {
+              "type": "number"
+            },
+            "costUsd": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "calls",
+            "inputTokens",
+            "outputTokens",
+            "costUsd"
+          ]
+        }
+      },
+      "today": {
+        "type": "object",
+        "properties": {
+          "costUsd": {
+            "type": "number"
+          },
+          "limitUsd": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "costUsd",
+          "limitUsd"
+        ]
+      }
+    },
+    "required": [
+      "calls",
+      "inputTokens",
+      "outputTokens",
+      "costUsd",
+      "energyWh",
+      "co2eGrams",
+      "byModel",
+      "today"
+    ]
+  }
+}

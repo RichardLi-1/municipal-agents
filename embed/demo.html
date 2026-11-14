@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>Embed demo · Municipal Agents</title>
+    <meta name="description" content="Demo: how a municipality embeds a Municipal Agents decision card on its own website with one script tag." />
+    <style>
+      :root {
+        --bg: #f6f5f2;
+        --fg: #17181b;
+        --mut: #5a5b61;
+        --line: #dedcd6;
+        --panel: #ffffff;
+        --band: #23324a;
+        --band-fg: #f4f6fa;
+        --acc: #1f5fd6;
+        color-scheme: light;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #121214;
+          --fg: #efeee9;
+          --mut: #a9a9b0;
+          --line: #303036;
+          --panel: #1a1a1d;
+          --band: #1c2638;
+          --band-fg: #e9edf5;
+          --acc: #7aa7ff;
+          color-scheme: dark;
+        }
+      }
+      * { box-sizing: border-box; }
+      body { margin: 0; background: var(--bg); color: var(--fg); font: 16px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+      a { color: var(--acc); }
+      .demo-flag { background: #fff3c4; color: #3d2f00; border-bottom: 1px solid #e6d27a; padding: 10px 16px; font-size: 14px; text-align: center; }
+      .demo-flag strong { font-weight: 700; }
+      header.city { background: var(--band); color: var(--band-fg); }
+      header.city .inner, main, footer { max-width: 1080px; margin: 0 auto; padding: 0 16px; }
+      header.city .inner { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-top: 14px; padding-bottom: 14px; flex-wrap: wrap; }
+      .seal { display: flex; align-items: center; gap: 12px; font-weight: 700; font-size: 18px; }
+      .seal span.mark { width: 34px; height: 34px; border-radius: 50%; border: 2px solid currentColor; display: grid; place-items: center; font-size: 13px; }
+      nav.city a { color: inherit; text-decoration: none; margin-left: 18px; font-size: 15px; opacity: .9; }
+      .crumbs { font-size: 13px; color: var(--mut); margin: 22px 0 6px; }
+      h1 { font-size: 30px; line-height: 1.2; margin: 0 0 12px; }
+      .grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 380px); gap: 32px; align-items: start; margin-bottom: 48px; }
+      @media (max-width: 860px) { .grid { grid-template-columns: 1fr; } nav.city a { margin: 0 14px 0 0; } }
+      .panel { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 18px 20px; margin-bottom: 18px; }
+      .muted { color: var(--mut); }
+      .placeholder { height: 10px; border-radius: 6px; background: var(--line); margin: 10px 0; }
+      .placeholder.short { width: 60%; }
+      aside h2 { font-size: 14px; text-transform: uppercase; letter-spacing: .05em; color: var(--mut); margin: 0 0 10px; }
+      pre { background: #0f1115; color: #e8eaf0; padding: 14px 16px; border-radius: 10px; overflow-x: auto; font-size: 13px; line-height: 1.5; white-space: pre-wrap; word-break: break-all; }
+      code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+      table { border-collapse: collapse; width: 100%; font-size: 14px; }
+      th, td { text-align: left; border-top: 1px solid var(--line); padding: 7px 6px; vertical-align: top; }
+      footer { color: var(--mut); font-size: 13px; padding-bottom: 40px; }
+    </style>
+  </head>
+  <body>
+    <div class="demo-flag" role="note">
+      <strong>Demo.</strong> This is a mock municipal web page for the fictional "Town of Example", made to show how a city embeds a
+      <a href="/">Municipal Agents</a> card. It is not a real city's site. The card on the right is live.
+    </div>
+
+    <header class="city">
+      <div class="inner">
+        <div class="seal"><span class="mark" aria-hidden="true">TE</span> Town of Example <span class="muted" style="color:inherit;opacity:.7;font-weight:400">(mock)</span></div>
+        <nav class="city" aria-label="Mock city navigation">
+          <a href="#">Residents</a><a href="#">Council</a><a href="#">Budget</a><a href="#">Contact</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <p class="crumbs">Home › Council › Budget</p>
+      <h1>Budget and council decisions</h1>
+      <div class="grid">
+        <div>
+          <div class="panel">
+            <p>This is where a city's own page content goes: the official notice, agendas and staff reports. The Municipal Agents card sits beside it and links back to the official notice; it never replaces it.</p>
+            <div class="placeholder"></div>
+            <div class="placeholder"></div>
+            <div class="placeholder short"></div>
+          </div>
+
+          <div class="panel">
+            <h2 style="margin-top:0;font-size:20px">Add a card to your page</h2>
+            <p>One line of HTML. Change <code>data-decision</code> to the decision's id.</p>
+            <pre><code>&lt;script src="https://municipal-agents.fly.dev/embed.js"
+        data-decision="row-2027-budget"
+        data-lang="en"&gt;&lt;/script&gt;</code></pre>
+            <p>Several cards with one script:</p>
+            <pre><code>&lt;div data-municipal-agents data-decision="row-2027-budget"&gt;&lt;/div&gt;
+&lt;div data-municipal-agents data-decision="row-water-supply-2051" data-lang="fr"&gt;&lt;/div&gt;
+&lt;script src="https://municipal-agents.fly.dev/embed.js" defer&gt;&lt;/script&gt;</code></pre>
+            <table>
+              <tr><th scope="row">data-decision</th><td>Required. The decision id, as in <code>/d/&lt;id&gt;</code>.</td></tr>
+              <tr><th scope="row">data-lang</th><td><code>en</code> or <code>fr</code> labels; a cached translation of the summary is used when one exists. Defaults to the page's language.</td></tr>
+              <tr><th scope="row">data-theme</th><td><code>auto</code> (follows the visitor's setting), <code>light</code> or <code>dark</code>.</td></tr>
+            </table>
+            <p class="muted" style="margin-bottom:0;margin-top:12px">Privacy: the card sets no cookies, stores nothing in the browser, sends no referrer and loads one JSON file from municipal-agents.fly.dev. Its styles live in a Shadow DOM, so they don't change your page. Under 15 KB compressed.</p>
+          </div>
+
+          <div class="panel">
+            <h2 style="margin-top:0;font-size:20px">A second card, in French</h2>
+            <div data-municipal-agents data-decision="row-water-supply-2051" data-lang="fr"></div>
+          </div>
+        </div>
+
+        <aside aria-label="What's being decided">
+          <h2>What's being decided</h2>
+          <script src="/embed.js" data-decision="row-2027-budget" data-lang="en"></script>
+        </aside>
+      </div>
+    </main>
+
+    <footer>
+      <p>Mock page for demonstration only. "Town of Example" is fictional. The embedded card is served by Municipal Agents; its content cites the Region of Waterloo's own documents.</p>
+    </footer>
+  </body>
+</html>

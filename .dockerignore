@@ -6,6 +6,8 @@
 **/.DS_Store
 *.log
 web/dist
+landing/dist
+docs-site/dist
 data/log.db*
 data/cache
 data/uploads
