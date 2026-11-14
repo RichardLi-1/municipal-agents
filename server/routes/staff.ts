@@ -6,12 +6,12 @@ import { findBriefRun, replayBriefRun, RunWriter } from "../runfiles.ts";
 import { withLenses } from "./public.ts";
 import { recorded } from "./agents.ts";
 import type { IncomingMessage } from "node:http";
-import type { AgentEvent, Brief } from "../../shared/types.ts";
+import type { AgentEvent, Brief, Statement } from "../../shared/types.ts";
 import { type App, briefHash } from "../app.ts";
 import { HttpError, openSse, readJsonBody, type Router, sendJson } from "../http.ts";
 import { checkDailyCap } from "../limits.ts";
 import { failureMessage, logUsageFallback, startRun, safeEvent } from "../runs.ts";
-import { allStatements, briefGrade, publicBrief, recheck, unreviewed } from "../statements.ts";
+import { allStatements, briefGrade, publicBrief, recheck, unreviewed, withdrawn } from "../statements.ts";
 import { handleUpload } from "../upload.ts";
 
 /** True when the request carries the staff passcode (used to show staff the full brief). */
@@ -169,7 +169,21 @@ export function staffRoutes(app: App, r: Router): void {
     if (!current) throw new HttpError(404, `No brief for decision "${decisionId}"`);
     // Work on a copy: the store's cached object must not change unless the write succeeds.
     const brief = structuredClone(current);
-    const st = allStatements(brief).find((s) => s.id === statementId);
+    let st = allStatements(brief).find((s) => s.id === statementId);
+    // A statement from a lens file (shown to residents in brief.lenses) is reviewed by
+    // copying it into the brief's own additions to that lens, where the review is kept.
+    if (!st) {
+      const decision = app.store.decision(decisionId);
+      const lenses = (decision ? app.store.lenses(decision) : {}) as Record<string, { statements?: Statement[] } | undefined>;
+      for (const [lensId, lens] of Object.entries(lenses)) {
+        const found = lens?.statements?.find((s) => s.id === statementId);
+        if (!found) continue;
+        const own = ((brief.lenses ??= {}) as Record<string, { statements?: Statement[] }>);
+        own[lensId] ??= { statements: [] };
+        (own[lensId].statements ??= []).push((st = structuredClone(found)));
+        break;
+      }
+    }
     if (!st) throw new HttpError(404, `No statement "${statementId}" in this brief`);
 
     const before = st.text;
@@ -217,10 +231,13 @@ export function staffRoutes(app: App, r: Router): void {
     if (!reviewer) throw new HttpError(400, "Publishing needs the reviewer's name.");
     const current = app.store.brief(decisionId);
     if (!current) throw new HttpError(404, `No brief for decision "${decisionId}"`);
-    // Staff publish (principle 4): every statement needs a decision first.
-    const pending = unreviewed(current);
+    // Staff publish (principle 4): every statement residents will see, lens files
+    // included, needs a staff decision first. Operator corrections don't count as one.
+    const decision = app.store.decision(decisionId);
+    const visible = withLenses(current, decision ? app.store.lenses(decision) : {})!;
+    const pending = unreviewed(visible);
     if (pending.length) {
-      const total = allStatements(current).length;
+      const total = allStatements(visible).filter((s) => !withdrawn(s)).length;
       throw new HttpError(
         409,
         `${pending.length} of ${total} statement${total === 1 ? "" : "s"} ${pending.length === 1 ? "hasn't" : "haven't"} been reviewed yet. Approve, edit or reject each one before publishing.`,

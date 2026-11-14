@@ -56,6 +56,10 @@ export interface LensOptions {
   departureOffsetsMin?: number[]; // [0, 5, ..., 25]
   walk?: WalkModel;
   sources: { population: string; destinations: string; gtfs: string };
+  /** The agency's name for plain text ("Grand River Transit"); from the feed's agency.txt. */
+  agency?: string;
+  /** Mean latitude of the area, for grid maths (default: the area's middle). */
+  lat0?: number;
   /** A place the decision is about (e.g. a new hub): who in the whole population can reach it. */
   focus?: { label: string; p: LngLat };
   log?: (msg: string) => void;
@@ -67,7 +71,7 @@ export interface LensOptions {
  * origin at its centroid. A small area with no grid point inside gives its people to the cell
  * holding its centroid.
  */
-export function buildOrigins(das: DAInput[], cellM: number, lat0 = 43.45): Origin[] {
+export function buildOrigins(das: DAInput[], cellM: number, lat0 = Math.round((das.reduce((s, d) => s + d.centroid[1], 0) / Math.max(1, das.length)) * 20) / 20): Origin[] {
   const dLat = cellM / 111_320;
   const dLng = cellM / (111_320 * Math.cos((lat0 * Math.PI) / 180));
   const cells = new Map<string, Origin>();
@@ -125,10 +129,10 @@ function median(xs: number[]): number {
 }
 
 /** Group origins into blocks of about 2 km (5 x 5 cells of 400 m) so hot spots can be named. */
-function blocks(origins: Origin[], idx: number[], cellM: number): number[][] {
+function blocks(origins: Origin[], idx: number[], cellM: number, lat0: number): number[][] {
   const k = Math.max(1, Math.round(2000 / cellM));
   const dLat = cellM / 111_320;
-  const dLng = cellM / (111_320 * Math.cos((43.45 * Math.PI) / 180));
+  const dLng = cellM / (111_320 * Math.cos((lat0 * Math.PI) / 180));
   const groups = new Map<string, number[]>();
   for (const i of idx) {
     const x = origins[i];
@@ -326,7 +330,8 @@ export function buildTransitLens(o: LensOptions): TransitLens & Record<string, u
     }
     return { pop, c: roundPt(c), where, distToStop: near !== undefined ? Math.round(distM(c, stopPts[near])) : null };
   };
-  const topGroups = (idx: number[], n: number) => blocks(origins, idx, o.cellM).map(describeGroup).sort((a, b) => b.pop - a.pop).slice(0, n);
+  const lat0 = o.lat0 ?? (o.area.bbox[1] + o.area.bbox[3]) / 2;
+  const topGroups = (idx: number[], n: number) => blocks(origins, idx, o.cellM, lat0).map(describeGroup).sort((a, b) => b.pop - a.pop).slice(0, n);
 
   type Gap = TransitLens["gaps"][number] & { share?: number };
   const gaps: Gap[] = [];
@@ -345,7 +350,7 @@ export function buildTransitLens(o: LensOptions): TransitLens & Record<string, u
     addGap({
       id: "no-stop-nearby",
       kind: "no-service",
-      title: `${fmt(popOf(noStop))} people (${pct(popOf(noStop) / totalPop)}) live more than 800 m from any bus or ION stop`,
+      title: `${fmt(popOf(noStop))} people (${pct(popOf(noStop) / totalPop)}) live more than 800 m from any transit stop`,
       detail: `Largest groups: ${groups.map((g) => `${g.where} (${fmt(g.pop)} people)`).join("; ")}. Distances are straight-line from 400 m grid cells; rural areas count from their census area's centre.`,
       peopleAffected: Math.round(popOf(noStop)),
       location: groups[0]?.c,
@@ -478,7 +483,8 @@ export function buildTransitLens(o: LensOptions): TransitLens & Record<string, u
     for (let t = 0; t < day.nTrips; t++) if (day.tripRoute[t] === r && day.tripFirstDep[t] >= from && day.tripFirstDep[t] < to) n++;
     return n;
   };
-  const tradeCommon = "GRT's cost per service hour would turn these hours into dollars; the buses and drivers have to come from new money or from other routes, which would then run less often.";
+  const agency = o.agency ?? "The transit agency";
+  const tradeCommon = `${agency}'s cost per service hour would turn these hours into dollars; the buses and drivers have to come from new money or from other routes, which would then run less often.`;
 
   // 1. Frequency: run a route every 15 minutes, 6 am to 7 pm on weekdays.
   const hWk = routeHeadwaysMin(wkDay, weekday.time);
@@ -652,7 +658,7 @@ export function buildTransitLens(o: LensOptions): TransitLens & Record<string, u
       access: { type: "FeatureCollection", features: accessFeats },
     },
     method:
-      `Earliest arrival by the Connection Scan Algorithm (Dibbelt, Pajor, Strasser and Wagner, "Intriguingly Simple and Fast Transit Routing", SEA 2013; ACM JEA 2018) over one service day of Grand River Transit's published GTFS schedules (buses and ION light rail). ` +
+      `Earliest arrival by the Connection Scan Algorithm (Dibbelt, Pajor, Strasser and Wagner, "Intriguingly Simple and Fast Transit Routing", SEA 2013; ACM JEA 2018) over one service day of ${o.feedInfo.name}, the published schedules. ` +
       `From each ${o.cellM} m grid cell of homes (2021 census population by dissemination area, shared evenly over the cells inside it), the rider walks at ${walk.speedKmh} km/h along ${walk.detour}x the straight-line distance to any stop within ${walk.accessM} m, rides, may change vehicles (${walk.transferBufferS} s at the same stop, or a walk to another stop within ${walk.transferM} m), and walks from a stop within ${walk.accessM} m to the destination (or walks directly if it is within ${walk.accessM} m). ` +
       `Travel time is the median over departures every 5 minutes for half an hour from each scenario time. A destination type counts as reached when its nearest one is within ${LIMIT / 60} minutes. Shares are of people, not places. ` +
       `Stop gaps come from the timetable: first departure after 6:30 am, last before 11 pm, and fewer than two departures in the hour around the scenario time (all routes at the stop together). Fixes are ranked by the people living within ${walk.accessM} m of the changed stops who lack that service today; trip and bus-hour estimates come from the timetable's own trip times.`,
@@ -662,8 +668,8 @@ export function buildTransitLens(o: LensOptions): TransitLens & Record<string, u
       `Schedules are the published timetable for one weekday (${weekday.dayLabel})${sunday ? ` and one Sunday (${sunday.dayLabel})` : ""}; delays, detours, crowding and missed connections are not modelled. Saturday is not computed.`,
       "Destinations come from OpenStreetMap and may be missing or out of date; a clinic or pharmacy may not serve everyone (walk-in hours, specialties). Hospital means an OSM hospital not tagged emergency=no (three sites in the region); a hospital's other services and specialties are not distinguished.",
       `Headway at a stop counts all routes together, so two routes going different ways can look like one frequent service. Routes outside the area that riders transfer to are included in travel times but not in fixes.`,
-      "Fixes are candidates computed from the timetable, not GRT proposals. People helped counts residents near the changed stops, not expected riders. Bus-hour estimates count trip time only; layovers, deadheading and fleet limits are not included, and no dollar cost is given because no cost per hour was taken from a cited source.",
-      "MobilityPLUS, GRT's specialized service, and any on-demand or school services are not in the GTFS and are not counted.",
+      `Fixes are candidates computed from the timetable, not ${agency} proposals. People helped counts residents near the changed stops, not expected riders. Bus-hour estimates count trip time only; layovers, deadheading and fleet limits are not included, and no dollar cost is given because no cost per hour was taken from a cited source.`,
+      "Specialized (paratransit) service, on-demand zones and school buses are not counted unless they are in the GTFS.",
     ],
     area: { id: o.area.id, label: o.area.label },
     population: { total: Math.round(totalPop), origins: nO, source: o.sources.population },

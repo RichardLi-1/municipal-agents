@@ -11,6 +11,7 @@ import type { AgentsModule } from "./agents-loader.ts";
 import { type App, createApp } from "./app.ts";
 import { loadConfig } from "./config.ts";
 import { createServer } from "./server.ts";
+import { allStatements } from "./statements.ts";
 
 let app: App;
 let base = "";
@@ -455,4 +456,29 @@ test("the daily cap stops new runs once today's spend reaches the limit", async 
   const res = await post("/api/decisions/fixture-budget/ask", { question: "Still there?" }, { "Fly-Client-IP": "10.0.0.9" });
   assert.equal(res.status, 429);
   assert.match((await res.json()).error, /budget/);
+});
+
+test("publishing waits for staff to review lens statements from lens files too, and staff can review them", async () => {
+  const file = path.join(app.cfg.dataDir, "lenses", "fixture-budget.cost.json");
+  const before = fs.readFileSync(file, "utf8");
+  const lens = JSON.parse(before);
+  lens.statements = [{ id: "cost-lens-1", text: "Upkeep is $1 million a year.", kind: "fact", verified: true, citations: [{ sourceId: "fixture-report", page: 1, quote: "The levy rises 4.9 per cent." }] }];
+  fs.writeFileSync(file, JSON.stringify(lens));
+  try {
+    // Make sure everything in the brief itself is reviewed by staff.
+    const d = await (await get("/api/decisions/fixture-budget", { headers: staff })).json();
+    for (const s of allStatements(d.brief as Brief).filter((x) => !x.review || /Municipal Agents team/.test(x.review.by)))
+      if (s.id !== "cost-lens-1") await post("/api/staff/review", { decisionId: "fixture-budget", statementId: s.id, action: "approve", reviewer: "Ana Silva" }, staff);
+    const blocked = await post("/api/staff/publish", { decisionId: "fixture-budget", reviewer: "Ana Silva" }, staff);
+    assert.equal(blocked.status, 409);
+    assert.match((await blocked.json()).error, /^1 of \d+ statements hasn't been reviewed/);
+    const rev = await post("/api/staff/review", { decisionId: "fixture-budget", statementId: "cost-lens-1", action: "approve", reviewer: "Ana Silva" }, staff);
+    assert.equal(rev.status, 200);
+    const after = await (await get("/api/decisions/fixture-budget", { headers: staff })).json();
+    const merged = (after.brief.lenses.cost.statements as Statement[]).find((s) => s.id === "cost-lens-1")!;
+    assert.equal(merged.review?.by, "Ana Silva", "the brief's reviewed copy wins over the lens file's");
+    assert.equal((await post("/api/staff/publish", { decisionId: "fixture-budget", reviewer: "Ana Silva" }, staff)).status, 200);
+  } finally {
+    fs.writeFileSync(file, before);
+  }
 });

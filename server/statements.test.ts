@@ -50,3 +50,13 @@ test("a draft hides statements the Municipal Agents team withdrew, and nothing e
   b.summary[0].review = { action: "rejected", by: "Municipal Agents team (not Region staff)", at: "2026-11-14T09:00:00-05:00", note: "Unsupported." };
   assert.deepEqual(publicBrief(b).summary.map((s) => s.id), ["b"]);
 });
+
+test("only a staff review counts before publishing, and lens statements from lens files count too", async () => {
+  const { withLenses } = await import("./routes/public.ts");
+  const b = brief("draft");
+  b.summary[0].review = { action: "edited", by: "Municipal Agents team (not Region staff)", at: "2026-11-14T08:30:00-05:00", note: "fixed" };
+  b.summary[1].review = { action: "rejected", by: "Municipal Agents team (not Region staff)", at: "2026-11-14T08:30:00-05:00", note: "withdrawn" };
+  const merged = withLenses(b, { housing: { statements: [st("lens-1")] } } as never)!;
+  // "a" was only corrected by the team; "b" was withdrawn (residents never see it); "lens-1" comes from the lens file.
+  assert.deepEqual(unreviewed(merged).map((s) => s.id).sort(), ["a", "d", "lens-1"]);
+});

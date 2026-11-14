@@ -8,6 +8,7 @@
     "build": "tsc --noEmit -p tsconfig.json && vite build",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit -p tsconfig.json",
+    "test": "node --test src/lib/*.test.ts",
     "shots": "node scripts/shots.mjs"
   },
   "dependencies": {

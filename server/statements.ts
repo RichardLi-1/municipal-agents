@@ -35,8 +35,23 @@ export function allStatements(brief: Brief): Statement[] {
   return out;
 }
 
+/** A review counts only when a named staff member made it: operator corrections don't. */
+export function staffReviewed(s: Statement): boolean {
+  const by = s.review?.by ?? "";
+  return !!s.review && by !== OPERATOR && !/Municipal Agents team/i.test(by);
+}
+
+/** Withdrawn by the Municipal Agents team: residents never see it, so staff needn't review it. */
+export function withdrawn(s: Statement): boolean {
+  return s.review?.action === "rejected" && s.review.by === OPERATOR;
+}
+
+/**
+ * Statements still waiting for a staff decision. Pass the brief with its lens files
+ * merged in (withLenses), so lens statements residents will see count too.
+ */
 export function unreviewed(brief: Brief): Statement[] {
-  return allStatements(brief).filter((s) => !s.review);
+  return allStatements(brief).filter((s) => !withdrawn(s) && !staffReviewed(s));
 }
 
 /** The brief with the given statements removed; audience groups left empty are dropped. */

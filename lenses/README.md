@@ -64,11 +64,30 @@ Other settings:
 **Run.**
 
 ```
-node lenses/transit/fetch.ts            # GTFS, OSM destinations, census, into data/cache (once)
-node lenses/transit/build.ts            # data/lenses/transit-region.json
+node lenses/transit/fetch.ts [--city <id>]  # GTFS, OSM destinations, census, into data/cache/transit/<id>/ (once)
+node lenses/transit/build.ts [--city <id>]  # data/lenses/transit-region.json
 node lenses/transit/build.ts --area data/decisions/kitchener-transit-hub-variances.json \
   --focus-label "the Kitchener Central Transit Hub site (King and Victoria)"   # 1.5 km around the point
 ```
+
+**Another city: no code change.** Everything city-specific is read from `cities/<id>.json`:
+
+- `gtfsUrls`: one or more feeds. Waterloo Region lists two, buses (`staticfeeds/1`) and
+  ION (`staticfeeds/2`). Without `gtfsUrls`, the lens reads `gtfsUrl`.
+- `censusDivision`, or `bbox`: which census areas to use.
+- the GTFS licence: the `openData` entry that mentions GTFS or transit.
+
+The agency's name comes from the feed's `agency.txt`. The grid latitude is the census areas'
+mean, rounded to 0.05°.
+
+`--city` defaults to the first city file. That city writes `transit-region.json`; any other
+city writes `transit-<id>.json`.
+
+Population uses Statistics Canada, so a city outside Canada needs a replacement for
+`fetchCensus` and `loadDAs`.
+
+The refactor reproduces the current `transit-region.json` and the hub lens exactly (same
+gaps, access, fixes and layers); only the wording of the method and limits changed.
 
 **For the agents.** Call `transitSummary(lens, {scenario?, maxGaps?, maxFixes?, types?})` from
 `lenses/transit/summary.ts`, or `index.ts`. It returns compact text with:
@@ -130,6 +149,16 @@ approved, site plan, permit issued, under construction and completed. Counts sta
 
 **For the agents.** `housingSummary(lens)` in `summary.ts` returns compact text for the
 `housing-pipeline` agent. Details and limits: [`housing/README.md`](housing/README.md).
+
+**Another city: a small field mapping per permit portal.** Unlike transit, housing isn't
+config-only, because every permit portal names its fields differently. A new city needs:
+
+- its datasets in `sources.ts`;
+- one short function in `build.ts` per permit dataset. It maps that portal's permit number,
+  dates, status, new units and location to a `Permit`, like `kitchenerPermit` (about 25
+  lines).
+
+The province's target data covers Ontario only.
 
 ## Cost (challenge 3): `lenses/cost/`
 

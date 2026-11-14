@@ -16,7 +16,7 @@ import { isUnreachable, logFailure, publicError, UNREACHABLE } from "./errors.ts
 import { offlineAnswer } from "./offline.ts";
 import { tidyBrief } from "./tidy.ts";
 import { listSkills, loadSkill } from "./skills.ts";
-import { AUDIENCES, AUDIENCE_LABELS, newFindings, type Findings, type RecordedStatement } from "./tools.ts";
+import { AUDIENCES, AUDIENCE_LABELS, newFindings, numberBacked, numbersIn, type Findings, type RecordedStatement } from "./tools.ts";
 import { glossaryPass, plainAnswer, plainPass, TARGET_GRADE, type LeadCall, type PlainItem } from "./plain.ts";
 
 export interface Deps {
@@ -123,10 +123,12 @@ const ADVICE = [
 ];
 
 /**
- * Renumbers markers in order of use: [n] for verified statements, [Cn] for computed
- * figures. Keeps only what the text cites, and drops any sentence that states a figure
- * without a marker unless the figure is in a cited statement or the decision's
- * hand-checked timeline. Sentences that give voting advice are dropped too.
+ * Keeps the written answer to what was checked. Renumbers markers in order of use ([n]
+ * for verified statements, [Cn] for computed figures) and keeps only what the text
+ * cites. Drops a sentence that gives voting advice; a sentence with markers whose
+ * numbers aren't all in what it cites (the statements' text and quotes, or the computed
+ * figures; "$ thousands" scaling allowed); and a sentence without markers whose numbers
+ * aren't in any statement or the decision's hand-checked timeline.
  */
 const MARK = /\[(C?\d+(?:\s*,\s*C?\d+)*)\]/g;
 export function groundAnswer(
@@ -148,8 +150,20 @@ export function groundAnswer(
     if (ADVICE.some((r) => r.test(sentence))) continue;
     const valid = [...sentence.matchAll(MARK)].flatMap((m) => parse(m[1]));
     const bare = sentence.replace(MARK, "");
-    const nums = bare.replace(/(\d),(?=\d{3})/g, "$1").match(/\d+(?:\.\d+)?/g) ?? [];
-    if (valid.length === 0 && nums.some((n) => !known.includes(n))) continue;
+    const nums = numbersIn(bare);
+    if (valid.length === 0) {
+      // No marker: every number must be in some statement or the hand-checked timeline.
+      if (nums.some((n) => !known.includes(n))) continue;
+    } else {
+      // With markers: every number must be in what those markers cite (the statements'
+      // text and quotes, or the computed figures), allowing "$80.5 million" for a quoted
+      // "80,483" in $ thousands, as record_statement does.
+      const cited = valid.flatMap((m) =>
+        m.c ? [String(computed[m.n - 1].value), computed[m.n - 1].display, computed[m.n - 1].label] : [statements[m.n - 1].text, ...statements[m.n - 1].citations.map((c) => c.quote)],
+      );
+      const citedNums = numbersIn(cited.join(" "));
+      if (nums.some((n) => !numberBacked(n, citedNums))) continue;
+    }
     for (const m of valid) {
       const used = m.c ? usedC : usedS;
       if (!used.includes(m.n)) used.push(m.n);

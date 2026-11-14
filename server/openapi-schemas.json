@@ -1959,6 +1959,37 @@
       "gtfsUrl": {
         "type": "string"
       },
+      "gtfsUrls": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "description": "Every GTFS feed of the region, for agencies that publish several (Waterloo: buses and ION light rail). The transit lens reads these, or `gtfsUrl` when absent."
+      },
+      "censusDivision": {
+        "type": "string",
+        "description": "Statistics Canada census division code (Waterloo Region \"3530\"): the transit lens takes 2021 population from its dissemination areas."
+      },
+      "bbox": {
+        "type": "array",
+        "prefixItems": [
+          {
+            "type": "number"
+          },
+          {
+            "type": "number"
+          },
+          {
+            "type": "number"
+          },
+          {
+            "type": "number"
+          }
+        ],
+        "minItems": 4,
+        "maxItems": 4,
+        "description": "[west, south, east, north] in WGS84: the area to take census areas from when there is no `censusDivision` (default: a box around `center`)."
+      },
       "openData": {
         "type": "array",
         "items": {

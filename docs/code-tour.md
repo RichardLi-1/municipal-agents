@@ -60,8 +60,9 @@ Size, for a sense of scale (14 November 2026, 04:15 ET): 205 tests across `serve
 - `log.ts` and `canonical.ts`: the append-only, hash-chained record.
 - `runfiles.ts`: every agent run's events saved to `data/runs/<runId>.jsonl`; doubles as
   the answer cache.
-- `statements.ts`: review rules: every statement reviewed before publishing, rejected
-  ones left out of the public brief, edits re-checked.
+- `statements.ts`: review rules: every statement residents will see (lens-file
+  statements included) needs a staff review before publishing (operator corrections
+  don't count), rejected ones are left out of the public brief, edits are re-checked.
 - `limits.ts`, `usage.ts`: rate limit, run slots, daily cap; spend and energy from the record.
 - `ics.ts`: calendars (RFC 5545). `openapi.ts`: the API description.
 
@@ -121,9 +122,14 @@ about the budget?".
    the lens tools) and each tool's one-line summary is streamed as a `tool` event.
 9. **Each statement is checked on the spot** by `record_statement` (section 4).
 10. **Lead writes the answer** from the verified statements only, with `[n]` markers.
-11. **Answer is grounded in code.** `groundAnswer()` in `agents/lead.ts` drops any
-    sentence that gives voting advice or has a number not found in a cited statement
-    or the hand-checked timeline; renumbers the markers; keeps only cited statements.
+11. **Answer is grounded in code.** `groundAnswer()` in `agents/lead.ts` drops a
+    sentence that gives voting advice. A sentence with markers is kept only if every
+    number in it is in what those markers cite: the cited statements' text and quotes,
+    or the cited computed figures' value, display and label (a quoted "80,483" from a
+    "$ thousands" table backs "$80.5 million", as in `record_statement`). A sentence
+    without markers is kept only if every number in it is in some verified statement or
+    the decision's hand-checked timeline. It then renumbers the markers in order of use
+    (`[n]` statements, `[Cn]` computed figures) and keeps only what the text cites.
 12. **Back to the browser.** The `answer` event carries text and statements; the server
     logs `answer.given`, sends `done` and closes the stream. `Citations.tsx` shows each
     citation; clicking one opens `SourceViewer.tsx` on the PDF page with the quote
@@ -285,10 +291,14 @@ any number that is not in the lens result.
    is logged with counts, cost and the brief's hash. A previous draft goes to history.
 4. For each statement, `POST /api/staff/review` with `approve`, `edit` (original text
    kept; citations re-checked; residents see "Edited by staff") or `reject`, with an
-   optional note. The brief moves to `in-review`.
+   optional note. A statement from a lens file is copied into the brief's own additions
+   to that lens with its review. The brief moves to `in-review`.
 5. `POST /api/staff/publish` needs the reviewer's name and answers 409 until every
-   statement has been reviewed. The public brief leaves out rejected statements
-   (`publicBrief()` in `server/statements.ts`). `brief.published` is logged with counts.
+   statement residents will see (the brief with its lens files merged in) has a staff
+   review. Operator corrections (`data/corrections/`, by "Municipal Agents team (not
+   Region staff)") don't count as one; statements the team withdrew aren't shown and
+   need none. The public brief leaves out rejected statements (`publicBrief()` in
+   `server/statements.ts`). `brief.published` is logged with counts.
 
 Real numbers: a full brief with all lenses is about 40 model calls (the cap) and cost
 US$0.24 to US$0.37 in our runs (`data/briefs/*.json`, `costUsd`; the live budget brief

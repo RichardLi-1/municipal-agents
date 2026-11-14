@@ -6,8 +6,10 @@ keeps only small derived files.
 
 ## Transit
 
-All retrieved 2026-11-14 by `node lenses/transit/fetch.ts` into `data/cache/` (dates kept in
-`data/cache/retrieved.json`).
+All retrieved 2026-11-14 by `node lenses/transit/fetch.ts` into `data/cache/transit/waterloo-region/`
+(dates in its `retrieved.json`; the national census file is `data/cache/statcan-da-pop-2021.csv`).
+The feed URLs and census division come from `cities/waterloo-region.json` (`gtfsUrls`,
+`censusDivision`).
 
 - **Grand River Transit GTFS, buses**, Region of Waterloo (Grand River Transit).
   https://webapps.regionofwaterloo.ca/api/grt-routes/api/staticfeeds/1 (GTFS.zip, files dated

@@ -7,6 +7,7 @@ import { announce } from "../lib/state.ts";
 import { CitationChip, Statements } from "./Citations.tsx";
 import { Alert, ArrowUp, Calc, Replay, Spark } from "./icons.tsx";
 import { fmtDate } from "../lib/format.ts";
+import { parseMarkers } from "../lib/markers.ts";
 import { StepsPanel } from "./Steps.tsx";
 
 interface Turn {
@@ -62,23 +63,17 @@ function AnswerText({ text, statements, figures = [] }: { text: string; statemen
       {!s.verified ? <Alert size={13} class="warn-text" /> : null}
     </span>
   );
+  const ids = new Set(statements.map((s) => s.id));
   const inline = (para: string) =>
-    para.split(/(\[[^\]\s]{1,40}\])/g).map((part, i) => {
-              const m = /^\[([^\]\s]+)\]$/.exec(part);
-              if (!m) return part;
-              const key = m[1];
-              const cm = /^C(\d+)$/i.exec(key);
-              if (cm) {
-                const f = figures[Number(cm[1]) - 1];
-                return f ? <ComputedChip key={i} f={f} /> : null;
-              }
-              if (/^\d+$/.test(key)) {
-                const s = statements[Number(key) - 1];
-                return s ? chipsFor(s, i) : null;
-              }
-              const s = byId.get(key);
-              return s ? chipsFor(s, i) : part;
-            });
+    parseMarkers(para, ids).map((part, i) => {
+      if (typeof part === "string") return part;
+      if (part.ref === "figure") {
+        const f = figures[part.index - 1];
+        return f ? <ComputedChip key={i} f={f} /> : null;
+      }
+      const s = part.ref === "statement" ? statements[part.index - 1] : byId.get(part.id);
+      return s ? chipsFor(s, i) : null;
+    });
   return (
     <>
       {text

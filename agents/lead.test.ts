@@ -156,3 +156,15 @@ test("generateBrief fails instead of returning an empty brief when every special
   assert.deepEqual(r.events.slice(-2).map((e) => e.type), ["error", "done"]);
   assert.ok(!JSON.stringify(r.events).includes("prepayment"), "the provider's words never reach the client");
 });
+
+test("groundAnswer checks the numbers in a cited sentence against what it cites", () => {
+  const s1: Statement = { id: "a", text: "The 2026 capital budget is large.", kind: "fact", verified: true, citations: [{ sourceId: "x", page: 1, quote: "Waterloo Region Housing 80,483" }] };
+  const s2: Statement = { id: "b", text: "64 spaces go.", kind: "fact", verified: true, citations: [] };
+  const fig = { id: "f", label: "Reach a hospital in 45 min, Sunday 8 am", value: 48, unit: "%", display: "48%", kind: "computed" as const, formula: "GTFS" };
+  const out = groundAnswer(
+    "Housing gets $80.5 million [1]. It removes 64 spaces [1]. 48% reach a hospital in 45 minutes [C1]. 52% can't [C1]. 64 spaces go [2].",
+    [s1, s2], "", [fig],
+  );
+  // 80.5 is the quoted 80,483 thousand; 64 isn't in [1]; 52 isn't in [C1].
+  assert.equal(out.text, "Housing gets $80.5 million [1]. 48% reach a hospital in 45 minutes [C1]. 64 spaces go [2].");
+});

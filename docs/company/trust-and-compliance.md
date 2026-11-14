@@ -126,8 +126,11 @@ officer before the first paid pilot.
   information conveyed by colour alone, and respect for reduced motion. Every map view
   has a list equivalent.
 - **Status.** The prototype was designed and checked against these targets during the
-  hackathon. Automated (axe) and manual (keyboard, VoiceOver) audits have not
-  been run yet. **Planned before the first paid go-live:** an independent audit, an
+  hackathon. An automated axe-core audit of the live site (every decision tab and
+  the main pages, at desktop and phone widths, light and dark) found 0 violations,
+  and keyboard-only use was checked by hand (focus order, visible focus, the source
+  viewer's focus trap and Esc). A screen-reader (VoiceOver/NVDA) audit has not been
+  run yet. **Planned before the first paid go-live:** an independent audit, an
   Accessibility Conformance Report in VPAT format, and testing with residents who use
   assistive technology.
 - **AI disclosures are accessible.** Disclosures and review status are plain text at the

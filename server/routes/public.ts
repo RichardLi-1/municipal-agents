@@ -40,8 +40,12 @@ export function mergeLens(computed: unknown, own: unknown): unknown {
   const out: Record<string, unknown> = { ...base };
   for (const [k, v] of Object.entries(own as Record<string, unknown>)) {
     if (k === "statements") {
-      const all = [...((base.statements as { id: string }[]) ?? []), ...((v as { id: string }[]) ?? [])];
-      out.statements = all.filter((st, i) => all.findIndex((x) => x.id === st.id) === i);
+      // The brief's copy of a statement wins (it may carry a staff review); new ones follow.
+      const own = (v as { id: string }[]) ?? [];
+      const mine = new Map(own.map((st) => [st.id, st]));
+      const merged = ((base.statements as { id: string }[]) ?? []).map((st) => mine.get(st.id) ?? st);
+      const have = new Set(merged.map((st) => st.id));
+      out.statements = [...merged, ...own.filter((st) => !have.has(st.id))];
     } else if (k === "commitments") {
       const have = ((base.commitments as { title: string }[]) ?? []);
       const titles = new Set(have.map((c) => c.title.toLowerCase()));
@@ -108,11 +112,13 @@ export function publicRoutes(app: App, r: Router): void {
     if (lang && SAFE_LANG.test(lang) && brief && brief.lang !== lang) brief = app.store.brief(decision.id, lang) ?? brief;
     // Residents get a published brief without the statements staff rejected; staff
     // (with the passcode) get everything so they can change their minds.
-    if (brief && original && !isStaff(app, req)) brief = publicBrief(brief, original);
+    // Lens files are merged first, so a lens statement staff rejected stays out too.
+    let merged = withLenses(brief, lenses);
+    if (merged && original && !isStaff(app, req)) merged = publicBrief(merged, withLenses(original, lenses)!);
     const sources = decision.sources.map((id) => app.store.source(id)).filter((s) => !!s);
     // The lenses travel inside brief.lenses (merged per lens); a top-level copy only when
     // there is no brief yet, so the large map layers are sent once.
-    const detail: DecisionDetail & { lenses?: Lenses } = { decision, brief: withLenses(brief, lenses), sources, ...(brief ? {} : { lenses }) };
+    const detail: DecisionDetail & { lenses?: Lenses } = { decision, brief: merged, sources, ...(brief ? {} : { lenses }) };
     // no-cache + ETag: staff see their review at once, unchanged briefs cost a 304.
     sendJson(req, res, 200, detail, { "Cache-Control": "no-cache" });
   });

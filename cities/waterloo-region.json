@@ -32,6 +32,11 @@
   "officialNoticeUrl": "https://www.regionofwaterloo.ca/news-public-notices-and-council-info/",
   "clerkContact": "Regional Clerk, Region of Waterloo, 150 Frederick Street, Kitchener ON N2G 4J3; regionalclerk@regionofwaterloo.ca; 519-575-4400",
   "gtfsUrl": "https://webapps.regionofwaterloo.ca/api/grt-routes/api/staticfeeds/1",
+  "gtfsUrls": [
+    "https://webapps.regionofwaterloo.ca/api/grt-routes/api/staticfeeds/1",
+    "https://webapps.regionofwaterloo.ca/api/grt-routes/api/staticfeeds/2"
+  ],
+  "censusDivision": "3530",
   "openData": [
     {
       "name": "Region of Waterloo Open Data (includes Grand River Transit GTFS)",
@@ -56,7 +61,7 @@
   ],
   "sourcesNote": {
     "languages": "English and French (official), then the region's most common non-official home languages: Punjabi is the most common non-official language spoken most often at home in the Kitchener-Cambridge-Waterloo CMA (Statistics Canada, 2021 Census, 'Increasing diversity of languages, other than English or French, spoken at home', 11-627-M2022051, Table 5); Arabic, Mandarin, Spanish, Portuguese, German, Romanian, Persian and Vietnamese are among the top home languages in Region of Waterloo 2016 Census Bulletin #4 (Language), Figure 2.",
-    "gtfs": "Grand River Transit open data page (grt.ca/about-grt/open-data) links the GTFS feeds at webapps.regionofwaterloo.ca/api/grt-routes/; staticfeeds/1 returns GTFS.zip. Licence: Region of Waterloo Open Data Licence v.2.0.",
+    "gtfs": "Grand River Transit open data page (grt.ca/about-grt/open-data) links the GTFS feeds at webapps.regionofwaterloo.ca/api/grt-routes/; staticfeeds/1 returns GTFS.zip (buses) and staticfeeds/2 the ION light rail (route 301), which is not in the bus feed; staticfeeds/0 is an older bus feed. censusDivision 3530 is Statistics Canada's code for the Regional Municipality of Waterloo. Licence: Region of Waterloo Open Data Licence v.2.0.",
     "boundary": "Region boundary in data/decisions/*.json: Region of Waterloo Open Data, Regional Boundary layer, simplified."
   },
   "feedbackUrl": "https://github.com/RichardLi-1/municipal-agents/issues/new",

@@ -20,8 +20,8 @@ for a city that wants its own deployment, with its own decisions, map and lenses
 | Source documents | `data/sources/` and `scripts/sources.ts` | Everything: agents cite only these |
 | Decisions | `data/decisions/<id>.json` and `<id>.notes.md` | Each decision residents can open |
 | The agents' wording | `agents/skills/RULES.md`, some `SKILL.md` files, `agents/plain.ts` | Briefs that name your city, not Waterloo Region |
-| Transit open data | `lenses/transit/fetch.ts` | The transit lens |
-| Housing open data | `lenses/housing/` | The housing lens |
+| Transit open data | `cities/<id>.json` (`gtfsUrls`, `censusDivision` or `bbox`) | The transit lens: no code change |
+| Housing open data | `lenses/housing/sources.ts` and one field mapping per permit portal | The housing lens |
 | Deployment | `fly.toml`, secrets | See [self-hosting](self-host.md) |
 
 ## Write the city file
@@ -43,6 +43,8 @@ the default city; without it, the first file in the folder is the default.
   "officialNoticeUrl": "https://www.your-city.ca/public-notices",
   "clerkContact": "City Clerk's Office, 100 Main Street; clerk@your-city.ca; 555-555-0100",
   "gtfsUrl": "https://example.ca/gtfs.zip",
+  "gtfsUrls": ["https://example.ca/gtfs.zip"],
+  "censusDivision": "3520",
   "openData": [
     { "name": "Your City Open Data", "url": "https://opendata.your-city.ca/", "licence": "Open Government Licence - Your City" }
   ]
@@ -57,7 +59,10 @@ the default city; without it, the first file in the folder is the default.
 | `languages` | The language menu, as codes. English first. Translations are made on request by the translator agent for any code. |
 | `officialNoticeUrl` | Where the city's official notices are. Shown by `GET /api/city`; the server's upload code also names it as a fallback link, but an upload without `url` or `officialUrl` currently ends up with an empty link, so send one. |
 | `clerkContact` | The clerk's public office contact, never a person's own details. |
-| `gtfsUrl` | Your transit feed, for reference. The transit lens doesn't read it yet; see [Transit](#transit-schedules). |
+| `gtfsUrl` | Your transit feed. The transit lens reads it when there is no `gtfsUrls`. |
+| `gtfsUrls` | Every GTFS feed of your region, if your agency publishes more than one (Waterloo Region: buses and ION light rail). |
+| `censusDivision` | Statistics Canada's census division code (Waterloo Region `3530`, Toronto `3520`). The transit lens takes 2021 population from its dissemination areas. |
+| `bbox` | `[west, south, east, north]`: where to take census areas from when you give no `censusDivision`. Without either, a box around `center` is used. |
 | `openData` | The portals your lenses use, with their licences. |
 
 The Waterloo file also has a `sourcesNote` object saying where the language list and the
@@ -201,33 +206,45 @@ The transit lens computes who can reach essential places by transit from the pub
 schedule, OpenStreetMap destinations and 2021 census population. See the
 [planners' guide](planners.md) for the method.
 
-To point it at your city, edit two things at the top of
-[`lenses/transit/fetch.ts`](../../lenses/transit/fetch.ts):
+**A new city needs no code change.** Everything city-specific comes from the city file:
 
-- `SOURCES.gtfsBus` and `SOURCES.gtfsIon`: your feed URLs and `gtfsLicence`. The build
-  reads two feeds (Waterloo has one for buses and one for light rail). With a single feed,
-  `lenses/transit/build.ts` needs a small change to load one.
-- `CD`: your census division code (Waterloo Region is `3530`). Population, the census
-  areas and the box for the OpenStreetMap query all follow from it.
+- `gtfsUrls` (or `gtfsUrl`): one or more feeds, loaded together. The licence comes from the
+  `openData` entry whose name mentions GTFS or transit.
+- `censusDivision` (or `bbox`): which census areas to use. Population, the 400 m grid, the
+  region's outline and the box for the one OpenStreetMap query all follow from it.
+- The agency's name in the lens's text comes from the feed's own `agency.txt`.
 
 ```bash
-node lenses/transit/fetch.ts                    # GTFS, destinations, census into data/cache (once; --force to refresh)
-node lenses/transit/build.ts                    # data/lenses/transit-region.json
-node lenses/transit/build.ts --area data/decisions/<id>.json --focus-label "the new library site"
+node lenses/transit/fetch.ts --city your-city   # GTFS, destinations, census into data/cache/transit/your-city/ (once; --force to refresh)
+node lenses/transit/build.ts --city your-city   # the whole area
+node lenses/transit/build.ts --city your-city --area data/decisions/<id>.json --focus-label "the new library site"
 node --test "lenses/transit/**/*.test.ts"
 ```
 
+`--city` defaults to the first city file (alphabetical). That city's whole-area lens is
+`data/lenses/transit-region.json`, and its derived files are `data/open/destinations.geojson`
+and `population-da-2021.geojson`. Any other city writes `transit-<city id>.json`,
+`destinations-<city id>.geojson` and `population-da-2021-<city id>.geojson`, so several cities
+can share one deployment.
+
 | Option | Default | Meaning |
 |---|---|---|
-| `--area <decision file>` | whole region | Compute for that decision's `area`; writes `data/lenses/transit-<id>.json`. |
+| `--city <id>` | the first city file | Which `cities/<id>.json` to use. |
+| `--area <decision file>` | whole area | Compute for that decision's `area`; writes `data/lenses/transit-<id>.json`. |
 | `--radius <m>` | 1500 | For a point area: the circle around it. |
 | `--focus-label "<place>"` | | For a point area: how to name the site. |
 | `--weekday YYYY-MM-DD`, `--sunday YYYY-MM-DD` | the next days every feed runs | The service days modelled. |
+| `--from YYYY-MM-DD` | today | Look for those days after this date. |
 | `--cell <m>` | 400 | Size of the population grid. |
+| `--out-dir <dir>` | `data/lenses` | Where to write. |
 
 Record what you downloaded, when and under which licence in `data/open/README.md`.
 
-Reading the feed URL from `gtfsUrl` in the city file is **Planned**.
+> [!NOTE]
+> Population comes from Statistics Canada's 2021 Census, so the population step works for
+> Canadian cities only. Elsewhere, `fetchCensus` and `loadDAs` in
+> [`lenses/transit/fetch.ts`](../../lenses/transit/fetch.ts) need a replacement source of
+> small areas with population. The GTFS, OpenStreetMap and routing steps work anywhere.
 
 ## Housing data
 
@@ -242,10 +259,14 @@ node lenses/housing/fetch.ts                    # into data/cache/housing/
 node lenses/housing/build.ts --city kitchener   # or waterloo, cambridge, region
 ```
 
-For another city this is the biggest job: every portal names its fields differently. You
-will add your datasets to `sources.ts` and write one small function per permit dataset in
-`build.ts` that maps its fields to a permit (like `kitchenerPermit` does), plus your
-city's name in the `--city` list. The provincial target data applies to Ontario cities
+Unlike transit, the housing lens is not config-only. Every permit portal names its fields
+differently, so a new city needs a small field mapping:
+
+- add your datasets to `sources.ts`;
+- write one short function per permit dataset in `build.ts` that maps its fields (permit
+  number, issue and final dates, status, new units, location) to a permit, as
+  `kitchenerPermit` does (about 25 lines);
+- add your city's name to the `--city` list. The provincial target data applies to Ontario cities
 only. Stages your data doesn't show are listed as "hard to track", which is an honest
 result in itself. Details: [`lenses/housing/README.md`](../../lenses/housing/README.md).
 
@@ -311,8 +332,8 @@ and one staff member who knows the decisions. We haven't yet timed it with a sec
 | Sources: manifest, page text, spot-check the text | 1 to 2 hours |
 | Decision files and notes, every date checked against the official pages | 3 to 6 hours per decision |
 | The agents' wording for your city | 1 to 2 hours |
-| Transit lens: feeds, census code, first run, check the results make sense | Half a day to 2 days |
-| Housing lens: new datasets and field mappings | 2 to 5 days, depending on the portals |
+| Transit lens: `gtfsUrls` and `censusDivision` in the city file, first run, check the results make sense (no code) | 2 hours to 1 day |
+| Housing lens: new datasets and one field mapping per permit portal (code) | 2 to 5 days, depending on the portals |
 | Cost and commitments | Nothing extra; add progress reports as sources |
 | First brief: run, then staff review | Several minutes to run (stopped at 15); our guess is 30 to 60 minutes to review |
 | Evals for your decisions | Half a day |

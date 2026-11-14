@@ -176,3 +176,25 @@ test("buildTransitLens: access shares, a no-stop gap and a summary on the tiny n
   assert.equal(noStop.peopleAffected, 50);
   assert.match(transitSummary(lens), /grocery \(45 min\): Weekday 8 am 67%, Sunday 8 am 0%/);
 });
+
+test("the city file drives the transit inputs: feeds, licence, census areas", async () => {
+  const { gtfsUrlsOf, gtfsLicenceOf, loadCity, cityIds, citySuffix } = await import("./fetch.ts");
+  const base = { id: "x", name: "X", municipalities: [], center: [-79.4, 43.7] as [number, number], zoom: 10, languages: ["en"], officialNoticeUrl: "", clerkContact: "" };
+  const open = [
+    { name: "City portal", url: "https://p", licence: "City OGL" },
+    { name: "Transit GTFS", url: "https://g", licence: "Transit licence" },
+  ];
+  assert.deepEqual(gtfsUrlsOf({ ...base, openData: open, gtfsUrl: "a", gtfsUrls: ["a", "b"] }), ["a", "b"]);
+  assert.deepEqual(gtfsUrlsOf({ ...base, openData: open, gtfsUrl: "a" }), ["a"]);
+  assert.throws(() => gtfsUrlsOf({ ...base, openData: open }));
+  assert.equal(gtfsLicenceOf({ ...base, openData: open }), "Transit licence (https://g)");
+  // Waterloo Region, the first city file: two GRT feeds (buses, ION) and census division 3530.
+  const wr = loadCity();
+  assert.equal(wr.id, cityIds()[0]);
+  assert.equal(citySuffix(wr), "");
+  if (wr.id === "waterloo-region") {
+    assert.equal(gtfsUrlsOf(wr).length, 2);
+    assert.equal(wr.censusDivision, "3530");
+  }
+  assert.throws(() => loadCity("no-such-city"));
+});

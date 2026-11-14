@@ -336,6 +336,12 @@ export interface CityConfig {
   /** Who runs this deployment, shown beside feedback links. */
   operator?: string;
   gtfsUrl?: string;
+  /** Every GTFS feed of the region, for agencies that publish several (Waterloo: buses and ION light rail). The transit lens reads these, or `gtfsUrl` when absent. */
+  gtfsUrls?: string[];
+  /** Statistics Canada census division code (Waterloo Region "3530"): the transit lens takes 2021 population from its dissemination areas. */
+  censusDivision?: string;
+  /** [west, south, east, north] in WGS84: the area to take census areas from when there is no `censusDivision` (default: a box around `center`). */
+  bbox?: [number, number, number, number];
   openData: { name: string; url: string; licence: string }[];
 }
 

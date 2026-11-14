@@ -133,10 +133,11 @@ export function agentRoutes(app: App, r: Router): void {
     if (!source) throw new HttpError(404, "There's no brief for this decision yet.");
     // Like GET /api/decisions/:id: the computed lens files merged into brief.lenses.
     const lenses = app.store.lenses(decision);
-    if ((source.lang ?? "en") === lang) return sendJson(req, res, 200, withLenses(publicBrief(source), lenses));
+    const merged = withLenses(source, lenses)!;
+    if ((source.lang ?? "en") === lang) return sendJson(req, res, 200, publicBrief(merged));
 
     const cached = cachedTranslation(app, decision.id, lang, source);
-    if (cached) return sendJson(req, res, 200, withLenses(publicBrief(cached, source), lenses));
+    if (cached) return sendJson(req, res, 200, publicBrief(withLenses(cached, lenses)!, merged));
 
     const key = `${decision.id}:${lang}`;
     let pending = app.translating.get(key);
@@ -146,7 +147,7 @@ export function agentRoutes(app: App, r: Router): void {
       app.visitorLimiter.take(clientIp(req), "requests");
       const release = app.slots.acquire();
       pending = translate(app, agents, source, lang)
-        .then((t) => withLenses(publicBrief(t, source), lenses)!)
+        .then((t) => publicBrief(withLenses(t, lenses)!, merged))
         .finally(() => {
           release();
           app.translating.delete(key);
