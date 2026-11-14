@@ -34,6 +34,11 @@ export interface Statement {
   citations: Citation[];
   /** True only when every citation's quote was found on its page by the checker. */
   verified: boolean;
+  /**
+   * How well the quotes back the sentence, measured in code by shared words and numbers:
+   * "weak" means the quote is on the page but a reader should check that it supports this.
+   */
+  support?: "strong" | "weak";
   /** Staff review of this one statement. */
   review?: { action: "approved" | "edited" | "rejected"; by: string; at: IsoDate; note?: string; originalText?: string };
 }
@@ -109,6 +114,8 @@ export interface Decision {
    * proposes the budget). Shown above the brief until staff regenerate it.
    */
   notices?: { id: string; date: IsoDate; title: string; text: string; citation?: Citation }[];
+  /** Hand-picked first questions for the chat, in the residents' own words. */
+  suggestedQuestions?: string[];
 }
 
 export type LensId = "transit" | "cost" | "commitments" | "housing" | "construction";
@@ -314,6 +321,13 @@ export interface CityConfig {
   languages: string[]; // offered in the language menu
   officialNoticeUrl: string;
   clerkContact: string;
+  /**
+   * Where residents report an error or ask for another format. In a city's own deployment
+   * this is the city's; in this demo it is the team's issue tracker, never the city clerk.
+   */
+  feedbackUrl?: string;
+  /** Who runs this deployment, shown beside feedback links. */
+  operator?: string;
   gtfsUrl?: string;
   openData: { name: string; url: string; licence: string }[];
 }

@@ -526,5 +526,11 @@
     "housing",
     "climate",
     "infrastructure"
+  ],
+  "suggestedQuestions": [
+    "How much of my regional tax bill goes to public transit?",
+    "How can I speak to Regional Council about the budget?",
+    "Is Waterloo Region on track for its 2030 climate target?",
+    "Should I support this budget or oppose it?"
   ]
 }
