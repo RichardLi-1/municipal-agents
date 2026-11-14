@@ -1,0 +1,176 @@
+{
+  "meta": {
+    "product": "Municipal Agents",
+    "written": "2026-11-14",
+    "status": "Prototype built at CIVIC Hack 2026. No municipal customers yet.",
+    "rules": "No fake customers, logos, testimonials or usage metrics. Prices are proposed, in Canadian dollars before tax."
+  },
+  "hero": {
+    "headlineOptions": [
+      "Every city decision, explained in five minutes, with a source for every fact.",
+      "Know what your council is deciding, how it may affect you, and when you can have a say.",
+      "AI drafts it. Your staff approve it. Every fact links to its page."
+    ],
+    "subhead": "Municipal Agents reads a city's own documents and turns a proposed decision into a plain-language brief: what's proposed, how it may affect you, and when you can have a say. Code checks every quote against its page, a named staff member approves every statement, and every step goes on a public record anyone can verify.",
+    "primaryCta": "See the live demo",
+    "primaryCtaUrl": "https://municipal-agents.fly.dev",
+    "secondaryCta": "Talk to us about a 90-day pilot"
+  },
+  "features": [
+    {
+      "title": "Every fact has its page",
+      "body": "Click any figure to open the source page with the quote highlighted. If a quote can't be found on the page it cites, the statement is never shown as verified."
+    },
+    {
+      "title": "Staff approve before anyone sees it",
+      "body": "Agents draft. Clerks and communications staff approve, edit or reject each statement, then publish under their own name. Until then, the brief says it's a draft."
+    },
+    {
+      "title": "A record that can't be edited quietly",
+      "body": "Every brief, approval, question and answer is added to a hash-chained public record. Anyone can check the chain in their browser."
+    },
+    {
+      "title": "Have your say, on time",
+      "body": "A timeline of the decision with the next chance to speak, write in or answer a survey, plus the deadline, the contact and an add-to-calendar button."
+    },
+    {
+      "title": "Lenses on the same decision",
+      "body": "Transit access gaps, lifecycle cost per household, the city's own commitments, and housing from approval to construction, all computed from open data with the method shown."
+    },
+    {
+      "title": "Plain words, for everyone",
+      "body": "Briefs aim for a grade 8 reading level, measured and shown. Designed for WCAG 2.2 AA. Read it in 11 languages; machine translations are labelled."
+    }
+  ],
+  "forWhom": [
+    {
+      "audience": "Residents",
+      "title": "Understand it before it's decided",
+      "body": "See what's being decided near you and how it may affect renters, riders, seniors, students, parents or business owners. Find the next date you can take part. You don't need an account, and nothing tracks you."
+    },
+    {
+      "audience": "Clerks and communications",
+      "title": "Start from a checked draft, not a blank page",
+      "body": "Each statement arrives with its quote and page side by side. Approve, edit or reject in one place, and publish under your name with a record of who approved what."
+    },
+    {
+      "audience": "Planners and councillors",
+      "title": "One neutral, sourced link",
+      "body": "Lenses you can recognize, with methods and inputs cited. Send constituents a brief that lays out trade-offs on both sides and gives the dates to take part."
+    }
+  ],
+  "pricing": {
+    "note": "Proposed pricing in Canadian dollars, before tax. Residents never pay.",
+    "tiers": [
+      {
+        "name": "Pilot",
+        "price": "$7,500 one-time",
+        "for": "Any municipality trying it on one live decision for 90 days",
+        "includes": [
+          "Up to 3 published decisions",
+          "English, French and 2 more languages",
+          "Any lens your data supports",
+          "5 staff seats with individual sign-in",
+          "We set up your city and sources",
+          "PIA template and AI disclosure text",
+          "End-of-pilot report: review time, reading grade, resident use",
+          "100% credited to year one if you subscribe"
+        ]
+      },
+      {
+        "name": "Town",
+        "price": "$12,000 / year",
+        "for": "Municipalities under 50,000 people",
+        "includes": [
+          "Up to 24 published decisions a year",
+          "3,000 resident questions a year",
+          "English, French and 4 more languages",
+          "Commitments, cost and housing lenses; transit if you have a GTFS feed",
+          "5 staff seats with roles",
+          "Data stored in Canada",
+          "Public record and spend page",
+          "Embed on your website"
+        ]
+      },
+      {
+        "name": "City",
+        "price": "$36,000 / year",
+        "for": "Municipalities of 50,000 to 250,000 people",
+        "includes": [
+          "Up to 75 published decisions a year",
+          "15,000 resident questions a year",
+          "11 languages",
+          "All lenses, including transit and the construction scout",
+          "25 staff seats with single sign-on",
+          "Data stored and AI run in Canada",
+          "One agenda-system connector when available",
+          "Staff analytics and priority support"
+        ]
+      },
+      {
+        "name": "Region",
+        "price": "From $96,000 / year",
+        "for": "250,000+ people, upper-tier and regional governments, and shared service for member municipalities",
+        "includes": [
+          "Unlimited published decisions (fair use)",
+          "50,000 resident questions a year",
+          "Any supported language, with human review of top languages available",
+          "Custom lenses",
+          "Unlimited seats, single sign-on, user provisioning and audit export",
+          "Hosted in Canada, single-tenant, or on your own infrastructure with your choice of model",
+          "All agenda-system connectors",
+          "Named success manager"
+        ]
+      }
+    ]
+  },
+  "faq": [
+    {
+      "q": "Who uses it today?",
+      "a": "No municipality yet. Municipal Agents is a working prototype built at CIVIC Hack 2026 from public Waterloo Region documents and open data. We're looking for our first pilot municipalities."
+    },
+    {
+      "q": "Is this the city's official notice?",
+      "a": "No. Every page says so and links to the official notice, which always prevails. Municipal Agents explains a decision; it doesn't replace legal notice or the city's consultation."
+    },
+    {
+      "q": "Can the AI get things wrong?",
+      "a": "Yes, which is why it never gets the last word. Code, not a model, checks that every quote is on the page it cites. Sentences with figures that no checked statement supports are removed from answers. A named staff member approves each statement before it's published, and residents can report errors."
+    },
+    {
+      "q": "Who approves what residents see?",
+      "a": "City staff. Agents produce a draft; a clerk or communications officer approves, edits or rejects each statement and publishes under their name. The approval is added to the public record."
+    },
+    {
+      "q": "Do you collect personal information?",
+      "a": "No, by design. Residents don't need an account, and there are no tracking scripts. Questions are logged with no identifier, and IP addresses are kept in memory only for rate limiting, never written. Please don't type personal details into a question, because questions are part of the public record."
+    },
+    {
+      "q": "Where is data stored, and where does the AI run?",
+      "a": "The prototype stores its record in Toronto and uses a US-hosted AI model. City and Region plans run the model in Canada or on the city's own infrastructure. Only public documents and residents' questions are sent to the model."
+    },
+    {
+      "q": "Is it accessible, and is it available in French?",
+      "a": "It's designed to WCAG 2.2 AA, beyond Ontario's WCAG 2.0 AA requirement; an independent audit comes before the first paid launch. French is included in every plan, and machine translations are labelled."
+    },
+    {
+      "q": "How does a municipality start?",
+      "a": "With a 90-day paid pilot on one live decision, priced below typical low-value purchase limits. We set up your city from your public documents, your staff review and publish, and you get a short report you can take to council."
+    }
+  ],
+  "proofPoints": [
+    {
+      "text": "Every quote checked against its page, in code",
+      "source": "docs/architecture.md (D3); shared/verify.ts"
+    },
+    {
+      "text": "A full brief with four lenses cost US$0.24 in AI fees on its first run",
+      "source": "report/readiness-report.html; docs/architecture.md section 7"
+    },
+    {
+      "text": "Hard spending caps: US$0.50 per run and US$5 per day in the prototype",
+      "source": "agents/lead.ts (RUN_MAX_USD); server/config.ts (DAILY_LIMIT_USD)"
+    }
+  ],
+  "disclaimer": "Not affiliated with the Region of Waterloo or its cities and townships. The demo uses public documents and open data and is not the official notice."
+}
