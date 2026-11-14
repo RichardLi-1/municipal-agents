@@ -28,17 +28,17 @@
   {
    "id": "under-construction",
    "label": "Under construction",
-   "units": 6820,
-   "projects": null,
-   "source": "Table 34-10-0154-01: CMHC housing starts, under construction and completions in selected census metropolitan areas, monthly, Statistics Canada (data from Canada Mortgage and Housing Corporation), https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=3410015401, retrieved 2026-11-14, Statistics Canada Open Licence: housing units under construction (all types) in the Kitchener-Cambridge-Waterloo census metropolitan area at the end of 2026-09. CMHC housing starts over 2022-01 to 2026-09: 20,210 units.",
+   "units": 9464,
+   "projects": 1652,
+   "source": "Sum of the three cities' building permit data (Kitchener, Waterloo, Cambridge; not the townships), as counted in each city lens: Kitchener 6,120, Waterloo 2,849, Cambridge 495. CMHC's figures for the wider census area are kept apart under \"context\".",
    "tracked": true
   },
   {
    "id": "completed",
    "label": "Completed",
-   "units": 20646,
-   "projects": null,
-   "source": "Table 34-10-0154-01: CMHC housing starts, under construction and completions in selected census metropolitan areas, monthly, Statistics Canada (data from Canada Mortgage and Housing Corporation), https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=3410015401, retrieved 2026-11-14, Statistics Canada Open Licence: housing completions (all types) in the Kitchener-Cambridge-Waterloo census metropolitan area, 2022-01 to 2026-09, summed by month.",
+   "units": 21416,
+   "projects": 9017,
+   "source": "Sum of the three cities' building permit data (Kitchener, Waterloo, Cambridge; not the townships), as counted in each city lens: Kitchener 15,891, Waterloo 2,137, Cambridge 3,388. CMHC's figures for the wider census area are kept apart under \"context\".",
    "tracked": true
   }
  ],
@@ -59,9 +59,38 @@
  "target": {
   "label": "Sum of Ontario's housing targets for Kitchener (35,000), Waterloo (16,000) and Cambridge (19,000): 70,000 new homes from 2022 to 2031. The province counts 15,902 homes toward them from 2022 through 2024. The townships have no provincial target. Source: https://data.ontario.ca/dataset/ontario-s-housing-supply-progress (Open Government Licence – Ontario).",
   "units": 70000,
-  "by": "2031"
+  "by": "2031",
+  "progress": {
+   "units": 15902,
+   "asOf": "2024-12-31",
+   "source": "Ontario's housing supply progress, \"Ontario’s housing supply: January – December 2024\", column \"Total housing progress since 2022\" (sum of Kitchener, Waterloo, Cambridge); Government of Ontario, Open Government Licence – Ontario. This is the province's own count toward the target, not permits or CMHC completions.",
+   "url": "https://data.ontario.ca/dataset/77ac513f-a65a-4cf0-b889-31be6ddb6f46/resource/3bb04ba5-2445-44e0-9d2c-8a25dd1b18e6/download/ontarios_housing_supply_-_january_december_2024_-_en.csv"
+  }
  },
  "statements": [],
+ "context": [
+  {
+   "id": "cmhc-under-construction",
+   "label": "CMHC: homes under construction at the end of 2026-09, Kitchener-Cambridge-Waterloo census metropolitan area (the three cities plus Woolwich and North Dumfries)",
+   "units": 6820,
+   "asOf": "2026-09-01",
+   "source": "Table 34-10-0154-01: CMHC housing starts, under construction and completions in selected census metropolitan areas, monthly, Statistics Canada (data from Canada Mortgage and Housing Corporation), https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=3410015401, retrieved 2026-11-14, Statistics Canada Open Licence"
+  },
+  {
+   "id": "cmhc-starts",
+   "label": "CMHC: housing starts 2022-01 to 2026-09, Kitchener-Cambridge-Waterloo census metropolitan area (the three cities plus Woolwich and North Dumfries)",
+   "units": 20210,
+   "asOf": "2026-09-01",
+   "source": "Table 34-10-0154-01: CMHC housing starts, under construction and completions in selected census metropolitan areas, monthly, Statistics Canada (data from Canada Mortgage and Housing Corporation), https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=3410015401, retrieved 2026-11-14, Statistics Canada Open Licence"
+  },
+  {
+   "id": "cmhc-completions",
+   "label": "CMHC: housing completions 2022-01 to 2026-09, Kitchener-Cambridge-Waterloo census metropolitan area (the three cities plus Woolwich and North Dumfries)",
+   "units": 20646,
+   "asOf": "2026-09-01",
+   "source": "Table 34-10-0154-01: CMHC housing starts, under construction and completions in selected census metropolitan areas, monthly, Statistics Canada (data from Canada Mortgage and Housing Corporation), https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=3410015401, retrieved 2026-11-14, Statistics Canada Open Licence"
+  }
+ ],
  "hardToTrack": [
   "Approved but no building permit yet: no city publishes a list that links a council approval (zoning, subdivision or site plan) to the building permits that follow, so nobody outside city hall can count the homes waiting between approval and permit.",
   "Construction start: permits show the day a permit was issued, not the day work began. Here 'under construction' means a permit issued since 2022 with no final inspection or occupancy yet; some of those may not have started, and some may have lapsed.",
@@ -69,7 +98,7 @@
   "One building, several permits: big projects can be split into phases or permits (and townhouse blocks into one permit per unit), so 'projects' counts permits, not buildings.",
   "Who the homes are for: permits don't say whether units are rentals, condos or affordable homes.",
   "Finish dates: a permit's final inspection or closing date can come months or years after people moved in, so permits 'completed' in a period are not the same as CMHC's completions for that period.",
-  "Mixed geographies: permits here cover the three cities only, while CMHC's under-construction and completion counts cover the Kitchener-Cambridge-Waterloo census metropolitan area, which also includes Woolwich and North Dumfries. The two can't be subtracted from each other.",
+  "Three measures that don't line up: the stages here are the three cities' permits; CMHC counts starts and completions for the wider Kitchener-Cambridge-Waterloo census area, which also includes Woolwich and North Dumfries (20,646 completions 2022-01 to 2026-09); and the province counts its own progress toward the three cities' 70,000-home target (15,902 through 2024). Only the province's figure measures progress toward the target; the townships have no provincial target.",
   "Approval and site plan stages: only Kitchener (zoning, subdivision, site plans) and Cambridge (site plans) publish application data, and neither gives unit counts."
  ]
 }

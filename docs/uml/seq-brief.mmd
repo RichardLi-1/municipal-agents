@@ -1,4 +1,4 @@
-%% Sequence: staff draft a brief, review each statement and publish.
+%% Sequence: staff draft a brief, review every statement and publish (server/routes/staff.ts).
 sequenceDiagram
   autonumber
   actor St as Staff reviewer
@@ -10,39 +10,45 @@ sequenceDiagram
   participant Log as Log (SQLite)
   actor R as Resident
 
-  St->>S: POST /api/staff/briefs {decisionId}<br/>Authorization: Bearer token
-  S->>S: check token
-  S->>Log: append brief.started
-  S->>A: draft brief
+  St->>S: POST /api/staff/briefs {decisionId} or a PDF upload<br/>Authorization: Bearer passcode
+  S->>S: passcode (timing-safe), daily cap, a free run slot
+  S->>Log: brief.started {sources, runId}
+  S->>A: draft the brief
   A->>G: plan sections (summary, impacts, have your say, lenses)
   loop each section
-    A->>G: work on section
+    A->>G: work on the section
     G-->>A: record_statement("Fares rise 5%", quote on p. 12)
-    A->>C: check quote on page 12
-    Note over C,F: The quote is not on page 12
-    C-->>A: rejected: quote not found on that page
-    A->>Log: append statement.rejected
-    A->>G: rejected, with the reason
-    G-->>A: read_page, then record_statement(fixed quote, p. 14)
-    A->>C: check quote on page 14
+    A->>C: check the quote on page 12
+    C-->>A: rejected: "That quote is on page 14, not page 12. Cite page 14."
+    A->>Log: statement.rejected {reasons}
+    A->>G: the reasons
+    G-->>A: record_statement(same text, quote on p. 14)
+    A->>C: check the quote on page 14
     C-->>A: verified
-    A->>Log: append statement.recorded
+    A->>Log: statement.recorded
     A-->>St: SSE progress (steps, statements)
   end
-  A->>A: reading grade (Flesch-Kincaid), lens computations
-  A->>F: write draft brief (status: draft)
-  A->>Log: append brief.generated + usage
+  A->>A: reading grade, lens figures, plain-language pass
+  A->>F: draft brief (review status: draft)
+  A->>Log: brief.generated {briefHash, statements, verified, cost}
   A-->>St: SSE brief, done
 
-  loop each statement
+  loop every statement
     St->>S: POST /api/staff/review {statementId, action, text?, note?}
-    Note right of St: approve, edit (original kept) or reject
-    S->>F: update statement review (by, at)
-    S->>Log: append statement.reviewed
+    alt edit
+      S->>C: re-check the citations against the new words
+      C-->>S: verified true or false (shown as is)
+    end
+    S->>F: review {action, by, at, note, originalText}, status: in-review
+    S->>Log: statement.reviewed {action, from, to, verified, briefHash}
   end
   St->>S: POST /api/staff/publish {decisionId, reviewer}
-  S->>F: status: published (by, at)
-  S->>Log: append brief.published
+  alt any statement unreviewed
+    S-->>St: 409 "n of m statements haven't been reviewed yet"
+  else all reviewed
+    S->>F: status: published {by, at}, grade of what residents read
+    S->>Log: brief.published {briefHash, approved, edited, rejected}
+  end
   R->>S: GET /api/decisions/:id
-  S-->>R: published brief
-  Note over S,R: Shows "Approved by (name), (date)". Rejected statements are not shown.
+  S-->>R: the published brief without rejected statements
+  Note over St,R: Residents see "Approved by (name), (date)" and "Edited by staff" next to edited statements. Staff can also replay the agents' last real run ({replay: true}): no model, no spend.

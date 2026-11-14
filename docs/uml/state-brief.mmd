@@ -1,21 +1,25 @@
-%% State machine of a brief (Brief.review.status).
+%% State machine of a brief (Brief.review.status), as server/routes/staff.ts enforces it.
 stateDiagram-v2
   direction LR
   [*] --> Draft : agents finish a run<br/>(brief.generated)
-  Draft --> InReview : staff open it and<br/>review a statement
+  Draft --> InReview : staff review the<br/>first statement
   InReview --> InReview : approve, edit or reject<br/>a statement (statement.reviewed)
-  InReview --> Published : publish by a named reviewer<br/>(brief.published)
-  Published --> Draft : staff regenerate after<br/>the report changes
-  InReview --> Draft : staff regenerate
-  Published --> [*] : decision made,<br/>brief kept as a record
+  InReview --> Published : every statement reviewed<br/>and a reviewer named<br/>(brief.published)
+  InReview --> InReview : publish refused (409)<br/>while any statement<br/>is unreviewed
+  Published --> Draft : staff draft a new brief<br/>(the old file is kept in history)
+  InReview --> Draft : staff draft a new brief
+  Published --> Published : a later review is logged,<br/>status stays published
 
   Draft : Draft
-  Draft : shown as "Draft, not yet reviewed by staff"
+  Draft : shown whole, labelled "Draft"
   InReview : In review
   InReview : still labelled draft to residents
   Published : Published
   Published : "Approved by (name), (date)"
+  Published : rejected statements left out
   note right of Published
-    Publish needs a staff token and a reviewer name.
-    Each change is a new log entry; the old ones stay.
+    Publish needs the staff passcode, a reviewer name
+    and a decision on every statement. Each change is
+    a new log entry with the brief's hash, and nothing
+    earlier is overwritten.
   end note

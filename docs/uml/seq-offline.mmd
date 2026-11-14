@@ -1,0 +1,48 @@
+%% Sequence: the two ways a question is answered without a new model run.
+%% server/routes/agents.ts, server/runfiles.ts, agents/lead.ts, agents/offline.ts.
+sequenceDiagram
+  autonumber
+  actor R as Resident
+  participant S as Server
+  participant RF as Saved runs<br/>(data/runs)
+  participant Lim as Limits
+  participant Log as Log
+  participant L as Lead
+  participant G as Gemini API
+  participant OA as Offline answerer<br/>(offline.ts)
+  participant D as Checked files<br/>brief · timeline · lenses
+
+  R->>S: POST /api/decisions/:id/ask {question, lang, audiences}
+  S->>RF: asked before? same decision, language and audiences,<br/>same numbers, 85% or more of the same words,<br/>and a real cited answer (never an offline one or an error)
+  alt a saved run answered it
+    RF-->>S: saved run (every step and the answer)
+    S->>Lim: per-visitor rate limit only (a replay costs nothing)
+    S->>Log: question.asked {replayOf: runId}
+    S-->>R: the saved steps at about 4x speed, then the answer<br/>"Answered by the agents on (date) ET · replayed from the record"
+    S->>Log: answer.given {replayOf, costUsd: 0}
+  else new question
+    RF-->>S: none
+    S->>Lim: agents loaded, daily cap, rate limit, a free run slot
+    S->>RF: start a run file (each event is appended as it is sent)
+    S->>Log: question.asked {runId}
+    S->>L: ask
+    L->>G: plan
+    alt the model can't be reached
+      G-->>L: no key, key refused (401/403), credit used up (402),<br/>rate limited (429), outage (5xx) or no connection
+      L->>OA: offlineAnswer(question, reason)
+      OA->>D: statements that passed the checker (not rejected by staff),<br/>timeline events with checked citations, computed lens results<br/>(transit gaps and fixes, figures)
+      OA->>OA: rank with BM25: must share a topic word<br/>with the question and score high enough
+      alt something matches
+        OA-->>L: those items as bullets, each with its citation
+      else nothing in the brief
+        OA-->>L: exact quotes from the decision's documents,<br/>or "the brief doesn't cover that" + the Clerk's contact
+      end
+      L-->>R: answer marked offline: "The agents can't be reached right now<br/>(reason). Here is what the checked brief says..."
+      L->>Log: answer.given {offline: true, reason, costUsd: 0}
+    else the model answers
+      Note over L,G: the live run in seq-ask
+      L-->>R: steps, then the answer
+    end
+    Note over S,RF: if the answer was real and cited, the next<br/>person asking the same question gets a replay
+  end
+  Note over R,D: No model writes an offline answer, so nothing new can be wrong. A draft brief's answer says it is not yet reviewed by staff.

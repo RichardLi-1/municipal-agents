@@ -111,8 +111,7 @@ Target: one cooperative vehicle by the end of 2027. Until then we sell Pilot, To
 
 ### 2.2 Target list (examples; 2021 Census population)
 
-Before outreach, confirm each one's housing-target status against the ERO lists above
-(`TODO(verify)`). Populations come from StatCan 2021, as compiled in
+Before outreach, confirm each one's housing-target status against the ERO lists above. Populations come from StatCan 2021, as compiled in
 [Wikipedia's list](https://en.wikipedia.org/wiki/List_of_municipalities_in_Ontario).
 
 | Wave | Municipality | Population | Why |

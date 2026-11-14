@@ -29,6 +29,18 @@ export function housingSummary(lens: HousingLens): string {
   if (lens.target) {
     lines.push("");
     lines.push(`Target (${n(lens.target.units)} units by ${lens.target.by}): ${lens.target.label}`);
+    const p = lens.target.progress;
+    if (p) {
+      const share = lens.target.units ? ` (${Math.round((p.units / lens.target.units) * 100)}% of the target)` : "";
+      lines.push(`Progress toward the target, as the province counts it: ${n(p.units)} homes as of ${p.asOf}${share}. Source: ${p.source}${p.url ? ` ${p.url}` : ""}`);
+      lines.push("Compare the target with this progress figure, not with the completed stage (a different measure).");
+    }
+  }
+  const context = (lens as HousingLens & { context?: { label: string; units: number; source: string }[] }).context;
+  if (context?.length) {
+    lines.push("");
+    lines.push("Context (different geography; not progress toward the target):");
+    for (const c of context) lines.push(`- ${c.label}: ${n(c.units)}. ${c.source}`);
   }
   if (lens.hardToTrack.length) {
     lines.push("");

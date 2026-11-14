@@ -1,27 +1,34 @@
 %% State machine of one statement: checked by code first, then by staff.
+%% agents/tools.ts (record_statement) and server/routes/staff.ts (review).
 stateDiagram-v2
   direction LR
-  [*] --> Recorded : agent calls record_statement
-  Recorded --> Verified : every quote found<br/>on its page
-  Recorded --> RejectedByChecker : a quote is missing<br/>(statement.rejected)
-  RejectedByChecker --> [*] : agent may retry<br/>with a new statement
+  [*] --> Checking : agent calls record_statement
+  Checking --> Verified : every quote on its page,<br/>every number in a quote
+  Checking --> RejectedByChecker : a check fails<br/>(statement.rejected, with reasons)
+  RejectedByChecker --> [*] : the agent may fix it<br/>and call again
   Verified --> Approved : staff approve
   Verified --> Edited : staff edit the wording
   Verified --> RejectedByStaff : staff reject, with a note
-  Approved --> [*]
-  Edited --> [*]
+  Edited --> Edited : citations re-checked by code,<br/>approval keeps it "edited"
+  Approved --> Shown : brief published
+  Edited --> Shown : brief published
+  Shown --> [*]
   RejectedByStaff --> [*]
 
-  Recorded : Recorded
-  Verified : Verified (by code)
+  Checking : Checking (code)
+  Verified : Verified
+  Verified : stored in the draft brief
   RejectedByChecker : Rejected by checker
-  RejectedByChecker : never shown as a fact
+  RejectedByChecker : never stored in a brief,<br/>only in the record
   Approved : Approved
   Edited : Edited
-  Edited : original text kept
+  Edited : original text kept,<br/>"Edited by staff" badge
   RejectedByStaff : Rejected by staff
-  RejectedByStaff : hidden from residents
-  note left of Recorded
-    An unverified statement is never shown silently:
-    if one is shown at all, it carries an "unverified" label.
+  RejectedByStaff : left out of the published brief
+  Shown : Shown to residents
+  Shown : with its citations
+  note left of Checking
+    The checker runs again after every staff edit.
+    If a quote no longer matches, the statement
+    shows a "Not verified" badge to staff and residents.
   end note

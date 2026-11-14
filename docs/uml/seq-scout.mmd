@@ -1,0 +1,57 @@
+%% Sequence: the construction scout. Build time: code computes the scenario from open data
+%% and Gemini's image model draws the steps. Run time: a planner asks; the scout explains
+%% the precomputed scenario and cites only what the documents say.
+sequenceDiagram
+  autonumber
+  participant B as lenses/construction<br/>(build scripts)
+  participant O as Open data<br/>ROW · OSM · NRCan
+  participant I as Gemini<br/>image model
+  participant F as data/lenses +<br/>data/renders
+  actor P as Planner
+  participant S as Server
+  participant L as Lead
+  participant C as Construction<br/>scout
+  participant G as Gemini API
+  participant T as Tools
+  participant V as Checker
+  participant Log as Log
+
+  rect rgb(246, 246, 250)
+    Note over B,F: Build time, run once by a developer (no resident data)
+    B->>I: render.ts: one prompt per step (cap US$1.50)
+    I-->>B: images
+    B->>F: JPEGs + prompts and model (construction-renders.json)
+    B->>O: ION Stage 2 line and stations, OSM land and roads, ground levels
+    O-->>B: GeoJSON, elevations
+    B->>B: scout.ts: candidate sites scored 0 to 100<br/>(area 25, line 25, buffer 20, road 15, land 15)
+    B->>B: layout.ts: twin 6.5 m bores, cross-passages ≤ 244 m (NFPA 130),<br/>boreholes ~75 m, ≥ 1.5 D below invert (FHWA-NHI-10-034)
+    B->>B: steps.ts: 7 steps, durations, noise by-law hours, trucks
+    B->>F: construction-row-2027-budget.json<br/>(each step links /api/renders/file)
+  end
+
+  rect rgb(255, 255, 255)
+    Note over P,Log: Run time
+    P->>S: POST /api/decisions/:id/ask<br/>"Where would the tunnel machine start?"
+    S->>L: run (after cache and limit checks)
+    L->>G: plan
+    G-->>L: hand to construction-scout
+    L->>C: sub-question
+    C->>G: next action
+    G-->>C: call construction_sites
+    C->>T: construction_sites
+    T->>F: read the precomputed lens
+    T-->>C: ranked sites, bores, boreholes,<br/>steps, limits (computed, no page)
+    C->>T: search_pages / read_page ("68030 RT to Cambridge")
+    C->>T: record_statement (budget line, quote on p. 43)
+    T->>V: quote on its page? numbers in the quote?
+    V-->>T: verified
+    T->>Log: statement.recorded
+    C->>T: record_computed_figure (site score, method)
+    T->>T: the number must appear in the lens<br/>result this run looked up, else rejected
+    C->>T: record_tradeoff, record_unknown<br/>(soil, utilities, owners: who can answer)
+    C-->>L: verified statements + computed figures
+    L-->>P: answer (SSE): "This is an illustrative scenario,<br/>not a Region plan..." with citations
+    P->>S: Construction tab: GET /api/decisions/:id, GET /api/renders/:file
+    S-->>P: sites on the map, profile, 7 steps,<br/>renders labelled "illustrative"
+  end
+  Note over P,Log: In a brief draft, these statements go to staff review like any other (see seq-brief). The scout never picks a site.

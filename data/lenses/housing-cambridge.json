@@ -59,7 +59,13 @@
  "target": {
   "label": "Ontario's housing target for Cambridge: 19,000 new homes from 2022 to 2031. The province counts 3,023 homes toward it from 2022 through 2024. In 2024: 741 against a 2024 target of 1,583 (Not met). Source: \"Ontario’s housing supply: January – December 2024\", https://data.ontario.ca/dataset/ontario-s-housing-supply-progress (Open Government Licence – Ontario).",
   "units": 19000,
-  "by": "2031"
+  "by": "2031",
+  "progress": {
+   "units": 3023,
+   "asOf": "2024-12-31",
+   "source": "Ontario's housing supply progress, \"Ontario’s housing supply: January – December 2024\", column \"Total housing progress since 2022\"; Government of Ontario, Open Government Licence – Ontario. This is the province's own count toward the target, not permits or CMHC completions.",
+   "url": "https://data.ontario.ca/dataset/77ac513f-a65a-4cf0-b889-31be6ddb6f46/resource/3bb04ba5-2445-44e0-9d2c-8a25dd1b18e6/download/ontarios_housing_supply_-_january_december_2024_-_en.csv"
+  }
  },
  "statements": [],
  "hardToTrack": [
@@ -70,7 +76,8 @@
   "Who the homes are for: permits don't say whether units are rentals, condos or affordable homes.",
   "Finish dates: a permit's final inspection or closing date can come months or years after people moved in, so permits 'completed' in a period are not the same as CMHC's completions for that period.",
   "Council approvals: Cambridge publishes site plans (without unit counts) but no zoning or subdivision applications as open data.",
-  "Starts and completions by city: CMHC counts housing starts and completions for the whole Kitchener-Cambridge-Waterloo area (including Woolwich and North Dumfries), not for each city."
+  "Starts and completions by city: CMHC counts housing starts and completions for the whole Kitchener-Cambridge-Waterloo area (including Woolwich and North Dumfries), not for each city.",
+  "Progress toward the 2031 target: the province counts its own figure for Cambridge (the target's progress here, through the end of its latest published year). It is not the same measure as completed permits, so the completed stage above should not be read against the target."
  ],
  "layers": {
   "recent-residential-permits": {

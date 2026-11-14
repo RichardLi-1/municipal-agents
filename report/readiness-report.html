@@ -25,7 +25,7 @@
   html, body { margin: 0; padding: 0; background: #fff; }
   body {
     font-family: "Inter Report", Inter, -apple-system, "Helvetica Neue", Arial, sans-serif;
-    font-size: 8.2pt;
+    font-size: 8.5pt;
     line-height: 1.25;
     color: var(--ink);
     -webkit-print-color-adjust: exact;
@@ -74,6 +74,7 @@
   td { vertical-align: top; border-bottom: 0.5pt solid var(--rule); padding: 1.5pt 4pt 1.5pt 0; }
   td:first-child { font-weight: 600; white-space: nowrap; }
   td.num { white-space: nowrap; }
+  tr.total td { font-weight: 600; border-top: 0.8pt solid var(--ink); }
 
   .case { background: var(--tint); border-radius: 7pt; padding: 4.5pt 6pt 2.5pt; }
   .note { font-size: 7pt; color: var(--muted); }
@@ -85,7 +86,7 @@
 
   footer.refs {
     border-top: 0.8pt solid var(--rule); padding-top: 2.5pt; margin-top: 1pt;
-    font-size: 6pt; line-height: 1.28; color: var(--muted);
+    font-size: 5.8pt; line-height: 1.28; color: var(--muted);
     column-count: 2; column-gap: 0.22in;
   }
   footer.refs ol { margin: 0; padding-left: 8.5pt; }
@@ -111,7 +112,8 @@
     CIVIC Hack 2026, Future Cities Institute, UWaterloo<br>
     14 November 2026<br>
     <b>Working prototype, not yet used by a city</b><br>
-    Live: <span class="todo">TODO(verify) URL</span> &nbsp;Code: <span class="todo">TODO(verify)</span>
+    Live: <b>municipal-agents.fly.dev</b><br>
+    Code: <b>github.com/RichardLi-1/municipal-agents</b>
   </div>
 </header>
 
@@ -129,22 +131,22 @@
 <div class="col">
 <section>
   <h2>The problem</h2>
-  <p>Budgets, transit changes, rezonings and new facilities are explained in long staff reports, often published shortly before the meeting. Affected residents find out late, can't tell how it touches them, and miss the chance to speak. Municipal Agents drafts a plain brief from the city's own documents; code checks every quote is on its page, and a named staff member approves each statement. Lenses add transit access, lifecycle cost, commitments and housing.</p>
+  <p>Budgets, transit changes and rezonings are explained in long staff reports. Residents find out late and miss the chance to speak. Municipal Agents drafts a plain brief from the city's own documents. Code checks every quote on its page; staff approve every statement. Seven specialists, five lenses: transit, cost, commitments, housing, construction.</p>
 </section>
 
 <section class="case">
   <h2>Case study: Region of Waterloo 2027 budget</h2>
-  <p><b>Decision:</b> Regional Council sets the 2027 budget, which fixes regional property tax and water rates. Draft to Council 16 Dec 2026 (register to speak by noon 9 Dec); review days 19 and 27 Jan; EngageWR survey open to 26 Feb 2027. The draft isn't public yet, so the brief uses last year's forecast for 2027, and says so.</p>
-  <p><b>Sources:</b> 19 public documents, 344 pages, from the Region, GRT and Kitchener. Two more decisions: water supply strategy, transit hub variances.</p>
-  <p><b>First run:</b> US$0.24 for the full brief with four lenses: 17 statements, each quote found on its page, 8 figures, 6 unknowns. Reading grade 11.8, target 8 <span class="todo">TODO(verify) after rewrite</span>. Not yet staff-reviewed.</p>
-  <p><b>Lesson:</b> the timeline took most care; two official pages disagree on a review-day date.</p>
+  <p><b>Decision:</b> the 2027 regional budget (property tax, water rates). Under strong-mayor rules, the Regional Chair proposes it by 1 Feb 2027; Council may amend, the Chair veto, Council override by two-thirds.<sup>8</sup> Overview at Council 16 Dec (to speak, register by noon 9 Dec); survey open to 26 Feb 2027. The draft isn't public, so the brief uses last year's forecast.</p>
+  <p><b>Sources:</b> 25 public documents, 399 pages.</p>
+  <p><b>Result:</b> 19 statements, each quote found on its page; 11 figures; reading grade 7.3 (target 8); not yet staff-reviewed. Evals: 6 of 12 pass; 5 of 6 failures were reading grade only; no citation failures or voting advice.</p>
+  <p><b>Lesson:</b> when the Gemini credit ran out (~02:20 ET), the site kept answering from recorded answers and checked statements. Production needs billing alerts.</p>
 </section>
 
 <section>
   <h2>Data and resources needed</h2>
   <ul>
-    <li>Reports, agendas, budgets, plans as text PDFs; per decision, a clerk-checked timeline and map area.</li>
-    <li>GTFS, OpenStreetMap, permits, census households; a trained reviewer; a capped model API key.</li>
+    <li>Text PDFs; a clerk-checked timeline per decision.</li>
+    <li>GTFS, OpenStreetMap, permits, census; a reviewer; a model key.</li>
   </ul>
 </section>
 
@@ -152,26 +154,28 @@
   <h2>Rough cost (US dollars)</h2>
   <table>
     <tr><th>Item</th><th>Cost</th><th>Basis</th></tr>
-    <tr><td>Hosting, one city</td><td class="num">~$7&ndash;10 a month</td><td>1 GB machine $6.70, volume $0.15<sup>7</sup></td></tr>
-    <tr><td>Model, per brief</td><td class="num">$0.24</td><td>First full run <span class="todo">TODO(verify)</span></td></tr>
-    <tr><td>Model, per question</td><td class="num">~$0.01</td><td>5 calls, $0.012 <span class="todo">TODO(verify)</span></td></tr>
-    <tr><td>Spend caps</td><td class="num">$0.50/run, $5/day</td><td>In code; worst case ~$150/month</td></tr>
-    <tr><td>Staff review</td><td class="num">30&ndash;60 min a brief</td><td>Our estimate, not measured</td></tr>
+    <tr><td>Hosting</td><td class="num">$7&ndash;10 a month</td><td>Fly.io 1 GB machine + volume<sup>7</sup></td></tr>
+    <tr><td>Per brief</td><td class="num">$0.24&ndash;0.37</td><td>About 40 model calls</td></tr>
+    <tr><td>Per question</td><td class="num">$0.05&ndash;0.07</td><td>Eval averages; repeats $0</td></tr>
+    <tr><td>Per translation</td><td class="num">~$0.009</td><td>One language, 2 calls</td></tr>
+    <tr><td>Spend caps</td><td class="num">$0.50/run, $5/day</td><td>Enforced in code</td></tr>
+    <tr class="total"><td>A year, one city</td><td class="num">~$360&ndash;500</td><td>50 briefs, 5,000 questions</td></tr>
+    <tr class="total"><td>Same, from 2027</td><td class="num">~$630&ndash;870</td><td>Gemini prices double<sup>5</sup></td></tr>
   </table>
-  <p class="note">gemini-3.6-flash: $0.75 in, $3.75 out per million tokens to 31 Dec 2026, then $1.50 and $7.50.<sup>5</sup> Cached briefs cost nothing to read.</p>
+  <p class="note">A year: hosting $85&ndash;120, briefs $19, questions $250&ndash;350 (less with replays), translations $5. Excludes staff time (review est. 30&ndash;60 min a brief).</p>
 </section>
 
 <section>
   <h2>How another municipality adapts it</h2>
   <ol>
-    <li><code>cities/&lt;id&gt;.json</code>: map, languages, clerk, GTFS. <i>~1 h</i></li>
+    <li><code>cities/&lt;id&gt;.json</code>: map, languages, contacts, GTFS. <i>~1 h</i></li>
     <li>PDFs into <code>data/sources</code>; <code>npm run sources</code>. <i>~1 h</i></li>
     <li><code>data/decisions/&lt;id&gt;.json</code>, clerk-checked. <i>~2&ndash;4 h each</i></li>
-    <li>Local GTFS, OpenStreetMap, permits (5 stages). <i>~1&ndash;3 days</i></li>
-    <li>Model and spend caps; deploy the container. <i>~&frac12; day</i></li>
+    <li>Local GTFS, OpenStreetMap, permits. <i>~1&ndash;3 days</i></li>
+    <li>Set caps; deploy the container. <i>~&frac12; day</i></li>
     <li>Train reviewers. <i>~1 h</i></li>
   </ol>
-  <p class="note">Times are estimates. Text PDFs and public GTFS need no code changes.</p>
+  <p class="note">Estimates. Text PDFs and public GTFS need no code changes.</p>
 </section>
 
 </div>
@@ -180,8 +184,8 @@
   <h2>Who would use it</h2>
   <ul>
     <li><b>Residents</b>, no account: renters, owners, riders, seniors, students, parents, people with a disability, newcomers.</li>
-    <li><b>Clerks, communications</b>: review each statement, publish.</li>
-    <li><b>Planners</b>: transit, cost, housing lenses from open data.</li>
+    <li><b>Clerks</b>: review every statement before publishing.</li>
+    <li><b>Planners</b>: open-data lenses; ION Stage 2 construction scout.</li>
     <li><b>Councillors, groups</b>: one cited link with the dates to take part.</li>
   </ul>
 </section>
@@ -189,10 +193,11 @@
 <section class="split">
   <h2>Privacy and the law</h2>
   <ul>
-    <li><b>No personal data by design.</b> No accounts; only public documents go to the model. IP addresses stay in memory for rate limits, never logged; a logged question keeps only its text, audiences and language. Questions are public: we ask people not to type personal details.</li>
-    <li><b>MFIPPA.</b> A municipality may collect personal information only if a statute authorizes it, for law enforcement, or if necessary to a lawfully authorized activity, with notice (ss. 28(2), 29(2)).<sup>4</sup> Still do a privacy impact assessment.</li>
-    <li><b>Data residency.</b> The Gemini API is a US service; paid-tier content is not used to improve Google's products.<sup>5</sup> For production: Vertex AI in Canada, which lists Gemini 3.5 and 3.8 Flash but not 3.6,<sup>6</sup> or an on-premises model.</li>
-    <li><b>Bill 194.</b> Ontario's Enhancing Digital Security and Trust Act, 2024 lets the province require prescribed public sector entities that use AI (municipalities can be prescribed) to inform the public, keep an accountability framework, manage risk and have a person oversee it.<sup>1,2</sup> No regulation yet does so for municipal AI.<sup>3</sup> The prototype already discloses AI use and names a human approver.</li>
+    <li><b>No personal data by design.</b> No accounts; only public documents go to the model. IPs stay in memory for rate limits, never logged. A logged question keeps only its text, audiences and language.</li>
+    <li><b>Retention.</b> Staff can purge an entry's content under the retention by-law. The chain still verifies.</li>
+    <li><b>MFIPPA.</b> A municipality may collect personal information only if a statute authorizes it, for law enforcement, or if necessary to a lawfully authorized activity (s. 28(2)).<sup>4</sup></li>
+    <li><b>Data residency.</b> The Gemini API is a US service; paid-tier content isn't used to improve Google's products.<sup>5</sup> Production: Vertex AI in Canada<sup>6</sup> or on-premises.</li>
+    <li><b>Bill 194.</b> Ontario's Enhancing Digital Security and Trust Act, 2024 lets the province require prescribed public bodies using AI to inform the public, keep an accountability framework, manage risk and ensure human oversight.<sup>1,2</sup> No regulation yet covers municipal AI.<sup>3</sup></li>
   </ul>
 </section>
 
@@ -202,8 +207,9 @@
     <li>AI drafts; a named staff member approves each statement.</li>
     <li><b>Not the official notice</b>: each page links to it, and it prevails.</li>
     <li>Every number links to its page. The AI can be wrong.</li>
-    <li>Questions are public, not tied to you. Translations are by machine <span class="todo">TODO(verify)</span>.</li>
-    <li>Errors: "Report an error" or the clerk <span class="todo">TODO(verify)</span>.</li>
+    <li>Questions are public; the chat warns you to leave out personal details.</li>
+    <li>Translations are labelled machine-made, not staff-reviewed.</li>
+    <li>"Report an error" goes to the site's operator: here, our GitHub issues; a city would use its own channel.</li>
   </ul>
 </section>
 
@@ -212,32 +218,33 @@
   <table>
     <tr><th>Risk</th><th>Mitigation</th></tr>
     <tr><td>Misinformation</td><td>Quotes checked on the page in code; staff approve</td></tr>
-    <tr><td>Over-trust in AI</td><td>"AI draft" labels; uncertainty kept; sources a click away</td></tr>
+    <tr><td>Over-trust in AI</td><td>Draft labels; uncertainty kept; sources a click away</td></tr>
     <tr><td>Digital divide</td><td>Grade-8 aim, measured; screen readers; paper too</td></tr>
-    <tr><td>Language</td><td>11 languages in the menu; translations labelled</td></tr>
+    <tr><td>Language</td><td>11 languages; translations labelled</td></tr>
     <tr><td>Manipulation</td><td>Staff add sources; 10 questions per 10 min per visitor</td></tr>
     <tr><td>Liability</td><td>Not the official notice; approvals in a tamper-evident log</td></tr>
     <tr><td>Staff workload</td><td>Agents draft; staff review one statement at a time</td></tr>
+    <tr><td>Model outage</td><td>Replays answers; answers offline from checked text</td></tr>
   </table>
 </section>
 
 <section>
   <h2>What's next</h2>
-  <p>Pilot one live decision with a Waterloo Region municipality; measure review time and understanding with screen-reader users and newcomers. Before real use: WCAG 2.2 AA audit, privacy impact assessment, Canadian-hosted model, OCR, clerk sign-off procedure.</p>
+  <p>Pilot one live decision with a Waterloo Region municipality. Measure review time and understanding with screen-reader users and newcomers. Before real use: a WCAG 2.2 AA audit, a privacy impact assessment, a Canadian-hosted model, billing alerts, OCR.</p>
 </section>
 </div>
 </div>
 
 <footer class="refs">
   <ol>
-    <li>Bill 194, Strengthening Cyber Security and Building Trust in the Public Sector Act, 2024, S.O. 2024, c. 24. ola.org</li>
+    <li>Bill 194, Strengthening Cyber Security and Building Trust in the Public Sector Act, 2024.</li>
     <li>Lerners LLP, "Bill 194, Part II: Enhancing Digital Security and Trust Act, 2024". lerners.ca</li>
-    <li>Ontario, "Enhancing Digital Security and Trust Act" (web page), updated 22 Oct 2026. ontario.ca</li>
+    <li>Ontario, "Enhancing Digital Security and Trust Act", updated 22 Oct 2026. ontario.ca</li>
     <li>Municipal Freedom of Information and Protection of Privacy Act, R.S.O. 1990, c. M.56.</li>
     <li>Google, Gemini API pricing. ai.google.dev/gemini-api/docs/pricing</li>
     <li>Google Cloud, Generative AI on Vertex AI: data residency. docs.cloud.google.com</li>
-    <li>Fly.io, Resource pricing, lowest-price regions. fly.io/docs/about/pricing</li>
-    <li>Kincaid et al. 1975; Dibbelt et al. 2018. Web pages read 14 Nov 2026. More: docs/references.md</li>
+    <li>Fly.io, Resource pricing. fly.io/docs/about/pricing. Read 14 Nov 2026; all: docs/references.md</li>
+    <li>O. Reg. 530/22 as amended by O. Reg. 189/26; Municipal Act, 2001, Part VI.1.</li>
   </ol>
 </footer>
 

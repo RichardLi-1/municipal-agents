@@ -134,6 +134,41 @@ classDiagram
     commitments[]: title, madeBy, target, status, unclear[]
   }
 
+  class ConstructionLens {
+    scenario: title, label, basis
+    method: tbm-twin-bore | ...
+    alignment: GeoJSON line
+    proposed: launch, extraction
+    weights[]: label, weight
+    bores[]: diameterM, depthM, lengthM
+    crossPassages[]
+    boreholes[]: depthM, purpose
+    profile[]
+    limits: string[]
+    references: string[]
+  }
+
+  class ConstructionSite {
+    id: string
+    name: string
+    role: launch-shaft | extraction-shaft | laydown | ...
+    areaM2: number
+    landUse: string
+    distanceToAlignmentM: number
+    score: number 0 to 100
+    reasons: string[]
+    concerns: string[]
+  }
+
+  class ConstructionStep {
+    n: number
+    title: string
+    plain: string
+    duration: string
+    whatResidentsNotice: string
+    render?: url, prompt, model, illustrative
+  }
+
   class HousingLens {
     city: string
     stages[]: approved to completed, units, tracked
@@ -147,9 +182,11 @@ classDiagram
     actor: string
     kind: string
     decisionId?: string
-    payload: unknown
+    payload: unknown, null once purged
+    payloadHash: string
     prevHash: string
     hash: string
+    purged?: at, reason, bySeq
   }
 
   class DecisionCard {
@@ -203,6 +240,7 @@ classDiagram
     cost
     commitments
     housing
+    construction
   }
 
   CityConfig "1" --> "*" Decision : has
@@ -220,6 +258,10 @@ classDiagram
   Brief "1" *-- "0..1" CostLens
   Brief "1" *-- "0..1" CommitmentsLens
   Brief "1" *-- "0..1" HousingLens
+  Brief "1" *-- "0..1" ConstructionLens
+  ConstructionLens "1" *-- "*" ConstructionSite : ranked candidates
+  ConstructionLens "1" *-- "*" ConstructionStep : 7 steps
+  ConstructionLens "1" *-- "*" Statement
   AudienceImpact "1" *-- "*" Statement
   CostLens "1" *-- "*" Figure
   CostLens "1" *-- "*" Statement

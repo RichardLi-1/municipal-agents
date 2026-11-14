@@ -3,300 +3,384 @@
 A guided walk through the code for judges, and for the team to explain it. It follows
 real requests from the browser to Gemini and back, and points at the lines that keep
 the product honest: where citations are checked, where the record's hashes are made,
-how a lens is computed. The last section says how AI was used to write this code and
-how we checked it.
+how a lens is computed, what happens when the model can't be reached. The last section
+says how AI was used to write this code and how we checked it.
 
-Items marked `TODO(verify)` were still being written when this tour was drafted.
-Diagrams for each path are in [design.md](design.md).
+Diagrams for each path are in [design.md](design.md). Live site:
+https://municipal-agents.fly.dev. Code: https://github.com/RichardLi-1/municipal-agents.
 
 ## 1. The folders
 
 | Folder | What lives there | Read first |
 |---|---|---|
-| `shared/` | Types every part shares, and the two checks that must behave the same everywhere | `types.ts`, `verify.ts`, `readability.ts` |
-| `server/` | The web service: one Node process, `node:http`, no framework | `main.ts`, `app.ts`, `http.ts`, `routes/*.ts`, `log.ts` |
-| `agents/` | The lead and the specialists: a plain loop around the Gemini API | `index.ts`, `lead.ts`, `loop.ts`, `tools.ts`, `gemini.ts`, `skills/` |
-| `lenses/` | Scripts that compute the four lenses from open data, ahead of time | `housing/README.md`, then `transit/`, `cost/`, `commitments/` `TODO(verify)` |
-| `web/` | The resident and staff screens (Preact, MapLibre, pdf.js) | `src/screens/Decision.tsx`, `src/components/Chat.tsx`, `src/lib/sse.ts`, `src/lib/hash.ts` |
-| `data/` | Source PDFs and their page text, hand-checked decisions, briefs, lens results | `sources/index.json`, `decisions/row-2027-budget.json` and its `.notes.md` |
+| `shared/` | Types every part shares, and the checks that must behave the same everywhere | `types.ts`, `verify.ts`, `readability.ts` |
+| `server/` | The web service: one Node 24 process, `node:http`, no framework | `main.ts`, `app.ts`, `http.ts`, `routes/*.ts`, `log.ts`, `runfiles.ts` |
+| `agents/` | The lead and seven specialists: a plain loop around the Gemini API, plus the offline answerer | `index.ts`, `lead.ts`, `loop.ts`, `tools.ts`, `offline.ts`, `gemini.ts`, `skills/` |
+| `lenses/` | Code that computes the five lenses from open data and cited figures, before deployment | `README.md`, then `transit/`, `cost/`, `commitments/`, `housing/`, `construction/` |
+| `web/` | The resident and staff app (Preact, MapLibre, pdf.js) | `src/screens/Decision.tsx`, `src/components/Chat.tsx`, `src/components/Citations.tsx`, `src/lib/hash.ts` |
+| `landing/` | The public website at `/` (Vite, static pages) | `index.html` |
+| `docs-site/` | Builds `docs/` into the docs site at `/docs` (marked, highlight.js) | `build.ts` |
+| `embed/` | A script a city drops on its own page to show a card about one decision | `embed.js`, `demo.html` |
+| `data/` | Source PDFs and page text, hand-checked decisions, briefs, lens results, recorded runs, construction renders | `sources/index.json`, `decisions/row-2027-budget.json` and its `.notes.md`, `open/README.md` |
 | `cities/` | One settings file per region | `waterloo-region.json` |
-| `scripts/` | `sources.ts` (PDF to page text), `smoke.ts` (checks a deployment) | |
+| `scripts/` | `sources.ts` (PDF to page text), `smoke.ts` (checks a deployment), OpenAPI schema generation | |
 | `docs/`, `report/` | These documents and the one-page readiness report | |
 
-Size, for a sense of scale (14 November, 02:15 ET): the server is about 2,800 lines of
-TypeScript including tests, the agents about 2,700 including tests plus six skill files,
-the shared checks about 250.
+Size, for a sense of scale (14 November 2026, 03:00 ET): 189 tests across `server/`,
+`shared/`, `agents/` and `lenses/`, all passing (`npm test`).
 
 ## 2. The key files in one line each
 
 **shared/**
 - `types.ts`: every shape: `SourceDoc`, `Citation`, `Statement`, `Figure`, `Decision`,
-  `Brief`, the four lens types, `LogEntry`, `AgentEvent`. Changes are additive only.
+  `Brief`, the five lens types, `LogEntry`, `AgentEvent`. Changes are additive only.
 - `verify.ts`: the citation check. `quoteOnPage`, `verifyCitation`, `verifyStatement`.
 - `readability.ts`: Flesch-Kincaid grade, `readingGrade(texts)`.
 
 **server/**
-- `main.ts`: start-up. Loads settings, copies committed data to the volume, opens the
+- `main.ts`: start-up. Loads settings, mirrors committed data into the volume, opens the
   record, checks the chain, loads the agents, listens.
-- `config.ts`: every setting from the environment with a default (port, data folder,
-  staff passcode, daily limit, rate limits, run timeout).
+- `config.ts`: every setting from the environment with a default.
 - `app.ts`: the shared state handed to every route; `briefHash()` ties log entries to
   the exact brief text.
-- `http.ts`: the router, JSON and gzip, body size limits, server-sent events.
-- `routes/public.ts`: read-only API: health, city, decisions, calendar, sources, pages,
-  log, chain check, usage.
-- `routes/agents.ts`: `/ask` and `/translate`, the two routes that spend money.
-- `routes/staff.ts`: start a brief, review a statement, publish. Passcode check.
-- `log.ts`: the append-only, hash-chained record in SQLite.
-- `canonical.ts`: the canonical JSON that gets hashed.
-- `limits.ts`: per-IP rate limit, run slots, daily spend cap.
-- `usage.ts`: spend, tokens, energy and CO2e, all computed from the record.
-- `ics.ts`: the `.ics` calendar (RFC 5545).
-- `agents-loader.ts`: imports `agents/` lazily, so the site works even if the agents
-  fail to load.
-- `runs.ts`: what every agent run shares (log, abort signal, usage tally).
-- `data.ts`: reads decisions, briefs, sources and lenses from files; writes briefs.
+- `http.ts`: router, JSON and gzip, body size limits, server-sent events.
+- `security.ts`: security headers on every response; a Content-Security-Policy whose
+  inline-script hashes are computed as each page is served.
+- `site.ts`: which built site answers which path (`/` landing, `/docs`, `/decisions` and
+  `/d/:id` app, `/embed.js`).
+- `routes/public.ts`: health, city, decisions, calendar, sources, pages, log, chain check,
+  usage, construction renders.
+- `routes/agents.ts`: `/ask` and `/translate`, the routes that can spend money; the
+  answer cache and offline fallback are wired in here.
+- `routes/staff.ts`: start or replay a brief, review a statement, publish. Passcode check.
+- `routes/records.ts`: the records-retention purge.
+- `routes/insights.ts`: "what residents are asking", aggregated with k = 3.
+- `routes/cities.ts`: several municipalities on one deployment.
+- `routes/platform.ts`: calendar subscription feed, embed card data, OpenAPI.
+- `log.ts` and `canonical.ts`: the append-only, hash-chained record.
+- `runfiles.ts`: every agent run's events saved to `data/runs/<runId>.jsonl`; doubles as
+  the answer cache.
+- `statements.ts`: review rules: every statement reviewed before publishing, rejected
+  ones left out of the public brief, edits re-checked.
+- `limits.ts`, `usage.ts`: rate limit, run slots, daily cap; spend and energy from the record.
+- `ics.ts`: calendars (RFC 5545). `openapi.ts`: the API description.
 
 **agents/**
-- `index.ts`: the three functions the server calls: `ask`, `generateBrief`, `translateBrief`.
+- `index.ts`: the functions the server calls: `ask`, `generateBrief`, `translateBrief`.
 - `lead.ts`: plans, runs specialists in parallel, writes and grounds the answer;
   assembles and translates briefs.
 - `loop.ts`: `runStep`, the loop one specialist runs; `Budget`; `budgetedCall`.
 - `tools.ts`: the tools the model may call, and the checks they run.
+- `plain.ts`: the plain-language pass: rewrites statements above grade 8, kept only if
+  code confirms they read easier and keep every number.
+- `tidy.ts`: last pass in code: drops near-duplicates, marks hedged statements as estimates.
+- `offline.ts`: answers without a model from already-checked material.
 - `corpus.ts`: loads a decision's sources and searches their pages (BM25).
 - `gemini.ts`: one REST call to Gemini with retries, timeout and cost.
-- `skills.ts` and `skills/`: each specialist's instructions as Markdown, plus `RULES.md`
-  shared by all.
-- `cli.ts`: run the agents from the terminal for testing.
+- `skills/`: each specialist's instructions as Markdown (`explainer`, `transit-access`,
+  `lifecycle-cost`, `commitments`, `housing-pipeline`, `construction-scout`,
+  `translator`), plus `RULES.md` shared by all.
+- `evals/`: 18 question cases scored in code (`run.ts`, `cases.json`, `results.md`).
+- `cli.ts`: run the agents from the terminal; `testing.ts`: a fake model for tests.
 
 ## 3. Path of a question: from the browser to Gemini and back
 
-A resident on the Region's 2027 budget page types "Will my water bill go up?".
+A resident on the Region's 2027 budget page types "How can I speak to Regional Council
+about the budget?".
 
 1. **Browser.** `web/src/components/Chat.tsx` calls `postEvents()` in
    `web/src/lib/sse.ts`, which POSTs `{question, audiences, lang}` to
-   `/api/decisions/row-2027-budget/ask` and reads the reply as a stream of
-   server-sent events.
-2. **Route.** `server/routes/agents.ts`, the `r.post("/api/decisions/:id/ask")`
-   handler, validates the input (non-empty, under 1,000 characters, known audiences,
-   a safe language code). Then the cheap checks, in order, so a refused request costs
-   nothing: the agents are loaded; today's spend is under the cap (`checkDailyCap`,
-   `server/limits.ts`); this IP has not asked 10 questions in 10 minutes
-   (`RateLimiter.take`; the IP is held in memory only); one of 4 run slots is free
-   (`RunSlots.acquire`).
-3. **Record the question.** `app.log.append({actor: "visitor", kind: "question.asked", ...})`
-   with the question text, audiences and language. No identity.
-4. **Open the stream.** `openSse()` in `server/http.ts`. `startRun()` in
-   `server/runs.ts` gives the agents a context whose `log()` writes to the record and
-   whose abort signal fires if the resident leaves or the run passes 240 seconds.
-5. **Lead plans.** `askWith()` in `agents/lead.ts`. Greetings and "what can you do?"
-   are answered without a model call. Otherwise it loads the corpus
-   (`loadCorpus`, `agents/corpus.ts`), creates a `Budget` of 40 calls and US$0.50 with
-   one call held back for the answer, and calls `plan()`: one Gemini call that picks
-   which specialists to ask and what to ask each. The browser receives a `plan` event
-   and the steps panel shows them.
-6. **Specialists work in parallel.** `runStep()` in `agents/loop.ts`, once per step.
-   Each builds its system prompt from `RULES.md`, its own `SKILL.md` and the decision's
-   metadata (`systemPrompt`, `decisionBrief`), then loops:
-   - `budgetedCall()` reserves a call from the shared budget, calls Gemini
-     (`callGemini` in `agents/gemini.ts`, a `fetch` to `generateContent` with the
-     tools declared), records a `usage` entry in the log with tokens and cost, and
-     emits a `usage` event.
-   - If the model asks for tools, the loop runs them: `search_pages` (BM25 over page
-     passages), `read_page`, and `record_statement`. Each tool's one-line summary is
-     emitted as a `tool` event, which is what the steps panel shows.
-   - It stops when the model stops calling tools, or at its own call limit, or when
-     the budget is spent.
-7. **Each statement is checked on the spot.** `record_statement` in `agents/tools.ts`
-   (see section 4). Accepted statements are emitted as `statement` events and logged
-   as `statement.recorded`; rejected ones are logged as `statement.rejected` with the
-   reasons, and the reasons go back to the model.
-8. **Lead writes the answer.** `writeAnswer()` makes one more Gemini call with only the
-   verified statements, numbered, and asks for a plain answer with `[n]` markers.
-9. **Answer is grounded in code.** `groundAnswer()` in `agents/lead.ts` drops any
-   sentence that gives voting advice, or that has a number not found in a cited
-   statement or the decision's hand-checked timeline; renumbers the markers; and keeps
-   only the statements actually cited.
-10. **Back to the browser.** The `answer` event carries the text and its statements.
-    The server logs `answer.given`, adds a `usage` entry if the agents did not, sends
-    `done` and closes the stream (`server/routes/agents.ts`). `Chat.tsx` shows the
-    answer with numbered citation links; clicking one opens `SourceViewer.tsx` on the
-    cited PDF page with the quote highlighted.
+   `/api/decisions/row-2027-budget/ask` and reads the reply as server-sent events.
+2. **Route.** `server/routes/agents.ts` validates the input (non-empty, under 1,000
+   characters, known audiences, a safe language code).
+3. **Answer cache first.** `server/runfiles.ts` looks for a recorded run of the same
+   decision, language and audiences whose question has the same numbers and at least
+   85% of the same words. Only runs that produced a real, cited answer qualify. If one
+   matches, its events are replayed (labelled with when it was first answered), at
+   US$0. Replays skip the daily spend cap but not the per-visitor limit.
+4. **Cheap checks.** Otherwise, in order, so a refused request costs nothing: today's
+   spend is under the cap (`checkDailyCap`, `server/limits.ts`); this IP has not asked 10
+   questions in 10 minutes (`RateLimiter.take`; the IP is held in memory only); one of 4
+   run slots is free.
+5. **Record the question.** `question.asked` with the question text, audiences and
+   language. No identity.
+6. **Open the stream.** `openSse()`; `startRun()` in `server/runs.ts` gives the agents a
+   context whose `log()` writes to the record and whose abort signal fires if the
+   resident leaves or the run passes 240 seconds. Every event is also written to
+   `data/runs/<runId>.jsonl`.
+7. **Lead plans.** `askWith()` in `agents/lead.ts`. Greetings are answered without a
+   model call. Otherwise it loads the corpus, creates a `Budget` of 40 calls and US$0.50
+   with a reserve for the answer, and calls `plan()`: one Gemini call that picks which
+   specialists to ask and what to ask each. The steps panel shows the plan.
+8. **Specialists work in parallel.** `runStep()` in `agents/loop.ts`. Each builds its
+   system prompt from `RULES.md`, its `SKILL.md` and the decision's metadata, then loops:
+   `budgetedCall()` reserves a call from the shared budget, calls Gemini
+   (`callGemini` in `agents/gemini.ts`), logs a `usage` entry with tokens and cost; any
+   tools the model asks for are run (`search_pages`, `read_page`, `record_statement`,
+   the lens tools) and each tool's one-line summary is streamed as a `tool` event.
+9. **Each statement is checked on the spot** by `record_statement` (section 4).
+10. **Lead writes the answer** from the verified statements only, with `[n]` markers.
+11. **Answer is grounded in code.** `groundAnswer()` in `agents/lead.ts` drops any
+    sentence that gives voting advice or has a number not found in a cited statement
+    or the hand-checked timeline; renumbers the markers; keeps only cited statements.
+12. **Back to the browser.** The `answer` event carries text and statements; the server
+    logs `answer.given`, sends `done` and closes the stream. `Citations.tsx` shows each
+    citation; clicking one opens `SourceViewer.tsx` on the PDF page with the quote
+    highlighted.
 
-If anything fails, the resident gets a plain message (`failureMessage` in
-`server/runs.ts`) and the run slot is released in a `finally` block.
+**When the model can't be reached** (no key, 401 or 403, 402, 429, 5xx, no connection),
+the route falls back to `agents/offline.ts`. It ranks, with BM25, the brief's verified
+statements that staff did not reject, the decision's hand-checked timeline events, and
+computed lens results (transit gaps and fixes, the construction scenario, cost
+figures); then exact quotes from the documents; and as a last resort it gives the
+Clerk's contact. It starts "The agents can't be reached right now. Here is what the checked brief says about that:". This is not
+hypothetical: the team's prepaid Gemini credit ran out at about 02:20 ET during the
+hackathon, and since then the live site has answered from replays and the offline
+answerer.
 
 ## 4. Where citations are verified
 
-There is one rule: a statement is verified only if every quote it cites is found on
-the page it names. The code is `shared/verify.ts`; the tool that applies it is
-`record_statement` in `agents/tools.ts`.
+One rule: a statement is verified only if every quote it cites is found on the page it
+names. The code is `shared/verify.ts`; the tool that applies it is `record_statement` in
+`agents/tools.ts`.
 
 1. `checkCitations()` refuses a statement with no citations.
 2. For each citation, `checkCitation()`:
    - refuses a source that is not one of this decision's sources, a page that does not
      exist, a quote with an ellipsis, or a quote shorter than 8 characters;
    - calls `verifyCitation()` → `quoteOnPage()`, which normalises both texts (case,
-     spacing, curly quotes, dashes, ligatures, soft hyphens, words split by a hyphen
-     at a line end) and looks for the quote: first as a plain substring, then with
-     all spaces removed, then word by word in order across the columns of a two-column
-     page (`matchAcrossColumns`). Nothing is fuzzy: every word must be present in order.
-   - On failure it tells the model something it can act on: the page the quote is
-     really on (`findQuotePages`), or another source that has it, or the closest line
-     on the cited page.
-3. `ruleProblems()` checks the wording: under 40 words, no advocacy, "may" for
-   impacts, both sides for trade-offs.
-4. Only if all of that passes is the statement stored with `verified: true`.
+     spacing, curly quotes, dashes, ligatures, soft hyphens, words split by a hyphen at a
+     line end) and looks for the quote: as a substring, then with all spaces removed,
+     then word by word in order across the columns of a two-column page
+     (`matchAcrossColumns`). Nothing is fuzzy: every word must be present, in order;
+   - on failure tells the model something it can act on: the page the quote is really
+     on (`findQuotePages`), another source that has it, or the closest line on the page.
+3. `ruleProblems()` checks the wording: under 40 words, no advocacy, "may" for impacts,
+   both sides for trade-offs.
+4. Only then is the statement stored with `verified: true`. Rejections are logged as
+   `statement.rejected` with their reasons.
+5. A statement also carries a support strength (`support` in `shared/types.ts`),
+   measured in code from the words and numbers the sentence shares with its quotes:
+   `weak` means the quote is on the page but a reviewer should check that it really
+   backs the sentence.
 
-The sequence diagram "staff drafts, reviews and publishes" in [design.md](design.md)
-shows a quote rejected because it was on page 14, not page 12, and the agent's
-corrected second try.
+How often it bites: in the four recorded brief runs (`data/runs/*-brief-*.jsonl`) the
+checker rejected 78 statement attempts and accepted 116. The agents fixed most by
+quoting the right page.
 
-Tests: `shared/verify.test.ts` (normalising, two-column pages, hyphenated line breaks,
-quotes on the wrong page, statements with no citations) and `agents/tools.test.ts`.
+The same check runs again in three places: when a staff edit is saved
+(`recheck()` in `server/statements.ts`), when cost lenses are built
+(`lenses/cost/build.ts` stops if a quote fails), and in the evals (`agents/evals/run.ts`
+finds each cited quote again on its page).
 
 ## 5. Where the record's hash is computed
 
 `server/log.ts`, method `Log.append()`:
 
-1. The payload is round-tripped through JSON so what is hashed is exactly what is
-   stored and later read back.
-2. Inside one `BEGIN IMMEDIATE` transaction, it reads the last entry's `seq` and
-   `hash`.
-3. The new entry's hash is `entryHash(body)` = SHA-256 of `hashInput(e)` from
-   `server/canonical.ts`: the previous hash followed by the canonical JSON (keys
-   sorted, no whitespace) of `{seq, at, actor, kind, decisionId, payload}`. The first
-   entry's previous hash is 64 zeros.
-4. It inserts the row and commits. SQLite triggers refuse any `UPDATE` or `DELETE` on
-   the table.
+1. The payload is round-tripped through JSON so what is hashed is exactly what is stored.
+2. `payloadHash` = SHA-256 of the canonical JSON of the payload (`server/canonical.ts`:
+   keys sorted, no whitespace).
+3. Inside one `BEGIN IMMEDIATE` transaction it reads the last entry's `seq` and `hash`.
+4. `hash` = SHA-256 of the previous hash followed by the canonical JSON of
+   `{seq, at, actor, kind, decisionId, payloadHash}`. The first entry's previous hash is
+   64 zeros.
+5. It inserts the header (table `log`) and the content (table `log_content`) and
+   commits. Triggers refuse any `UPDATE` or `DELETE` on the headers, and allow only one
+   kind of change to content: a purge.
 
-`Log.verifyChain()` recomputes every hash from the start; `main.ts` runs it at start-up
-and `GET /api/log/verify` runs it on request. The browser re-checks the chain itself
-with the Web Crypto API in `web/src/lib/hash.ts` (`verifyChain`), so a visitor does not
-have to trust the server's word. Tests: `server/log.test.ts`, including a tamper test.
+**Retention purge.** A municipality must be able to dispose of records when its
+retention by-law says so. `POST /api/staff/purge` (`server/routes/records.ts`) takes an
+entry number and a reason; `Log.purge()` removes that entry's content, keeps its header
+and `payloadHash`, and appends a `record.purged` entry saying which entry, why and who.
+Because the chain covers the payload's hash rather than the payload, every hash still
+verifies. Content missing without a matching `record.purged` entry, or content that
+doesn't match its hash, is reported as tampering. Purges are manual, one entry at a
+time; nothing is purged on a schedule.
+
+`Log.verifyChain()` recomputes every hash; `main.ts` runs it at start-up and
+`GET /api/log/verify` on request. The browser re-checks the chain itself with the Web
+Crypto API (`web/src/lib/hash.ts`), so a visitor need not trust the server. The browser
+and server each implement canonical JSON; `server/canonical.test.ts` checks the two agree
+on tricky payloads. Tests: `server/log.test.ts`, including tamper and purge tests.
 
 ## 6. How a lens is computed
 
-Lenses are computed **before** deployment by scripts, stored as JSON in `data/lenses/`,
-and read by the agents' lens tools (`transit_gaps`, `lifecycle_cost`,
-`housing_stages`, `commitment_progress` in `agents/tools.ts`). The model never does the
-arithmetic; it explains the result and cites the documents.
+Lenses are computed **before** deployment by code, stored as JSON in `data/lenses/`,
+and read by the agents' lens tools in `agents/tools.ts` (`transit_gaps`,
+`lifecycle_cost`, `housing_stages`, `commitment_progress`, `construction_sites`). The
+model never does the arithmetic; it explains the result and cites the documents.
+Overview: [lenses/README.md](../lenses/README.md).
 
-**Worked example: housing (challenge 5).** `lenses/housing/`:
-1. `sources.ts` lists each dataset with its URL, publisher and licence.
-2. `fetch.ts` downloads them to `data/cache/housing/` (not committed).
-3. `build.ts` counts, for Kitchener, Waterloo, Cambridge and the region, new homes at
-   each stage since 1 January 2022 (approved, site plan, permit issued, under
-   construction, completed), works out median days between stages where the same
-   permit can be followed, attaches Ontario's 2031 target and progress, and lists the
-   stages with no public data. `lib.ts` holds the pure functions the tests cover.
-4. Output: `data/lenses/housing-<city>.json`, a `HousingLens`. `summary.ts` turns it
-   into plain text for the agents.
+**Transit (challenge 2), `lenses/transit/`.** `fetch.ts` downloads GRT's bus and ION
+GTFS, OpenStreetMap essential destinations (626 points) and 2021 census population by
+dissemination area (766 areas, 587,165 people). `gtfs.ts` turns one service day into
+connections sorted by departure; `csa.ts` runs the Connection Scan Algorithm (Dibbelt
+et al.) with walking transfers; `lens.ts` computes, at weekday 8 am, weekday 10 pm and
+Sunday 8 am, the share of people who can reach each kind of destination within 45
+minutes, service gaps at stops, first/last-mile gaps, and ranked fixes with trade-offs.
+Output: `transit-region.json` and `transit-<decision>.json`.
 
-**Transit (challenge 2).** `lenses/transit/` `TODO(verify)`: reads the Grand River
-Transit GTFS (bus and ION), builds one service day's connections sorted by departure
-time, and runs the Connection Scan Algorithm from origins in the decision's area to
-essential destinations at weekday 8 am, weekday 10 pm and Sunday 8 am; then finds
-service gaps and first/last-mile gaps, and ranks candidate fixes by people affected.
+**Cost (challenge 3), `lenses/cost/build.ts`.** Built in code from cited figures, one
+lens per decision, no model calls. Every input is either a figure whose quote is checked
+on its page by `shared/verify.ts` (the build stops if one fails) or an assumption with a
+slider range and a reason. It sums capital, operating, maintenance, renewal and
+environmental cost year by year over the stated horizon, at 0% or 3% discount, and
+divides by the region's 222,426 households (2021 census). The web app recomputes when a
+resident moves a slider (`web/src/lib/cost.ts`).
 
-**Cost (challenge 3).** `lenses/cost/` `TODO(verify)`: for an asset, sums capital,
-operating, maintenance, renewal and environmental cost year by year over the stated
-horizon, with a 0% or 3% discount rate, divides by households, and marks each input as
-cited or assumption. The web app recomputes when a resident moves an assumption
-slider (`web/src/lib/cost.ts`).
+**Commitments (challenge 4), `lenses/commitments/status.ts`.** Compares the latest cited
+figure with a straight line from the baseline to the target, and says on track, behind,
+done or unclear. Pure function; the agents supply cited numbers.
 
-**Commitments (challenge 4).** Recorded by the `commitments` specialist with
-`record_commitment`, each progress figure a verified statement `TODO(verify)`.
+**Housing (challenge 5), `lenses/housing/`.** Counts new homes at each stage from
+approval to completion since 2022 for Kitchener, Waterloo, Cambridge and the region,
+median days between stages where one permit can be followed, Ontario's 2031 target, and
+the stages with no public data.
+
+**Construction scout, `lenses/construction/`.** An illustrative what-if, not a Region
+plan: ION Stage 2 between Sportsworld and Preston built as twin tunnels under Highway
+401 and the Speed River.
+1. `build.ts` reads the ION Stage 2 alignment and stations (Region of Waterloo Open
+   Data), crossings and candidate land (OpenStreetMap via Overpass) and ground levels
+   (NRCan's CDEM).
+2. `scout.ts` scores candidate launch, extraction and laydown sites 0 to 100 on stated
+   weights (area 25, distance to the line 25, buffer from homes, schools and parks 20,
+   road access 15, ease of taking the land 15). It ranks; people choose.
+3. `layout.ts` lays out the bores with stated rules: 6.5 m machines, crown cover of at
+   least 2 diameters, cross-passages no more than 244 m apart (NFPA 130), boreholes
+   about every 75 m (an assumption) and at least 1.5 tunnel diameters below the invert
+   (FHWA-NHI-10-034).
+4. `steps.ts` writes seven steps with typical durations, spoil and truck arithmetic, and
+   work hours from each city's noise rule (Kitchener; Cambridge By-law 32-04).
+5. `render.ts` asked Gemini's image model (`gemini-3.1-flash-image`) for one
+   illustration per step, ahead of time, capped at US$1.50 (about US$0.64 spent). The
+   images are files in `data/renders/`, served by `/api/renders/:file`; no image is
+   generated at run time.
+At run time the `construction-scout` specialist reads the lens through
+`construction_sites` and may record its numbers only as computed figures; code rejects
+any number that is not in the lens result.
 
 ## 7. Path of a brief: draft, review, publish
 
 1. Staff open `/staff` and enter the passcode. `POST /api/staff/briefs` with
-   `{decisionId}` (or a PDF upload, `server/upload.ts`). `requireStaff()` compares the
-   passcode's SHA-256 digest in constant time.
-2. The server logs `brief.started` and calls `generateBrief()`. In `agents/lead.ts`,
-   `generateBriefWith()` runs the explainer and one specialist per lens, then
-   `assembleBrief()` builds the `Brief` from the verified findings; the reading grade
-   of the summary and impacts is computed with `readingGrade()`, and the status is
-   `draft`. Progress streams to the staff
-   screen as events.
-3. The draft is written to `data/briefs/<id>.json` (on the volume in production) and
-   `brief.generated` is logged with counts of verified statements, its cost and its
-   hash.
-4. For each statement, `POST /api/staff/review` with `approve`, `edit` (the original
-   text is kept) or `reject`, and an optional note. The brief moves to `in-review`.
-   `statement.reviewed` is logged with the reviewer's name and the new brief hash.
-5. `POST /api/staff/publish` needs the reviewer's name. The brief becomes `published`
-   with `by` and `at`, and `brief.published` is logged with the counts approved,
-   edited, rejected and left unreviewed.
+   `{decisionId}` or a PDF upload (`server/upload.ts`). `requireStaff()` compares the
+   passcode's SHA-256 digest in constant time. Staff can also replay the agents' last
+   real run instead of paying for a new one.
+2. `generateBriefWith()` in `agents/lead.ts` runs the explainer and one specialist per
+   lens; `plain.ts` rewrites statements above grade 8 (kept only if they read easier and
+   keep every number); `tidy.ts` removes near-duplicates; `assembleBrief()` builds the
+   `Brief` with its reading grade and status `draft`.
+3. The draft is written to `data/briefs/<id>.json` (on the volume) and `brief.generated`
+   is logged with counts, cost and the brief's hash. A previous draft goes to history.
+4. For each statement, `POST /api/staff/review` with `approve`, `edit` (original text
+   kept; citations re-checked; residents see "Edited by staff") or `reject`, with an
+   optional note. The brief moves to `in-review`.
+5. `POST /api/staff/publish` needs the reviewer's name and answers 409 until every
+   statement has been reviewed. The public brief leaves out rejected statements
+   (`publicBrief()` in `server/statements.ts`). `brief.published` is logged with counts.
 
-## 8. Tests and how to run them
+Real numbers: a full brief with all lenses is about 40 model calls (the cap) and cost
+US$0.24 to US$0.37 in our runs (`data/briefs/*.json`, `costUsd`; the live budget brief
+logged US$0.368). A translation of a brief costs about US$0.009 per language (2 calls;
+French and Spanish in the live record). Reading grades after
+the plain-language pass: budget 7.3, water supply 6.0, transit hub 6.7.
+
+## 8. The platform around the app
+
+- **Several cities, one deployment** (`server/routes/cities.ts`): each city is
+  `cities/<id>.json` and each decision names its city.
+- **Embed** (`embed/embed.js`): a city adds one `<script>` tag to its own page and gets a
+  card with the plain title, three cited statements and the next date to take part,
+  from `/api/embed/:id`. Demo: `/embed/demo`.
+- **Calendar feed** (`/api/calendar.ics?decisions=a,b`): one subscription for many
+  decisions' dates.
+- **OpenAPI** (`/api/openapi.json`): `server/openapi.test.ts` fails if a route is missing
+  or the generated schemas are stale.
+- **Staff insights** (`/api/staff/insights`): what residents ask, aggregated. Question
+  wording appears only for groups of at least 3 similar questions, with emails, phone
+  numbers, addresses and long numbers removed; smaller groups are only counted.
+- **Security headers** (`server/security.ts`): CSP with per-page script hashes, HSTS,
+  `nosniff`, a strict policy on the API.
+
+## 9. Tests, evals and how to run them
 
 ```
-npm test                                       # server, agents, lenses: 68 tests passing on 14 Nov 2026, 02:10 ET
-node --test "shared/**/*.test.ts"              # citation check and reading grade: 12 tests passing
+npm test                       # 189 tests: server, shared, agents, lenses (14 Nov 2026, all passing)
 npm run typecheck
-npm run smoke                                  # checks a running deployment end to end
-node agents/cli.ts                             # run the agents from the terminal TODO(verify) flags
+npm run smoke                  # checks a running deployment end to end
+node agents/evals/run.ts       # scores the agents on question cases (spends model credit)
+node agents/cli.ts             # run the agents from the terminal
 ```
 
-`npm test` does not yet include `shared/` (`TODO(verify)`: add it to the script).
+**Evals** (`agents/evals/results.md`): each case checks every cited quote is found
+again on its page, valid citation markers, no advice on how to vote or what to think,
+and a reading grade of 9 or lower, plus case-specific pages and words. Latest full run:
+6 of 12 passed, at US$0.073 a question and a median of 30 seconds (the first run, before
+the plain-language pass, averaged US$0.053 over 16 questions, so we quote about
+US$0.05–0.07 a question). All 6 failures were
+over the answer reading-grade limit (one also found nothing to cite); there were no
+citation failures and no voting advice. Six more cases were skipped at the spend cap,
+and a re-run stopped when the credit ran out.
 
 ## How AI was used and how we checked it
 
 **What AI drafted.** Code, data pipelines and documents were drafted with Claude Code
-(Anthropic, model Claude Opus 5.5), directed and reviewed by the team. In practice that
-covers most of the TypeScript in `server/`, `agents/`, `lenses/`, `shared/` and `web/`,
-the scripts that turn PDFs into page text and fetch open data, the skill files, these
-documents and the readiness report. At run time, the product's agents use Google's
-Gemini API (`gemini-3.6-flash`).
+(Anthropic, model Claude Opus 5.5), directed and reviewed by the team. That covers most
+of the TypeScript in `server/`, `agents/`, `lenses/`, `shared/`, `web/`, `landing/`,
+`docs-site/` and `embed/`, the scripts that turn PDFs into page text and fetch open data,
+the skill files, these documents and the readiness report. At run time, the product's
+agents use Google's Gemini API (`gemini-3.6-flash`); the construction illustrations were
+made once with `gemini-3.1-flash-image`.
 
 **What the team decided and did by hand.**
 - The product rules (spec, "Principles") and the decision to enforce them in code.
-- The choice of decisions and source documents, and the hand-checked timeline of each
-  decision: dates, deadlines and ways to take part, checked against the official
-  pages. `data/decisions/row-2027-budget.notes.md` records what was checked and where
-  two official pages disagreed.
+- The choice of decisions and source documents, and each decision's hand-checked
+  timeline, checked against the official pages. `data/decisions/*.notes.md` records what
+  was checked and where official pages disagreed (two gave different dates for a budget
+  review day).
 - The architecture choices in [architecture.md](architecture.md).
 - Review of every change before it was committed, and of the agents' drafts.
 
 **How we checked the AI-written code.**
-- **Tests on the parts that carry trust.** The citation checker, reading grade, hash
-  chain (including a tamper test), calendar, limits, spend summary, routes, the agent
-  loop and tools, and the housing lens maths have unit tests: 80 in total, all passing
-  at the time of writing.
-- **Type checking** of all shared shapes with `tsc --strict`.
-- **Fixtures.** `agents/fixtures/` holds a small made-up decision so the agent loop can
-  be tested without spending money, and a cached run for repeatable checks.
-- **Real runs on real documents.** The first full brief for the 2027 budget used
-  `gemini-3.6-flash`, cost US$0.24, and produced 17 statements, every quote found on
-  its page. `TODO(verify)`: how many the checker rejected on the way, from the record.
+- **Tests on the parts that carry trust**: citation checker, reading grade, canonical
+  JSON (browser and server agree), hash chain (tamper and purge), review rules, answer
+  cache, offline answers, calendar, limits, spend, routes, OpenAPI coverage, the agent
+  loop and tools with a fake model, and each lens's maths. 189 tests, all passing.
+- **Type checking** with `tsc --strict` over the shared shapes.
+- **Evals on real documents** with real model calls, scored in code (section 9).
+- **Recorded runs**: every agent run's events are kept in `data/runs/`, so what the
+  agents actually said can be inspected and replayed.
 - **Smoke test** of the deployed site (`scripts/smoke.ts`).
 
 **How we check the AI at run time.** The model's output is never trusted on its own:
-quotes are checked on the page, wording rules are applied, numbers in answers must be
-in a cited statement, spend is capped per run and per day, and staff approve before
-anything is published. Every model call is in the public record with its cost.
+quotes are checked on the page, wording rules applied, numbers in answers must be in a
+cited statement, lens numbers must come from code, spend is capped per run and per day,
+and staff review every statement before anything is published. Every model call is in
+the public record with its cost.
 
 **Known weak spots (honest list).**
 1. **A quote on the page does not prove the sentence is fair.** The checker proves the
    words exist on that page, not that the statement reads them correctly or keeps their
-   context. Staff review is the control for that.
-2. **Staff edits are not re-checked.** An edited statement keeps its citations; the new
-   text is not compared with the quote.
-3. **Publishing does not require every statement to be reviewed.** It records how many
-   were left unreviewed. `TODO(verify)`: whether the public page hides unreviewed or
-   rejected statements.
-4. **The first brief reads at grade 11.8**, above the grade-8 target. The grade is
-   shown honestly; a rewrite pass is `TODO(verify)`. The syllable counter is a
-   heuristic (about ±0.5 grade).
-5. **The answer's number check is loose.** It looks for each number as text in the
-   cited statements and the timeline, so a short number such as "5" can pass by
-   coincidence.
-6. **Two copies of canonical JSON.** The browser (`web/src/lib/hash.ts`) and the server
-   (`server/canonical.ts`) each implement it. They agree today; if one changes, the
-   browser would report a broken chain. A shared test would catch it.
-7. **The record can be rewritten wholesale** by whoever controls the server.
-   Publishing the head hash elsewhere is a next step.
-8. **One shared staff passcode**, not individual accounts.
-9. **Questions are public in the record.** No automatic removal of personal details yet.
+   context. The `weak` support flag points reviewers at the likeliest cases, but it
+   counts shared words; it doesn't understand meaning. Staff review is the control.
+2. **An edit is re-checked, but only its quotes.** Re-checking confirms the quotes are
+   still on their pages; it doesn't compare the new wording with them. The original
+   text is kept and residents see "Edited by staff".
+3. **Answers are not always plain enough.** Briefs read at grade 6.0 to 7.3 after the
+   plain-language pass, but 6 of 12 eval answers were above grade 9. The syllable counter
+   is a heuristic (about ±0.5 grade).
+4. **The answer's number check is loose.** It looks for each number as text in the cited
+   statements and the timeline, so a short number such as "5" can pass by coincidence.
+5. **The answer cache matches by words, not meaning.** A differently worded question
+   gets a new run (or an offline answer); a near-identical question with a different
+   intent could, rarely, get a replay. Replays are labelled with their original date.
+6. **The record can be rewritten wholesale** by whoever controls the server. Publishing
+   the head hash elsewhere is a next step.
+7. **One shared staff passcode**, not individual accounts.
+8. **Questions are public in the record.** The chat box asks people not to include
+   personal details, and staff insights remove them from what they show, but the raw log
+   is not redacted; purging is manual.
+9. **Provider credit is a single point of failure for new answers.** When ours ran out,
+   replays and offline answers kept the site useful, but new questions can't get fresh
+   agent research until billing is restored. Production needs billing alerts.
 10. **Energy and CO2e are estimates** from tokens, not measurements.

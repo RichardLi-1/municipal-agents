@@ -4,7 +4,7 @@
 
 import type { ConstructionLens } from "../../shared/types.ts";
 
-export { scoutSites, toFeatures, fetchOsm, WEIGHTS, WEIGHT_LABELS, scoreOf, factorsFor, areaFit } from "./scout.ts";
+export { scoutSites, numberDuplicateNames, sitePhrase, toFeatures, fetchOsm, WEIGHTS, WEIGHT_LABELS, scoreOf, factorsFor, areaFit } from "./scout.ts";
 export { RULES, crossPassageChainages, boreholeChainages, boreholeDepth, gradeLimitedCrown, requiredCrown } from "./layout.ts";
 export { SPOIL, spoilPlan, boreVolumeM3 } from "./steps.ts";
 

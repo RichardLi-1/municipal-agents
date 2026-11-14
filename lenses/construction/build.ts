@@ -12,7 +12,7 @@ import {
   chainages, distM, lineLengthM, offsetLine, pointAt, projectOnLine, rectangle, ringCentroid, roundGeometry, roundPt, simplify, sliceLine,
   type LngLat,
 } from "./geo.ts";
-import { fetchOsm, receptorKind, scoutSites, toFeatures, WEIGHT_LABELS, WEIGHTS, type Feature } from "./scout.ts";
+import { fetchOsm, numberDuplicateNames, publicName, sitePhrase, receptorKind, scoutSites, toFeatures, WEIGHT_LABELS, WEIGHTS, type Feature } from "./scout.ts";
 import { CDEM_URL, groundElevations, layoutTunnel, RULES, type Crossing } from "./layout.ts";
 import { buildSteps, spoilPlan, SPOIL, NOISE_RULES } from "./steps.ts";
 
@@ -150,8 +150,8 @@ export async function buildLens(decisionId: string): Promise<ConstructionLens> {
   // 5. Steps.
   const at = (name: string) => crossingsAll.find((c) => c.name.includes(name))?.at ?? mid;
   const steps = buildSteps({
-    launchName: launch.name,
-    extractionName: extraction.name,
+    launchName: sitePhrase(launch.name),
+    extractionName: sitePhrase(extraction.name),
     launch: layout.shafts[0].point,
     extraction: layout.shafts[1].point,
     middle: pointAt(section, layout.lengthM / 2).point,
@@ -179,7 +179,7 @@ export async function buildLens(decisionId: string): Promise<ConstructionLens> {
   // 6. Map layers.
   // Shown and stored: the best few per role, ranked within the role.
   const cap: Record<string, number> = { "launch-shaft": 5, "extraction-shaft": 5, laydown: 3 };
-  const top = sites.filter((s) => (cap[s.role] = (cap[s.role] ?? 0) - 1) >= 0);
+  const top = numberDuplicateNames(sites.filter((s) => (cap[s.role] = (cap[s.role] ?? 0) - 1) >= 0));
   const shaftPolys = layout.shafts.map((s) =>
     ({
       type: "Feature",
@@ -203,7 +203,10 @@ export async function buildLens(decisionId: string): Promise<ConstructionLens> {
       const p = projectOnLine(c, section);
       return p.distanceM < 350;
     })
-    .map(({ f, c }) => pt(c, { kind: receptorKind(f.tags), name: f.tags.name ?? null }));
+    .map(({ f, c }) => {
+      const kind = receptorKind(f.tags)!;
+      return pt(c, { kind, name: publicName(kind, f.tags) ?? null });
+    });
   const layers: Record<string, GeoJSON.FeatureCollection> = {
     stage2: fc([ln(simplify(stage2, 2), { name: "ION Stage 2 (approved route, Region of Waterloo Open Data)" })]),
     alignment: fc([ln(simplify(section, 1), { name: "What-if tunnel section", lengthM: layout.lengthM })]),
@@ -252,6 +255,7 @@ export async function buildLens(decisionId: string): Promise<ConstructionLens> {
       "Illustrative scenario only: the Region of Waterloo's approved ION Stage 2 route runs mostly at street level. Nobody has proposed this tunnel.",
       "No geotechnical data: soil, rock and groundwater are unknown until boreholes are drilled. Glacial soils and high groundwater near the Speed River could change the method, the depth or whether a tunnel is practical at all.",
       "No utilities data: buried pipes, cables and the Highway 401 bridge and culvert foundations are not mapped here.",
+      "Candidate sites are described by land use; ownership was not checked and no owner has been contacted.",
       "No property data: the scout does not know who owns each site or whether it is for sale or lease. Sites come from OpenStreetMap tags, which can be out of date.",
       "Distances are straight lines, not truck routes. Truck access is the distance to the nearest highway or main road.",
       `Ground levels are from a national elevation model (CDEM, about 20 m cells, rounded to 1 m). The river bed is assumed ${RULES.riverbedBelowSurfaceM} m below the water surface.`,

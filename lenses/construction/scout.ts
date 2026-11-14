@@ -160,6 +160,54 @@ export function receptorKind(t: Record<string, string>): string | null {
 
 export const TRUCK_ROADS = /^(motorway|trunk|primary)$/;
 
+/** Generic words for each kind of candidate land: sites are never named after a business or owner. */
+export const USE_WORDS: Record<Candidate, string> = {
+  parking: "Surface parking lot",
+  brownfield: "Vacant former industrial land",
+  industrial: "Industrial land",
+  commercial: "Commercial land",
+  retail: "Retail land",
+  railway: "Railway land",
+  greenfield: "Undeveloped land",
+  grass: "Open grassed land",
+  construction: "Land under construction",
+};
+
+/** Same generic name twice in a list: number the lots in list order ("(lot 1)", "(lot 2)"). */
+export function numberDuplicateNames(sites: ConstructionSite[]): ConstructionSite[] {
+  const count = new Map<string, number>();
+  for (const s of sites) count.set(s.name, (count.get(s.name) ?? 0) + 1);
+  const seen = new Map<string, number>();
+  return sites.map((s) => {
+    if ((count.get(s.name) ?? 0) < 2) return s;
+    const k = (seen.get(s.name) ?? 0) + 1;
+    seen.set(s.name, k);
+    return { ...s, name: `${s.name} (lot ${k})` };
+  });
+}
+
+/** A site's generic name as a phrase inside a sentence: "a surface parking lot off ...". */
+export function sitePhrase(name: string): string {
+  const base = name.replace(/ \(lot \d+\)$/, "");
+  const lower = base[0].toLowerCase() + base.slice(1);
+  return /^(surface parking lot)/.test(lower) ? `a ${lower}` : lower;
+}
+
+/** A receptor's name only when it is a public place (a park or a river); otherwise none. */
+export function publicName(kind: string, t: Record<string, string>): string | undefined {
+  return kind === "park" || kind === "river or wetland" ? t.name : undefined;
+}
+
+const STREET_ABBR: [RegExp, string][] = [
+  [/\bStreet\b/g, "St"], [/\bRoad\b/g, "Rd"], [/\bDrive\b/g, "Dr"], [/\bAvenue\b/g, "Ave"], [/\bBoulevard\b/g, "Blvd"],
+  [/\bParkway\b/g, "Pkwy"], [/\bCrescent\b/g, "Cres"], [/\bCourt\b/g, "Crt"], [/\bPlace\b/g, "Pl"], [/\bLane\b/g, "Lane"],
+  [/\bEast$/, "E"], [/\bWest$/, "W"], [/\bNorth$/, "N"], [/\bSouth$/, "S"],
+];
+
+export function abbreviateStreet(name: string): string {
+  return STREET_ABBR.reduce((s, [re, to]) => s.replace(re, to), name);
+}
+
 // ---------------------------------------------------------------------------
 // The scoring rule: weights sum to 100, each factor runs 0..1 and is stated in words.
 
@@ -281,7 +329,6 @@ export function scoutSites(input: ScoutInput): ScoutResult {
   const named = features.filter((f) => f.line && f.tags.highway && f.tags.name);
   const buildings = features.filter((f) => f.rings && f.tags.building);
   const rivers = features.filter((f) => f.line && f.tags.waterway === "river");
-  const landmarks = features.filter((f) => f.rings && f.tags.name && (f.tags.building || f.tags.shop || f.tags.amenity) && !f.tags.highway);
 
   const raw = features
     .map((f) => ({ f, use: f.rings ? candidateUse(f.tags) : null }))
@@ -324,7 +371,8 @@ export function scoutSites(input: ScoutInput): ScoutResult {
       if (r.id === f.id) continue;
       if (distM(c, nearRef(r)) > 1500) continue;
       const d = ringDist(ring, r);
-      if (!rec || d < rec.distanceM) rec = { kind: receptorKind(r.tags)!, name: r.tags.name, distanceM: Math.round(d) };
+      const kind = receptorKind(r.tags)!;
+      if (!rec || d < rec.distanceM) rec = { kind, name: publicName(kind, r.tags), distanceM: Math.round(d) };
     }
     let truck: { road: string; distanceM: number } | undefined;
     for (const t of trucks) {
@@ -332,25 +380,19 @@ export function scoutSites(input: ScoutInput): ScoutResult {
       const d = ringDist(ring, t);
       if (!truck || d < truck.distanceM) truck = { road: t.tags.name || (t.tags.ref ? `Highway ${t.tags.ref}` : t.tags.highway!), distanceM: Math.round(d) };
     }
-    let street: string | undefined, streetD = Infinity;
+    // Named by land use and the nearest public streets only: never a business or owner name.
+    const streets = new Map<string, number>();
     for (const r of named) {
       if (distM(c, nearRef(r)) > 2500) continue;
       const d = ringDist(ring, r);
-      if (d < streetD) (streetD = d), (street = r.tags.name);
+      const n = abbreviateStreet(r.tags.name!);
+      if (d <= 400 && d < (streets.get(n) ?? Infinity)) streets.set(n, d);
     }
-    let mark: string | undefined, markD = 150;
-    for (const m of landmarks) {
-      if (m.id === f.id) continue;
-      const d = distM(c, ringCentroid(m.rings![0]));
-      if (d < markD) (markD = d), (mark = m.tags.name);
-    }
+    const [street, cross] = [...streets.entries()].sort((p, q) => p[1] - q[1]).map(([n]) => n);
 
     const fac = factorsFor(role, use, open, toLine, rec?.distanceM ?? 1000, truck?.distanceM ?? 5000);
     const score = scoreOf(fac);
-    const kindWord = use === "parking" ? "Surface parking" : use === "brownfield" ? "Vacant former industrial land" : `${use[0].toUpperCase()}${use.slice(1)} land`;
-    const name = f.tags.name
-      ? `${f.tags.name}${street ? `, ${street}` : ""}`
-      : `${kindWord}${street ? ` off ${street}` : ""}${mark ? ` by ${mark}` : ""}`;
+    const name = `${USE_WORDS[use]}${street ? ` off ${street}` : ""}${cross ? ` near ${cross}` : ""}`;
 
     const reasons: string[] = [];
     const concerns: string[] = [];
@@ -413,5 +455,6 @@ export function scoutSites(input: ScoutInput): ScoutResult {
   // Ranked within each role: launch candidates, then extraction, then laydown.
   const order: Record<string, number> = { "launch-shaft": 0, "extraction-shaft": 1, laydown: 2 };
   sites.sort((a, b) => order[a.role] - order[b.role] || b.score - a.score || a.id.localeCompare(b.id));
+
   return { sites };
 }

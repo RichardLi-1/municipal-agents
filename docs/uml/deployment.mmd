@@ -1,37 +1,43 @@
-%% Deployment: where each part runs.
+%% Deployment: where each part runs (Dockerfile, fly.toml, server/data.ts, server/site.ts).
 flowchart TB
-  rb["Resident's browser<br/>(phone or computer)"]
+  rb["Resident's browser"]
   sb["Staff browser<br/>(passcode)"]
+  cw["City website<br/>(embed.js card)"]
+  ca["Calendar apps<br/>(webcal feed)"]
   tiles["OpenFreeMap<br/>vector tiles"]
 
-  subgraph fly["Fly.io, region yyz (Toronto): one machine"]
+  subgraph fly["Fly.io, region yyz (Toronto): one always-on machine, shared-cpu-1x, 1 GB RAM"]
     direction LR
-    node["Node 24 process<br/>node:http · agents · lenses<br/>serves the built web app"]
-    baked[("Files in the image:<br/>sources + page text,<br/>decisions, briefs,<br/>open data, city config")]
-    vol[("Volume /data, 1 GB<br/>log.db (SQLite)<br/>hash-chained log")]
+    node["Node 24 process<br/>API · agents · lenses<br/>resident app · landing · /docs · embed.js<br/>health check /api/health"]
+    baked[("Image /app: code, built sites,<br/>committed data: sources, decisions,<br/>lenses, renders, saved runs, cities")]
+    vol[("Volume /data (municipal_data, 1 GB)<br/>log.db · staff-edited briefs<br/>saved runs · uploads · brief history")]
   end
 
-  gem["Gemini API<br/>(Google, US)"]
+  gem["Gemini API, text model<br/>(Google, US)"]
 
-  subgraph build["Build time, on a developer's machine"]
-    direction TB
+  subgraph build["Before deploy, on a developer's machine"]
+    direction LR
     p1["npm run sources<br/>PDF → page text"]
-    p2["GTFS: GRT + ION"]
-    p3["OpenStreetMap<br/>destinations"]
-    p4["Permits and<br/>applications"]
+    p2["lens builds: GTFS (GRT, ION),<br/>census, OSM, permits,<br/>cited cost figures"]
+    p3["construction build:<br/>ROW open data, OSM Overpass,<br/>NRCan elevation"]
+    p4["render.ts → Gemini<br/>image model (cap US$1.50)"]
     repo[("Git repo: data/")]
   end
 
   rb -- "HTTPS" --> node
   sb -- "HTTPS + bearer token" --> node
+  cw -- "HTTPS: embed.js,<br/>/api/embed/:id" --> node
+  ca -- "HTTPS: /api/calendar.ics" --> node
   rb -. "tiles" .-> tiles
-  baked --- node
+  baked -- "mirrored into /data at boot<br/>(newer brief wins)" --> vol
   node -- "append, read" --> vol
   node -- "HTTPS + API key (Fly secret)" --> gem
   p1 & p2 & p3 & p4 --> repo
-  repo -- "fly deploy builds the image" --> baked
+  repo -- "fly deploy: Docker builds<br/>the sites and the image" --> baked
 
   classDef ext fill:#f2f2f2,stroke:#777,color:#111
   classDef file fill:#fffaf0,stroke:#b8860b,color:#111
+  classDef client fill:#ffffff,stroke:#1f5fd6,stroke-width:2px,color:#111
   class gem,tiles ext
   class baked,vol,repo file
+  class rb,sb,cw,ca client

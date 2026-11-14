@@ -107,7 +107,7 @@ export function buildSteps(c: StepContext): ConstructionStep[] {
     {
       id: "set-up",
       title: "Fence the work sites and move utilities",
-      plain: `The launch site (${c.launchName}) and the extraction site (${c.extractionName}) are fenced with tall hoarding. Site offices, a wheel wash and a power supply go in. Pipes, cables and wires under the shaft footprints are moved out of the way first.`,
+      plain: `The launch site, ${c.launchName}, and the extraction site, ${c.extractionName}, are fenced with tall hoarding. Site offices, a wheel wash and a power supply go in. Pipes, cables and wires under the shaft footprints are moved out of the way first.`,
       duration: "about 4 to 6 months (assumption)",
       whatResidentsNotice: `Tall hoarding around the sites, lost parking, utility crews digging along nearby streets, and temporary lane shifts. Work hours follow each city's rule. At the launch site in Kitchener: ${NOISE_RULES.kitchener.rule}. At the extraction site in Preston: ${NOISE_RULES.cambridge.rule}.`,
       mapFocus: { center: c.launch, zoom: 16.4, pitch: 60, bearing: side(-40), layers: [L.stage2, L.alignment, L.sites, L.shafts, L.sensitive] },

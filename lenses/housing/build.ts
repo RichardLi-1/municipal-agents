@@ -118,7 +118,7 @@ export function cambridgePermit(f: any): Permit {
 
 // ---------- the province's targets ----------
 
-interface ProvincialTarget {
+export interface ProvincialTarget {
   municipality: string;
   target: number;
   progressSince2022: number | null;
@@ -166,7 +166,19 @@ export function parseOntarioProgress(cache: any): Map<string, ProvincialTarget> 
   return out;
 }
 
-function targetFor(name: string, t: ProvincialTarget | undefined): HousingLens["target"] {
+/** The province's own count toward its target: the newest file's "since 2022" total, as of that year's end. */
+export function provinceProgress(ts: ProvincialTarget[]): NonNullable<HousingLens["target"]>["progress"] {
+  if (!ts.length || ts.some((t) => t.progressSince2022 == null)) return undefined;
+  const year = ts[0].year;
+  return {
+    units: ts.reduce((s, t) => s + (t.progressSince2022 ?? 0), 0),
+    asOf: `${year}-12-31`,
+    source: `Ontario's housing supply progress, "${ts[0].csvName}", column "Total housing progress since 2022"${ts.length > 1 ? ` (sum of ${ts.map((t) => t.municipality).join(", ")})` : ""}; Government of Ontario, ${DATASETS.ontarioProgress.licence}. This is the province's own count toward the target, not permits or CMHC completions.`,
+    url: ts[0].csvUrl || DATASETS.ontarioProgress.page,
+  };
+}
+
+export function targetFor(name: string, t: ProvincialTarget | undefined): HousingLens["target"] {
   if (!t) return undefined;
   const parts = [
     `Ontario's housing target for ${name}: ${fmt(t.target)} new homes from 2022 to 2031.`,
@@ -178,7 +190,7 @@ function targetFor(name: string, t: ProvincialTarget | undefined): HousingLens["
       : "",
     `Source: "${t.csvName}", ${DATASETS.ontarioProgress.page} (${DATASETS.ontarioProgress.licence}).`,
   ];
-  return { label: parts.filter(Boolean).join(" "), units: t.target, by: "2031" };
+  return { label: parts.filter(Boolean).join(" "), units: t.target, by: "2031", progress: provinceProgress([t]) };
 }
 
 // ---------- development applications ----------
@@ -531,6 +543,7 @@ export function buildCity(city: CityId, L: Loaded): HousingLens {
   }
   hard.push(
     "Starts and completions by city: CMHC counts housing starts and completions for the whole Kitchener-Cambridge-Waterloo area (including Woolwich and North Dumfries), not for each city.",
+    `Progress toward the 2031 target: the province counts its own figure for ${name} (the target's progress here, through the end of its latest published year). It is not the same measure as completed permits, so the completed stage above should not be read against the target.`,
   );
 
   const timeBetween: Between[] = [NO_LINK];
@@ -556,7 +569,7 @@ export function buildCity(city: CityId, L: Loaded): HousingLens {
   };
 }
 
-export function buildRegion(L: Loaded, cities: Record<CityId, HousingLens>): HousingLens {
+export function buildRegion(L: Loaded, cities: Record<CityId, HousingLens>): HousingLens & { context: { id: string; label: string; units: number; asOf: string; source: string }[] } {
   const m = L.manifest;
   const issued = CITIES.map((c) => cities[c].stages.find((s) => s.id === "permit-issued")!);
   const sum = (xs: (number | null)[]) => xs.reduce<number>((s, x) => s + (x ?? 0), 0);
@@ -595,26 +608,25 @@ export function buildRegion(L: Loaded, cities: Record<CityId, HousingLens>): Hou
       ).join(", ")}. See each city lens for its dataset and licence.`,
       tracked: true,
     },
-    {
-      id: "under-construction",
-      label: LABELS["under-construction"],
-      units: lastUc ? lastUc.value : null,
-      projects: null,
-      source: lastUc
-        ? `${cmhcCite}: housing units under construction (all types) in the Kitchener-Cambridge-Waterloo census metropolitan area at the end of ${month(lastUc.refPer)}. CMHC housing starts over ${month(starts[0]?.refPer ?? WINDOW_START)} to ${month(starts.at(-1)?.refPer ?? "")}: ${fmt(sum(starts.map((p) => p.value)))} units.`
-        : "CMHC data not available in the cache.",
-      tracked: lastUc != null,
-    },
-    {
-      id: "completed",
-      label: LABELS.completed,
-      units: comp.length ? sum(comp.map((p) => p.value)) : null,
-      projects: null,
-      source: comp.length
-        ? `${cmhcCite}: housing completions (all types) in the Kitchener-Cambridge-Waterloo census metropolitan area, ${month(comp[0].refPer)} to ${month(lastMonth!)}, summed by month.`
-        : "CMHC data not available in the cache.",
-      tracked: comp.length > 0,
-    },
+    ...(["under-construction", "completed"] as const).map((id): Stage => {
+      const per = CITIES.map((c) => cities[c].stages.find((s) => s.id === id)!);
+      return {
+        id,
+        label: LABELS[id],
+        units: sum(per.map((s) => s.units)),
+        projects: sum(per.map((s) => s.projects)),
+        source: `Sum of the three cities' building permit data (Kitchener, Waterloo, Cambridge; not the townships), as counted in each city lens: ${CITIES.map((c, i) => `${NAMES[c]} ${fmt(per[i].units ?? 0)}`).join(", ")}. CMHC's figures for the wider census area are kept apart under "context".`,
+        tracked: per.every((s) => s.tracked),
+      };
+    }),
+  ];
+
+  // CMHC: a separate, separately labelled context figure, for a wider area than the three cities.
+  const cmhcArea = "Kitchener-Cambridge-Waterloo census metropolitan area (the three cities plus Woolwich and North Dumfries)";
+  const context = [
+    ...(lastUc ? [{ id: "cmhc-under-construction", label: `CMHC: homes under construction at the end of ${month(lastUc.refPer)}, ${cmhcArea}`, units: lastUc.value, asOf: lastUc.refPer, source: cmhcCite }] : []),
+    ...(starts.length ? [{ id: "cmhc-starts", label: `CMHC: housing starts ${month(starts[0].refPer)} to ${month(starts.at(-1)!.refPer)}, ${cmhcArea}`, units: sum(starts.map((p) => p.value)), asOf: starts.at(-1)!.refPer, source: cmhcCite }] : []),
+    ...(comp.length ? [{ id: "cmhc-completions", label: `CMHC: housing completions ${month(comp[0].refPer)} to ${month(lastMonth!)}, ${cmhcArea}`, units: sum(comp.map((p) => p.value)), asOf: lastMonth!, source: cmhcCite }] : []),
   ];
 
   const target: HousingLens["target"] =
@@ -623,6 +635,7 @@ export function buildRegion(L: Loaded, cities: Record<CityId, HousingLens>): Hou
           label: `Sum of Ontario's housing targets for Kitchener (${fmt(targets[0].target)}), Waterloo (${fmt(targets[1].target)}) and Cambridge (${fmt(targets[2].target)}): ${fmt(sum(targets.map((t) => t.target)))} new homes from 2022 to 2031. The province counts ${fmt(sum(targets.map((t) => t.progressSince2022)))} homes toward them from 2022 through ${targets[0].year}. The townships have no provincial target. Source: ${DATASETS.ontarioProgress.page} (${DATASETS.ontarioProgress.licence}).`,
           units: sum(targets.map((t) => t.target)),
           by: "2031",
+          progress: provinceProgress(targets),
         }
       : undefined;
 
@@ -640,9 +653,10 @@ export function buildRegion(L: Loaded, cities: Record<CityId, HousingLens>): Hou
     ],
     target,
     statements: [],
+    context,
     hardToTrack: [
       ...COMMON_HARD,
-      "Mixed geographies: permits here cover the three cities only, while CMHC's under-construction and completion counts cover the Kitchener-Cambridge-Waterloo census metropolitan area, which also includes Woolwich and North Dumfries. The two can't be subtracted from each other.",
+      `Three measures that don't line up: the stages here are the three cities' permits; CMHC counts starts and completions for the wider Kitchener-Cambridge-Waterloo census area, which also includes Woolwich and North Dumfries (${comp.length ? `${fmt(sum(comp.map((p) => p.value)))} completions ${month(comp[0].refPer)} to ${month(lastMonth!)}` : "no CMHC data"}); and the province counts its own progress toward the three cities' ${fmt(sum(targets.map((t) => t.target)))}-home target (${targets.length === 3 && targets.every((t) => t.progressSince2022 != null) ? `${fmt(sum(targets.map((t) => t.progressSince2022)))} through ${targets[0].year}` : "not available"}). Only the province's figure measures progress toward the target; the townships have no provincial target.`,
       "Approval and site plan stages: only Kitchener (zoning, subdivision, site plans) and Cambridge (site plans) publish application data, and neither gives unit counts.",
     ],
   };

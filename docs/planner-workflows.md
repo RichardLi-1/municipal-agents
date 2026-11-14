@@ -148,7 +148,7 @@ All calls were plain `curl` to `https://municipal-agents.fly.dev/api`. We did no
 | Add to calendar | `.ics` with one-day reminders | Works today | `GET /decisions/:id/calendar.ics`: 10, 2 and 1 events |
 | Check the statutory notice period (20 days for OPA/ZBA, 10 days for CofA) | None | Not yet | No code computes Planning Act notice minimums (grep for `notice` in `server/`, `agents/`, `shared/`) |
 | Notice of decision and appeal window | None; the `Decision.status` type has `decided`, but no post-decision events | Not yet | `shared/types.ts`; no decision has events after the meeting |
-| Accessible formats on request (s. 12) | Screen-reader and keyboard targets; no "request another format" contact; no print view | Partly | NFR-1 axe results still "TODO(verify)" (`docs/requirements.md`); no `@media print` or "Report an error" in `web/src` (grep) |
+| Accessible formats on request (s. 12) | Screen-reader and keyboard targets; no "request another format" contact; no print view | Partly | NFR-1: not yet audited with axe or assistive-technology users (`docs/requirements.md`); no `@media print`; "Report an error" on each statement (`web/src/components/Citations.tsx`) |
 | "Not the official notice" | Shown on the page and in every `.ics` event | Works today | `web/src/screens/Decision.tsx:268`; `.ics` DESCRIPTION |
 | Other languages | `POST /translate`; 11 languages in `cities/waterloo-region.json` | Partly | Needs the model, so likely down (finding 1). The UI says "Translated into {lang}", not "machine translation" (`web/src/lib/i18n.ts:243`) |
 | Answer residents' own questions | Ask, with steps and citations | Not yet on live (outage) | Three live calls returned 402. The offline fallback exists in the working tree only |

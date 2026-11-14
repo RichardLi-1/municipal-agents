@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { distM, offsetLine, polygonAreaM2, projectOnLine, rectangle, ringAreaM2, sliceLine, lineLengthM, type LngLat } from "./geo.ts";
-import { areaFit, candidateUse, factorsFor, isExcluded, receptorKind, scoreOf, scoutSites, WEIGHTS, type Feature } from "./scout.ts";
+import { abbreviateStreet, numberDuplicateNames, sitePhrase, areaFit, candidateUse, factorsFor, isExcluded, publicName, receptorKind, scoreOf, scoutSites, WEIGHTS, type Feature } from "./scout.ts";
 import { boreholeChainages, boreholeDepth, crossPassageChainages, gradeLimitedCrown, layoutTunnel, requiredCrown, RULES, shaftBoreholeDepth } from "./layout.ts";
 import { boreVolumeM3, spoilPlan } from "./steps.ts";
 import { constructionSummary } from "./index.ts";
@@ -89,6 +89,29 @@ test("scouting ranks a big empty lot by the line above a small one far away, and
   assert.ok(sites[0].score > (sites.find((s) => s.id === "site-way-2")?.score ?? 0));
   assert.ok(sites[0].reasons.length && sites[0].concerns.length);
   near(sites[0].areaM2, 15000, 50);
+  assert.equal(sites[0].name, "Surface parking lot off King St E");
+});
+
+test("sites are named by land use and public streets, never a business", () => {
+  const line = [at(0, 0), at(30, 0)];
+  const box = (x: number, y: number, w: number, h: number): number[][] => [at(x, y), at(x + w, y), at(x + w, y + h), at(x, y + h), at(x, y)];
+  const features: Feature[] = [
+    { id: "way/1", tags: { amenity: "parking", name: "Big Box Store Parking", operator: "Big Box Inc." }, rings: [box(1, 0.2, 1.5, 1)] },
+    { id: "way/2", tags: { shop: "supermarket", name: "Big Box Store", building: "retail" }, rings: [box(1.2, 1.3, 0.5, 0.3)] },
+    { id: "way/3", tags: { amenity: "childcare", name: "Little Sprouts Daycare" }, rings: [box(3, 0.3, 0.2, 0.2)] },
+    { id: "way/5", tags: { highway: "primary", name: "King Street East" }, line: [at(0, -0.3), at(30, -0.3)] },
+    { id: "way/6", tags: { highway: "residential", name: "Sportsworld Drive" }, line: [at(0.8, -0.5), at(0.8, 3)] },
+  ];
+  const { sites } = scoutSites({ line, sectionM: [100, 2900], features });
+  const text = JSON.stringify(sites);
+  assert.equal(sites[0].name, "Surface parking lot off Sportsworld Dr near King St E");
+  assert.ok(!/Big Box|Little Sprouts/.test(text), "no business names anywhere in sites");
+  assert.equal(publicName("park", { name: "Riverside Park" }), "Riverside Park");
+  assert.equal(publicName("school", { name: "Little Sprouts Daycare" }), undefined);
+  assert.equal(abbreviateStreet("Fountain Street South"), "Fountain St S");
+  const named = numberDuplicateNames([sites[0], { ...sites[0], id: "x" }]);
+  assert.deepEqual(named.map((s) => s.name), [`${sites[0].name} (lot 1)`, `${sites[0].name} (lot 2)`]);
+  assert.equal(sitePhrase(named[1].name), "a surface parking lot off Sportsworld Dr near King St E");
 });
 
 test("cross-passages are never more than 244 m apart (NFPA 130)", () => {

@@ -14,8 +14,7 @@ you can have a say. City staff approve every statement before it goes out.
 ## The problem
 
 - Decisions are explained in documents written for council. To cover three Waterloo
-  Region decisions, the prototype's agents read 19 public documents (344 pages) and 4 web
-  pages ([readiness report](../../report/readiness-report.html);
+  Region decisions, the prototype's agents read 25 public documents (399 pages) ([readiness report](../../report/readiness-report.html);
   [requirements](../requirements.md)). The Region's budget book alone is 191 pages.
 - Residents find out late, can't tell how a decision touches them, and miss the window
   to take part. In the demo, the window is a delegation registration that closes at
@@ -27,9 +26,9 @@ you can have a say. City staff approve every statement before it goes out.
 
 ## Why now
 
-1. **AI drafting is now cheap enough to use on every decision.** Our first full brief,
-   with all four lenses, cost **US$0.24** in model fees. The average resident question in
-   our test suite cost **US$0.073** (agents/evals/results.md, run of 14 November 2026). That run
+1. **AI drafting is now cheap enough to use on every decision.** A full brief,
+   with all five lenses, costs **US$0.24–0.37** in model fees. A resident question in our
+   test suite costs **about US$0.05–0.07** (eval averages, `agents/evals/results.md`). That run
    used Gemini 3.6 Flash at US$0.75 per million input tokens and US$3.75 per million
    output tokens. Those prices rise to US$1.50 and US$7.50 on 1 January 2027
    ([architecture §7](../architecture.md), citing

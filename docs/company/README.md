@@ -28,7 +28,7 @@ Every number links to a source with a date. Our own arithmetic is marked **estim
 | Market (estimates at our list prices) | Ontario SAM ≈ CA$5.9M a year; Canada TAM ≈ CA$24M; US TAM ≈ US$185M |
 | Proposed price | Pilot $7,500; Town $12,000 a year; City $36,000 a year; Region from $96,000 a year (CA$) |
 | Comparable | Ontario municipalities have paid $10,000 to $22,500 a year for EngagementHQ |
-| Unit costs | US$0.24 in model fees for a full brief; US$0.073 per resident question (measured, 2026 prices; these double on 1 Jan 2027) |
+| Unit costs | US$0.24–0.37 in model fees for a full brief; about US$0.05–0.07 per resident question; about US$0.009 per translation (measured, 2026 prices; these double on 1 Jan 2027) |
 | Gross margin (estimate) | About 66 to 74% including support; 76 to 84% for the software alone |
 
 Product and engineering documents are one level up: [spec](../spec.md),

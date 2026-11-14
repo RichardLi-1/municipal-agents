@@ -35,6 +35,12 @@ export interface Statement {
   /** True only when every citation's quote was found on its page by the checker. */
   verified: boolean;
   /**
+   * How well the quotes back the sentence, measured in code: "weak" when the sentence and
+   * its quotes share fewer than 2 meaningful words and no number (the quote is on the page,
+   * but may not say what the sentence says). Shown so staff check those first.
+   */
+  support?: "strong" | "weak";
+  /**
    * How well the quotes back the sentence, measured in code by shared words and numbers:
    * "weak" means the quote is on the page but a reader should check that it supports this.
    */
@@ -215,7 +221,14 @@ export interface HousingLens {
     tracked: boolean; // false where no public data shows this stage
   }[];
   timeBetween: { from: string; to: string; medianDays: number | null; note: string }[];
-  target?: { label: string; units: number; by: string; citation?: Citation };
+  target?: {
+    label: string;
+    units: number;
+    by: string;
+    citation?: Citation;
+    /** Progress toward this target as the target's owner counts it (e.g. Ontario's housing supply progress). Compare this, not the completed stage, with `units`. */
+    progress?: { units: number; asOf: string; source: string; url?: string; citation?: Citation };
+  };
   statements: Statement[];
   hardToTrack: string[];
   layers?: Record<string, GeoJSON.FeatureCollection>;

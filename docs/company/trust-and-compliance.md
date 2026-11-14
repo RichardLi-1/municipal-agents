@@ -26,7 +26,7 @@ counsel and privacy office review it. Web sources were read on 14 November 2026.
 |---|---|---|---|
 | Source documents (staff reports, budgets, agendas, notices) | No; public records | Built into the container; copies under `data/sources/` | For the life of the deployment |
 | Decision metadata (timeline, area), briefs, lens results | No | `data/` files; edited briefs on the Toronto volume | Same |
-| Resident questions (text, chosen audiences, language) | Not intended to be, but a resident may type personal details. The page asks them not to (`TODO(verify)` on screen); automatic redaction is planned | The public record (SQLite on the Toronto volume) | Kept in the record; the text can be purged when the by-law's retention period ends, see [section 8](#8-records-retention) |
+| Resident questions (text, chosen audiences, language) | Not intended to be, but a resident may type personal details. The chat box asks them not to; automatic redaction is planned | The public record (SQLite on the Toronto volume) | Kept in the record; the text can be purged when the by-law's retention period ends, see [section 8](#8-records-retention) |
 | IP addresses | Yes | In memory only, for rate limiting | Discarded when the window ends; never written |
 | Staff reviewer names and actions | Staff names in their official capacity | The public record | Kept in the append-only record |
 | Model-call metadata (tokens, cost, model) | No | The public record and the spend page | Kept |
@@ -42,7 +42,7 @@ counsel and privacy office review it. Web sources were read on 14 November 2026.
   city does not need to collect personal information to run it.
 - **Staff names.** MFIPPA excludes from "personal information" the name, title and
   contact details of a person acting in a business, professional or official capacity
-  (s. 2(2.1); `TODO(verify)` with the city's MFIPPA coordinator). Reviewer names on
+  (s. 2(2.1); to confirm with the city's MFIPPA coordinator). Reviewer names on
   approvals are recorded in that capacity.
 - **Records in custody or under control.** Briefs, approvals and the record are the
   city's records and can be requested under MFIPPA access requests. We will export
@@ -126,8 +126,8 @@ officer before the first paid pilot.
   information conveyed by colour alone, and respect for reduced motion. Every map view
   has a list equivalent.
 - **Status.** The prototype was designed and checked against these targets during the
-  hackathon. Automated (axe) and manual (keyboard, VoiceOver) results are
-  `TODO(verify)`. **Planned before the first paid go-live:** an independent audit, an
+  hackathon. Automated (axe) and manual (keyboard, VoiceOver) audits have not
+  been run yet. **Planned before the first paid go-live:** an independent audit, an
   Accessibility Conformance Report in VPAT format, and testing with residents who use
   assistive technology.
 - **AI disclosures are accessible.** Disclosures and review status are plain text at the
@@ -173,7 +173,7 @@ grounding) are code, not a model. So they work the same on every option
   secure and accessible manner". Under s. 255, it may destroy a record only after the
   retention period set under that section (usually in its records retention by-law) has
   expired ([e-Laws, S.O. 2001, c. 25](https://www.ontario.ca/laws/statute/01m25);
-  `TODO(verify)` exact wording with the clerk).
+  exact wording to confirm with the clerk).
 - **What counts as a record here:** published briefs and each version, staff reviews
   and approvals, resident questions and answers, and the source list. The city's
   retention by-law sets how long each is kept.
@@ -211,7 +211,7 @@ We use it as a benchmark because Ontario has no municipal equivalent yet.
   - *Human in the loop:* a named approver for each statement.
   - *Quality assurance:* evals scored in code and published.
   - *Data quality:* public sources with publisher, date and licence listed.
-  - *Recourse:* "Report an error" goes to the clerk and is logged (`TODO(verify)`; planned).
+  - *Recourse:* "Report an error" on every statement goes to the operator (in the demo, the team's GitHub issues); routing it to the clerk and logging it is planned.
   - *Peer review:* an external review of the method, invited through FCI.
 - We will publish a completed AIA-style questionnaire with each city's go-live.
 
@@ -226,8 +226,8 @@ We use it as a benchmark because Ontario has no municipal equivalent yet.
 | Integrity | Append-only hash-chained log; triggers refuse UPDATE and DELETE; chain verified on the server and in the browser | Head hash published on a schedule outside the city's control, e.g. a public Git repository, council minutes or a timestamping service (Q1 2027) |
 | Supply chain | No runtime dependencies at the server root; three dev dependencies ([architecture D1](../architecture.md)) | Dependency and container scanning in CI (Q1 2027) |
 | Privacy | No accounts, no tracking scripts, IPs never written; map tiles without an API key | Redaction of personal details in questions before they are logged or sent to the model (Q1 2027) |
-| Availability and backup | Health check and automatic restart; volume snapshots (`TODO(verify)` retention setting) | Documented backups with tested restores, a 99.9% target for Region tier, status page (Q2 2027) |
-| Encryption | HTTPS in transit | Confirm and document encryption at rest for every store (`TODO(verify)`), customer-specific keys for Region tier (2027) |
+| Availability and backup | Health check and automatic restart; daily Fly.io volume snapshots (retention to be set per contract) | Documented backups with tested restores, a 99.9% target for Region tier, status page (Q2 2027) |
+| Encryption | HTTPS in transit | Fly.io volumes are encrypted at rest by default; document it for every store, customer-specific keys for Region tier (2027) |
 | Monitoring and incidents | Every model call and action is logged in the record | Alerting, an incident response plan, breach notification (24 hours to the city), annual tabletop exercise (Q1 2027) |
 | Testing | Unit tests with `node --test`; evals scored in code | An independent penetration test before the first annual contract (Q2 2027) |
 | Vendors | Subprocessors: Fly.io (hosting), Google Gemini API (model); OpenFreeMap tiles load in the browser | A published subprocessor list and a data processing agreement template (Q1 2027) |

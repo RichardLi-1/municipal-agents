@@ -258,7 +258,7 @@ Switch between these with `LEAD_MODEL` and `SPECIALIST_MODEL`. Google's publishe
 change over time (the architecture notes a rise on 1 January 2027), so check them and
 update `PRICES` in `agents/gemini.ts` to keep the spend page and the caps honest.
 
-A typical question costs a few US cents. Our eval run averaged US$0.07 a question; the
+A typical question costs a few US cents: about US$0.05–0.07 in our eval runs; the
 first full brief for the 2027 budget cost US$0.24 and the current one US$0.37 (see
 [evals](evals.md) and `GET /api/usage`).
 

@@ -1,43 +1,50 @@
-%% Component diagram: the parts of Municipal Agents and what each depends on.
+%% Component diagram (core): the parts that turn documents into a checked brief and answers.
 %% server/, agents/, lenses/ and shared/ run in one Node 24 process on one machine.
+%% The public-facing platform pieces (landing, docs, embed, feeds) are in component-platform.mmd.
 flowchart TB
-  web["<b>Web app</b> (web/)<br/>Preact · Vite · MapLibre · pdf.js<br/>Home · Brief · Lenses · Source viewer<br/>Ask · Staff · Record · Spend"]
+  web["<b>Resident and staff app</b> (web/)<br/>Preact · Vite · MapLibre · pdf.js<br/>Brief · lenses · source viewer · Ask<br/>Staff review · Record (chain check) · Spend"]
   tiles["OpenFreeMap<br/>map tiles"]
 
   subgraph server["server/"]
-    s1["HTTP router + SSE<br/>(http.ts, node:http)"]
-    s4["Staff auth<br/>(bearer token)"]
-    s2["API routes"]
-    s6["Limits + usage<br/>rate limit, spend caps"]
-    s5["Log store (log.ts)<br/>node:sqlite, SHA-256 chain"]
+    s1["http.ts<br/>router + SSE"]
+    s4["Staff auth<br/>(bearer passcode)"]
+    s2["routes/<br/>public · agents · staff"]
+    s6["limits.ts + usage.ts<br/>rate limit, run slots,<br/>daily spend cap"]
+    s7["runfiles.ts<br/>saved runs = answer cache"]
+    s8["statements.ts<br/>review rules, re-check<br/>(verify.ts), public brief"]
+    s5["log.ts<br/>node:sqlite, SHA-256 chain"]
   end
 
   subgraph agents["agents/"]
-    a1["Lead loop"]
-    a2["Specialists<br/>skills/*/SKILL.md"]
-    a3["Tools: search_pages (BM25),<br/>read_page, record_statement,<br/>lens tools"]
-    a6["Gemini client<br/>(gemini.ts, REST)"]
+    a1["lead.ts<br/>plan, merge, ground"]
+    a2["loop.ts + skills/*/SKILL.md<br/>explainer · transit-access · lifecycle-cost<br/>commitments · housing-pipeline<br/>construction-scout · translator"]
+    a3["tools.ts<br/>search_pages (BM25) · read_page<br/>record_statement · record_computed_figure<br/>lens tools"]
+    a7["offline.ts<br/>answers from the checked<br/>brief, no model"]
+    a6["gemini.ts<br/>REST client"]
   end
 
   subgraph shared["shared/ (also runs in the browser)"]
-    v1["Citation checker<br/>(verify.ts)"]
-    v2["Reading grade<br/>(readability.ts)"]
+    v1["verify.ts<br/>citation checker"]
+    v2["readability.ts<br/>reading grade"]
   end
 
-  subgraph lenses["lenses/"]
+  subgraph lenses["lenses/ (build scripts + summaries)"]
     direction LR
-    l1["Transit access<br/>(Connection Scan)"]
-    l2["Lifecycle cost"]
-    l3["Commitments"]
-    l4["Housing pipeline"]
+    l1["transit<br/>Connection Scan"]
+    l2["cost<br/>lifecycle"]
+    l3["commitments<br/>status"]
+    l4["housing<br/>pipeline"]
+    l5["construction<br/>scout · layout · steps"]
   end
 
   subgraph data["Files: data/ and cities/"]
     direction LR
-    d1[("Source PDFs<br/>+ page text")]
-    d2[("Decisions<br/>+ briefs")]
-    d5[("City config")]
-    d4[("Open data: GTFS,<br/>destinations, permits")]
+    d1[("sources/<br/>PDFs + page text")]
+    d2[("decisions/<br/>briefs/")]
+    d6[("lenses/<br/>precomputed results")]
+    d7[("runs/<br/>every run's events")]
+    d8[("renders/<br/>step illustrations")]
+    d5[("cities/<br/>city config")]
   end
 
   gem["Gemini API"]
@@ -46,19 +53,25 @@ flowchart TB
   web -. "tiles" .-> tiles
   s1 --> s4 --> s2
   s2 --> s6 --> s5
+  s2 -- "same question?" --> s7
+  s2 --> s8
   s2 --> a1
   a1 --> a2 --> a3
+  a1 -- "model unreachable" --> a7
   a1 & a2 --> a6
   a6 -- "function calling" --> gem
   a3 -- "every quote" --> v1
   a1 -- "grade" --> v2
-  a3 -- "statements" --> s5
-  a3 -- "lens tools" --> lenses
+  a3 -- "statement.recorded / rejected" --> s5
+  a3 -- "summaries, status,<br/>cost maths" --> lenses
   a3 --> d1
-  s2 --> d2 & d5
-  lenses --> d4
+  a3 --> d6
+  a7 --> d2
+  s7 --> d7
+  s2 --> d2 & d5 & d8
+  lenses -- "build scripts write" --> d6
 
   classDef ext fill:#f2f2f2,stroke:#777,color:#111
   classDef file fill:#fffaf0,stroke:#b8860b,color:#111
   class gem,tiles ext
-  class d1,d2,d4,d5 file
+  class d1,d2,d5,d6,d7,d8 file

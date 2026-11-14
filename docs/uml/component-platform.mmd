@@ -1,0 +1,51 @@
+%% Component diagram (platform): what the same Node process serves beyond the resident app,
+%% and who outside uses it. Core parts are in component.mmd.
+flowchart LR
+  subgraph outside["Outside users"]
+    direction TB
+    cityweb["City website<br/>(one script tag)"]
+    cal["Calendar apps<br/>(webcal subscription)"]
+    dev["Developers and<br/>other cities"]
+    staff["City staff<br/>(passcode)"]
+    visitor["Visitors"]
+  end
+
+  subgraph proc["One Node 24 process (server/)"]
+    direction TB
+    sec["security.ts<br/>CSP with script hashes, HSTS,<br/>nosniff, security.txt"]
+    site["site.ts<br/>which built site answers a path"]
+    subgraph sites["Static sites"]
+      direction TB
+      landing["landing/dist<br/>/ · pricing · security<br/>company · contact · changelog"]
+      docs["docs-site/dist<br/>/docs (guides, reference,<br/>UML, credits)"]
+      embedjs["embed/embed.js<br/>card in a Shadow DOM,<br/>no cookies, no storage"]
+      app["web/dist<br/>resident and staff app"]
+    end
+    subgraph api["Platform API (routes/)"]
+      direction TB
+      cities["cities.ts<br/>/api/cities, ?city=<br/>one config file per city"]
+      plat["platform.ts<br/>/api/calendar.ics feed<br/>/api/embed/:id (CORS *)<br/>/api/openapi.json"]
+      ins["insights.ts<br/>/api/staff/insights<br/>wording only for groups of 3+"]
+      purge["records.ts<br/>/api/staff/purge<br/>retention by-law"]
+    end
+    log["log.ts<br/>payloadHash in the chain,<br/>record.purged entries"]
+  end
+
+  cfg[("cities/*.json")]
+
+  visitor --> sec
+  cityweb -- "loads embed.js,<br/>then one JSON card" --> sec
+  cal --> sec
+  dev --> sec
+  staff --> sec
+  sec --> site
+  site --> landing & docs & embedjs & app
+  sec --> cities & plat & ins & purge
+  cities --> cfg
+  ins -- "reads question.asked<br/>and answers" --> log
+  purge -- "removes content,<br/>keeps its hash" --> log
+
+  classDef ext fill:#ffffff,stroke:#1f5fd6,stroke-width:2px,color:#111
+  classDef file fill:#fffaf0,stroke:#b8860b,color:#111
+  class cityweb,cal,dev,staff,visitor ext
+  class cfg file

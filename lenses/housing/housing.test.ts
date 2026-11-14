@@ -148,3 +148,23 @@ test("city normalisers read each city's fields the way the lens counts them", as
   assert.equal(c3.isDone, true);
   assert.equal(c3.done, "2024-02-01");
 });
+
+test("target progress comes from the province's own count, summed for the region", async () => {
+  const { parseOntarioProgress, provinceProgress, targetFor } = await import("./build.ts");
+  const csv = [
+    "Municipality,Ten-year housing target ,Total housing progress since 2022,Target for 2024,Total 2024 housing progress,Progress % for 2024,Housing target status",
+    "Cambridge,19000,3023,1583,741,46.81%,Not met",
+    "Kitchener,35000,9594,2917,3067,105.14%,Exceeded",
+    "Waterloo,16000,3285,1333,1722,129.18%,Exceeded",
+  ].join("\n");
+  const old = csv.replace(/2024/g, "2023").replace("9594", "6527");
+  const t = parseOntarioProgress({ csvs: [{ name: "Ontario housing supply: January - December 2023", url: "u23", text: old }, { name: "Ontario housing supply: January - December 2024", url: "u24", text: csv }] });
+  const k = targetFor("Kitchener", t.get("kitchener"))!;
+  assert.equal(k.units, 35000);
+  assert.deepEqual({ units: k.progress!.units, asOf: k.progress!.asOf, url: k.progress!.url }, { units: 9594, asOf: "2024-12-31", url: "u24" }); // newest file wins
+  const region = provinceProgress(["kitchener", "waterloo", "cambridge"].map((c) => t.get(c)!))!;
+  assert.equal(region.units, 15902);
+  assert.match(region.source, /not permits or CMHC completions/);
+  const text = housingSummary({ city: "kitchener", stages: [], timeBetween: [], target: k, statements: [], hardToTrack: [] });
+  assert.match(text, /as the province counts it: 9,594 homes as of 2024-12-31 \(27% of the target\)/);
+});

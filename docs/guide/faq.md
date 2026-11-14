@@ -82,10 +82,10 @@ Run it through OCR first. Built-in OCR is **Planned**.
 | Item | Cost | Basis |
 |---|---|---|
 | Hosting | about US$7 to 10 a month | One Fly.io `shared-cpu-1x` machine with 1 GB of memory, plus a 1 GB volume |
-| One brief, all lenses | US$0.26 to US$0.37 for the three briefs on the public site; capped at US$0.50 | The `costUsd` of each committed brief |
-| One question | US$0.07 on average (median 30 seconds) in our evaluation run; capped at US$0.50 | [Evaluation results](evals.md) |
+| One brief, all lenses | US$0.24 to US$0.37 (about 40 model calls); capped at US$0.50 | The first run and the `costUsd` of each committed brief |
+| One question | about US$0.05–0.07 (eval averages before and after the plain-language pass); capped at US$0.50 | [Evaluation results](evals.md) |
 | A question already answered | US$0 | Replayed from the saved run |
-| A translation | paid once per language per brief version | Cached until the English brief changes |
+| A translation | about US$0.009 per language, paid once per brief version | The live record; cached until the English brief changes |
 | Model spending ceiling | US$5 a day | `DAILY_LIMIT_USD` |
 
 Prices are the model's paid-tier prices in November 2026 (US$0.75 per million input

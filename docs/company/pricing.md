@@ -86,9 +86,9 @@ engagement platform; we make it worth visiting". We are not asking them to swap.
 
 | Item | Measured | Source |
 |---|---|---|
-| One full brief with all four lenses | **US$0.24** (17 statements, each quote verified, 8 figures, 6 unknowns) | First full run, [readiness report](../../report/readiness-report.html); [architecture §7](../architecture.md) |
+| One full brief with all five lenses | **US$0.24–0.37** (about 40 model calls; first run US$0.24, the live budget brief US$0.37) | `data/briefs/*.json`; [architecture §7](../architecture.md) |
 | One resident question (average of 12 eval questions) | **US$0.0728**; median 29.7 s; 117 model calls and US$0.8739 in total | `agents/evals/results.md`, run of 14 Nov 2026 |
-| One small test question | US$0.012 (5 calls, ~12,300 input and 700 output tokens) | [architecture §7](../architecture.md) |
+| Translation of a brief, one language | about US$0.009 (2 calls) | Live record, French and Spanish |
 | Reading a published brief | **US$0** in model fees (served as stored JSON) | [architecture D4](../architecture.md) |
 | Hosting, one city (prototype) | about US$7 to US$10 a month (Fly.io shared-cpu-1x 1 GB at US$6.70 a month, volume US$0.15 per GB-month) | [architecture §7](../architecture.md), citing [Fly.io pricing](https://fly.io/docs/about/pricing) |
 | Model price | Gemini 3.6 Flash US$0.75 / US$3.75 per million input / output tokens to 31 Dec 2026; **US$1.50 / US$7.50 from 1 Jan 2027** | [architecture D7](../architecture.md), citing [Google](https://ai.google.dev/gemini-api/docs/pricing) |
@@ -99,7 +99,7 @@ engagement platform; we make it worth visiting". We are not asking them to swap.
 |---|---|---|
 | Brief run | US$0.48 | Measured US$0.24 × 2 |
 | Published decision | **US$2.00** | 4 runs per decision (drafts and re-runs after new documents) at ~US$0.50 |
-| Translation of one brief into one language | US$0.05 | About 6,000 input and 5,000 output tokens; not yet measured (`TODO(verify)` in architecture) |
+| Translation of one brief into one language | US$0.02 | Measured about US$0.009 (2 calls; French US$0.0088, Spanish US$0.0081 in the live record) × 2, rounded up |
 | Resident question | **US$0.15** | Measured US$0.0728 × 2 |
 | Canadian-region model | +0 to 30% on the above | Vertex AI Montréal lists Gemini 3.5 and 3.8 Flash but not 3.6 ([architecture §4](../architecture.md)); price not yet checked |
 
@@ -113,12 +113,12 @@ All **estimates**.
 
 | | Town ($12,000) | City ($36,000) | Region ($96,000) |
 |---|---|---|---|
-| Model: decisions + translations | 24 × $2 + 24 × 6 × 2 × $0.05 = US$62 | 75 × $2 + 75 × 11 × 2 × $0.05 = US$233 | 200 × $2 + 200 × 11 × 2 × $0.05 = US$620 |
+| Model: decisions + translations | 24 × $2 + 24 × 6 × 2 × $0.02 = US$54 | 75 × $2 + 75 × 11 × 2 × $0.02 = US$183 | 200 × $2 + 200 × 11 × 2 × $0.02 = US$488 |
 | Model: questions **at the included cap** | 3,000 × $0.15 = US$450 | 15,000 × $0.15 = US$2,250 | 50,000 × $0.15 = US$7,500 |
-| Model total (CA$) | ≈ $720 | ≈ $3,480 | ≈ $11,370 |
+| Model total (CA$) | ≈ $705 | ≈ $3,405 | ≈ $11,185 |
 | Hosting (CA$) | $1,200 | $4,800 | $12,000 |
 | Support and onboarding (CA$) | $1,600 | $3,200 | $9,600 |
-| **Cost of revenue (CA$)** | **≈ $3,520** | **≈ $11,480** | **≈ $32,970** |
+| **Cost of revenue (CA$)** | **≈ $3,505** | **≈ $11,405** | **≈ $32,785** |
 | **Gross margin at the cap** | **≈ 71%** | **≈ 68%** | **≈ 66%** |
 | Gross margin at a third of the question cap | ≈ 74% | ≈ 74% | ≈ 73% |
 | Gross margin, software only (no human support), at the cap | ≈ 84% | ≈ 77% | ≈ 76% |

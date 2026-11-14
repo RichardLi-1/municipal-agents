@@ -1,9 +1,9 @@
 # Municipal Agents: roadmap (30 / 90 / 365 days)
 
 Starting point, 14 November 2026: a working prototype for Waterloo Region with three
-decisions, seven agent skills, four lenses plus a construction scout, staff review and
+decisions, seven agent skills, five lenses (including a construction scout), staff review and
 publish, a hash-chained public record and a spend page. It has no customers. Open items
-are marked `TODO(verify)` in [architecture](../architecture.md) and
+are listed in [architecture §8](../architecture.md) and the harms table in
 [requirements](../requirements.md). Dates are targets, not commitments. Customer numbers
 are goals, not forecasts.
 
@@ -13,8 +13,7 @@ are goals, not forecasts.
 - Bring every eval case to reading grade 9 or lower (5 of the last 12 failed on grade
   alone) and fix the `tax-2026` regression. Run all 18 cases, including the 6 skipped
   when the spend cap was reached (`agents/evals/results.md`).
-- Measure the `TODO(verify)` items: translation cost per brief, the final brief cost, a
-  load test of `GET /api/decisions/:id`, and volume snapshot retention.
+- Run a load test of `GET /api/decisions/:id` and set volume snapshot retention.
 - Add a "Report an error" flow to the clerk, which is itself logged. Add the "don't type
   personal details" notice and the "machine translation" label on screen.
 
