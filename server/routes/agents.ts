@@ -119,7 +119,7 @@ function cachedTranslation(app: App, decisionId: string, lang: string, source: B
 }
 
 async function translate(app: App, agents: Awaited<ReturnType<App["agents"]["require"]>>, source: Brief, lang: string): Promise<Brief> {
-  const run = startRun(app);
+  const run = startRun(app, { timeoutMs: app.cfg.briefTimeoutMs });
   const out = await agents.translateBrief(run.ctx, source, lang);
   const sourceHash = briefHash(source);
   const brief: Brief & { sourceHash: string } = { ...out, decisionId: source.decisionId, lang, sourceHash };

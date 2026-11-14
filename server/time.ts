@@ -49,6 +49,22 @@ export function upcomingParticipation(decision: Decision, now = Date.now()): Tim
     .sort((a, b) => startMs(a.date) - startMs(b.date));
 }
 
+/** Not begun yet. A date-only event counts as not begun until its day is over. */
+function notStarted(e: TimelineEvent, now: number): boolean {
+  return isDateOnly(e.date) ? endMs(e.date) >= now : startMs(e.date) >= now;
+}
+
+/**
+ * The next chance to take part: the soonest event that hasn't begun yet (so the card
+ * can count down to it). Only if there is none, something still open (a survey that
+ * runs for weeks).
+ */
 export function nextParticipation(decision: Decision, now = Date.now()): TimelineEvent | undefined {
-  return upcomingParticipation(decision, now)[0];
+  const upcoming = upcomingParticipation(decision, now);
+  return upcoming.find((e) => notStarted(e, now)) ?? upcoming[0];
+}
+
+/** Chances that are open right now: begun but not yet closed. */
+export function openParticipation(decision: Decision, now = Date.now()): TimelineEvent[] {
+  return upcomingParticipation(decision, now).filter((e) => !notStarted(e, now));
 }

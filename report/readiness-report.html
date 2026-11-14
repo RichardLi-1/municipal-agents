@@ -133,18 +133,18 @@
 </section>
 
 <section class="case">
-  <h2>Case study: Waterloo Region</h2>
-  <p><b>Decision:</b> <span class="todo">TODO(verify) title, decided by, council date</span>. <b>Sources:</b> <span class="todo">TODO(verify) n</span> public PDFs, <span class="todo">TODO(verify) n</span> pages.</p>
-  <p><b>Result:</b> <span class="todo">TODO(verify) n</span> statements, each linked to a page; <span class="todo">TODO(verify) n</span> drafts rejected because a quote was not on its page; reading grade <span class="todo">TODO(verify)</span> (staff report: <span class="todo">TODO(verify)</span>); the next chance to speak as a calendar file; transit gaps from Grand River Transit and ION schedules.</p>
-  <p><b>Lesson:</b> budget staff time for the hand-checked timeline and housing data, not only AI review <span class="todo">TODO(verify)</span>.</p>
+  <h2>Case study: Region of Waterloo 2027 budget</h2>
+  <p><b>Decision:</b> Regional Council sets the 2027 budget, which fixes regional property tax and water rates. Draft to Council 16 Dec 2026 (register to speak by noon 9 Dec); review days 19 and 27 Jan; EngageWR survey open to 26 Feb 2027. The draft isn't public yet, so the brief uses last year's forecast for 2027, and says so.</p>
+  <p><b>Sources:</b> 19 public documents, 344 pages, from the Region, GRT and Kitchener. Two more decisions: water supply strategy, transit hub variances.</p>
+  <p><b>First run:</b> US$0.24 for the full brief with four lenses: 17 statements, each quote found on its page, 8 figures, 6 unknowns. Reading grade 11.8, target 8 <span class="todo">TODO(verify) after rewrite</span>. Not yet staff-reviewed.</p>
+  <p><b>Lesson:</b> the timeline took most care; two official pages disagree on a review-day date.</p>
 </section>
 
 <section>
   <h2>Data and resources needed</h2>
   <ul>
-    <li>Staff reports, agendas, budgets, plans as text PDFs; per decision, a clerk-checked timeline and map area.</li>
-    <li>GTFS, OpenStreetMap, building permits, Statistics Canada households.</li>
-    <li>A trained reviewer per brief; light IT; a capped model API key.</li>
+    <li>Reports, agendas, budgets, plans as text PDFs; per decision, a clerk-checked timeline and map area.</li>
+    <li>GTFS, OpenStreetMap, permits, census households; a trained reviewer; a capped model API key.</li>
   </ul>
 </section>
 
@@ -152,10 +152,10 @@
   <h2>Rough cost (US dollars)</h2>
   <table>
     <tr><th>Item</th><th>Cost</th><th>Basis</th></tr>
-    <tr><td>Hosting, one city</td><td class="num">~$7&ndash;10 a month</td><td>Fly.io 1 GB machine $6.70; volume, traffic<sup>7</sup></td></tr>
-    <tr><td>Model, per brief</td><td class="num"><span class="todo">TODO(verify)</span></td><td>Run cap: 40 calls or $0.50</td></tr>
-    <tr><td>Model, per question</td><td class="num"><span class="todo">TODO(verify)</span></td><td>Same cap</td></tr>
-    <tr><td>Public site cap</td><td class="num">$5 a day at most</td><td>In code; worst case ~$150/month</td></tr>
+    <tr><td>Hosting, one city</td><td class="num">~$7&ndash;10 a month</td><td>1 GB machine $6.70, volume $0.15<sup>7</sup></td></tr>
+    <tr><td>Model, per brief</td><td class="num">$0.24</td><td>First full run <span class="todo">TODO(verify)</span></td></tr>
+    <tr><td>Model, per question</td><td class="num">~$0.01</td><td>5 calls, $0.012 <span class="todo">TODO(verify)</span></td></tr>
+    <tr><td>Spend caps</td><td class="num">$0.50/run, $5/day</td><td>In code; worst case ~$150/month</td></tr>
     <tr><td>Staff review</td><td class="num">30&ndash;60 min a brief</td><td>Our estimate, not measured</td></tr>
   </table>
   <p class="note">gemini-3.6-flash: $0.75 in, $3.75 out per million tokens to 31 Dec 2026, then $1.50 and $7.50.<sup>5</sup> Cached briefs cost nothing to read.</p>
@@ -164,7 +164,7 @@
 <section>
   <h2>How another municipality adapts it</h2>
   <ol>
-    <li><code>cities/&lt;id&gt;.json</code>: map, languages, notice page, clerk, GTFS, open data. <i>~1 h</i></li>
+    <li><code>cities/&lt;id&gt;.json</code>: map, languages, clerk, GTFS. <i>~1 h</i></li>
     <li>PDFs into <code>data/sources</code>; <code>npm run sources</code>. <i>~1 h</i></li>
     <li><code>data/decisions/&lt;id&gt;.json</code>, clerk-checked. <i>~2&ndash;4 h each</i></li>
     <li>Local GTFS, OpenStreetMap, permits (5 stages). <i>~1&ndash;3 days</i></li>
@@ -174,17 +174,13 @@
   <p class="note">Times are estimates. Text PDFs and public GTFS need no code changes.</p>
 </section>
 
-<section>
-  <h2>Needed before real use</h2>
-  <p>Accuracy and review time measured in a pilot; a WCAG 2.2 AA audit; a privacy impact assessment; a Canadian-hosted model; OCR for scanned PDFs; a written clerk sign-off procedure.</p>
-</section>
 </div>
 <div class="col">
 <section>
   <h2>Who would use it</h2>
   <ul>
     <li><b>Residents</b>, no account: renters, owners, riders, seniors, students, parents, people with a disability, newcomers.</li>
-    <li><b>Clerks, communications</b>: start a brief, review each statement, publish.</li>
+    <li><b>Clerks, communications</b>: review each statement, publish.</li>
     <li><b>Planners</b>: transit, cost, housing lenses from open data.</li>
     <li><b>Councillors, groups</b>: one cited link with the dates to take part.</li>
   </ul>
@@ -193,10 +189,10 @@
 <section class="split">
   <h2>Privacy and the law</h2>
   <ul>
-    <li><b>No personal data by design.</b> No resident accounts; only public documents go to the model. Questions are kept without identity <span class="todo">TODO(verify) no IP</span> but are public, so we ask people not to type personal details.</li>
+    <li><b>No personal data by design.</b> No accounts; only public documents go to the model. IP addresses stay in memory for rate limits, never logged; a logged question keeps only its text, audiences and language. Questions are public: we ask people not to type personal details.</li>
     <li><b>MFIPPA.</b> A municipality may collect personal information only if a statute authorizes it, for law enforcement, or if necessary to a lawfully authorized activity, with notice (ss. 28(2), 29(2)).<sup>4</sup> Still do a privacy impact assessment.</li>
     <li><b>Data residency.</b> The Gemini API is a US service; paid-tier content is not used to improve Google's products.<sup>5</sup> For production: Vertex AI in Canada, which lists Gemini 3.5 and 3.8 Flash but not 3.6,<sup>6</sup> or an on-premises model.</li>
-    <li><b>Bill 194.</b> Ontario's Enhancing Digital Security and Trust Act, 2024 lets the province require prescribed public sector entities that use AI (municipalities can be prescribed) to inform the public, keep an accountability framework, manage risk and have a person oversee it.<sup>1,2</sup> No regulation yet does so for municipal AI.<sup>3</sup> The prototype already discloses AI use, names a human approver and keeps a public log.</li>
+    <li><b>Bill 194.</b> Ontario's Enhancing Digital Security and Trust Act, 2024 lets the province require prescribed public sector entities that use AI (municipalities can be prescribed) to inform the public, keep an accountability framework, manage risk and have a person oversee it.<sup>1,2</sup> No regulation yet does so for municipal AI.<sup>3</sup> The prototype already discloses AI use and names a human approver.</li>
   </ul>
 </section>
 
@@ -205,7 +201,7 @@
   <ul>
     <li>AI drafts; a named staff member approves each statement.</li>
     <li><b>Not the official notice</b>: each page links to it, and it prevails.</li>
-    <li>Every number links to its page. The AI can be wrong; it never says what to think.</li>
+    <li>Every number links to its page. The AI can be wrong.</li>
     <li>Questions are public, not tied to you. Translations are by machine <span class="todo">TODO(verify)</span>.</li>
     <li>Errors: "Report an error" or the clerk <span class="todo">TODO(verify)</span>.</li>
   </ul>
@@ -218,8 +214,8 @@
     <tr><td>Misinformation</td><td>Quotes checked on the page in code; staff approve</td></tr>
     <tr><td>Over-trust in AI</td><td>"AI draft" labels; uncertainty kept; sources a click away</td></tr>
     <tr><td>Digital divide</td><td>Grade 8, measured; screen readers; keep paper channels</td></tr>
-    <tr><td>Language</td><td>Language menu; translations labelled</td></tr>
-    <tr><td>Manipulation</td><td>Only staff add sources; answers only from cited pages</td></tr>
+    <tr><td>Language</td><td>11 languages in the menu; translations labelled</td></tr>
+    <tr><td>Manipulation</td><td>Staff add sources; 10 questions per 10 min per visitor</td></tr>
     <tr><td>Liability</td><td>Not the official notice; approvals in a tamper-evident log</td></tr>
     <tr><td>Staff workload</td><td>Agents draft; staff review one statement at a time</td></tr>
   </table>
@@ -227,7 +223,7 @@
 
 <section>
   <h2>What's next</h2>
-  <p>Pilot one live decision with a Waterloo Region municipality; measure review time and whether residents understand it, with screen-reader users and newcomers; then scale to more cities.</p>
+  <p>Pilot one live decision with a Waterloo Region municipality; measure review time and understanding with screen-reader users and newcomers. Before real use: WCAG 2.2 AA audit, privacy impact assessment, Canadian-hosted model, OCR, clerk sign-off procedure.</p>
 </section>
 </div>
 </div>

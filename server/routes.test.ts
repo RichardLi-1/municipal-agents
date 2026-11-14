@@ -103,6 +103,8 @@ test("decision detail merges lens files into the brief", async () => {
   assert.equal(d.sources[0].id, "fixture-report");
   assert.equal(d.brief.lenses.cost.asset, "Testville services");
   assert.deepEqual(d.brief.lenses.housing.hardToTrack, ["Completions"]);
+  const again = await get("/api/decisions/fixture-budget", { headers: { "If-None-Match": res.headers.get("etag")! } });
+  assert.equal(again.status, 304);
   const missing = await get("/api/decisions/nope");
   assert.equal(missing.status, 404);
   assert.match((await missing.json()).error, /No decision/);

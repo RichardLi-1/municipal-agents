@@ -40,7 +40,8 @@ export function readUsage(p: unknown): Required<UsagePayload> {
     model: typeof o.model === "string" ? o.model : typeof u.model === "string" ? u.model : "unknown",
     calls: u.calls === undefined ? 1 : num(u.calls),
     inputTokens: num(u.inputTokens ?? u.promptTokens),
-    outputTokens: num(u.outputTokens ?? u.completionTokens ?? u.candidatesTokens),
+    // Gemini reports thinking separately; it's generated (and billed) like output.
+    outputTokens: u.outputTokens !== undefined ? num(u.outputTokens) : num(u.candidatesTokens ?? u.completionTokens) + num(u.thoughtsTokens),
     costUsd: num(u.costUsd),
   };
 }

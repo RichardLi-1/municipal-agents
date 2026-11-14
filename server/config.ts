@@ -20,8 +20,10 @@ export interface Config {
   askWindowMs: number;
   /** Runs (ask, brief, translate) allowed at once across all visitors. */
   maxConcurrentRuns: number;
-  /** A single run is aborted after this long. */
+  /** A visitor's question is aborted after this long. */
   runTimeoutMs: number;
+  /** A full brief (many specialists) or a translation gets longer. */
+  briefTimeoutMs: number;
 }
 
 const here = import.meta.dirname;
@@ -43,5 +45,6 @@ export function loadConfig(env: NodeJS.ProcessEnv = process.env): Config {
     askWindowMs: Number(env.ASK_WINDOW_MIN ?? 10) * 60_000,
     maxConcurrentRuns: Number(env.MAX_CONCURRENT_RUNS ?? 4),
     runTimeoutMs: Number(env.RUN_TIMEOUT_SEC ?? 240) * 1000,
+    briefTimeoutMs: Number(env.BRIEF_TIMEOUT_SEC ?? 900) * 1000,
   };
 }

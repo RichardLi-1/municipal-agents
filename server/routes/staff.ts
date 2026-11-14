@@ -79,7 +79,7 @@ export function staffRoutes(app: App, r: Router): void {
     try {
       app.log.append({ actor, kind: "brief.started", decisionId, payload: { sources: decision.sources } });
       const sse = openSse(req, res);
-      const run = startRun(app, { signal: sse.signal, serverKinds: ["brief.started"] });
+      const run = startRun(app, { signal: sse.signal, serverKinds: ["brief.started"], timeoutMs: app.cfg.briefTimeoutMs });
       let emitted: Brief | undefined;
       const emit = (e: AgentEvent) => {
         if (e.type === "brief") emitted = e.brief;

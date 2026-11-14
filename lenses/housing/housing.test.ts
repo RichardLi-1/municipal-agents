@@ -116,3 +116,35 @@ test("housingSummary is plain text with stages, medians, target and gaps", () =>
   assert.match(s, /Approved but not permitted/);
   assert.match(s, /Test permits 2022-2025/);
 });
+
+test("city normalisers read each city's fields the way the lens counts them", async () => {
+  const { kitchenerPermit, waterlooPermit, cambridgePermit } = await import("./build.ts");
+  const k = kitchenerPermit({
+    attributes: {
+      PERMITNO: "1", PERMIT_STATUS: "Occupancy Permitted", UNITS_CREATED: "12",
+      ISSUE_DATE: Date.UTC(2023, 0, 10), OCCUPANCY_PERMITTED_DT: Date.UTC(2024, 0, 10), FINAL_DATE: null,
+    },
+    geometry: { x: -80.5, y: 43.4 },
+  });
+  assert.equal(k.units, 12);
+  assert.equal(k.isDone, true);
+  assert.equal(k.done, "2024-01-10");
+  assert.equal(k.isOpen, false);
+
+  // Waterloo: units on interior work are not new homes; no completion date.
+  const w1 = waterlooPermit({ attributes: { STATUS: "Issued", WORKDESC: "InteriorWork", UNITS: 1, ISSUEDATE: Date.UTC(2024, 5, 1, 15) } });
+  const w2 = waterlooPermit({ attributes: { STATUS: "Complete", WORKDESC: "AdditionalDwellingUnits", UNITS: 1, ISSUEDATE: Date.UTC(2024, 5, 1, 15) } });
+  assert.equal(w1.units, 0);
+  assert.equal(w2.units, 1);
+  assert.equal(w2.isDone, true);
+  assert.equal(w2.done, null);
+
+  // Cambridge: cancelled permits carry a FINALDATE but are not completions; foundation permits repeat units.
+  const c1 = cambridgePermit({ attributes: { STATUSDESC: "Cancelled", FOLDERDESC: "Residential Building Permit", PROP_NEW_UNITS: "1", ISSUEDATE: Date.UTC(2023, 1, 1, 15), FINALDATE: Date.UTC(2024, 1, 1, 15) } });
+  const c2 = cambridgePermit({ attributes: { STATUSDESC: "Issued", FOLDERDESC: "Foundation Permit Residential", PROP_NEW_UNITS: "147", ISSUEDATE: Date.UTC(2025, 1, 1, 15) } });
+  const c3 = cambridgePermit({ attributes: { STATUSDESC: "Closed", FOLDERDESC: "Residential Building Permit", PROP_NEW_UNITS: "2", ISSUEDATE: Date.UTC(2023, 1, 1, 15), FINALDATE: Date.UTC(2024, 1, 1, 15) } });
+  assert.equal(c1.isDropped, true);
+  assert.equal(c2.units, 0);
+  assert.equal(c3.isDone, true);
+  assert.equal(c3.done, "2024-02-01");
+});

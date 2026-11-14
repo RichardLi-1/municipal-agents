@@ -3,7 +3,7 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { test } from "node:test";
-import { syncCommittedData } from "./data.ts";
+import { Store, syncCommittedData } from "./data.ts";
 
 function write(file: string, text: string, mtime?: Date): void {
   fs.mkdirSync(path.dirname(file), { recursive: true });
@@ -34,4 +34,20 @@ test("boot mirror copies committed data, drops stale files, keeps uploads, and k
   assert.equal(read("briefs/a.json"), "staff-edited");
   assert.equal(read("briefs/b.json"), "committed-new");
   assert.equal(fs.existsSync(path.join(vol, "log.db")), false);
+});
+
+test("city-wide lens files go to the decision whose decider they name", () => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), "ma-lens-"));
+  const d = (id: string, decidedBy: string) => ({ id, decidedBy, title: "t", lenses: ["housing", "cost"], timeline: [] });
+  write(path.join(root, "data/decisions/row-budget.json"), JSON.stringify(d("row-budget", "Regional Council, Region of Waterloo")));
+  write(path.join(root, "data/decisions/kit-hub.json"), JSON.stringify(d("kit-hub", "City of Kitchener Committee of Adjustment")));
+  write(path.join(root, "data/lenses/housing-kitchener.json"), '{"city":"kitchener"}');
+  write(path.join(root, "data/lenses/housing-region.json"), '{"city":"region"}');
+  write(path.join(root, "data/lenses/kit-hub.cost.json"), '{"asset":"hub"}');
+  const store = new Store({ appRoot: root, dataDir: path.join(root, "data") });
+  const lenses = (id: string) => store.lenses(store.decision(id)!) as Record<string, Record<string, string>>;
+  assert.equal(lenses("row-budget").housing.city, "region");
+  assert.equal(lenses("kit-hub").housing.city, "kitchener");
+  assert.equal(lenses("kit-hub").cost.asset, "hub");
+  assert.equal(lenses("row-budget").cost, undefined);
 });

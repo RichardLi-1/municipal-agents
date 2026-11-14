@@ -10,9 +10,18 @@ brief a resident can read in five minutes: what is proposed, how it may affect t
 and when they can have a say. Every figure links to the page it came from, and a named
 staff member approves every statement before it is published.
 
-Pilot setting: Waterloo Region, Ontario. The first decision is the Region of Waterloo
-2027 Plan and Budget (`data/decisions/row-2027-budget.json`); the second is the
-Region's long-term water supply strategy (`data/decisions/row-water-supply-2051.json`).
+Pilot setting: Waterloo Region, Ontario (`cities/waterloo-region.json`: the Region,
+three cities and four townships). The main decision is the Region of Waterloo 2027
+Plan and Budget (`data/decisions/row-2027-budget.json`): the draft goes to Regional
+Council on 16 December 2026 (register to speak by noon on 9 December), with detailed
+review days on 19 and 27 January 2027 and an online survey open to 26 February 2027.
+The draft itself is not public yet, so the 2027 figures come from the forecast in the
+2026 budget book, and the brief says so. Secondary decisions: the Region's Water Supply
+Strategy Update (`data/decisions/row-water-supply-2051.json`; online meeting 17
+November, drop-in 24 November 2026) and Kitchener's Committee of Adjustment hearing on
+the Kitchener Central Transit Hub variances (17 November 2026, 10 am; `TODO(verify)`
+file name). The agents read 19 public PDFs from the Region, Grand River Transit and the
+City of Kitchener, plus 4 web pages saved as PDF.
 
 Related documents: [design and UML](design.md), [architecture](architecture.md),
 [code tour](code-tour.md), [references](references.md), [spec](spec.md).

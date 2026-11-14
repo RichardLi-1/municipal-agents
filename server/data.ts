@@ -181,16 +181,15 @@ export class Store {
   // ---- lenses ---------------------------------------------------------------
 
   /**
-   * Lens results for one decision from data/lenses. Tolerant of layout because the
-   * lens builder works in parallel: a file name (or folder) naming a lens id and/or a
-   * decision id places it; one naming only a lens applies to every decision that
-   * lists that lens (the housing pipeline is city-wide); one naming only the decision
-   * holds `{transit, cost, ...}`.
+   * Lens results for one decision from data/lenses, matched the same way the agents
+   * match them (agents/corpus.ts): a file name naming a lens and this decision's id
+   * places it; one naming another decision is skipped; one naming only a lens is
+   * city-wide and applies to decisions that list that lens (the best match on the
+   * decider's words wins); one naming only the decision holds `{transit, cost, ...}`.
    */
   lenses(decision: Decision): Lenses {
     const root = path.join(this.dataDir, "lenses");
     const out: Lenses = {};
-    const general: Lenses = {};
     const files: string[] = [];
     const walk = (dir: string, depth: number) => {
       let names: string[] = [];
@@ -207,28 +206,31 @@ export class Store {
       }
     };
     walk(root, 0);
+    const others = this.decisions().map((d) => d.id).filter((id) => id !== decision.id);
+    // Words of the decider and title pick between city-wide files, e.g.
+    // housing-kitchener.json for a Kitchener committee, housing-region.json for the Region.
+    const decider = `${decision.decidedBy} ${decision.title}`.toLowerCase();
+    const general: Partial<Record<LensId, { value: unknown; score: number }>> = {};
     for (const file of files) {
-      const tokens = path.relative(root, file).replace(/\.json$/, "").split(/[/.]/);
-      const lens = LENS_IDS.find((l) => tokens.includes(l));
-      const forThis = tokens.includes(decision.id);
-      const forOther = !forThis && this.mentionsOtherDecision(tokens, decision.id);
-      if (forOther) continue;
+      const rel = path.relative(root, file).replace(/\.json$/, "").toLowerCase();
+      const words = rel.split(/[/._-]+/);
+      const names = (id: string) => new RegExp(`(^|[/._-])${id.toLowerCase()}([/._-]|$)`).test(rel);
+      if (others.some(names)) continue;
       const value = readJson<Record<string, unknown>>(file);
       if (!value || typeof value !== "object") continue;
       if (typeof value.decisionId === "string" && value.decisionId !== decision.id) continue;
-      if (lens) {
-        (forThis ? out : general)[lens] = value as never;
-      } else if (forThis) {
+      const mine = names(decision.id);
+      const lens = LENS_IDS.find((l) => words.includes(l));
+      if (lens && mine) out[lens] = value as never;
+      else if (lens) {
+        const score = words.filter((w) => w !== lens && w.length > 2 && decider.includes(w)).length;
+        if (!general[lens] || score > general[lens].score) general[lens] = { value, score };
+      } else if (mine) {
         for (const l of LENS_IDS) if (value[l]) out[l] = value[l] as never;
       }
     }
-    for (const l of decision.lenses ?? []) if (!out[l] && general[l]) out[l] = general[l] as never;
+    for (const l of decision.lenses ?? []) if (!out[l] && general[l]) out[l] = general[l].value as never;
     return out;
-  }
-
-  private mentionsOtherDecision(tokens: string[], self: string): boolean {
-    const ids = new Set(this.decisions().map((d) => d.id));
-    return tokens.some((t) => t !== self && ids.has(t));
   }
 }
 

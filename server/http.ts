@@ -1,5 +1,6 @@
 // Small HTTP helpers on top of node:http: JSON responses (gzipped when it pays),
 // errors as JSON, body reading with a size cap, server-sent events, and a router.
+import { createHash } from "node:crypto";
 import type { IncomingMessage, ServerResponse } from "node:http";
 import { gzipSync } from "node:zlib";
 
@@ -25,6 +26,16 @@ export function sendBody(
 ): void {
   let buf = typeof body === "string" ? Buffer.from(body, "utf8") : body;
   const out: Record<string, string | number> = { "Cache-Control": "no-store", ...headers, Vary: "Accept-Encoding" };
+  // Revalidated responses carry an ETag so a repeat fetch of an unchanged brief is a 304.
+  if (status === 200 && (req.method === "GET" || req.method === "HEAD") && out["Cache-Control"] !== "no-store") {
+    const etag = `W/"${createHash("sha1").update(buf).digest("base64url").slice(0, 27)}"`;
+    out.ETag = etag;
+    if (req.headers["if-none-match"] === etag) {
+      res.writeHead(304, out);
+      res.end();
+      return;
+    }
+  }
   if (buf.length > 1024 && acceptsGzip(req)) {
     buf = gzipSync(buf, { level: 6 });
     out["Content-Encoding"] = "gzip";

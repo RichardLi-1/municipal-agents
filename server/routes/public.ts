@@ -1,21 +1,23 @@
 // Read-only routes anyone can call: the city, decisions, sources, the record, spend.
 import fs from "node:fs";
-import type { Brief, Decision, DecisionCard, DecisionDetail } from "../../shared/types.ts";
+import type { Brief, Decision, DecisionCard, DecisionDetail, TimelineEvent } from "../../shared/types.ts";
 import type { App } from "../app.ts";
 import type { Lenses } from "../data.ts";
 import { SAFE_LANG } from "../data.ts";
 import { HttpError, type Router, sendBody, sendJson } from "../http.ts";
 import { decisionCalendar } from "../ics.ts";
-import { nextParticipation, startMs } from "../time.ts";
+import { nextParticipation, openParticipation, startMs } from "../time.ts";
 import { summarise } from "../usage.ts";
 
-export function card(app: App, d: Decision, now = Date.now()): DecisionCard {
+/** A DecisionCard, plus `open`: ways to take part that are open right now (extra field). */
+export function card(app: App, d: Decision, now = Date.now()): DecisionCard & { open: TimelineEvent[] } {
   return {
     id: d.id,
     plainTitle: d.plainTitle,
     decidedBy: d.decidedBy,
     status: d.status,
     next: nextParticipation(d, now),
+    open: openParticipation(d, now),
     center: d.center,
     reviewStatus: app.store.brief(d.id)?.review?.status ?? "none",
     lenses: d.lenses ?? [],
@@ -39,7 +41,7 @@ export function publicRoutes(app: App, r: Router): void {
     sendJson(req, res, 200, {
       ok: true,
       startedAt: app.startedAt.toISOString(),
-      version: process.env.FLY_IMAGE_REF ?? process.env.GIT_SHA ?? "dev",
+      version: process.env.GIT_SHA ?? process.env.FLY_IMAGE_REF ?? "dev",
       decisions: app.store.decisions().length,
       sources: app.store.sources().length,
       logEntries: app.log.count(),
@@ -51,7 +53,7 @@ export function publicRoutes(app: App, r: Router): void {
   r.get("/api/city", ({ req, res }) => {
     const city = app.store.city();
     if (!city) throw new HttpError(404, "No city config in cities/");
-    sendJson(req, res, 200, city, { "Cache-Control": "public, max-age=60" });
+    sendJson(req, res, 200, city, { "Cache-Control": "no-cache" });
   });
 
   r.get("/api/decisions", ({ req, res }) => {
@@ -59,7 +61,7 @@ export function publicRoutes(app: App, r: Router): void {
     const cards = app.store.decisions().map((d) => card(app, d, now));
     // Soonest chance to take part first; decisions with none at the end.
     cards.sort((a, b) => (a.next ? startMs(a.next.date) : Infinity) - (b.next ? startMs(b.next.date) : Infinity) || a.plainTitle.localeCompare(b.plainTitle));
-    sendJson(req, res, 200, cards, { "Cache-Control": "public, max-age=30" });
+    sendJson(req, res, 200, cards, { "Cache-Control": "no-cache" });
   });
 
   r.get("/api/decisions/:id", ({ req, res, params, url }) => {
@@ -71,7 +73,8 @@ export function publicRoutes(app: App, r: Router): void {
     if (lang && SAFE_LANG.test(lang) && brief && brief.lang !== lang) brief = app.store.brief(decision.id, lang) ?? brief;
     const sources = decision.sources.map((id) => app.store.source(id)).filter((s) => !!s);
     const detail: DecisionDetail & { lenses: Lenses } = { decision, brief: withLenses(brief, lenses), sources, lenses };
-    sendJson(req, res, 200, detail, { "Cache-Control": "public, max-age=15" });
+    // no-cache + ETag: staff see their review at once, unchanged briefs cost a 304.
+    sendJson(req, res, 200, detail, { "Cache-Control": "no-cache" });
   });
 
   r.get("/api/decisions/:id/calendar.ics", ({ req, res, params }) => {
@@ -86,7 +89,7 @@ export function publicRoutes(app: App, r: Router): void {
   });
 
   r.get("/api/sources", ({ req, res }) => {
-    sendJson(req, res, 200, app.store.sources(), { "Cache-Control": "public, max-age=60" });
+    sendJson(req, res, 200, app.store.sources(), { "Cache-Control": "no-cache" });
   });
 
   r.get("/api/sources/:id/pdf", ({ req, res, params }) => {
@@ -117,7 +120,7 @@ export function publicRoutes(app: App, r: Router): void {
       kind: q.get("kind") ?? undefined,
       after: int("after"),
       before: int("before"),
-      limit: int("limit") ?? 5000,
+      limit: int("limit") ?? 10_000,
       order: q.get("order") === "desc" ? "desc" : "asc",
     });
     sendJson(req, res, 200, entries);

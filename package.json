@@ -9,6 +9,7 @@
     "build": "npm --prefix web ci && npm --prefix web run build",
     "test": "node --disable-warning=ExperimentalWarning --test \"server/**/*.test.ts\" \"agents/**/*.test.ts\" \"lenses/**/*.test.ts\"",
     "typecheck": "tsc --noEmit -p tsconfig.json",
+    "sources": "node scripts/sources.ts",
     "smoke": "node scripts/smoke.ts",
     "deploy": "fly deploy --remote-only && npm run smoke"
   },

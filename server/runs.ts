@@ -19,8 +19,8 @@ export interface Run {
  * @param serverKinds kinds the server has already logged for this run; if an agent
  *   logs one again it's dropped, so the record has each fact once.
  */
-export function startRun(app: App, opts: { signal?: AbortSignal; serverKinds?: LogEntry["kind"][] } = {}): Run {
-  const signals = [AbortSignal.timeout(app.cfg.runTimeoutMs)];
+export function startRun(app: App, opts: { signal?: AbortSignal; serverKinds?: LogEntry["kind"][]; timeoutMs?: number } = {}): Run {
+  const signals = [AbortSignal.timeout(opts.timeoutMs ?? app.cfg.runTimeoutMs)];
   if (opts.signal) signals.push(opts.signal);
   const skip = new Set(opts.serverKinds ?? []);
   const run: Run = {
